@@ -3,7 +3,7 @@ import { ConnectLink } from "@/components/molecules/ConnectLink";
 import { ScrollReveal } from "@/components/molecules/ScrollReveal";
 
 const connectLinks = [
-  { href: "mailto:samuel.gyasi@email.com", label: "Email"    },
+  { href: "mailto:impact@samuelgyasi.com", label: "Email"    },
   { href: "#",                              label: "LinkedIn" },
   { href: "#",                              label: "Speaking" },
   { href: "#",                              label: "Ministry" },

@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const heroPillars = [
-  { num: "01", label: "Faith & Beliefs",  href: "/faith"           },
+  { num: "01", label: "Beliefs",            href: "/faith"           },
   { num: "02", label: "Leadership",        href: "/leadership"      },
   { num: "03", label: "Intellectuality",   href: "/intellectuality" },
   { num: "04", label: "Transformation",    href: "/transformation"  },
@@ -42,7 +42,7 @@ export function HeroSection() {
 
       {/* ── left panel: text ── */}
       <div className="hero-left-v2">
-        <p className="hero-eyebrow-v2">Faith · Leadership · Thinker · Transformer</p>
+        <p className="hero-eyebrow-v2">Leader · CI Facilitator · Thinker · Transformation Contributor</p>
         <h1 className="hero-name-v2">
           <span className="hn-first">Samuel</span>
           <span className="hn-last">Gyasi</span>
@@ -71,8 +71,8 @@ export function HeroSection() {
           />
         </div>
         <div className="hero-photo-badge">
-          <span className="hpb-line">MSc Collective Intelligence</span>
-          <span className="hpb-sub">UM6P · Morocco</span>
+          <span className="hpb-line">CI Facilitator</span>
+          <span className="hpb-sub">Collective Intelligence</span>
         </div>
       </div>
 

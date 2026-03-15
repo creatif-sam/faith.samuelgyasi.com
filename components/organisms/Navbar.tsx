@@ -11,7 +11,7 @@ const navLinks = [
 ];
 
 const pillarLinks = [
-  { href: "/faith",          label: "Faith & Beliefs"  },
+  { href: "/faith",          label: "Beliefs"          },
   { href: "/leadership",     label: "Leadership"        },
   { href: "/intellectuality",label: "Intellectuality"   },
   { href: "/transformation", label: "Transformation"    },
@@ -87,7 +87,7 @@ export function Navbar() {
 
           <div className="nd-bottom">
             <span className="nd-name">Samuel Kobina Gyasi</span>
-            <a href="mailto:samuel.gyasi@um6p.ma" className="nd-email">samuel.gyasi@um6p.ma</a>
+            <a href="mailto:impact@samuelgyasi.com" className="nd-email">impact@samuelgyasi.com</a>
           </div>
         </div>
       </div>

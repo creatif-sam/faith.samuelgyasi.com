@@ -1,5 +1,6 @@
 import { Navbar }         from "@/components/organisms/Navbar";
 import { HeroSection }    from "@/components/organisms/HeroSection";
+import { ValuesSection }  from "@/components/organisms/ValuesSection";
 import { AboutSection }   from "@/components/organisms/AboutSection";
 import { PillarsSection } from "@/components/organisms/PillarsSection";
 import { VisionSection }  from "@/components/organisms/VisionSection";
@@ -11,6 +12,7 @@ export default function Home() {
     <>
       <Navbar />
       <HeroSection />
+      <ValuesSection />
       <AboutSection />
       <PillarsSection />
       <VisionSection />

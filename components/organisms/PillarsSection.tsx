@@ -5,7 +5,7 @@ import { ScrollReveal } from "@/components/molecules/ScrollReveal";
 const pillars = [
   {
     icon: "◯",
-    name: "Faith & Beliefs",
+    name: "Beliefs",
     href: "/faith",
     description:
       "Samuel's life is anchored in deep spiritual conviction and the wisdom found in sacred scripture. His faith is not passive doctrine but a living, active force that shapes how he thinks, leads, and engages with the world — the quiet centre from which everything else radiates.",

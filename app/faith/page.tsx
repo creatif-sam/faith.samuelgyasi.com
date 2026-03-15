@@ -461,7 +461,7 @@ export default function FaithPage() {
       <nav>
         <Link href="/" className="nav-back">Portfolio</Link>
         <div className="nav-logo">Samuel Kobina Gyasi</div>
-        <div className="nav-tag">Faith &amp; Beliefs</div>
+        <div className="nav-tag">Beliefs</div>
       </nav>
 
       {/* HERO */}
@@ -486,7 +486,6 @@ export default function FaithPage() {
         <div className="hero-text">
           <div className="hero-eyebrow">Faith · Belief · Conviction · Wisdom</div>
           <h1 className="hero-title">
-            Faith &amp;<br />
             <em>Beliefs</em>
           </h1>
           <p className="hero-subtitle">
