@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Playfair_Display, Cormorant_Garamond, Space_Mono } from "next/font/google";
 import "./globals.css";
 import { CustomCursor } from "@/components/organisms/CustomCursor";
+import { CookieBanner } from "@/components/organisms/CookieBanner";
+import { Analytics } from "@/components/Analytics";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -23,9 +25,104 @@ const spaceMono = Space_Mono({
   weight: ["400", "700"],
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://samuelgyasi.com";
+
 export const metadata: Metadata = {
-  title: "Samuel Gyasi — Spirituality · Leadership · Transformation",
-  description: "Rooted in the Word. Refined by Purpose. Rising to Transform.",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Samuel Gyasi — Spirituality · Leadership · Transformation",
+    template: "%s | Samuel Kobina Gyasi",
+  },
+  description:
+    "Samuel Kobina Gyasi — Rooted in the Word. Refined by Purpose. Rising to Transform. Scholar, leader, and speaker committed to faith-driven transformation.",
+  keywords: [
+    "Samuel Gyasi",
+    "Samuel Kobina Gyasi",
+    "Samuel K Gyasi",
+    "Samuel Gyasi Ghana",
+    "Samuel Gyasi leadership",
+    "Samuel Gyasi faith",
+    "Samuel Gyasi transformation",
+    "Samuel Gyasi speaker",
+    "Samuel Gyasi scholar",
+    "Ghanaian leader",
+    "faith leadership transformation",
+  ],
+  authors: [{ name: "Samuel Kobina Gyasi", url: siteUrl }],
+  creator: "Samuel Kobina Gyasi",
+  publisher: "Samuel Kobina Gyasi",
+  openGraph: {
+    type: "profile",
+    locale: "en_US",
+    url: siteUrl,
+    siteName: "Samuel Kobina Gyasi",
+    title: "Samuel Kobina Gyasi — Spirituality · Leadership · Transformation",
+    description:
+      "Rooted in the Word. Refined by Purpose. Rising to Transform.",
+    images: [
+      {
+        url: "/photo-hero.png",
+        width: 1200,
+        height: 630,
+        alt: "Samuel Kobina Gyasi",
+      },
+    ],
+    firstName: "Samuel",
+    lastName: "Gyasi",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Samuel Kobina Gyasi",
+    description: "Rooted in the Word. Refined by Purpose. Rising to Transform.",
+    images: ["/photo-hero.png"],
+    creator: "@samuel_gsi",
+  },
+  icons: {
+    icon: [
+      { url: "/favicon.png", type: "image/png" },
+    ],
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  alternates: { canonical: siteUrl },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Samuel Kobina Gyasi",
+  alternateName: ["Samuel Gyasi", "Samuel K. Gyasi"],
+  url: siteUrl,
+  image: `${siteUrl}/photo-hero.png`,
+  jobTitle: "Scholar · Leader · Speaker",
+  description:
+    "Samuel Kobina Gyasi is a scholar, leader, and speaker rooted in faith, dedicated to transformative leadership and community impact.",
+  nationality: { "@type": "Country", name: "Ghana" },
+  sameAs: [
+    "https://www.linkedin.com/in/samuel-k-gyasi/",
+    "https://web.facebook.com/samuel.kobinagyasi/",
+    "https://www.instagram.com/samuel_gsi",
+    "https://www.tiktok.com/@samuel_gsi",
+  ],
+  knowsAbout: [
+    "Faith",
+    "Leadership",
+    "Collective Intelligence",
+    "Transformation",
+    "Intellectuality",
+    "Community Development",
+  ],
 };
 
 export default function RootLayout({
@@ -33,13 +130,22 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body
         className={`${playfair.variable} ${cormorant.variable} ${spaceMono.variable}`}
       >
         <CustomCursor />
+        <Analytics />
         {children}
+        <CookieBanner />
       </body>
     </html>
   );
 }
+
 

@@ -3,10 +3,10 @@ import { ConnectLink } from "@/components/molecules/ConnectLink";
 import { ScrollReveal } from "@/components/molecules/ScrollReveal";
 
 const connectLinks = [
-  { href: "mailto:impact@samuelgyasi.com", label: "Email"    },
-  { href: "#",                              label: "LinkedIn" },
-  { href: "#",                              label: "Speaking" },
-  { href: "#",                              label: "Ministry" },
+  { href: "mailto:impact@samuelgyasi.com",                                                    label: "Email"    },
+  { href: "https://www.linkedin.com/in/samuel-k-gyasi/",                                      label: "LinkedIn" },
+  { href: "https://www.instagram.com/samuel_gsi?igsh=MWswMzRycjk1dXZ0cw==",                  label: "Instagram"},
+  { href: "https://www.tiktok.com/@samuel_gsi?_r=1&_t=ZS-94iqxzPNKqm",                       label: "TikTok"   },
 ];
 
 export function ConnectSection() {
