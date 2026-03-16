@@ -497,7 +497,7 @@ export default function TransformationPage() {
       {/* NAV */}
       <nav>
         <Link href="/" className="nav-back">Portfolio</Link>
-        <div className="nav-logo">Samuel Kobina Gyasi</div>
+        <div className="nav-logo">Samuel Gyasi</div>
         <div className="nav-pill">Transformation</div>
       </nav>
 

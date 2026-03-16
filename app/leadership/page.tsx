@@ -527,7 +527,7 @@ export default function LeadershipPage() {
             <div className="timeline-item">
               <div className="timeline-dot" />
               <div className="timeline-card">
-                <div className="tl-period">Since October 2024</div>
+                <div className="tl-period">October 2024 - October 2025</div>
                 <div className="tl-role">President</div>
                 <div className="tl-org">Collective Intelligence Consortium</div>
                 <div className="tl-location">UM6P · Rabat, Morocco</div>
@@ -537,7 +537,7 @@ export default function LeadershipPage() {
             <div className="timeline-item">
               <div className="timeline-dot" />
               <div className="timeline-card">
-                <div className="tl-period">Since November 2024</div>
+                <div className="tl-period">November 2024 - November 2025</div>
                 <div className="tl-role">Academic Affairs Delegate</div>
                 <div className="tl-org">International Students Club</div>
                 <div className="tl-location">UM6P · Morocco</div>
@@ -547,7 +547,7 @@ export default function LeadershipPage() {
             <div className="timeline-item">
               <div className="timeline-dot" />
               <div className="timeline-card">
-                <div className="tl-period">Since September 2024</div>
+                <div className="tl-period">September 2024 - August 2025</div>
                 <div className="tl-role">Financial Secretary</div>
                 <div className="tl-org">Ghanaian Students Association in Morocco</div>
                 <div className="tl-location">Morocco</div>
@@ -557,7 +557,7 @@ export default function LeadershipPage() {
             <div className="timeline-item">
               <div className="timeline-dot" />
               <div className="timeline-card">
-                <div className="tl-period">Since December 2023</div>
+                <div className="tl-period">December 2023 - September 2025</div>
                 <div className="tl-role">School Ambassador</div>
                 <div className="tl-org">School of Collective Intelligence</div>
                 <div className="tl-location">UM6P · Rabat, Morocco</div>
@@ -567,7 +567,7 @@ export default function LeadershipPage() {
             <div className="timeline-item">
               <div className="timeline-dot" />
               <div className="timeline-card">
-                <div className="tl-period">Since October 2023</div>
+                <div className="tl-period">October 2023 - September 2025</div>
                 <div className="tl-role">Student Representative</div>
                 <div className="tl-org">School of Collective Intelligence</div>
                 <div className="tl-location">UM6P · Morocco</div>
@@ -618,7 +618,7 @@ export default function LeadershipPage() {
 
           <div className="exp-grid">
             <div className="exp-card">
-              <div className="exp-period">Oct 2025 —<br />Present</div>
+              <div className="exp-period">September 2025 —<br />Present</div>
               <div className="exp-content">
                 <div className="exp-role">Junior Program Officer</div>
                 <div className="exp-org">School of Collective Intelligence, University Mohammed VI Polytechnic · Rabat, Morocco</div>
@@ -683,7 +683,7 @@ export default function LeadershipPage() {
             <div className="edu-card">
               <div className="edu-degree">MSc. Collective Intelligence</div>
               <div className="edu-school">University Mohammed VI Polytechnic</div>
-              <div className="edu-period">Oct 2023 — Jul 2025 · Graduated</div>
+              <div className="edu-period">Oct 2023 — September 2025 · Graduated</div>
               <div className="edu-location">Rabat, Morocco</div>
             </div>
             <div className="edu-card">
@@ -730,7 +730,7 @@ export default function LeadershipPage() {
             <div className="award-card">
               <div className="award-icon">◆</div>
               <div>
-                <div className="award-name">Excellence Scholarship Recipient</div>
+                <div className="award-name">UM6P Excellence Scholarship Recipient</div>
                 <div className="award-desc">Awarded on the basis of academic excellence and entrance examination results</div>
               </div>
             </div>

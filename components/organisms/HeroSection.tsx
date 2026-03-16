@@ -42,7 +42,7 @@ export function HeroSection() {
 
       {/* ── left panel: text ── */}
       <div className="hero-left-v2">
-        <p className="hero-eyebrow-v2">Leader · Program Officer · Thinker · Transformation Contributor</p>
+        <p className="hero-eyebrow-v2">Leader · Group Intelligence Facilitator · Thinker · Transformation Contributor</p>
         <h1 className="hero-name-v2">
           <span className="hn-first">Samuel</span>
           <span className="hn-last">Gyasi</span>
@@ -71,8 +71,8 @@ export function HeroSection() {
           />
         </div>
         <div className="hero-photo-badge">
-          <span className="hpb-line">Program Officer</span>
-          <span className="hpb-sub">School of Collective Intelligence</span>
+          <span className="hpb-line">Group Intelligence Facilitator</span>
+          <span className="hpb-sub"></span>
         </div>
       </div>
 
