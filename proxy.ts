@@ -1,11 +1,15 @@
 import { updateSession } from "@/lib/supabase/proxy";
 import { NextResponse, type NextRequest } from "next/server";
 
-// Only these route prefixes are live — everything else redirects to /faith
 const ALLOWED_PREFIXES = [
+  "/",
   "/faith",
   "/blog",
   "/my-story",
+  "/credo",
+  "/upcoming",
+  "/resources",
+  "/testimonials",
   "/api",
   "/auth",
   "/admin",
@@ -14,14 +18,12 @@ const ALLOWED_PREFIXES = [
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Root → faith landing
-  if (pathname === "/") {
-    return NextResponse.redirect(new URL("/faith", request.url), 301);
-  }
+  const allowed =
+    pathname === "/" ||
+    ALLOWED_PREFIXES.some((p) => p !== "/" && pathname.startsWith(p));
 
-  const allowed = ALLOWED_PREFIXES.some((p) => pathname.startsWith(p));
   if (!allowed) {
-    return NextResponse.redirect(new URL("/faith", request.url), 301);
+    return NextResponse.redirect(new URL("/", request.url), 307);
   }
 
   // Run Supabase session proxy for all allowed routes
