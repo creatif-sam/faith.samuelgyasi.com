@@ -1,40 +1,17 @@
 ﻿"use client";
 
 import { useEffect, useRef } from "react";
-
-const timelineEntries = [
-  {
-    year: "The Beginning",
-    title: "Foundations of Faith",
-    body: "Born and raised with deep roots in Christian faith, Samuel's earliest formation came through Scripture, community, and a conviction that every life carries divine purpose. These foundations never left him.",
-  },
-  {
-    year: "The Formation",
-    title: "Education & Early Leadership",
-    body: "Samuel pursued academic and leadership development with the same intentionality he brought to faith. Early in his journey he began understanding that knowledge without service is incomplete — a lesson that would shape every season ahead.",
-  },
-  {
-    year: "The Field",
-    title: "Fifteen Years of Practice",
-    body: "Over fifteen years, Samuel worked across sectors — education, governance, civil society, and the private sector — facilitating groups, building leadership culture, and contributing to institutional transformation across Africa and beyond.",
-  },
-  {
-    year: "2023 – 2025",
-    title: "Master's in Collective Intelligence",
-    body: "At UM6P — University Mohammed VI Polytechnic in Morocco — Samuel completed a rigorous Master's programme in Collective Intelligence, fusing his leadership experience with data science, organisational theory, and systems thinking.",
-  },
-  {
-    year: "Now",
-    title: "School of Collective Intelligence",
-    body: "Today Samuel serves as Junior Program Officer at the School of Collective Intelligence, UM6P — designing programmes, facilitating strategic learning, and working to unlock the potential already present in people, teams, and institutions.",
-  },
-];
+import { useLang } from "@/lib/i18n";
+import { aboutTranslations as t } from "@/lib/i18n/about";
 
 export function AboutSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const { lang } = useLang();
 
   useEffect(() => {
-    const entries = sectionRef.current?.querySelectorAll<HTMLElement>(".tl-entry");
+    const entries = sectionRef.current?.querySelectorAll<HTMLElement>(
+      ".tl-entry, .mt-item"
+    );
     if (!entries) return;
 
     const observer = new IntersectionObserver(
@@ -51,24 +28,42 @@ export function AboutSection() {
 
     entries.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
-  }, []);
+  }, [lang]);
 
   return (
     <section id="my-story" className="about-section about-timeline-section">
       <div className="tl-inner" ref={sectionRef}>
 
         <div className="tl-header">
-          <span className="tl-eyebrow">My Story</span>
+          <span className="tl-eyebrow">{t.eyebrow[lang]}</span>
           <h2 className="tl-main-title">
-            A Life <em>Built</em> on Purpose,{" "}
-            <span>Faith &amp; Collective Growth</span>
+            {lang === "en"
+              ? <>A Life <em>Built</em> on Purpose, <span>Faith &amp; Collective Growth</span></>
+              : <>Une Vie <em>Bâtie</em> sur le But, <span>la Foi &amp; la Croissance Collective</span></>}
           </h2>
+        </div>
+
+        {/* ── 7 Mountains of Culture ── */}
+        <div className="mountains-section">
+          <p className="mountains-intro">{t.mountains.intro[lang]}</p>
+          <ol className="mountains-list">
+            {(t.mountains.list as { en: string; fr: string }[]).map((m, i) => (
+              <li
+                key={i}
+                className="mt-item"
+                style={{ "--mi": i } as React.CSSProperties}
+              >
+                <span className="mt-num">0{i + 1}</span>
+                <span className="mt-label">{m[lang]}</span>
+              </li>
+            ))}
+          </ol>
         </div>
 
         <div className="tl-track">
           <div className="tl-spine" aria-hidden="true" />
 
-          {timelineEntries.map((entry, i) => (
+          {(t.timeline as { year: { en: string; fr: string }; title: { en: string; fr: string }; body: { en: string; fr: string } }[]).map((entry, i) => (
             <div
               key={i}
               className="tl-entry"
@@ -79,9 +74,9 @@ export function AboutSection() {
               </div>
 
               <div className="tl-content">
-                <div className="tl-year">{entry.year}</div>
-                <h3 className="tl-title">{entry.title}</h3>
-                <p className="tl-body">{entry.body}</p>
+                <div className="tl-year">{entry.year[lang]}</div>
+                <h3 className="tl-title">{entry.title[lang]}</h3>
+                <p className="tl-body">{entry.body[lang]}</p>
               </div>
             </div>
           ))}
@@ -89,9 +84,8 @@ export function AboutSection() {
 
         <div className="tl-quote-wrap">
           <blockquote className="tl-quote">
-            &ldquo;For I know the plans I have for you,&rdquo; declares the Lord,
-            &ldquo;plans to prosper you and not to harm you, plans to give you hope and a future.&rdquo;
-            <cite>— Jeremiah 29:11</cite>
+            {(t.quote.text as { en: string; fr: string })[lang]}
+            <cite>{(t.quote.cite as { en: string; fr: string })[lang]}</cite>
           </blockquote>
         </div>
 

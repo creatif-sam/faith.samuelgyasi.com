@@ -3,19 +3,22 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
-const navLinks = [
-  { href: "/blog",      label: "Blog"     },
-  { href: "/my-story", label: "Story"    },
-  { href: "/library",  label: "Library"  },
-  { href: "/credo",    label: "Credo"    },
-  { href: "/upcoming", label: "Upcoming" },
-];
+import { useLang } from "@/lib/i18n";
+import { navTranslations as t } from "@/lib/i18n/nav";
 
 export function Navbar() {
   const [open, setOpen]         = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname                = usePathname();
+  const { lang, toggleLang }    = useLang();
+
+  const navLinks = [
+    { href: "/blog",      label: t.blog[lang]      },
+    { href: "/my-story",  label: t.story[lang]     },
+    { href: "/resources", label: t.resources[lang] },
+    { href: "/credo",     label: t.credo[lang]     },
+    { href: "/upcoming",  label: t.upcoming[lang]  },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -50,6 +53,18 @@ export function Navbar() {
           ))}
         </ul>
 
+        {/* Language toggle — desktop */}
+        <button
+          className="nav-lang-btn"
+          onClick={toggleLang}
+          aria-label={lang === "en" ? t.langLabel.en : t.langLabel.fr}
+          title={lang === "en" ? t.langLabel.en : t.langLabel.fr}
+        >
+          <span className={lang === "en" ? "nlb-active" : ""}>EN</span>
+          <span className="nlb-sep">|</span>
+          <span className={lang === "fr" ? "nlb-active" : ""}>FR</span>
+        </button>
+
         {/* Hamburger */}
         <button
           className={`nav-burger ${open ? "nav-burger--open" : ""}`}
@@ -79,6 +94,16 @@ export function Navbar() {
           </ul>
 
           <div className="nd-bottom">
+            {/* Language toggle — mobile */}
+            <button
+              className="nd-lang-btn"
+              onClick={toggleLang}
+              aria-label={lang === "en" ? t.langLabel.en : t.langLabel.fr}
+            >
+              <span className={lang === "en" ? "nlb-active" : ""}>EN</span>
+              <span className="nlb-sep">|</span>
+              <span className={lang === "fr" ? "nlb-active" : ""}>FR</span>
+            </button>
             <a href="mailto:impact@samuelgyasi.com" className="nd-email">impact@samuelgyasi.com</a>
             <div className="nd-social-row">
               <a href="https://www.linkedin.com/in/samuel-k-gyasi/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="nd-social-link">in</a>

@@ -1,30 +1,18 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Link from "next/link";
 import type { BilingualPost } from "../blog-data";
 import { blogPosts, getCategoryLabel } from "../blog-data";
-import type { Lang } from "../../translations";
+import { useLang } from "@/lib/i18n";
 
 export function ArticleClient({ post }: { post: BilingualPost }) {
-  const [lang, setLang] = useState<Lang>("en");
+  const { lang, toggleLang } = useLang();
 
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem("fdp-lang") as Lang | null;
-      if (stored === "en" || stored === "fr") setLang(stored);
-    } catch {}
     document.body.classList.add("on-fdp");
     return () => document.body.classList.remove("on-fdp");
   }, []);
-
-  function toggleLang() {
-    setLang((l) => {
-      const next: Lang = l === "en" ? "fr" : "en";
-      try { localStorage.setItem("fdp-lang", next); } catch {}
-      return next;
-    });
-  }
 
   const content = post[lang];
   const related = blogPosts
@@ -37,13 +25,13 @@ export function ArticleClient({ post }: { post: BilingualPost }) {
 
       {/* NAV */}
       <nav className="fdp-article-nav">
-        <Link href="/faith/blog" className="nav-back">
+        <Link href="/blog" className="nav-back">
           {lang === "en" ? "← Journal" : "← Journal"}
         </Link>
         <div className="nav-logo">Samuel Kobina Gyasi</div>
-        <button className="fdp-lang-toggle" onClick={toggleLang} aria-label="Toggle language">
+        <button className="fdp-lang-toggle" onClick={toggleLang} aria-label={lang === "en" ? "Passer en français" : "Switch to English"}>
           <span className={lang === "en" ? "active" : ""}>EN</span>
-          <span className="sep">/</span>
+          <span className="sep">|</span>
           <span className={lang === "fr" ? "active" : ""}>FR</span>
         </button>
       </nav>
@@ -77,7 +65,7 @@ export function ArticleClient({ post }: { post: BilingualPost }) {
             </div>
             <div className="fa-related-grid">
               {related.map((p) => (
-                <Link key={p.slug} href={`/faith/blog/${p.slug}`} className="fa-related-card">
+                <Link key={p.slug} href={`/blog/${p.slug}`} className="fa-related-card">
                   <div className="fa-rc-tag">{getCategoryLabel(p.category, lang)}</div>
                   <div className="fa-rc-title">{p[lang].title}</div>
                   <div className="fa-rc-meta">
@@ -90,7 +78,7 @@ export function ArticleClient({ post }: { post: BilingualPost }) {
         )}
 
         <footer className="fa-footer">
-          <Link href="/faith/blog" className="fa-back-link">
+          <Link href="/blog" className="fa-back-link">
             ← {lang === "en" ? "All Reflections" : "Toutes les Réflexions"}
           </Link>
           <Link href="/my-story" className="fa-credo-link">

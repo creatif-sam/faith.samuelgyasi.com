@@ -24,7 +24,7 @@ export function FaithConnect({ lang }: { lang: Lang }) {
         <Link href="/my-story" className="c-link">
           {c.links.credo[lang]} <span>→</span>
         </Link>
-        <Link href="/faith/blog" className="c-link">
+        <Link href="/blog" className="c-link">
           {c.links.blog[lang]} <span>→</span>
         </Link>
       </div>

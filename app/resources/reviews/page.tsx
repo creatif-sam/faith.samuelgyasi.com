@@ -295,7 +295,7 @@ export default function BookReviewsPage() {
 
         {/* ── HEADER ── */}
         <div className="reviews-header">
-          <Link href="/library" className="reviews-back">← Library</Link>
+          <Link href="/resources" className="reviews-back">← Resources</Link>
           <p className="reviews-eyebrow">Samuel Kobina Gyasi · Reading Journal</p>
           <h1 className="reviews-headline">
             Book<br /><em>Reviews</em>

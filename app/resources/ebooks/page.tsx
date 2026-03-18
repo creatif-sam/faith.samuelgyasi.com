@@ -243,7 +243,7 @@ export default function EbooksPage() {
 
         {/* ── HEADER ── */}
         <div className="ebooks-header">
-          <Link href="/library" className="ebooks-back">← Library</Link>
+          <Link href="/resources" className="ebooks-back">← Resources</Link>
           <p className="ebooks-eyebrow">Samuel Kobina Gyasi · Published Works</p>
           <h1 className="ebooks-headline">
             My<br /><em>eBooks</em>

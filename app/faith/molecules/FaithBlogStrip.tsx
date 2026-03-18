@@ -16,7 +16,7 @@ export function FaithBlogStrip({ lang }: { lang: Lang }) {
       </h2>
       <p className="bs-sub">{b.sub[lang]}</p>
       <div className="bs-btns">
-        <Link href="/faith/blog" className="bs-btn">{b.btnBlog[lang]}</Link>
+        <Link href="/blog" className="bs-btn">{b.btnBlog[lang]}</Link>
         <Link href="/my-story" className="bs-btn ghost">{b.btnCredo[lang]}</Link>
       </div>
     </div>

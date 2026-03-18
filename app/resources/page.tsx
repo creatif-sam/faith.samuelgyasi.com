@@ -1,8 +1,9 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect } from "react";
 import Link from "next/link";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
+import { useLang } from "@/lib/i18n";
 
 const css = `
 .lib-pg {
@@ -198,7 +199,9 @@ const css = `
 }
 `;
 
-export default function LibraryPage() {
+export default function ResourcesPage() {
+  const { lang } = useLang();
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("lib-visible"); }),
@@ -215,44 +218,49 @@ export default function LibraryPage() {
 
         {/* ── HERO ── */}
         <div className="lib-hero">
-          <p className="lib-eyebrow">Samuel Kobina Gyasi · Reading Life</p>
+          <p className="lib-eyebrow">
+            {lang === "en" ? "Samuel Kobina Gyasi · Reading Life" : "Samuel Kobina Gyasi · Vie de Lecteur"}
+          </p>
           <h1 className="lib-headline">
-            The<br /><em>Library</em>
+            {lang === "en" ? <>The<br /><em>Resources</em></> : <>Les<br /><em>Ressources</em></>}
           </h1>
           <div className="lib-rule" />
           <p className="lib-sub">
-            Books have been the companions of my formation — the voices of thinkers, believers,
-            and leaders who shaped how I see the world. Here I share what I have written and what I have learned.
+            {lang === "en"
+              ? "Books have been the companions of my formation — the voices of thinkers, believers, and leaders who shaped how I see the world. Here I share what I have written and what I have learned."
+              : "Les livres ont been les compagnons de ma formation — les voix de penseurs, de croyants et de leaders qui ont façonné ma vision du monde. Ici je partage ce que j'ai écrit et ce que j'ai appris."}
           </p>
         </div>
 
         {/* ── SECTIONS ── */}
         <div className="lib-sections">
-          <Link href="/library/ebooks" className="lib-section-card" style={{ transitionDelay: "0s" }}>
+          <Link href="/resources/ebooks" className="lib-section-card" style={{ transitionDelay: "0s" }}>
             <div className="lib-card-num">01</div>
-            <h2 className="lib-card-title">eBooks</h2>
+            <h2 className="lib-card-title">{lang === "en" ? "eBooks" : "Livres Numériques"}</h2>
             <p className="lib-card-body">
-              Writing is how I think out loud. This section gathers the essays, reflections, and short books
-              I have written — on faith, leadership, collective intelligence, and the examined life.
+              {lang === "en"
+                ? "Writing is how I think out loud. This section gathers the essays, reflections, and short books I have written — on faith, leadership, collective intelligence, and the examined life."
+                : "L'écriture est ma façon de penser à voix haute. Cette section rassemble les essais, réflexions et courts livres que j'ai écrits — sur la foi, le leadership, l'intelligence collective et la vie examinée."}
             </p>
-            <span className="lib-card-cta">Browse eBooks →</span>
+            <span className="lib-card-cta">{lang === "en" ? "Browse eBooks →" : "Parcourir les Livres →"}</span>
           </Link>
 
-          <Link href="/library/reviews" className="lib-section-card" style={{ transitionDelay: "0.08s" }}>
+          <Link href="/resources/reviews" className="lib-section-card" style={{ transitionDelay: "0.08s" }}>
             <div className="lib-card-num">02</div>
-            <h2 className="lib-card-title">Book Reviews</h2>
+            <h2 className="lib-card-title">{lang === "en" ? "Book Reviews" : "Critiques de Livres"}</h2>
             <p className="lib-card-body">
-              Every significant book I have read has left a mark. Here I share honest reflections on the books
-              that have challenged, shaped, and deepened my thinking across theology, leadership, and human flourishing.
+              {lang === "en"
+                ? "Every significant book I have read has left a mark. Here I share honest reflections on the books that have challenged, shaped, and deepened my thinking across theology, leadership, and human flourishing."
+                : "Chaque livre significatif que j'ai lu a laissé une empreinte. Ici je partage des réflexions honnêtes sur les livres qui ont remis en question, façonné et approfondi ma pensée en théologie, leadership et épanouissement humain."}
             </p>
-            <span className="lib-card-cta">Browse Reviews →</span>
+            <span className="lib-card-cta">{lang === "en" ? "Browse Reviews →" : "Parcourir les Critiques →"}</span>
           </Link>
         </div>
 
         {/* ── QUOTE ── */}
         <div className="lib-quote-strip">
           <blockquote>
-            &ldquo;Not all readers are leaders, but all leaders are readers.&rdquo;
+            &ldquo;{lang === "en" ? "Not all readers are leaders, but all leaders are readers." : "Tous les lecteurs ne sont pas des leaders, mais tous les leaders sont des lecteurs."}&rdquo;
           </blockquote>
           <cite>— Harry S. Truman</cite>
         </div>

@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState, Suspense } from "react";
+import { useEffect, useRef, Suspense } from "react";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
 import { TestimonialsClient } from "@/components/organisms/TestimonialsClient";
-import type { Lang } from "./translations";
+import { useLang } from "@/lib/i18n";
 
 /* ── Atomic / Molecular components ── */
 import { FaithParticles }  from "./atoms/FaithParticles";
@@ -587,9 +587,8 @@ body.on-fdp .cursor-ring { border-color: rgba(201,168,76,.35); mix-blend-mode: n
 `;
 
 export default function FaithPage() {
-  const [lang, setLang] = useState<Lang>("en");
+  const { lang, toggleLang } = useLang();
   const sectionRef = useRef<HTMLDivElement>(null);
-  const toggleLang = () => setLang((l) => (l === "en" ? "fr" : "en"));
 
   useEffect(() => {
     document.body.classList.add("on-fdp");
