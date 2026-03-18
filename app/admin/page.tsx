@@ -1334,9 +1334,6 @@ function TestimonialModal({ testimonial, onClose, onSave, db }: {
   );
 }
 
-  );
-}
-
 // ── LIBRARY TAB ────────────────────────────────────────────────────────────
 function LibraryTab({ items, onNew, onEdit, onDelete, onToggle }: {
   items: LibraryItem[];
