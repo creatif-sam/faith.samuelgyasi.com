@@ -38,11 +38,7 @@ export function LoginForm({
         password,
       });
       if (error) throw error;
-      const { data: userData } = await supabase.auth.getUser();
-      const role =
-        userData?.user?.app_metadata?.role ||
-        userData?.user?.user_metadata?.role;
-      router.push(role === "admin" ? "/admin" : "/");
+      router.push("/admin");
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "An error occurred");
     } finally {

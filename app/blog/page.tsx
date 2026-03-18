@@ -2,23 +2,51 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { blogPosts, categories, getCategoryLabel } from "./blog-data";
-import type { Category } from "./blog-data";
-import { useLang } from "@/lib/i18n";
+import { createClient } from "@/lib/supabase/client";
+
+type DbPost = {
+  id: string;
+  title: string;
+  slug: string;
+  category: string;
+  excerpt: string | null;
+  read_time_minutes: number;
+  featured_image_url: string | null;
+  created_at: string;
+};
+
+const CATEGORIES = [
+  { value: "faith", label: "Faith" },
+  { value: "leadership", label: "Leadership" },
+  { value: "intellectuality", label: "Intellectuality" },
+  { value: "transformation", label: "Transformation" },
+];
 
 export default function FaithBlogPage() {
-  const { lang, toggleLang } = useLang();
-  const [activeCat, setActiveCat] = useState<Category | "all">("all");
+  const [posts, setPosts] = useState<DbPost[]>([]);
+  const [activeCat, setActiveCat] = useState<string>("all");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     document.body.classList.add("on-fdp");
     return () => document.body.classList.remove("on-fdp");
   }, []);
 
-  const filtered = activeCat === "all"
-    ? blogPosts
-    : blogPosts.filter((p) => p.category === activeCat);
+  useEffect(() => {
+    const supabase = createClient();
+    supabase
+      .from("blog_posts")
+      .select("id,title,slug,category,excerpt,read_time_minutes,featured_image_url,created_at")
+      .eq("published", true)
+      .order("created_at", { ascending: false })
+      .then(({ data }) => {
+        setPosts(data ?? []);
+        setLoading(false);
+      });
+  }, []);
 
+  const filtered =
+    activeCat === "all" ? posts : posts.filter((p) => p.category === activeCat);
   const featured = filtered[0];
   const rest = filtered.slice(1);
 
@@ -28,27 +56,22 @@ export default function FaithBlogPage() {
 
       {/* NAV */}
       <nav className="fdp-blog-nav">
-        <Link href="/faith" className="nav-back">{lang === "en" ? "← Faith" : "← Foi"}</Link>
+        <Link href="/faith" className="nav-back">{"<-"} Faith</Link>
         <div className="nav-logo">Samuel Kobina Gyasi</div>
-        <button className="fdp-lang-toggle" onClick={toggleLang} aria-label={lang === "en" ? "Passer en français" : "Switch to English"}>
-          <span className={lang === "en" ? "active" : ""}>EN</span>
-          <span className="sep">|</span>
-          <span className={lang === "fr" ? "active" : ""}>FR</span>
-        </button>
+        <span />
       </nav>
 
       {/* HEADER */}
       <header className="fb-header">
-        <div className="fb-eyebrow">{lang === "en" ? "Faith Journal" : "Journal de Foi"}</div>
+        <div className="fb-eyebrow">Faith Journal</div>
         <h1 className="fb-title">
-          {lang === "en"
-            ? <><span>Words That</span><br /><em>Anchor</em></>
-            : <><span>Des Mots Qui</span><br /><em>Ancrent</em></>}
+          <span>Words That</span>
+          <br />
+          <em>Anchor</em>
         </h1>
         <p className="fb-subtitle">
-          {lang === "en"
-            ? "Reflections on scripture, sacred conviction, and the daily practice of trusting God with every step."
-            : "Réflexions sur l'Écriture, la conviction sacrée, et la pratique quotidienne de faire confiance à Dieu à chaque pas."}
+          Reflections on scripture, sacred conviction, and the daily practice of
+          trusting God with every step.
         </p>
       </header>
 
@@ -58,51 +81,66 @@ export default function FaithBlogPage() {
           className={`fb-filter${activeCat === "all" ? " fb-filter--active" : ""}`}
           onClick={() => setActiveCat("all")}
         >
-          {lang === "en" ? "All" : "Tout"}
+          All
         </button>
-        {categories.map((cat) => (
+        {CATEGORIES.map((cat) => (
           <button
             key={cat.value}
             className={`fb-filter${activeCat === cat.value ? " fb-filter--active" : ""}`}
-            onClick={() => setActiveCat(cat.value as Category)}
+            onClick={() => setActiveCat(cat.value)}
           >
-            {cat[lang]}
+            {cat.label}
           </button>
         ))}
       </div>
 
       {/* POSTS */}
-      {filtered.length === 0 ? (
-        <p className="fb-empty">
-          {lang === "en" ? "No reflections in this category yet." : "Pas encore de réflexions dans cette catégorie."}
-        </p>
+      {loading ? (
+        <p className="fb-empty">Loading reflections...</p>
+      ) : filtered.length === 0 ? (
+        <p className="fb-empty">No reflections in this category yet.</p>
       ) : (
         <div className="fb-content">
-          {/* FEATURED POST */}
           {featured && (
             <Link href={`/blog/${featured.slug}`} className="fb-featured">
-              <div className="fb-featured-tag">{getCategoryLabel(featured.category, lang)}</div>
-              <h2 className="fb-featured-title">{featured[lang].title}</h2>
-              <p className="fb-featured-excerpt">{featured[lang].excerpt}</p>
+              <div className="fb-featured-tag">{featured.category}</div>
+              <h2 className="fb-featured-title">{featured.title}</h2>
+              {featured.excerpt && (
+                <p className="fb-featured-excerpt">{featured.excerpt}</p>
+              )}
               <div className="fb-meta">
-                <span>{new Date(featured.date).toLocaleDateString(lang === "en" ? "en-GB" : "fr-FR", { day: "numeric", month: "long", year: "numeric" })}</span>
-                <span>·</span>
-                <span>{featured.readTime} {lang === "en" ? "min read" : "min de lecture"}</span>
+                <span>
+                  {new Date(featured.created_at).toLocaleDateString("en-GB", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                  })}
+                </span>
+                <span>.</span>
+                <span>{featured.read_time_minutes} min read</span>
               </div>
             </Link>
           )}
 
-          {/* GRID */}
           {rest.length > 0 && (
             <div className="fb-grid">
               {rest.map((post) => (
                 <Link key={post.slug} href={`/blog/${post.slug}`} className="fb-card">
-                  <div className="fb-card-tag">{getCategoryLabel(post.category, lang)}</div>
-                  <h3 className="fb-card-title">{post[lang].title}</h3>
-                  <p className="fb-card-excerpt">{post[lang].excerpt}</p>
+                  <div className="fb-card-tag">{post.category}</div>
+                  <h3 className="fb-card-title">{post.title}</h3>
+                  {post.excerpt && (
+                    <p className="fb-card-excerpt">{post.excerpt}</p>
+                  )}
                   <div className="fb-meta">
-                    <span>{new Date(post.date).toLocaleDateString(lang === "en" ? "en-GB" : "fr-FR", { day: "numeric", month: "long", year: "numeric" })}</span>
-                    <span>{post.readTime} {lang === "en" ? "min" : "min"}</span>
+                    <span>
+                      {new Date(post.created_at).toLocaleDateString("en-GB", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      })}
+                    </span>
+                    <span>.</span>
+                    <span>{post.read_time_minutes} min</span>
                   </div>
                 </Link>
               ))}
@@ -113,10 +151,10 @@ export default function FaithBlogPage() {
 
       {/* FOOTER */}
       <footer className="fb-pg-footer">
-        <Link href="/my-story" className="fb-footer-link">
-          {lang === "en" ? "My Story →" : "Mon Histoire →"}
-        </Link>
-        <p className="fb-footer-copy">© {new Date().getFullYear()} Samuel Kobina Gyasi</p>
+        <Link href="/my-story" className="fb-footer-link">My Story {"->"}</Link>
+        <p className="fb-footer-copy">
+          {`\u00a9 ${new Date().getFullYear()} Samuel Kobina Gyasi`}
+        </p>
       </footer>
     </div>
   );
@@ -129,19 +167,10 @@ const blogCss = `
   --line:rgba(240,236,228,.06); --card:#111009; min-height:100vh;
 }
 body.on-fdp { background:#080807; color:#f0ece4; font-family:'Cormorant Garamond',serif; }
-.fdp-blog-nav {
-  position:fixed; top:0; left:0; right:0; z-index:200;
-  padding:22px 56px; display:flex; justify-content:space-between; align-items:center;
-  background:rgba(6,6,5,.96); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
-  border-bottom:1px solid rgba(255,222,89,.08);
-}
+.fdp-blog-nav { position:fixed; top:0; left:0; right:0; z-index:200; padding:22px 56px; display:flex; justify-content:space-between; align-items:center; background:rgba(6,6,5,.96); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); border-bottom:1px solid rgba(255,222,89,.08); }
 .nav-back { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:var(--dim); text-decoration:none; transition:color .3s; }
 .nav-back:hover { color:#ffde59; }
 .nav-logo { font-family:var(--font-playfair),'Playfair Display',serif; font-size:17px; color:var(--white); letter-spacing:.06em; }
-.fdp-lang-toggle { background:transparent; border:1px solid rgba(255,222,89,.3); border-radius:4px; padding:4px 10px; font-family:'Space Mono',monospace; font-size:10px; letter-spacing:.16em; color:var(--dim); cursor:pointer; display:flex; align-items:center; gap:6px; transition:border-color .25s,color .25s; }
-.fdp-lang-toggle:hover { border-color:#ffde59; color:#ffde59; }
-.fdp-lang-toggle .active { background:linear-gradient(90deg,#ffde59,#ff914d); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; font-weight:700; }
-.fdp-lang-toggle .sep { opacity:.35; }
 .fb-header { padding:160px 56px 64px; border-bottom:1px solid var(--line); }
 .fb-eyebrow { font-family:'Space Mono',monospace; font-size:9px; letter-spacing:.4em; text-transform:uppercase; background:linear-gradient(90deg,#ffde59,#ff914d); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:24px; display:flex; align-items:center; gap:16px; }
 .fb-eyebrow::before { content:''; width:36px; height:1px; background:linear-gradient(90deg,#ffde59,#ff914d); }

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 export const dynamic = "force-dynamic";
 
@@ -124,13 +124,13 @@ const NAV: { id: Tab; label: string; Icon: React.ComponentType<{ size?: number }
 // â”€â”€ TAILWIND CLASS CONSTANTS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const TW = {
   // Buttons
-  btn:     "inline-flex items-center gap-1.5 font-mono text-[9px] tracking-[.18em] uppercase cursor-pointer rounded-lg transition-all duration-200 active:scale-[.97] border-0",
-  gold:    "bg-gradient-to-br from-[#d4a843] to-[#c49838] text-[#09090d] px-[22px] py-[11px] shadow-[0_2px_12px_rgba(212,168,67,.25)] hover:from-[#e0b84e] hover:to-[#d4a843] hover:shadow-[0_4px_18px_rgba(212,168,67,.4)]",
-  ghost:   "bg-white/5 text-white/50 border border-white/10 px-[22px] py-[11px] hover:bg-white/[.09] hover:text-white/85 hover:border-white/[.18]",
-  danger:  "bg-red-500/10 text-red-400 border border-red-500/20 px-[22px] py-[11px] hover:bg-red-500/[.18] hover:border-red-500/30",
-  sm:      "!px-3 !py-1.5 !text-[8px] !rounded-md gap-1",
+  btn:     "inline-flex items-center gap-2 font-poppins text-[11px] font-medium cursor-pointer rounded-xl transition-all duration-200 active:scale-[.97] border-0",
+  gold:    "bg-gradient-to-br from-[#d4a843] to-[#c49838] text-[#09090d] px-5 py-2.5 shadow-[0_2px_12px_rgba(212,168,67,.25)] hover:from-[#e0b84e] hover:to-[#d4a843] hover:shadow-[0_4px_18px_rgba(212,168,67,.4)]",
+  ghost:   "bg-white/5 text-white/50 border border-white/10 px-5 py-2.5 hover:bg-white/[.09] hover:text-white/85 hover:border-white/[.18]",
+  danger:  "bg-red-500/10 text-red-400 border border-red-500/20 px-5 py-2.5 hover:bg-red-500/[.18] hover:border-red-500/30",
+  sm:      "!px-3 !py-1.5 !text-[10px] !rounded-lg gap-1",
   // Badges
-  badge:   "font-mono text-[7px] tracking-[.14em] uppercase px-2.5 py-1 inline-block rounded-full",
+  badge:   "font-poppins text-[10px] font-medium px-2.5 py-0.5 inline-block rounded-full",
   bPub:    "bg-[rgba(212,168,67,.12)] text-[#d4a843] border border-[rgba(212,168,67,.2)]",
   bDft:    "bg-white/[.06] text-white/40 border border-white/[.08]",
   bSent:   "bg-blue-500/10 text-blue-400 border border-blue-500/20",
@@ -138,53 +138,53 @@ const TW = {
   bNew:    "bg-[rgba(212,168,67,.16)] text-[#d4a843] border border-[rgba(212,168,67,.25)]",
   // Form
   field:   "mb-5",
-  label:   "font-mono text-[8px] tracking-[.22em] uppercase text-white/35 block mb-2",
-  input:   "w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-serif text-base px-3.5 py-[11px] outline-none transition-all focus:border-[rgba(212,168,67,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(212,168,67,.08)]",
-  select:  "w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-serif text-base px-3.5 py-[11px] outline-none transition-all focus:border-[rgba(212,168,67,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(212,168,67,.08)]",
-  tarea:   "w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-serif text-base px-3.5 py-[11px] outline-none transition-all focus:border-[rgba(212,168,67,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(212,168,67,.08)] resize-y min-h-[200px]",
+  label:   "font-poppins text-[11px] font-medium text-white/50 block mb-2",
+  input:   "w-full bg-white/[.04] border border-white/[.09] rounded-xl text-[#eef0f5] font-poppins text-sm px-4 py-3 outline-none transition-all focus:border-[rgba(212,168,67,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(212,168,67,.08)]",
+  select:  "w-full bg-white/[.04] border border-white/[.09] rounded-xl text-[#eef0f5] font-poppins text-sm px-4 py-3 outline-none transition-all focus:border-[rgba(212,168,67,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(212,168,67,.08)]",
+  tarea:   "w-full bg-white/[.04] border border-white/[.09] rounded-xl text-[#eef0f5] font-poppins text-sm px-4 py-3 outline-none transition-all focus:border-[rgba(212,168,67,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(212,168,67,.08)] resize-y min-h-[200px]",
   // Typography
-  pgTitle: "font-[family-name:'Playfair_Display',serif] text-[34px] font-bold text-[#eef0f5] leading-[1.1] tracking-[-0.3px]",
-  pgSub:   "font-mono text-[10px] tracking-[.12em] text-white/30 mt-2.5",
-  sTitle:  "font-[family-name:'Playfair_Display',serif] text-[21px] text-[#eef0f5]",
-  sHead:   "flex justify-between items-center mb-5",
+  pgTitle: "font-poppins text-[30px] font-bold text-[#eef0f5] leading-tight tracking-tight",
+  pgSub:   "font-poppins text-[13px] text-white/40 mt-1.5",
+  sTitle:  "font-poppins text-[18px] font-semibold text-[#eef0f5]",
+  sHead:   "flex justify-between items-center mb-6",
   // Table
-  tWrap:   "overflow-x-auto rounded-xl border border-white/[.06] overflow-hidden",
-  th:      "font-mono text-[8px] tracking-[.22em] uppercase text-white/[.28] px-[18px] py-3.5 text-left border-b border-white/[.06] bg-white/[.02] whitespace-nowrap",
-  td:      "px-[18px] py-[15px] text-sm text-white/60 border-b border-white/[.04] align-middle",
+  tWrap:   "overflow-x-auto rounded-2xl border border-white/[.06] overflow-hidden",
+  th:      "font-poppins text-[11px] font-semibold text-white/[.35] px-5 py-3.5 text-left border-b border-white/[.06] bg-white/[.025] whitespace-nowrap",
+  td:      "px-5 py-4 text-sm text-white/60 border-b border-white/[.04] align-middle font-poppins",
   // Actions
   actRow:  "flex gap-1.5 items-center flex-wrap",
   // Empty
-  empty:   "font-serif text-lg italic text-white/25 py-[60px] text-center",
+  empty:   "font-poppins text-base text-white/25 py-16 text-center",
   // Overlay / modal
   overlay: "fixed inset-0 bg-black/[.82] backdrop-blur-xl z-[9000] flex items-center justify-center p-5",
-  modal:   "bg-[#0d0e15] border border-white/[.08] rounded-2xl w-full max-w-[720px] max-h-[90vh] overflow-y-auto p-10 shadow-[0_32px_80px_rgba(0,0,0,.7),0_0_0_1px_rgba(255,255,255,.04)]",
-  panel:   "bg-[#0d0e15] border border-white/[.08] rounded-2xl w-full max-w-[640px] max-h-[90vh] overflow-y-auto flex flex-col shadow-[0_32px_80px_rgba(0,0,0,.7),0_0_0_1px_rgba(255,255,255,.04)]",
+  modal:   "bg-[#0b0c12] border border-white/[.08] rounded-2xl w-full max-w-[720px] max-h-[90vh] overflow-y-auto p-10 shadow-[0_32px_80px_rgba(0,0,0,.7),0_0_0_1px_rgba(255,255,255,.04)]",
+  panel:   "bg-[#0b0c12] border border-white/[.08] rounded-2xl w-full max-w-[640px] max-h-[90vh] overflow-y-auto flex flex-col shadow-[0_32px_80px_rgba(0,0,0,.7),0_0_0_1px_rgba(255,255,255,.04)]",
   pHead:   "flex justify-between items-center px-7 py-6 border-b border-white/[.06] flex-shrink-0",
   pBody:   "p-7 flex-1 overflow-y-auto",
-  pFoot:   "flex gap-2.5 justify-end px-7 py-[18px] border-t border-white/[.055] bg-black/[.12] flex-shrink-0 rounded-b-2xl",
-  fTitle:  "font-[family-name:'Playfair_Display',serif] text-[22px] font-bold text-[#eef0f5]",
+  pFoot:   "flex gap-2.5 justify-end px-7 py-5 border-t border-white/[.055] bg-black/[.12] flex-shrink-0 rounded-b-2xl",
+  fTitle:  "font-poppins text-[20px] font-bold text-[#eef0f5]",
   // Message cards
-  msgCard: "bg-[#0d0e15] border border-white/[.06] border-l-[3px] border-l-transparent rounded-[10px] p-[18px_22px] transition-all duration-200 mb-2 hover:border-l-[rgba(212,168,67,.35)] hover:shadow-[0_4px_20px_rgba(0,0,0,.25)]",
+  msgCard: "bg-[#0b0c12] border border-white/[.06] border-l-[3px] border-l-transparent rounded-2xl p-5 transition-all duration-200 mb-2 hover:border-l-[rgba(212,168,67,.35)] hover:shadow-[0_4px_20px_rgba(0,0,0,.25)]",
   msgNew:  "!bg-[rgba(212,168,67,.03)] !border-[rgba(212,168,67,.15)] !border-l-[rgba(212,168,67,.6)]",
   msgHead: "flex justify-between items-start gap-4 flex-wrap",
-  msgName: "font-[family-name:'Playfair_Display',serif] text-[15px] text-[#eef0f5] flex items-center gap-2 flex-wrap",
-  msgMeta: "font-mono text-[9px] text-white/[.28] mt-1 tracking-[.07em]",
-  msgSubj: "font-serif text-[13px] italic text-white/45 mt-1",
-  msgBody: "mt-3.5 pt-3.5 border-t border-white/[.05] font-serif text-base leading-[1.8] text-white/[.62] break-words",
+  msgName: "font-poppins text-[15px] font-semibold text-[#eef0f5] flex items-center gap-2 flex-wrap",
+  msgMeta: "font-poppins text-[11px] text-white/[.35] mt-1",
+  msgSubj: "font-poppins text-[12px] italic text-white/45 mt-1",
+  msgBody: "mt-4 pt-4 border-t border-white/[.05] font-poppins text-sm leading-[1.8] text-white/[.65] break-words",
   // Mail sub-nav
-  mNav:    "flex gap-1 mb-8 overflow-x-auto bg-white/[.03] border border-white/[.06] rounded-[10px] p-1",
-  mTab:    "flex items-center gap-[7px] px-[18px] py-2.5 font-mono text-[9px] tracking-[.12em] uppercase text-white/38 bg-transparent border-0 cursor-pointer rounded-[7px] flex-shrink-0 transition-all whitespace-nowrap hover:text-white/75 hover:bg-white/5",
+  mNav:    "flex gap-1 mb-8 overflow-x-auto bg-white/[.03] border border-white/[.06] rounded-xl p-1",
+  mTab:    "flex items-center gap-2 px-4 py-2.5 font-poppins text-[12px] font-medium text-white/40 bg-transparent border-0 cursor-pointer rounded-lg flex-shrink-0 transition-all whitespace-nowrap hover:text-white/75 hover:bg-white/5",
   mAct:    "!text-[#d4a843] !bg-[rgba(212,168,67,.1)]",
   // Stats
-  stat:    "bg-[#0d0e15] p-6 border border-white/[.06] rounded-xl relative overflow-hidden cursor-default transition-all duration-[250ms] group hover:border-[rgba(212,168,67,.2)] hover:-translate-y-[3px] hover:shadow-[0_12px_32px_rgba(0,0,0,.35),0_0_0_1px_rgba(212,168,67,.08)]",
-  statNum: "font-[family-name:'Playfair_Display',serif] text-[40px] font-bold leading-none mb-2.5 bg-gradient-to-br from-[#d4a843] to-[#f0cc7a] bg-clip-text text-transparent",
-  statLbl: "font-mono text-[8px] tracking-[.24em] uppercase text-white/[.32]",
+  stat:    "bg-[#0b0c12] p-6 border border-white/[.06] rounded-2xl relative overflow-hidden cursor-default transition-all duration-[250ms] group hover:border-[rgba(212,168,67,.22)] hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(0,0,0,.4),0_0_0_1px_rgba(212,168,67,.1)]",
+  statNum: "font-poppins text-[36px] font-bold leading-none mb-2 bg-gradient-to-br from-[#d4a843] to-[#f0cc7a] bg-clip-text text-transparent",
+  statLbl: "font-poppins text-[12px] font-medium text-white/[.40]",
   // Icon button
-  iconBtn: "bg-white/5 border border-white/[.08] text-white/40 cursor-pointer p-[7px] rounded-lg flex items-center transition-all hover:bg-white/10 hover:text-white/80",
+  iconBtn: "bg-white/5 border border-white/[.08] text-white/40 cursor-pointer p-2 rounded-xl flex items-center transition-all hover:bg-white/10 hover:text-white/80",
   // Quick reply
-  qReply:  "mt-4 p-[18px] bg-white/[.02] border-t border-white/5 border-l-[3px] border-l-[rgba(212,168,67,.25)] rounded-b-lg",
+  qReply:  "mt-4 p-5 bg-white/[.02] border-t border-white/5 border-l-[3px] border-l-[rgba(212,168,67,.25)] rounded-b-xl",
   // WA
-  waCard:  "bg-[#0d0e15] border border-white/[.06] rounded-xl p-7",
+  waCard:  "bg-[#0b0c12] border border-white/[.06] rounded-2xl p-7",
   // Compose
   compose: "max-w-[780px]",
   // Form row
@@ -228,6 +228,11 @@ export default function AdminPage() {
   };
 
   const load = useCallback(async () => {
+    const { data: { session } } = await db.auth.getSession();
+    if (!session) {
+      router.push("/auth/login");
+      return;
+    }
     setLoading(true);
     const [pR, sR, mR, lR, iR, tR, aR, tsR, libR, upR, fbR] = await Promise.all([
       db.from("blog_posts").select("*").order("created_at", { ascending: false }),
@@ -279,36 +284,44 @@ export default function AdminPage() {
   function go(t: Tab) { setTab(t); setNavOpen(false); }
 
   return (
-    <div className="min-h-screen flex bg-[#07080c] text-[#eef0f5]">
+    <div className="min-h-screen flex bg-[#07080c] text-[#eef0f5] font-poppins">
       {/* Mobile header */}
-      <div className="flex md:hidden fixed top-0 left-0 right-0 z-[600] bg-[#0d0e15] border-b border-white/[.06] px-[18px] py-3.5 items-center justify-between shadow-[0_2px_20px_rgba(0,0,0,.4)]">
+      <div className="flex md:hidden fixed top-0 left-0 right-0 z-[600] bg-[#0b0c12] border-b border-white/[.06] px-5 py-3.5 items-center justify-between shadow-[0_2px_20px_rgba(0,0,0,.4)]">
         <button
-          className="bg-white/[.06] border border-white/[.09] rounded-lg text-white/60 cursor-pointer flex items-center justify-center p-1.5 transition-all hover:bg-white/10"
+          className="bg-white/[.06] border border-white/[.09] rounded-xl text-white/60 cursor-pointer flex items-center justify-center p-1.5 transition-all hover:bg-white/10"
           onClick={() => setNavOpen(!navOpen)}
           aria-label="Menu"
         >
           <Menu size={18} />
         </button>
-        <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "14px", fontWeight: 700, color: "#f0ece4", display: "flex", alignItems: "center", gap: "8px" }}>
-          <span style={{ color: "#c9a84c", fontSize: "12px" }}>âœ¦</span>Samuel Gyasi
+        <span className="font-poppins text-[14px] font-semibold text-[#f0ece4] flex items-center gap-2">
+          <span className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#d4a843] to-[#c49838] flex items-center justify-center text-[9px] font-bold text-[#09090d]">SG</span>
+          Samuel Gyasi
         </span>
-        <Link href="/" style={{ color: "rgba(240,236,228,.35)", lineHeight: 0 }}><Globe size={16} /></Link>
+        <Link href="/" className="text-white/30 hover:text-white/60 transition-colors leading-none"><Globe size={16} /></Link>
       </div>
 
       {/* Sidebar */}
       <aside className={cn(
-        "w-[252px] flex-shrink-0 bg-[#0d0e15] border-r border-white/[.055] py-8",
+        "w-[260px] flex-shrink-0 bg-[#0b0c12] border-r border-white/[.055]",
         "fixed md:sticky top-0 h-screen flex flex-col z-[500]",
         "shadow-[1px_0_0_0_rgba(255,255,255,.04),10px_0_50px_rgba(0,0,0,.5)]",
         "transition-transform duration-300 -translate-x-full md:translate-x-0",
         navOpen && "translate-x-0"
       )}>
-        <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "15px", fontWeight: 700, color: "#eef0f5", padding: "0 24px 28px", borderBottom: "1px solid rgba(255,255,255,.05)" }}>
-          <div style={{ fontSize: "18px", color: "#d4a843", marginBottom: "14px", lineHeight: 1 }}>âœ¦</div>
-          <span style={{ display: "block", fontFamily: "'Space Mono',monospace", fontSize: "8px", letterSpacing: ".4em", textTransform: "uppercase", color: "rgba(212,168,67,.65)", marginBottom: "5px", fontWeight: 400 }}>Admin</span>
-          Samuel Gyasi
+        {/* Brand */}
+        <div className="px-5 py-5 border-b border-white/[.06]">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#d4a843] to-[#c49838] flex items-center justify-center flex-shrink-0 shadow-[0_4px_14px_rgba(212,168,67,.3)]">
+              <span className="font-poppins text-[13px] font-bold text-[#09090d]">SG</span>
+            </div>
+            <div>
+              <div className="font-poppins text-[14px] font-semibold text-[#eef0f5] leading-tight">Samuel Gyasi</div>
+              <div className="font-poppins text-[10px] font-medium text-[rgba(212,168,67,.7)] mt-0.5">Admin Dashboard</div>
+            </div>
+          </div>
         </div>
-        <nav className="px-3 pt-4 flex-1 overflow-y-auto">
+        <nav className="px-3 pt-3 flex-1 overflow-y-auto">
           {NAV.map(({ id, label, Icon }) => {
             const badge = id === "messages" && unreadMsgs > 0    ? unreadMsgs
                         : id === "mail"     && unreadInbox > 0   ? unreadInbox
@@ -320,17 +333,18 @@ export default function AdminPage() {
                 key={id}
                 onClick={() => go(id)}
                 className={cn(
-                  "flex items-center gap-2.5 px-3.5 py-2.5 font-mono text-[9px] tracking-[.12em]",
-                  "uppercase cursor-pointer border-0 w-full text-left transition-all duration-200 rounded-lg relative mb-0.5",
+                  "flex items-center gap-3 px-4 py-2.5",
+                  "font-poppins text-[13px] font-medium",
+                  "cursor-pointer border-0 w-full text-left transition-all duration-200 rounded-xl relative mb-1",
                   isActive
-                    ? "text-[#d4a843] bg-[rgba(212,168,67,.1)] before:content-[''] before:absolute before:left-0 before:top-[20%] before:w-[3px] before:h-[60%] before:bg-[#d4a843] before:rounded-r-[2px]"
-                    : "text-white/[.38] bg-transparent hover:text-white/[.78] hover:bg-white/5"
+                    ? "text-[#d4a843] bg-[rgba(212,168,67,.12)]"
+                    : "text-white/[.42] bg-transparent hover:text-white/[.80] hover:bg-white/[.05]"
                 )}
               >
-                <Icon size={13} />
+                <Icon size={15} />
                 <span className="flex-1">{label}</span>
                 {badge !== null && (
-                  <span className="bg-gradient-to-br from-[#d4a843] to-[#f0cc7a] text-[#07080c] font-mono text-[7px] font-bold px-[7px] py-0.5 rounded-full leading-[1.6] ml-auto">
+                  <span className="bg-gradient-to-br from-[#d4a843] to-[#f0cc7a] text-[#07080c] font-poppins text-[9px] font-bold px-2 py-0.5 rounded-full leading-tight ml-auto">
                     {badge}
                   </span>
                 )}
@@ -338,17 +352,15 @@ export default function AdminPage() {
             );
           })}
         </nav>
-        <div className="px-7 pb-6 mt-auto flex flex-col gap-2.5">
-          <Link href="/" style={{ fontFamily: "'Space Mono',monospace", fontSize: "9px", letterSpacing: ".15em", textTransform: "uppercase", color: "rgba(240,236,228,.3)", textDecoration: "none", display: "flex", alignItems: "center", gap: "6px" }}>
-            <Globe size={10} /> Back to Site
+        <div className="px-4 pb-5 pt-3 mt-auto border-t border-white/[.06] flex flex-col gap-2">
+          <Link href="/" className="font-poppins text-[11px] font-medium text-white/30 no-underline flex items-center gap-2 hover:text-white/60 transition-colors py-1.5">
+            <Globe size={13} /> Back to Site
           </Link>
           <button
             onClick={handleLogout}
-            style={{ fontFamily: "'Space Mono',monospace", fontSize: "9px", letterSpacing: ".15em", textTransform: "uppercase", color: "rgba(240,236,228,.35)", background: "none", border: "1px solid rgba(240,236,228,.1)", padding: "8px 12px", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px", width: "100%", transition: "border-color .2s, color .2s" }}
-            onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(201,168,76,.4)"; (e.currentTarget as HTMLButtonElement).style.color = "#c9a84c"; }}
-            onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(240,236,228,.1)"; (e.currentTarget as HTMLButtonElement).style.color = "rgba(240,236,228,.35)"; }}
+            className="font-poppins text-[11px] font-medium text-white/40 bg-transparent border border-white/[.1] px-3 py-2.5 cursor-pointer flex items-center gap-2 w-full rounded-xl transition-all hover:border-[rgba(201,168,76,.4)] hover:text-[#c9a84c]"
           >
-            <LogOut size={10} /> Log Out
+            <LogOut size={13} /> Log Out
           </button>
         </div>
       </aside>
@@ -358,7 +370,7 @@ export default function AdminPage() {
       )}
 
       {/* Main */}
-      <main className="flex-1 overflow-y-auto px-4 pt-20 pb-8 md:px-14 md:py-12 bg-[#07080c]">
+      <main className="flex-1 overflow-y-auto px-4 pt-20 pb-8 md:px-12 md:py-10 bg-[#07080c]">
         {loading ? (
           <div className="flex gap-2.5 justify-center py-[140px]">
             {[0, 200, 400].map((delay) => (
@@ -525,7 +537,7 @@ export default function AdminPage() {
       {confirm && (
         <div className={TW.overlay} onClick={() => setConfirm(null)}>
           <div className="bg-[#0d0e15] border border-white/10 rounded-2xl p-8 w-[min(440px,92vw)] shadow-[0_28px_60px_rgba(0,0,0,.6)]" onClick={(e) => e.stopPropagation()}>
-            <p style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: "20px", color: "#eef0f5", marginBottom: "26px", lineHeight: 1.55 }}>{confirm.msg}</p>
+            <p style={{ fontFamily: "'Poppins',sans-serif", fontSize: "18px", fontWeight: 500, color: "#eef0f5", marginBottom: "26px", lineHeight: 1.6 }}>{confirm.msg}</p>
             <div className="flex gap-2.5 justify-end">
               <button className={cn(TW.btn, TW.ghost)} onClick={() => setConfirm(null)}>Cancel</button>
               <button className={cn(TW.btn, TW.danger)} onClick={async () => { await confirm.fn(); setConfirm(null); }}>Confirm</button>
@@ -677,13 +689,13 @@ function AnalyticsTab({ analytics }: { analytics: AnalyticsData | null }) {
               <tbody>
                 {topPages.map(({ path, count }) => (
                   <tr key={path} className="hover:[&>td]:bg-[rgba(212,168,67,.04)]">
-                    <td className={TW.td} style={{ color: "#f0ece4", fontFamily: "'Space Mono',monospace", fontSize: "11px" }}>
+                    <td className={TW.td} style={{ color: "#f0ece4", fontFamily: "'Poppins',sans-serif", fontSize: "11px" }}>
                       <span className="flex items-center gap-2">
                         {path}
                         <a href={path} target="_blank" rel="noreferrer" style={{ color: "rgba(240,236,228,.25)", lineHeight: 0 }}><ExternalLink size={10} /></a>
                       </span>
                     </td>
-                    <td className={TW.td} style={{ color: "#c9a84c", fontFamily: "'Playfair Display',serif", fontSize: "22px" }}>{count}</td>
+                    <td className={TW.td} style={{ color: "#c9a84c", fontFamily: "'Poppins',sans-serif", fontSize: "22px", fontWeight: 700 }}>{count}</td>
                     <td className={TW.td}>
                       <div className="flex items-center gap-2.5 font-mono text-[9px] text-white/35 min-w-[120px]">
                         <div className="h-[3px] bg-gradient-to-r from-[#d4a843] to-[#f0cc7a] rounded-full flex-shrink-0 transition-all max-w-[100px]" style={{ width: `${(count / totalViews) * 100}%` }} />
@@ -1633,7 +1645,7 @@ function UpcomingTab({ events, onNew, onEdit, onDelete, onToggle }: {
                     <div className="font-semibold">{ev.title}</div>
                     {ev.description && <div className="text-[11px] text-white/40 mt-0.5 italic">{ev.description.slice(0, 70)}{ev.description.length > 70 ? "â€¦" : ""}</div>}
                   </td>
-                  <td className={TW.td} style={{ fontSize: "11px", fontFamily: "'Space Mono',monospace", whiteSpace: "nowrap" }}>{ev.date_text ?? "â€”"}</td>
+                  <td className={TW.td} style={{ fontSize: "11px", fontFamily: "'Poppins',sans-serif", whiteSpace: "nowrap" }}>{ev.date_text ?? "â€”"}</td>
                   <td className={TW.td} style={{ fontSize: "11px" }}>{ev.location ?? "â€”"}</td>
                   <td className={TW.td}>
                     <button className={cn(TW.badge, ev.published ? TW.bPub : TW.bDft, "cursor-pointer bg-transparent border-none")}

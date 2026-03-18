@@ -44,7 +44,7 @@ export function PillarsSection() {
         <SectionLabel>Four Pillars</SectionLabel>
 
         <ScrollReveal className="pillars-header">
-          <h2 className="pillars-title">Four Foundations of Faith</h2>
+          <h2 className="pillars-title">Four Cardinals</h2>
           <p className="pillars-sub">
             Every pillar is a commitment — to the Word, to prayer, to testimony, and to walking in the fullness of what God has called.
           </p>

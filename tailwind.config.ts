@@ -11,9 +11,10 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        display: ["Playfair Display", "Georgia", "serif"],
-        serif:   ["Cormorant Garamond", "Georgia", "serif"],
-        mono:    ["Space Mono", "Courier New", "monospace"],
+        display:  ["Playfair Display", "Georgia", "serif"],
+        serif:    ["Cormorant Garamond", "Georgia", "serif"],
+        mono:     ["Space Mono", "Courier New", "monospace"],
+        poppins:  ["var(--font-poppins)", "Poppins", "sans-serif"],
       },
       keyframes: {
         "adm-pulse": {
