@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 export const dynamic = "force-dynamic";
 
@@ -12,10 +12,10 @@ import {
   LayoutDashboard, BarChart3, FileText, Users, MessageSquare,
   Mail, Phone, Send, Inbox, Clock, BookOpen, Eye, Trash2,
   Pencil, Plus, CheckCheck, X, Globe, ExternalLink,
-  Code, AlignLeft, Reply, Menu, Copy, Star, LogOut, Calendar,
+  Code, AlignLeft, Reply, Menu, Copy, Star, LogOut, Calendar, MessageSquarePlus,
 } from "lucide-react";
 
-// ── TYPES ──────────────────────────────────────────────────────────────────
+// â”€â”€ TYPES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 interface BlogPost {
   id: string; title: string; slug: string; category: string;
   published: boolean; excerpt: string | null; content: string | null;
@@ -88,7 +88,17 @@ interface UpcomingEvent {
   created_at: string;
 }
 
-type Tab = "overview" | "analytics" | "posts" | "subscribers" | "messages" | "mail" | "whatsapp" | "testimonials" | "library" | "upcoming";
+interface Feedback {
+  id: string;
+  type: "bug" | "idea";
+  message: string;
+  email: string | null;
+  page_url: string | null;
+  resolved: boolean;
+  created_at: string;
+}
+
+type Tab = "overview" | "analytics" | "posts" | "subscribers" | "messages" | "mail" | "whatsapp" | "testimonials" | "library" | "upcoming" | "feedback";
 type MailSubTab = "compose" | "inbox" | "sent" | "templates";
 
 const CATEGORIES = ["faith", "leadership", "intellectuality", "transformation"] as const;
@@ -108,9 +118,10 @@ const NAV: { id: Tab; label: string; Icon: React.ComponentType<{ size?: number }
   { id: "testimonials",label: "Testimonials",  Icon: Star            },
   { id: "library",     label: "Library",       Icon: BookOpen        },
   { id: "upcoming",    label: "Upcoming",      Icon: Calendar        },
+  { id: "feedback",    label: "Feedback",      Icon: MessageSquarePlus },
 ];
 
-// ── TAILWIND CLASS CONSTANTS ───────────────────────────────────────────────
+// â”€â”€ TAILWIND CLASS CONSTANTS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const TW = {
   // Buttons
   btn:     "inline-flex items-center gap-1.5 font-mono text-[9px] tracking-[.18em] uppercase cursor-pointer rounded-lg transition-all duration-200 active:scale-[.97] border-0",
@@ -180,66 +191,6 @@ const TW = {
   fRow:    "grid grid-cols-2 gap-4",
 } as const;
 
-// ── ADMIN PAGE ─────────────────────────────────────────────────────────────
-export default function AdminPage() {
-  const [tab, setTab]             = useState<Tab>("overview");
-  bNew:    "bg-[rgba(212,168,67,.16)] text-[#d4a843] border border-[rgba(212,168,67,.25)]",
-  // Form
-  field:   "mb-5",
-  label:   "font-mono text-[8px] tracking-[.22em] uppercase text-white/35 block mb-2",
-  input:   "w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-serif text-base px-3.5 py-[11px] outline-none transition-all focus:border-[rgba(212,168,67,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(212,168,67,.08)]",
-  select:  "w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-serif text-base px-3.5 py-[11px] outline-none transition-all focus:border-[rgba(212,168,67,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(212,168,67,.08)]",
-  tarea:   "w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-serif text-base px-3.5 py-[11px] outline-none transition-all focus:border-[rgba(212,168,67,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(212,168,67,.08)] resize-y min-h-[200px]",
-  // Typography
-  pgTitle: "font-[family-name:'Playfair_Display',serif] text-[34px] font-bold text-[#eef0f5] leading-[1.1] tracking-[-0.3px]",
-  pgSub:   "font-mono text-[10px] tracking-[.12em] text-white/30 mt-2.5",
-  sTitle:  "font-[family-name:'Playfair_Display',serif] text-[21px] text-[#eef0f5]",
-  sHead:   "flex justify-between items-center mb-5",
-  // Table
-  tWrap:   "overflow-x-auto rounded-xl border border-white/[.06] overflow-hidden",
-  th:      "font-mono text-[8px] tracking-[.22em] uppercase text-white/[.28] px-[18px] py-3.5 text-left border-b border-white/[.06] bg-white/[.02] whitespace-nowrap",
-  td:      "px-[18px] py-[15px] text-sm text-white/60 border-b border-white/[.04] align-middle",
-  // Actions
-  actRow:  "flex gap-1.5 items-center flex-wrap",
-  // Empty
-  empty:   "font-serif text-lg italic text-white/25 py-[60px] text-center",
-  // Overlay / modal
-  overlay: "fixed inset-0 bg-black/[.82] backdrop-blur-xl z-[9000] flex items-center justify-center p-5",
-  modal:   "bg-[#0d0e15] border border-white/[.08] rounded-2xl w-full max-w-[720px] max-h-[90vh] overflow-y-auto p-10 shadow-[0_32px_80px_rgba(0,0,0,.7),0_0_0_1px_rgba(255,255,255,.04)]",
-  panel:   "bg-[#0d0e15] border border-white/[.08] rounded-2xl w-full max-w-[640px] max-h-[90vh] overflow-y-auto flex flex-col shadow-[0_32px_80px_rgba(0,0,0,.7),0_0_0_1px_rgba(255,255,255,.04)]",
-  pHead:   "flex justify-between items-center px-7 py-6 border-b border-white/[.06] flex-shrink-0",
-  pBody:   "p-7 flex-1 overflow-y-auto",
-  pFoot:   "flex gap-2.5 justify-end px-7 py-[18px] border-t border-white/[.055] bg-black/[.12] flex-shrink-0 rounded-b-2xl",
-  fTitle:  "font-[family-name:'Playfair_Display',serif] text-[22px] font-bold text-[#eef0f5]",
-  // Message cards
-  msgCard: "bg-[#0d0e15] border border-white/[.06] border-l-[3px] border-l-transparent rounded-[10px] p-[18px_22px] transition-all duration-200 mb-2 hover:border-l-[rgba(212,168,67,.35)] hover:shadow-[0_4px_20px_rgba(0,0,0,.25)]",
-  msgNew:  "!bg-[rgba(212,168,67,.03)] !border-[rgba(212,168,67,.15)] !border-l-[rgba(212,168,67,.6)]",
-  msgHead: "flex justify-between items-start gap-4 flex-wrap",
-  msgName: "font-[family-name:'Playfair_Display',serif] text-[15px] text-[#eef0f5] flex items-center gap-2 flex-wrap",
-  msgMeta: "font-mono text-[9px] text-white/[.28] mt-1 tracking-[.07em]",
-  msgSubj: "font-serif text-[13px] italic text-white/45 mt-1",
-  msgBody: "mt-3.5 pt-3.5 border-t border-white/[.05] font-serif text-base leading-[1.8] text-white/[.62] break-words",
-  // Mail sub-nav
-  mNav:    "flex gap-1 mb-8 overflow-x-auto bg-white/[.03] border border-white/[.06] rounded-[10px] p-1",
-  mTab:    "flex items-center gap-[7px] px-[18px] py-2.5 font-mono text-[9px] tracking-[.12em] uppercase text-white/38 bg-transparent border-0 cursor-pointer rounded-[7px] flex-shrink-0 transition-all whitespace-nowrap hover:text-white/75 hover:bg-white/5",
-  mAct:    "!text-[#d4a843] !bg-[rgba(212,168,67,.1)]",
-  // Stats
-  stat:    "bg-[#0d0e15] p-6 border border-white/[.06] rounded-xl relative overflow-hidden cursor-default transition-all duration-[250ms] group hover:border-[rgba(212,168,67,.2)] hover:-translate-y-[3px] hover:shadow-[0_12px_32px_rgba(0,0,0,.35),0_0_0_1px_rgba(212,168,67,.08)]",
-  statNum: "font-[family-name:'Playfair_Display',serif] text-[40px] font-bold leading-none mb-2.5 bg-gradient-to-br from-[#d4a843] to-[#f0cc7a] bg-clip-text text-transparent",
-  statLbl: "font-mono text-[8px] tracking-[.24em] uppercase text-white/[.32]",
-  // Icon button
-  iconBtn: "bg-white/5 border border-white/[.08] text-white/40 cursor-pointer p-[7px] rounded-lg flex items-center transition-all hover:bg-white/10 hover:text-white/80",
-  // Quick reply
-  qReply:  "mt-4 p-[18px] bg-white/[.02] border-t border-white/5 border-l-[3px] border-l-[rgba(212,168,67,.25)] rounded-b-lg",
-  // WA
-  waCard:  "bg-[#0d0e15] border border-white/[.06] rounded-xl p-7",
-  // Compose
-  compose: "max-w-[780px]",
-  // Form row
-  fRow:    "grid grid-cols-2 gap-4",
-} as const;
-
-// ── ADMIN PAGE ─────────────────────────────────────────────────────────────
 export default function AdminPage() {
   const [tab, setTab]             = useState<Tab>("overview");
   const [mailSub, setMailSub]     = useState<MailSubTab>("compose");
@@ -264,6 +215,7 @@ export default function AdminPage() {
   const [upcomingEvents, setUpcomingEvents]   = useState<UpcomingEvent[]>([]);
   const [showUpcoming, setShowUpcoming]       = useState(false);
   const [editUpcoming, setEditUpcoming]       = useState<UpcomingEvent | null>(null);
+  const [feedbacks, setFeedbacks]             = useState<Feedback[]>([]);
   const [confirm, setConfirm]     = useState<{ msg: string; fn: () => Promise<void> } | null>(null);
   const [navOpen, setNavOpen]     = useState(false);
   const router = useRouter();
@@ -277,7 +229,7 @@ export default function AdminPage() {
 
   const load = useCallback(async () => {
     setLoading(true);
-    const [pR, sR, mR, lR, iR, tR, aR, tsR, libR, upR] = await Promise.all([
+    const [pR, sR, mR, lR, iR, tR, aR, tsR, libR, upR, fbR] = await Promise.all([
       db.from("blog_posts").select("*").order("created_at", { ascending: false }),
       db.from("newsletter_subscribers").select("*").order("created_at", { ascending: false }),
       db.from("contact_messages").select("*").order("created_at", { ascending: false }),
@@ -289,6 +241,7 @@ export default function AdminPage() {
       db.from("testimonials").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: false }),
       db.from("library_items").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: false }),
       db.from("upcoming_events").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: false }),
+      db.from("feedback").select("*").order("created_at", { ascending: false }),
     ]);
     setPosts(pR.data ?? []);
     setSubs(sR.data ?? []);
@@ -299,6 +252,7 @@ export default function AdminPage() {
     setTestimonials(tsR.data ?? []);
     setLibraryItems(libR.data ?? []);
     setUpcomingEvents(upR.data ?? []);
+    setFeedbacks(fbR.data ?? []);
 
     const views: PageViewRow[] = aR.data ?? [];
     const totalViews     = views.length;
@@ -319,6 +273,7 @@ export default function AdminPage() {
 
   const unreadMsgs   = msgs.filter((m) => !m.read).length;
   const unreadInbox  = inbox.filter((e) => !e.read).length;
+  const unreadFeedback = feedbacks.filter((f) => !f.resolved).length;
 
   function ask(msg: string, fn: () => Promise<void>) { setConfirm({ msg, fn }); }
   function go(t: Tab) { setTab(t); setNavOpen(false); }
@@ -335,7 +290,7 @@ export default function AdminPage() {
           <Menu size={18} />
         </button>
         <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "14px", fontWeight: 700, color: "#f0ece4", display: "flex", alignItems: "center", gap: "8px" }}>
-          <span style={{ color: "#c9a84c", fontSize: "12px" }}>✦</span>Samuel Gyasi
+          <span style={{ color: "#c9a84c", fontSize: "12px" }}>âœ¦</span>Samuel Gyasi
         </span>
         <Link href="/" style={{ color: "rgba(240,236,228,.35)", lineHeight: 0 }}><Globe size={16} /></Link>
       </div>
@@ -349,14 +304,15 @@ export default function AdminPage() {
         navOpen && "translate-x-0"
       )}>
         <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "15px", fontWeight: 700, color: "#eef0f5", padding: "0 24px 28px", borderBottom: "1px solid rgba(255,255,255,.05)" }}>
-          <div style={{ fontSize: "18px", color: "#d4a843", marginBottom: "14px", lineHeight: 1 }}>✦</div>
+          <div style={{ fontSize: "18px", color: "#d4a843", marginBottom: "14px", lineHeight: 1 }}>âœ¦</div>
           <span style={{ display: "block", fontFamily: "'Space Mono',monospace", fontSize: "8px", letterSpacing: ".4em", textTransform: "uppercase", color: "rgba(212,168,67,.65)", marginBottom: "5px", fontWeight: 400 }}>Admin</span>
           Samuel Gyasi
         </div>
         <nav className="px-3 pt-4 flex-1 overflow-y-auto">
           {NAV.map(({ id, label, Icon }) => {
-            const badge = id === "messages" && unreadMsgs > 0 ? unreadMsgs
-                        : id === "mail"     && unreadInbox > 0 ? unreadInbox
+            const badge = id === "messages" && unreadMsgs > 0    ? unreadMsgs
+                        : id === "mail"     && unreadInbox > 0   ? unreadInbox
+                        : id === "feedback" && unreadFeedback > 0 ? unreadFeedback
                         : null;
             const isActive = tab === id;
             return (
@@ -517,6 +473,21 @@ export default function AdminPage() {
                 }}
               />
             )}
+            {tab === "feedback" && (
+              <FeedbackTab
+                feedbacks={feedbacks}
+                onToggleResolved={async (id, val) => {
+                  const { error } = await db.from("feedback").update({ resolved: val }).eq("id", id);
+                  if (error) { toast.error("Update failed"); return; }
+                  await load();
+                }}
+                onDelete={(id) => ask("Delete this feedback?", async () => {
+                  const { error } = await db.from("feedback").delete().eq("id", id);
+                  if (error) { toast.error("Delete failed"); return; }
+                  toast.success("Deleted"); await load();
+                })}
+              />
+            )}
           </>
         )}
       </main>
@@ -566,7 +537,7 @@ export default function AdminPage() {
   );
 }
 
-// ── MINI BAR CHART ─────────────────────────────────────────────────────────
+// â”€â”€ MINI BAR CHART â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function MiniBarChart({ data }: { data: { date: string; count: number }[] }) {
   const max = Math.max(...data.map((d) => d.count), 1);
   return (
@@ -586,7 +557,7 @@ function MiniBarChart({ data }: { data: { date: string; count: number }[] }) {
   );
 }
 
-// ── OVERVIEW ──────────────────────────────────────────────────────────────
+// â”€â”€ OVERVIEW â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function OverviewTab({ posts, subs, msgs, logs, analytics, onNav }: {
   posts: BlogPost[]; subs: Subscriber[]; msgs: Message[];
   logs: EmailLog[]; analytics: AnalyticsData | null;
@@ -602,8 +573,8 @@ function OverviewTab({ posts, subs, msgs, logs, analytics, onNav }: {
     { num: pub,                           label: "Published",        nav: "posts"       },
     { num: subs.length,                   label: "Subscribers",      nav: "subscribers" },
     { num: unread,                        label: "Unread Messages",  nav: "messages"    },
-    { num: analytics?.totalViews   ?? "—", label: "Page Views (30d)", nav: "analytics"  },
-    { num: analytics?.uniqueVisitors ?? "—", label: "Visitors (30d)", nav: "analytics"  },
+    { num: analytics?.totalViews   ?? "â€”", label: "Page Views (30d)", nav: "analytics"  },
+    { num: analytics?.uniqueVisitors ?? "â€”", label: "Visitors (30d)", nav: "analytics"  },
     { num: logs.length,                   label: "Emails Sent",      nav: "mail"        },
     { num: `${openRate}%`,                label: "Open Rate",        nav: "mail"        },
   ];
@@ -633,7 +604,7 @@ function OverviewTab({ posts, subs, msgs, logs, analytics, onNav }: {
       {analytics && (
         <div className="mb-12">
           <div className={TW.sHead}>
-            <div className={TW.sTitle}>Page Views — Last 14 Days</div>
+            <div className={TW.sTitle}>Page Views â€” Last 14 Days</div>
             <button className={cn(TW.btn, TW.ghost)} onClick={() => onNav("analytics")}>Full Report</button>
           </div>
           <MiniBarChart data={analytics.dailyViews} />
@@ -664,7 +635,7 @@ function OverviewTab({ posts, subs, msgs, logs, analytics, onNav }: {
   );
 }
 
-// ── ANALYTICS ─────────────────────────────────────────────────────────────
+// â”€â”€ ANALYTICS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function AnalyticsTab({ analytics }: { analytics: AnalyticsData | null }) {
   if (!analytics) return <p className={TW.empty}>No analytics data. Visit the site to start tracking.</p>;
   const { totalViews, uniqueVisitors, topPages, dailyViews } = analytics;
@@ -672,15 +643,15 @@ function AnalyticsTab({ analytics }: { analytics: AnalyticsData | null }) {
   return (
     <>
       <div className="flex justify-between items-start mb-10 pb-7 border-b border-white/[.05]">
-        <div><div className={TW.pgTitle}>Analytics</div><p className={TW.pgSub}>Last 30 days · samuelgyasi.com</p></div>
+        <div><div className={TW.pgTitle}>Analytics</div><p className={TW.pgSub}>Last 30 days Â· samuelgyasi.com</p></div>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-10">
         {[
           { num: totalViews,     label: "Total Page Views" },
           { num: uniqueVisitors, label: "Unique Visitors"  },
-          { num: totalViews > 0 ? (totalViews / 30).toFixed(1) : "—", label: "Avg Views / Day" },
-          { num: topPages[0]?.count ?? "—",  label: "Top Page Views"  },
+          { num: totalViews > 0 ? (totalViews / 30).toFixed(1) : "â€”", label: "Avg Views / Day" },
+          { num: topPages[0]?.count ?? "â€”",  label: "Top Page Views"  },
         ].map(({ num, label }) => (
           <div key={label} className={TW.stat}>
             <div className="absolute top-0 inset-x-0 h-0.5 bg-gradient-to-r from-transparent via-[rgba(212,168,67,.5)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -691,7 +662,7 @@ function AnalyticsTab({ analytics }: { analytics: AnalyticsData | null }) {
       </div>
 
       <div className={cn(TW.sHead, "mb-3")}>
-        <div className={TW.sTitle}>Daily Views <span className="text-xs font-mono text-white/30">— 14d</span></div>
+        <div className={TW.sTitle}>Daily Views <span className="text-xs font-mono text-white/30">â€” 14d</span></div>
       </div>
       <MiniBarChart data={dailyViews} />
 
@@ -730,7 +701,7 @@ function AnalyticsTab({ analytics }: { analytics: AnalyticsData | null }) {
   );
 }
 
-// ── POSTS TAB ─────────────────────────────────────────────────────────────
+// â”€â”€ POSTS TAB â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function PostsTab({ posts, onNew, onEdit, onDelete, onToggle }: {
   posts: BlogPost[]; onNew: () => void;
   onEdit: (p: BlogPost) => void;
@@ -774,7 +745,7 @@ function PostsTab({ posts, onNew, onEdit, onDelete, onToggle }: {
   );
 }
 
-// ── SUBSCRIBERS ───────────────────────────────────────────────────────────
+// â”€â”€ SUBSCRIBERS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function SubsTab({ subs, onDelete }: { subs: Subscriber[]; onDelete: (id: string, email: string) => void }) {
   return (
     <>
@@ -789,13 +760,13 @@ function SubsTab({ subs, onDelete }: { subs: Subscriber[]; onDelete: (id: string
               {subs.map((s) => (
                 <tr key={s.id} className="hover:[&>td]:bg-[rgba(212,168,67,.04)]">
                   <td className={TW.td} style={{ color: "#f0ece4" }}>{s.email}</td>
-                  <td className={TW.td}>{s.name ?? "—"}</td>
+                  <td className={TW.td}>{s.name ?? "â€”"}</td>
                   <td className={TW.td} style={{ maxWidth: 220 }}>
                     {s.interests && s.interests.length > 0
                       ? s.interests.map((i) => (
                           <span key={i} className={cn(TW.badge, TW.bDft, "mr-1 mb-0.5 capitalize")}>{i.replace(/_/g, " ")}</span>
                         ))
-                      : <span className="text-white/30">—</span>}
+                      : <span className="text-white/30">â€”</span>}
                   </td>
                   <td className={TW.td}><span className={cn(TW.badge, s.confirmed ? TW.bPub : TW.bDft)}>{s.confirmed ? "Yes" : "Pending"}</span></td>
                   <td className={TW.td}>{new Date(s.created_at).toLocaleDateString("en-GB")}</td>
@@ -810,7 +781,7 @@ function SubsTab({ subs, onDelete }: { subs: Subscriber[]; onDelete: (id: string
   );
 }
 
-// ── MESSAGES ──────────────────────────────────────────────────────────────
+// â”€â”€ MESSAGES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function MsgsTab({ msgs, templates, onRead }: {
   msgs: Message[]; templates: EmailTemplate[];
   onRead: (id: string) => Promise<void>;
@@ -830,7 +801,7 @@ function MsgsTab({ msgs, templates, onRead }: {
               <div className={TW.msgHead}>
                 <div>
                   <div className={TW.msgName}>{m.name}{!m.read && <span className={cn(TW.badge, TW.bNew, "ml-2")}>NEW</span>}</div>
-                  <div className={TW.msgMeta}>{m.email} · {new Date(m.created_at).toLocaleDateString("en-GB")}</div>
+                  <div className={TW.msgMeta}>{m.email} Â· {new Date(m.created_at).toLocaleDateString("en-GB")}</div>
                   {m.subject && <div className={TW.msgSubj}>Re: {m.subject}</div>}
                 </div>
                 <div className={cn(TW.actRow, "flex-shrink-0")}>
@@ -853,7 +824,7 @@ function MsgsTab({ msgs, templates, onRead }: {
   );
 }
 
-// ── QUICK REPLY ────────────────────────────────────────────────────────────
+// â”€â”€ QUICK REPLY â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function QuickReply({ to, subject, templates, onClose }: {
   to: string; subject: string; templates: EmailTemplate[]; onClose: () => void;
 }) {
@@ -889,7 +860,7 @@ function QuickReply({ to, subject, templates, onClose }: {
       </div>
       {templates.length > 0 && (
         <select className={cn(TW.select, "text-xs py-[7px] px-2.5 mb-2")} value={tpl} onChange={(e) => applyTpl(e.target.value)}>
-          <option value="">— Load template —</option>
+          <option value="">â€” Load template â€”</option>
           {templates.map((t) => <option key={t.id} value={t.id}>{t.name}</option>)}
         </select>
       )}
@@ -897,15 +868,15 @@ function QuickReply({ to, subject, templates, onClose }: {
         <button className={cn(TW.btn, TW.sm, mode === "text" ? TW.gold : TW.ghost)} onClick={() => setMode("text")}><AlignLeft size={9} />Text</button>
         <button className={cn(TW.btn, TW.sm, mode === "html" ? TW.gold : TW.ghost)} onClick={() => setMode("html")}><Code size={9} />HTML</button>
       </div>
-      <textarea className={cn(TW.tarea, "min-h-[110px]")} value={body} onChange={(e) => setBody(e.target.value)} placeholder={mode === "html" ? "<p>Your reply…</p>" : "Your reply…"} />
+      <textarea className={cn(TW.tarea, "min-h-[110px]")} value={body} onChange={(e) => setBody(e.target.value)} placeholder={mode === "html" ? "<p>Your replyâ€¦</p>" : "Your replyâ€¦"} />
       <div className="flex justify-end mt-2">
-        <button className={cn(TW.btn, TW.gold)} onClick={send} disabled={busy}><Send size={10} />{busy ? "Sending…" : "Send Reply"}</button>
+        <button className={cn(TW.btn, TW.gold)} onClick={send} disabled={busy}><Send size={10} />{busy ? "Sendingâ€¦" : "Send Reply"}</button>
       </div>
     </div>
   );
 }
 
-// ── MAIL TAB ──────────────────────────────────────────────────────────────
+// â”€â”€ MAIL TAB â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function MailTab({ sub, setSub, logs, inbox, templates, onReload, db, onEditTpl, onNewTpl, onDeleteTpl }: {
   sub: MailSubTab; setSub: (t: MailSubTab) => void;
   logs: EmailLog[]; inbox: InboundEmail[]; templates: EmailTemplate[];
@@ -927,7 +898,7 @@ function MailTab({ sub, setSub, logs, inbox, templates, onReload, db, onEditTpl,
   return (
     <>
       <div className="flex justify-between items-start mb-10 pb-7 border-b border-white/[.05]">
-        <div><div className={TW.pgTitle}>Mail</div><p className={TW.pgSub}>impact@samuelgyasi.com · via Resend</p></div>
+        <div><div className={TW.pgTitle}>Mail</div><p className={TW.pgSub}>impact@samuelgyasi.com Â· via Resend</p></div>
       </div>
       <div className={TW.mNav}>
         {SUBS.map(({ id, label, Icon, badge }) => (
@@ -945,7 +916,7 @@ function MailTab({ sub, setSub, logs, inbox, templates, onReload, db, onEditTpl,
   );
 }
 
-// ── COMPOSE ───────────────────────────────────────────────────────────────
+// â”€â”€ COMPOSE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function ComposeView({ templates, onReload }: { templates: EmailTemplate[]; onReload: () => Promise<void> }) {
   const [to, setTo]     = useState("");
   const [sub, setSub]   = useState("");
@@ -983,7 +954,7 @@ function ComposeView({ templates, onReload }: { templates: EmailTemplate[]; onRe
       <div className="flex gap-2 items-center mb-6 flex-wrap">
         {templates.length > 0 && (
           <select className={cn(TW.select, "flex-1 max-w-[260px] text-xs py-2 px-[11px]")} value={tpl} onChange={(e) => loadTpl(e.target.value)}>
-            <option value="">— Load template —</option>
+            <option value="">â€” Load template â€”</option>
             {templates.map((t) => <option key={t.id} value={t.id}>{t.name}</option>)}
           </select>
         )}
@@ -1004,13 +975,13 @@ function ComposeView({ templates, onReload }: { templates: EmailTemplate[]; onRe
         }
       </div>
       <div className="flex justify-end">
-        <button className={cn(TW.btn, TW.gold)} onClick={send} disabled={busy}><Send size={11} />{busy ? "Sending…" : "Send Email"}</button>
+        <button className={cn(TW.btn, TW.gold)} onClick={send} disabled={busy}><Send size={11} />{busy ? "Sendingâ€¦" : "Send Email"}</button>
       </div>
     </div>
   );
 }
 
-// ── INBOX ─────────────────────────────────────────────────────────────────
+// â”€â”€ INBOX â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function InboxView({ emails, db, onReload, templates }: {
   emails: InboundEmail[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -1032,7 +1003,7 @@ function InboxView({ emails, db, onReload, templates }: {
       <p className={TW.empty}>No inbound emails yet.</p>
       <p className="font-mono text-[9px] text-white/20 text-center tracking-[.08em] leading-[2.2] max-w-[440px] mx-auto">
         To receive emails here, configure Resend inbound routing<br />
-        with webhook → /api/mail/inbound
+        with webhook â†’ /api/mail/inbound
       </p>
     </div>
   ) : (
@@ -1042,7 +1013,7 @@ function InboxView({ emails, db, onReload, templates }: {
           <div className={TW.msgHead}>
             <div>
               <div className={TW.msgName}>{e.from_name ?? e.from_email}{!e.read && <span className={cn(TW.badge, TW.bNew, "ml-2")}>NEW</span>}</div>
-              <div className={TW.msgMeta}>{e.from_email} · {new Date(e.received_at).toLocaleDateString("en-GB")}</div>
+              <div className={TW.msgMeta}>{e.from_email} Â· {new Date(e.received_at).toLocaleDateString("en-GB")}</div>
               {e.subject && <div className={TW.msgSubj}>{e.subject}</div>}
             </div>
             <div className={cn(TW.actRow, "flex-shrink-0")}>
@@ -1070,7 +1041,7 @@ function InboxView({ emails, db, onReload, templates }: {
   );
 }
 
-// ── SENT VIEW ─────────────────────────────────────────────────────────────
+// â”€â”€ SENT VIEW â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function SentView({ logs }: { logs: EmailLog[] }) {
   const [exp, setExp] = useState<string | null>(null);
 
@@ -1090,8 +1061,8 @@ function SentView({ logs }: { logs: EmailLog[] }) {
                 {l.subject}{statusBadge(l)}
               </div>
               <div className={TW.msgMeta}>
-                To: {l.to_email} · {new Date(l.sent_at).toLocaleDateString("en-GB")}
-                {l.opened_at && ` · Opened ${new Date(l.opened_at).toLocaleDateString("en-GB")}`}
+                To: {l.to_email} Â· {new Date(l.sent_at).toLocaleDateString("en-GB")}
+                {l.opened_at && ` Â· Opened ${new Date(l.opened_at).toLocaleDateString("en-GB")}`}
               </div>
             </div>
             <button className={cn(TW.btn, TW.ghost, TW.sm)} onClick={() => setExp(exp === l.id ? null : l.id)}>{exp === l.id ? "Collapse" : "View"}</button>
@@ -1107,7 +1078,7 @@ function SentView({ logs }: { logs: EmailLog[] }) {
   );
 }
 
-// ── TEMPLATES VIEW ────────────────────────────────────────────────────────
+// â”€â”€ TEMPLATES VIEW â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function TplsView({ templates, onNew, onEdit, onDelete }: {
   templates: EmailTemplate[]; onNew: () => void;
   onEdit: (t: EmailTemplate) => void;
@@ -1127,7 +1098,7 @@ function TplsView({ templates, onNew, onEdit, onDelete }: {
                 <div>
                   <div className={TW.msgName}>{t.name}</div>
                   <div className={TW.msgSubj} style={{ marginTop: 3 }}>{t.subject}</div>
-                  <div className={TW.msgMeta} style={{ marginTop: 3 }}>Created {new Date(t.created_at).toLocaleDateString("en-GB")} · {t.body_html.length} HTML chars</div>
+                  <div className={TW.msgMeta} style={{ marginTop: 3 }}>Created {new Date(t.created_at).toLocaleDateString("en-GB")} Â· {t.body_html.length} HTML chars</div>
                 </div>
                 <div className={cn(TW.actRow, "flex-shrink-0")}>
                   <button className={cn(TW.btn, TW.ghost, TW.sm)} onClick={() => onEdit(t)}><Pencil size={9} /></button>
@@ -1142,7 +1113,7 @@ function TplsView({ templates, onNew, onEdit, onDelete }: {
   );
 }
 
-// ── TEMPLATE MODAL ────────────────────────────────────────────────────────
+// â”€â”€ TEMPLATE MODAL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function TplModal({ tpl, onClose, onSave }: {
   tpl: EmailTemplate | null; onClose: () => void; onSave: () => Promise<void>;
 }) {
@@ -1201,7 +1172,7 @@ function TplModal({ tpl, onClose, onSave }: {
           )}
           <div className="flex gap-2.5 justify-end mt-6">
             <button type="button" className={cn(TW.btn, TW.ghost)} onClick={onClose}>Cancel</button>
-            <button type="submit" className={cn(TW.btn, TW.gold)} disabled={busy}>{busy ? "Saving…" : tpl ? "Save Changes" : "Create Template"}</button>
+            <button type="submit" className={cn(TW.btn, TW.gold)} disabled={busy}>{busy ? "Savingâ€¦" : tpl ? "Save Changes" : "Create Template"}</button>
           </div>
         </form>
       </div>
@@ -1209,7 +1180,7 @@ function TplModal({ tpl, onClose, onSave }: {
   );
 }
 
-// ── WHATSAPP ──────────────────────────────────────────────────────────────
+// â”€â”€ WHATSAPP â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function WhatsApp() {
   const DEFAULT_NUM = "233244000000";
   const [num, setNum]       = useState(DEFAULT_NUM);
@@ -1268,7 +1239,7 @@ function WhatsApp() {
           <div className={TW.field}><label className={TW.label}>Message</label><textarea className={cn(TW.tarea, "min-h-[90px]")} value={msg} onChange={(e) => setMsg(e.target.value)} /></div>
           <div className={cn(TW.actRow, "flex-wrap mb-3.5")}>
             {QUICK.map((q) => (
-              <button key={q} className={cn(TW.btn, TW.ghost, TW.sm, "text-[9px]")} onClick={() => setMsg(q)}>{q.slice(0, 30)}…</button>
+              <button key={q} className={cn(TW.btn, TW.ghost, TW.sm, "text-[9px]")} onClick={() => setMsg(q)}>{q.slice(0, 30)}â€¦</button>
             ))}
           </div>
           {composeLink
@@ -1291,7 +1262,7 @@ function WhatsApp() {
   );
 }
 
-// ── TESTIMONIALS TAB ──────────────────────────────────────────────────────
+// â”€â”€ TESTIMONIALS TAB â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function TestimonialsTab({ testimonials, onNew, onEdit, onDelete, onToggle }: {
   testimonials: Testimonial[];
   onNew: () => void;
@@ -1305,7 +1276,7 @@ function TestimonialsTab({ testimonials, onNew, onEdit, onDelete, onToggle }: {
       <div className="flex justify-between items-start mb-10 pb-7 border-b border-white/[.05]">
         <div>
           <div className={TW.pgTitle}>Testimonials</div>
-          <p className={TW.pgSub}>{published} published · {testimonials.length} total</p>
+          <p className={TW.pgSub}>{published} published Â· {testimonials.length} total</p>
         </div>
         <button className={cn(TW.btn, TW.gold)} onClick={onNew}><Plus size={12} />Add Testimonial</button>
       </div>
@@ -1318,10 +1289,10 @@ function TestimonialsTab({ testimonials, onNew, onEdit, onDelete, onToggle }: {
                 <tr key={t.id} className="hover:[&>td]:bg-[rgba(212,168,67,.04)]">
                   <td className={TW.td} style={{ color: "#f0ece4", maxWidth: "200px" }}>
                     <div className="font-semibold">{t.name}</div>
-                    <div className="text-[11px] text-white/40 mt-0.5 italic">{t.quote.slice(0, 60)}{t.quote.length > 60 ? "…" : ""}</div>
+                    <div className="text-[11px] text-white/40 mt-0.5 italic">{t.quote.slice(0, 60)}{t.quote.length > 60 ? "â€¦" : ""}</div>
                   </td>
-                  <td className={TW.td} style={{ fontSize: "12px" }}>{[t.role, t.company].filter(Boolean).join(" · ") || "—"}</td>
-                  <td className={TW.td} style={{ color: "#c9a84c", letterSpacing: "2px" }}>{"★".repeat(t.rating)}{"☆".repeat(5 - t.rating)}</td>
+                  <td className={TW.td} style={{ fontSize: "12px" }}>{[t.role, t.company].filter(Boolean).join(" Â· ") || "â€”"}</td>
+                  <td className={TW.td} style={{ color: "#c9a84c", letterSpacing: "2px" }}>{"â˜…".repeat(t.rating)}{"â˜†".repeat(5 - t.rating)}</td>
                   <td className={TW.td}>
                     <button className={cn(TW.badge, t.published ? TW.bPub : TW.bDft, "cursor-pointer bg-transparent border-none")}
                       onClick={() => onToggle(t.id, !t.published)} title={t.published ? "Click to unpublish" : "Click to publish"}>
@@ -1344,7 +1315,7 @@ function TestimonialsTab({ testimonials, onNew, onEdit, onDelete, onToggle }: {
   );
 }
 
-// ── TESTIMONIAL MODAL ─────────────────────────────────────────────────────
+// â”€â”€ TESTIMONIAL MODAL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function TestimonialModal({ testimonial, onClose, onSave, db }: {
   testimonial: Testimonial | null;
   onClose: () => void;
@@ -1398,17 +1369,17 @@ function TestimonialModal({ testimonial, onClose, onSave, db }: {
           </div>
           <div className={TW.fRow}>
             <div className={TW.field}><label className={TW.label}>Company / Organisation</label><input className={TW.input} value={company} onChange={(e) => setCompany(e.target.value)} placeholder="e.g. UM6P, World Bank" /></div>
-            <div className={TW.field}><label className={TW.label}>Avatar URL</label><input className={TW.input} value={avatarUrl} onChange={(e) => setAvatarUrl(e.target.value)} placeholder="https://…" /></div>
+            <div className={TW.field}><label className={TW.label}>Avatar URL</label><input className={TW.input} value={avatarUrl} onChange={(e) => setAvatarUrl(e.target.value)} placeholder="https://â€¦" /></div>
           </div>
           <div className={TW.field}><label className={TW.label}>Quote *</label><textarea className={cn(TW.tarea, "min-h-[100px]")} value={quote} onChange={(e) => setQuote(e.target.value)} placeholder="What did they say about Samuel?" /></div>
           <div className={TW.fRow}>
             <div className={TW.field}>
-              <label className={TW.label}>Rating (1–5)</label>
+              <label className={TW.label}>Rating (1â€“5)</label>
               <div className="flex gap-1.5 items-center">
                 {[1,2,3,4,5].map((n) => (
                   <button key={n} type="button" onClick={() => setRating(n)}
                     className="bg-transparent border-0 cursor-pointer text-[24px] p-0"
-                    style={{ color: n <= rating ? "#c9a84c" : "rgba(201,168,76,.2)" }}>★</button>
+                    style={{ color: n <= rating ? "#c9a84c" : "rgba(201,168,76,.2)" }}>â˜…</button>
                 ))}
               </div>
             </div>
@@ -1423,7 +1394,7 @@ function TestimonialModal({ testimonial, onClose, onSave, db }: {
         <div className={TW.pFoot}>
           <button className={cn(TW.btn, TW.ghost)} onClick={onClose}>Cancel</button>
           <button className={cn(TW.btn, TW.gold)} onClick={handleSave} disabled={saving}>
-            {saving ? "Saving…" : testimonial ? "Update" : "Add Testimonial"}
+            {saving ? "Savingâ€¦" : testimonial ? "Update" : "Add Testimonial"}
           </button>
         </div>
       </div>
@@ -1431,7 +1402,7 @@ function TestimonialModal({ testimonial, onClose, onSave, db }: {
   );
 }
 
-// ── LIBRARY TAB ────────────────────────────────────────────────────────────
+// â”€â”€ LIBRARY TAB â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function LibraryTab({ items, onNew, onEdit, onDelete, onToggle }: {
   items: LibraryItem[];
   onNew: () => void;
@@ -1448,7 +1419,7 @@ function LibraryTab({ items, onNew, onEdit, onDelete, onToggle }: {
       <div className="flex justify-between items-start mb-10 pb-7 border-b border-white/[.05]">
         <div>
           <div className={TW.pgTitle}>Library</div>
-          <p className={TW.pgSub}>{published} published · {filtered.length} {subTab === "ebook" ? "eBooks" : "Reviews"}</p>
+          <p className={TW.pgSub}>{published} published Â· {filtered.length} {subTab === "ebook" ? "eBooks" : "Reviews"}</p>
         </div>
         <button className={cn(TW.btn, TW.gold)} onClick={onNew}><Plus size={12} />Add {subTab === "ebook" ? "eBook" : "Review"}</button>
       </div>
@@ -1479,14 +1450,14 @@ function LibraryTab({ items, onNew, onEdit, onDelete, onToggle }: {
                 <tr key={item.id} className="hover:[&>td]:bg-[rgba(212,168,67,.04)]">
                   <td className={TW.td} style={{ color: "#f0ece4", maxWidth: "260px" }}>
                     <div className="font-semibold">{item.title}</div>
-                    {item.description && <div className="text-[11px] text-white/40 mt-0.5 italic">{item.description.slice(0, 70)}{item.description.length > 70 ? "…" : ""}</div>}
+                    {item.description && <div className="text-[11px] text-white/40 mt-0.5 italic">{item.description.slice(0, 70)}{item.description.length > 70 ? "â€¦" : ""}</div>}
                   </td>
-                  {subTab === "review" && <td className={TW.td} style={{ fontSize: "12px" }}>{item.author ?? "—"}</td>}
+                  {subTab === "review" && <td className={TW.td} style={{ fontSize: "12px" }}>{item.author ?? "â€”"}</td>}
                   {subTab === "review" && (
                     <td className={TW.td}>
                       {item.rating !== null
-                        ? <span style={{ color: "#c9a84c", letterSpacing: "2px" }}>{"★".repeat(item.rating)}{"☆".repeat(5 - item.rating)}</span>
-                        : "—"}
+                        ? <span style={{ color: "#c9a84c", letterSpacing: "2px" }}>{"â˜…".repeat(item.rating)}{"â˜†".repeat(5 - item.rating)}</span>
+                        : "â€”"}
                     </td>
                   )}
                   <td className={TW.td}>
@@ -1511,7 +1482,7 @@ function LibraryTab({ items, onNew, onEdit, onDelete, onToggle }: {
   );
 }
 
-// ── LIBRARY ITEM MODAL ─────────────────────────────────────────────────────
+// â”€â”€ LIBRARY ITEM MODAL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function LibraryItemModal({ item, onClose, onSave, db }: {
   item: LibraryItem | null;
   onClose: () => void;
@@ -1578,18 +1549,18 @@ function LibraryItemModal({ item, onClose, onSave, db }: {
             <div className={TW.field}><label className={TW.label}>Title *</label><input className={TW.input} value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Title" /></div>
             <div className={TW.field}><label className={TW.label}>{category === "ebook" ? "Author (optional)" : "Author"}</label><input className={TW.input} value={author} onChange={(e) => setAuthor(e.target.value)} placeholder="Author name" /></div>
           </div>
-          <div className={TW.field}><label className={TW.label}>Description</label><textarea className={cn(TW.tarea, "min-h-[80px]")} value={description} onChange={(e) => setDesc(e.target.value)} placeholder="Short description or review excerpt…" /></div>
+          <div className={TW.field}><label className={TW.label}>Description</label><textarea className={cn(TW.tarea, "min-h-[80px]")} value={description} onChange={(e) => setDesc(e.target.value)} placeholder="Short description or review excerptâ€¦" /></div>
           <div className={TW.fRow}>
-            <div className={TW.field}><label className={TW.label}>Cover Image URL</label><input className={TW.input} value={coverUrl} onChange={(e) => setCoverUrl(e.target.value)} placeholder="https://…" /></div>
+            <div className={TW.field}><label className={TW.label}>Cover Image URL</label><input className={TW.input} value={coverUrl} onChange={(e) => setCoverUrl(e.target.value)} placeholder="https://â€¦" /></div>
             {category === "ebook" ? (
-              <div className={TW.field}><label className={TW.label}>Download URL</label><input className={TW.input} value={downloadUrl} onChange={(e) => setDlUrl(e.target.value)} placeholder="https://…" /></div>
+              <div className={TW.field}><label className={TW.label}>Download URL</label><input className={TW.input} value={downloadUrl} onChange={(e) => setDlUrl(e.target.value)} placeholder="https://â€¦" /></div>
             ) : (
               <div className={TW.field}>
-                <label className={TW.label}>Rating (1–5)</label>
+                <label className={TW.label}>Rating (1â€“5)</label>
                 <div className="flex gap-1 items-center pt-1.5">
                   {[1,2,3,4,5].map((n) => (
                     <button key={n} type="button" onClick={() => setRating(n)} className="bg-transparent border-0 cursor-pointer text-[22px] p-0"
-                      style={{ color: n <= rating ? "#c9a84c" : "rgba(201,168,76,.2)" }}>★</button>
+                      style={{ color: n <= rating ? "#c9a84c" : "rgba(201,168,76,.2)" }}>â˜…</button>
                   ))}
                 </div>
               </div>
@@ -1605,14 +1576,14 @@ function LibraryItemModal({ item, onClose, onSave, db }: {
         </div>
         <div className={TW.pFoot}>
           <button className={cn(TW.btn, TW.ghost)} onClick={onClose}>Cancel</button>
-          <button className={cn(TW.btn, TW.gold)} onClick={handleSave} disabled={saving}>{saving ? "Saving…" : item ? "Update" : "Add Item"}</button>
+          <button className={cn(TW.btn, TW.gold)} onClick={handleSave} disabled={saving}>{saving ? "Savingâ€¦" : item ? "Update" : "Add Item"}</button>
         </div>
       </div>
     </div>
   );
 }
 
-// ── UPCOMING TAB ──────────────────────────────────────────────────────────
+// â”€â”€ UPCOMING TAB â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function UpcomingTab({ events, onNew, onEdit, onDelete, onToggle }: {
   events: UpcomingEvent[];
   onNew: () => void;
@@ -1635,7 +1606,7 @@ function UpcomingTab({ events, onNew, onEdit, onDelete, onToggle }: {
       <div className="flex justify-between items-start mb-10 pb-7 border-b border-white/[.05]">
         <div>
           <div className={TW.pgTitle}>Upcoming</div>
-          <p className={TW.pgSub}>{published} published · {filtered.length} {SUB_TABS.find((t) => t.id === subTab)?.label}</p>
+          <p className={TW.pgSub}>{published} published Â· {filtered.length} {SUB_TABS.find((t) => t.id === subTab)?.label}</p>
         </div>
         <button className={cn(TW.btn, TW.gold)} onClick={onNew}><Plus size={12} />Add Event</button>
       </div>
@@ -1660,10 +1631,10 @@ function UpcomingTab({ events, onNew, onEdit, onDelete, onToggle }: {
                 <tr key={ev.id} className="hover:[&>td]:bg-[rgba(212,168,67,.04)]">
                   <td className={TW.td} style={{ color: "#f0ece4", maxWidth: "260px" }}>
                     <div className="font-semibold">{ev.title}</div>
-                    {ev.description && <div className="text-[11px] text-white/40 mt-0.5 italic">{ev.description.slice(0, 70)}{ev.description.length > 70 ? "…" : ""}</div>}
+                    {ev.description && <div className="text-[11px] text-white/40 mt-0.5 italic">{ev.description.slice(0, 70)}{ev.description.length > 70 ? "â€¦" : ""}</div>}
                   </td>
-                  <td className={TW.td} style={{ fontSize: "11px", fontFamily: "'Space Mono',monospace", whiteSpace: "nowrap" }}>{ev.date_text ?? "—"}</td>
-                  <td className={TW.td} style={{ fontSize: "11px" }}>{ev.location ?? "—"}</td>
+                  <td className={TW.td} style={{ fontSize: "11px", fontFamily: "'Space Mono',monospace", whiteSpace: "nowrap" }}>{ev.date_text ?? "â€”"}</td>
+                  <td className={TW.td} style={{ fontSize: "11px" }}>{ev.location ?? "â€”"}</td>
                   <td className={TW.td}>
                     <button className={cn(TW.badge, ev.published ? TW.bPub : TW.bDft, "cursor-pointer bg-transparent border-none")}
                       onClick={() => onToggle(ev.id, !ev.published)}>
@@ -1686,7 +1657,7 @@ function UpcomingTab({ events, onNew, onEdit, onDelete, onToggle }: {
   );
 }
 
-// ── UPCOMING EVENT MODAL ──────────────────────────────────────────────────
+// â”€â”€ UPCOMING EVENT MODAL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function UpcomingEventModal({ event, onClose, onSave, db }: {
   event: UpcomingEvent | null;
   onClose: () => void;
@@ -1750,7 +1721,7 @@ function UpcomingEventModal({ event, onClose, onSave, db }: {
             </div>
           </div>
           <div className={TW.field}><label className={TW.label}>Title *</label><input className={TW.input} value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Event title" /></div>
-          <div className={TW.field}><label className={TW.label}>Description</label><textarea className={cn(TW.tarea, "min-h-[80px]")} value={desc} onChange={(e) => setDesc(e.target.value)} placeholder="Short description…" /></div>
+          <div className={TW.field}><label className={TW.label}>Description</label><textarea className={cn(TW.tarea, "min-h-[80px]")} value={desc} onChange={(e) => setDesc(e.target.value)} placeholder="Short descriptionâ€¦" /></div>
           <div className={TW.fRow}>
             <div className={TW.field}><label className={TW.label}>Date / Period</label><input className={TW.input} value={dateText} onChange={(e) => setDateText(e.target.value)} placeholder="e.g. March 2026 or Coming Soon" /></div>
             <div className={TW.field}><label className={TW.label}>Tag label</label><input className={TW.input} value={tag} onChange={(e) => setTag(e.target.value)} placeholder="e.g. Intervention" /></div>
@@ -1766,14 +1737,14 @@ function UpcomingEventModal({ event, onClose, onSave, db }: {
         </div>
         <div className={TW.pFoot}>
           <button className={cn(TW.btn, TW.ghost)} onClick={onClose}>Cancel</button>
-          <button className={cn(TW.btn, TW.gold)} onClick={handleSave} disabled={saving}>{saving ? "Saving…" : event ? "Update" : "Add Event"}</button>
+          <button className={cn(TW.btn, TW.gold)} onClick={handleSave} disabled={saving}>{saving ? "Savingâ€¦" : event ? "Update" : "Add Event"}</button>
         </div>
       </div>
     </div>
   );
 }
 
-// ── POST MODAL (original) ─────────────────────────────────────────────────
+// â”€â”€ POST MODAL (original) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function PostModal({ post, onClose, onSave, db }: {
   post: BlogPost | null; onClose: () => void;
   onSave: () => Promise<void>;
@@ -1829,10 +1800,10 @@ function PostModal({ post, onClose, onSave, db }: {
               </select>
             </div>
           </div>
-          <div className={TW.field}><label className={TW.label}>Excerpt</label><textarea className={cn(TW.tarea, "min-h-[80px]")} value={form.excerpt} onChange={(e) => setF("excerpt", e.target.value)} placeholder="Short summary…" /></div>
-          <div className={TW.field}><label className={TW.label}>Content (HTML)</label><textarea className={TW.tarea} value={form.content} onChange={(e) => setF("content", e.target.value)} placeholder="<p>Full article…</p>" /></div>
+          <div className={TW.field}><label className={TW.label}>Excerpt</label><textarea className={cn(TW.tarea, "min-h-[80px]")} value={form.excerpt} onChange={(e) => setF("excerpt", e.target.value)} placeholder="Short summaryâ€¦" /></div>
+          <div className={TW.field}><label className={TW.label}>Content (HTML)</label><textarea className={TW.tarea} value={form.content} onChange={(e) => setF("content", e.target.value)} placeholder="<p>Full articleâ€¦</p>" /></div>
           <div className={TW.fRow}>
-            <div className={TW.field}><label className={TW.label}>Featured Image URL</label><input className={TW.input} value={form.featured_image_url} onChange={(e) => setF("featured_image_url", e.target.value)} placeholder="https://…" /></div>
+            <div className={TW.field}><label className={TW.label}>Featured Image URL</label><input className={TW.input} value={form.featured_image_url} onChange={(e) => setF("featured_image_url", e.target.value)} placeholder="https://â€¦" /></div>
             <div className={TW.field}><label className={TW.label}>Read Time (min)</label><input className={TW.input} type="number" min={1} max={60} value={form.read_time_minutes} onChange={(e) => setF("read_time_minutes", parseInt(e.target.value, 10) || 5)} /></div>
           </div>
           <div className="flex items-center gap-3 mb-5 py-4 border-y border-white/[.05]">
@@ -1840,14 +1811,109 @@ function PostModal({ post, onClose, onSave, db }: {
               <input type="checkbox" checked={form.published} onChange={() => setF("published", !form.published)} className="sr-only peer" />
               <div className="w-10 h-5 bg-white/10 rounded-full peer-checked:bg-[rgba(212,168,67,.7)] after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-5" />
             </label>
-            <span className="font-mono text-[9px] tracking-[.1em] text-white/50">{form.published ? "Published — visible on site" : "Draft — not visible"}</span>
+            <span className="font-mono text-[9px] tracking-[.1em] text-white/50">{form.published ? "Published â€” visible on site" : "Draft â€” not visible"}</span>
           </div>
           <div className="flex gap-2.5 justify-end mt-6">
             <button type="button" className={cn(TW.btn, TW.ghost)} onClick={onClose}>Cancel</button>
-            <button type="submit" className={cn(TW.btn, TW.gold)} disabled={busy}>{busy ? "Saving…" : post ? "Save Changes" : "Create Post"}</button>
+            <button type="submit" className={cn(TW.btn, TW.gold)} disabled={busy}>{busy ? "Savingâ€¦" : post ? "Save Changes" : "Create Post"}</button>
           </div>
         </form>
       </div>
     </div>
+  );
+}
+
+
+// ── FEEDBACK TAB ─────────────────────────────────────────────────────────────
+function FeedbackTab({ feedbacks, onToggleResolved, onDelete }: {
+  feedbacks: Feedback[];
+  onToggleResolved: (id: string, val: boolean) => Promise<void>;
+  onDelete: (id: string) => void;
+}) {
+  const [filter, setFilter] = useState<"all" | "bug" | "idea" | "open" | "resolved">("all");
+
+  const filtered = feedbacks.filter((f) => {
+    if (filter === "bug")      return f.type === "bug";
+    if (filter === "idea")     return f.type === "idea";
+    if (filter === "open")     return !f.resolved;
+    if (filter === "resolved") return f.resolved;
+    return true;
+  });
+
+  const bugs  = feedbacks.filter((f) => f.type === "bug").length;
+  const ideas = feedbacks.filter((f) => f.type === "idea").length;
+  const open  = feedbacks.filter((f) => !f.resolved).length;
+
+  const FILTERS = [
+    { id: "all"      as const, label: `All (${feedbacks.length})` },
+    { id: "open"     as const, label: `Open (${open})` },
+    { id: "bug"      as const, label: `Bugs (${bugs})` },
+    { id: "idea"     as const, label: `Ideas (${ideas})` },
+    { id: "resolved" as const, label: "Resolved" },
+  ];
+
+  return (
+    <>
+      <div className="flex justify-between items-start mb-10 pb-7 border-b border-white/[.05]">
+        <div>
+          <div className={TW.pgTitle}>Feedback</div>
+          <p className={TW.pgSub}>{open} open &middot; {feedbacks.length} total</p>
+        </div>
+      </div>
+
+      <div className="flex gap-0 border-b border-white/[.08] mb-6 overflow-x-auto">
+        {FILTERS.map((f) => (
+          <button key={f.id} onClick={() => setFilter(f.id)}
+            className={cn("font-mono text-[9px] tracking-[.2em] uppercase px-5 py-3 bg-transparent border-0 cursor-pointer transition-colors whitespace-nowrap",
+              filter === f.id ? "text-[#c9a84c] border-b-2 border-[#c9a84c]" : "text-white/35 border-b-2 border-transparent"
+            )}>
+            {f.label}
+          </button>
+        ))}
+      </div>
+
+      {filtered.length === 0 ? (
+        <p className={TW.empty}>No feedback here yet.</p>
+      ) : (
+        <div className="flex flex-col gap-3">
+          {filtered.map((fb) => (
+            <div key={fb.id} className={cn(TW.msgCard, fb.resolved && "opacity-50")}>
+              <div className={TW.msgHead}>
+                <div className="flex items-center gap-2.5 flex-wrap">
+                  <span className={cn(TW.badge,
+                    fb.type === "bug"
+                      ? "bg-red-500/10 text-red-400 border border-red-500/20"
+                      : "bg-[rgba(212,168,67,.12)] text-[#d4a843] border border-[rgba(212,168,67,.2)]"
+                  )}>
+                    {fb.type === "bug" ? "Bug" : "Idea"}
+                  </span>
+                  {fb.email && (
+                    <span className="font-mono text-[9px] text-white/40">{fb.email}</span>
+                  )}
+                  {fb.page_url && (
+                    <span className="font-mono text-[9px] text-white/25 italic">{fb.page_url}</span>
+                  )}
+                </div>
+                <span className="font-mono text-[9px] text-white/25">
+                  {new Date(fb.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
+                </span>
+              </div>
+              <p className={TW.msgBody}>{fb.message}</p>
+              <div className={cn(TW.actRow, "mt-3")}>
+                <button
+                  className={cn(TW.btn, fb.resolved ? TW.ghost : TW.gold, TW.sm)}
+                  onClick={() => onToggleResolved(fb.id, !fb.resolved)}
+                >
+                  {fb.resolved ? "Reopen" : "Mark Resolved"}
+                </button>
+                <button className={cn(TW.btn, TW.danger, TW.sm)} onClick={() => onDelete(fb.id)}>
+                  <Trash2 size={10} />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </>
   );
 }
