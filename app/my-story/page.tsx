@@ -1,8 +1,10 @@
-"use client";
+﻿"use client";
 
-import { useEffect, Suspense } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Navbar } from "@/components/organisms/Navbar";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
+
+type Lang = "en" | "fr";
 
 const css = `
 .msp {
@@ -10,9 +12,8 @@ const css = `
   color: var(--white);
   min-height: 100vh;
   position: relative;
+  overflow-x: hidden;
 }
-
-/* ── FAINT BACKGROUND IMAGE ── */
 .msp::before {
   content: '';
   position: fixed;
@@ -27,46 +28,131 @@ const css = `
 }
 .msp > * { position: relative; z-index: 1; }
 
-/* â”€â”€ HERO â”€â”€ */
+.msp-particles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.msp-particle {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201,168,76,.3) 0%, transparent 70%);
+  animation: msp-float linear infinite;
+}
+@keyframes msp-float {
+  0%   { transform: translateY(0) scale(1);   opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: .5; }
+  100% { transform: translateY(-110px) scale(1.25); opacity: 0; }
+}
+.msp-lang-toggle {
+  display: inline-flex;
+  gap: 0;
+  border: 1px solid rgba(201,168,76,.3);
+  margin-bottom: 32px;
+  animation: msp-rise .8s .05s ease both;
+}
+.msp-lang-btn {
+  font-family: var(--font-space-mono),'Space Mono',monospace;
+  font-size: 9px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  padding: 8px 18px;
+  background: transparent;
+  border: none;
+  color: rgba(245,243,239,.4);
+  cursor: pointer;
+  transition: color .2s, background .2s;
+}
+.msp-lang-btn.active {
+  background: rgba(201,168,76,.1);
+  color: rgba(201,168,76,.9);
+}
+.msp-hero-glow {
+  position: absolute;
+  top: 50%; left: -80px;
+  transform: translateY(-50%);
+  width: 440px; height: 440px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201,168,76,.07) 0%, transparent 70%);
+  pointer-events: none;
+  animation: msp-glow-pulse 7s ease-in-out infinite;
+}
+@keyframes msp-glow-pulse {
+  0%,100% { transform: translateY(-50%) scale(1);    opacity: .6; }
+  50%      { transform: translateY(-50%) scale(1.18); opacity: 1; }
+}
 .msp-hero {
-  padding: 140px 8% 80px;
+  position: relative;
+  padding: 140px 8% 90px;
   border-bottom: 1px solid rgba(201,168,76,.18);
   max-width: 1100px;
   margin: 0 auto;
+  overflow: hidden;
 }
 .msp-hero-eyebrow {
   font-family: var(--font-space-mono), 'Space Mono', monospace;
   font-size: 10px;
   letter-spacing: 0.32em;
   text-transform: uppercase;
-  color: var(--gold);
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin-bottom: 24px;
+  animation: msp-rise .8s .15s ease both;
 }
 .msp-hero-headline {
   font-family: var(--font-playfair), 'Playfair Display', serif;
-  font-size: clamp(42px, 7vw, 90px);
+  font-size: clamp(52px,8vw,108px);
   font-weight: 900;
-  line-height: 0.93;
+  line-height: 0.9;
   letter-spacing: -0.03em;
-  color: var(--white);
   text-transform: uppercase;
   margin-bottom: 30px;
+  animation: msp-rise .85s .28s ease both;
+  position: relative;
+}
+.msp-hero-headline::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 2px;
+  background: var(--gold-gradient);
+  margin-top: 10px;
+  animation: msp-underline 1.2s .9s ease forwards;
+}
+@keyframes msp-underline { to { width: 80px; } }
+.msp-hl-gold {
+  display: block;
+  font-style: italic;
+  font-weight: 400;
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 .msp-hero-rule {
   width: 56px; height: 2px;
-  background: var(--gold);
-  margin: 28px 0;
+  background: var(--gold-gradient);
+  margin: 20px 0 28px;
+  animation: msp-rise .8s .44s ease both;
 }
 .msp-hero-sub {
   font-family: var(--font-cormorant), 'Cormorant Garamond', serif;
-  font-size: clamp(17px, 2vw, 22px);
+  font-size: clamp(17px, 2vw, 21px);
   font-style: italic;
   color: rgba(245,243,239,.65);
   max-width: 560px;
-  line-height: 1.65;
+  line-height: 1.7;
+  animation: msp-rise .8s .58s ease both;
 }
-
-/* â”€â”€ TIMELINE SECTION â”€â”€ */
+@keyframes msp-rise {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: none; }
+}
 .msp-section {
   padding: 80px 8% 100px;
   max-width: 1100px;
@@ -76,8 +162,6 @@ const css = `
   position: relative;
   padding-left: 0;
 }
-
-/* Vertical spine */
 .msp-timeline::before {
   content: '';
   position: absolute;
@@ -87,8 +171,6 @@ const css = `
   width: 1px;
   background: rgba(201,168,76,.25);
 }
-
-/* â”€â”€ TIMELINE ITEM â”€â”€ */
 .msp-item {
   display: flex;
   gap: 0;
@@ -98,12 +180,7 @@ const css = `
   transform: translateX(-20px);
   transition: opacity 0.65s ease, transform 0.65s ease;
 }
-.msp-item.msp-visible {
-  opacity: 1;
-  transform: none;
-}
-
-/* Circle dot column */
+.msp-item.msp-visible { opacity: 1; transform: none; }
 .msp-dot-col {
   position: relative;
   flex-shrink: 0;
@@ -116,14 +193,13 @@ const css = `
   background: var(--black);
   border: 2px solid rgba(201,168,76,.55);
   position: relative; z-index: 2;
-  transition: background 0.3s, border-color 0.3s;
+  transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
 }
 .msp-item:hover .msp-dot {
-  background: var(--gold);
-  border-color: var(--gold);
+  background: linear-gradient(135deg,#ffde59,#ff914d);
+  border-color: #ffde59;
+  box-shadow: 0 0 14px rgba(201,168,76,.5);
 }
-
-/* Text column */
 .msp-text {
   padding-left: 24px;
   flex: 1;
@@ -139,8 +215,11 @@ const css = `
   font-family: var(--font-space-mono), 'Space Mono', monospace;
   font-size: 11px;
   letter-spacing: 0.22em;
-  color: var(--gold);
   text-transform: uppercase;
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   flex-shrink: 0;
 }
 .msp-title {
@@ -157,11 +236,10 @@ const css = `
   color: rgba(245,243,239,.75);
 }
 .msp-body p + p { margin-top: 14px; }
-
 .msp-pullquote {
   margin: 22px 0 4px;
   padding: 18px 24px;
-  border-left: 3px solid var(--gold);
+  border-left: 3px solid rgba(201,168,76,.5);
   background: rgba(201,168,76,.05);
   font-family: var(--font-cormorant), 'Cormorant Garamond', serif;
   font-style: italic;
@@ -169,10 +247,8 @@ const css = `
   line-height: 1.7;
   color: var(--white);
 }
-
-/* â”€â”€ NOW SECTION â”€â”€ */
 .msp-now {
-  background: rgba(201,168,76,.06);
+  background: rgba(201,168,76,.04);
   border-top: 1px solid rgba(201,168,76,.18);
   border-bottom: 1px solid rgba(201,168,76,.18);
   padding: 72px 8%;
@@ -183,7 +259,10 @@ const css = `
   font-size: 9px;
   letter-spacing: 0.32em;
   text-transform: uppercase;
-  color: var(--gold);
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin-bottom: 16px;
 }
 .msp-now-heading {
@@ -201,14 +280,21 @@ const css = `
   gap: 36px;
 }
 .msp-now-card {
-  border-top: 2px solid var(--gold);
+  border-top: 2px solid rgba(201,168,76,.6);
   padding-top: 22px;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity .6s ease, transform .6s ease;
 }
+.msp-now-card.msp-visible { opacity: 1; transform: none; }
 .msp-now-num {
   font-family: var(--font-space-mono), 'Space Mono', monospace;
   font-size: 9px;
   letter-spacing: 0.28em;
-  color: var(--gold);
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin-bottom: 12px;
 }
 .msp-now-card-title {
@@ -226,118 +312,232 @@ const css = `
   line-height: 1.8;
   color: rgba(245,243,239,.6);
 }
-
-/* â”€â”€ RESPONSIVE â”€â”€ */
 @media (max-width: 768px) {
   .msp-hero { padding: 130px 6% 60px; }
   .msp-section { padding: 60px 6% 80px; }
   .msp-now { padding: 60px 6%; }
   .msp-now-grid { grid-template-columns: 1fr; gap: 32px; }
-}
-
-/* Gold gradient text */
-.msp-hero-eyebrow, .msp-year, .msp-now-label, .msp-now-num {
-  background: var(--gold-gradient) !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  background-clip: text !important;
-  color: transparent !important;
+  .msp-hero-glow { display: none; }
 }
 `;
 
-const timelineEntries = [
-  {
-    year: "1999",
-    title: "A Life Begins in Mpohor",
-    body: [
-      "On the 22nd of June 1999, Samuel Kobina Gyasi was born to Mr. Emmanuel Gyasi, a tailor of quiet discipline and industrious hands, and Mrs. Regina Baidoo, a woman whose faith and warmth became the first architecture of his soul. He entered the world as the newest member of a family of brothers — three in all — raised in Mpohor, a town in the Western Region of Ghana that, for all its modesty, would prove to be the first classroom of his life.",
-      "His earliest memories are woven with the sound of a sewing machine and the smell of finished cloth. His father's tailoring shop was not merely a trade — it was a lesson in precision, patience, and the dignity of craftsmanship. His mother's quiet prayers at dawn taught him that a life built on faith is a life built on something unshakeable.",
+const translations = {
+  en: {
+    eyebrow: "Samuel Kobina Gyasi · Born 22 June 1999 · Mpohor, Ghana",
+    headlineMain: "My",
+    headlineItalic: "Story",
+    sub: "Son of a tailor. Third of three brothers. Class Prefect at ten. Scholar across continents. Program Officer. Elder. Mentor. This is the story of a life built chapter by chapter.",
+    nowLabel: "The Present Chapter",
+    nowHeading: "What I Do Now",
+    timeline: [
+      {
+        year: "1999",
+        title: "A Life Begins in Mpohor",
+        body: [
+          "On the 22nd of June 1999, Samuel Kobina Gyasi was born to Mr. Emmanuel Gyasi, a tailor of quiet discipline and industrious hands, and Mrs. Regina Baidoo, a woman whose faith and warmth became the first architecture of his soul. He entered the world as the newest member of a family of brothers — three in all — raised in Mpohor, a town in the Western Region of Ghana that, for all its modesty, would prove to be the first classroom of his life.",
+          "His earliest memories are woven with the sound of a sewing machine and the smell of finished cloth. His father's tailoring shop was not merely a trade — it was a lesson in precision, patience, and the dignity of craftsmanship. His mother's quiet prayers at dawn taught him that a life built on faith is a life built on something unshakeable.",
+        ],
+        quote: "His father's tailoring shop was not merely a trade — it was a lesson in precision, patience, and the dignity of craftsmanship.",
+      },
+      {
+        year: "2009 — 2012",
+        title: "Class Prefect — Ghana-China Friendship School, Mpohor",
+        body: [
+          "At the age of ten, Samuel was appointed Class Prefect at Ghana-China Friendship School, Mpohor — a role he would hold for three years, through to Class 6. It was his first encounter with what it means to lead: to be accountable not only for yourself but for the order, spirit, and progress of those around you.",
+          "He learned that authority without relationship is hollow, and that the trust of peers is harder earned — and more precious — than any title. Three years of prefectship sharpened in him a commitment to servant leadership that has never faded.",
+        ],
+        quote: null,
+      },
+      {
+        year: "2017",
+        title: "Managing Director — Cash Washing Bay, Mpohor",
+        body: [
+          "Before his eighteenth birthday, Samuel founded and ran a car wash business in Mpohor. As Managing Director of Cash Washing Bay, he encountered the full weight of entrepreneurial reality: profit and loss, staff decisions, customer relationships, and the relentless discipline of running a small operation with integrity.",
+          "The experience was an education no classroom could replicate. It built in him an understanding that leadership in institutions begins with leadership of self — and that the instincts of a servant are more valuable than any title.",
+        ],
+        quote: null,
+      },
+      {
+        year: "2018 — 2022",
+        title: "University of Ghana, Legon — Political Science & Information Studies",
+        body: [
+          "Samuel pursued his undergraduate studies at the University of Ghana, Legon, earning a Bachelor's degree. His academic years were marked by intellectual curiosity, student leadership, and a growing conviction that the intersection of knowledge, governance, and collective action held the key to Africa's transformation.",
+          "He served in student leadership bodies, led study groups, and developed a reputation as a thinker who could hold complexity without losing clarity — a skill that would serve him well in every season that followed.",
+        ],
+        quote: null,
+      },
+      {
+        year: "2022",
+        title: "Government of Ghana Scholarship — A Commission, Not a Reward",
+        body: [
+          "The arrival of a Government of Ghana scholarship was, for Samuel, not the end of striving but the beginning of a deeper obligation. He understood — as few do — that a scholarship is a commission: a society's investment in an individual with the expectation that the investment will return, multiplied, to the community.",
+          "This conviction carried him across the Mediterranean to Morocco, where he would pursue graduate study and discover a new dimension of leadership in a new culture.",
+        ],
+        quote: "A scholarship is a commission: a society's investment in an individual with the expectation that the investment will return, multiplied, to the community.",
+      },
+      {
+        year: "2023 — 2025",
+        title: "Master's in Collective Intelligence — UM6P, Morocco",
+        body: [
+          "At the School of Collective Intelligence, University Mohammed VI Polytechnic (UM6P) in Ben Guerir, Morocco, Samuel completed a rigorous Master's programme in Collective Intelligence. The programme fused data science, organisational theory, complexity thinking, and facilitation practice into a discipline with one central question: how do groups think, decide, and create together?",
+          "His thesis and coursework deepened his research vocabulary, but it was the living laboratory of Moroccan life — navigating a new language, culture, and community — that sharpened his understanding of transformation as something that begins not with strategies but with the willingness to be made new.",
+        ],
+        quote: null,
+      },
+      {
+        year: "2025 — Now",
+        title: "Building, Serving, Rooting",
+        body: [
+          "Samuel today inhabits several interconnected spheres of service, each a different expression of the same conviction: that a life worth living is one poured out for others.",
+          "As Junior Program Officer at the School of Collective Intelligence (SCI), UM6P, he designs and facilitates programmes that help organisations and communities unlock collective intelligence. In the Eglise Evangelique Au Maroc, he serves as an elder — leading the intercession team and the library team. And beyond institution, Samuel mentors quietly, faithfully, walking alongside individuals who are navigating the questions he once navigated alone.",
+        ],
+        quote: null,
+      },
     ],
-    quote: "His father's tailoring shop was not merely a trade — it was a lesson in precision, patience, and the dignity of craftsmanship.",
-  },
-  {
-    year: "2009 — 2012",
-    title: "Class Prefect — Ghana-China Friendship School, Mpohor",
-    body: [
-      "At the age of ten, Samuel was appointed Class Prefect at Ghana-China Friendship School, Mpohor — a role he would hold for three years, through to Class 6. It was his first encounter with what it means to lead: to be accountable not only for yourself but for the order, spirit, and progress of those around you.",
-      "He learned that authority without relationship is hollow, and that the trust of peers is harder earned — and more precious — than any title. Three years of prefectship sharpened in him a commitment to servant leadership that has never faded.",
+    nowCards: [
+      {
+        num: "01",
+        title: "Junior Program Officer · SCI, UM6P",
+        body: "At the School of Collective Intelligence, University Mohammed VI Polytechnic (UM6P) in Morocco, Samuel designs and facilitates learning programmes that unlock the collective intelligence of organisations, communities, and teams.",
+      },
+      {
+        num: "02",
+        title: "Elder · Eglise Evangelique Au Maroc",
+        body: "Samuel serves as a church elder in the Eglise Evangelique Au Maroc, responsible for spiritual formation, community accountability, and pastoral care — leading both the intercession team and the library team.",
+      },
+      {
+        num: "03",
+        title: "Mentor",
+        body: "Quietly and faithfully, Samuel walks alongside individuals navigating questions of faith, purpose, leadership, and identity — offering the kind of mentorship he once needed himself.",
+      },
     ],
-    quote: null,
   },
-  {
-    year: "2017",
-    title: "Managing Director — Cash Washing Bay, Mpohor",
-    body: [
-      "Before his eighteenth birthday, Samuel founded and ran a car wash business in Mpohor. As Managing Director of Cash Washing Bay, he encountered the full weight of entrepreneurial reality: profit and loss, staff decisions, customer relationships, and the relentless discipline of running a small operation with integrity.",
-      "The experience was an education no classroom could replicate. It built in him an understanding that leadership in institutions begins with leadership of self — and that the instincts of a servant are more valuable than any title.",
+  fr: {
+    eyebrow: "Samuel Kobina Gyasi · Ne le 22 juin 1999 · Mpohor, Ghana",
+    headlineMain: "Mon",
+    headlineItalic: "Histoire",
+    sub: "Fils d'un tailleur. Troisieme de trois freres. Delegue de classe a dix ans. Chercheur a travers les continents. Programme Officer. Ancien. Mentor. Voici l'histoire d'une vie construite chapitre par chapitre.",
+    nowLabel: "Le Present Chapitre",
+    nowHeading: "Ce Que Je Fais Aujourd'hui",
+    timeline: [
+      {
+        year: "1999",
+        title: "Une Vie Nait a Mpohor",
+        body: [
+          "Le 22 juin 1999, Samuel Kobina Gyasi est ne de M. Emmanuel Gyasi, tailleur d'une discipline tranquille et aux mains laborieuses, et de Mme Regina Baidoo, une femme dont la foi et la chaleur ont constitue la premiere architecture de son ame. Il est entre dans le monde en tant que nouveau membre d'une famille de freres — trois au total — elevee a Mpohor, une ville de la Region Occidentale du Ghana qui, malgre sa modestie, allait devenir la premiere salle de classe de sa vie.",
+          "Ses premiers souvenirs sont tisses du son d'une machine a coudre et de l'odeur du tissu acheve. L'atelier de couture de son pere n'etait pas simplement un commerce — c'etait une lecon de precision, de patience et de dignite de l'artisanat. Les prieres silencieuses de sa mere a l'aube lui ont appris qu'une vie fondee sur la foi est une vie fondee sur quelque chose d'inebranlable.",
+        ],
+        quote: "L'atelier de couture de son pere n'etait pas simplement un commerce — c'etait une lecon de precision, de patience et de dignite de l'artisanat.",
+      },
+      {
+        year: "2009 — 2012",
+        title: "Delegue de Classe — Ghana-China Friendship School, Mpohor",
+        body: [
+          "A l'age de dix ans, Samuel a ete nomme delegue de classe a la Ghana-China Friendship School de Mpohor — une fonction qu'il exercerait pendant trois ans, jusqu'en Classe 6. C'etait sa premiere rencontre avec ce que signifie diriger : etre responsable non seulement de soi-meme, mais aussi de l'ordre, de l'esprit et du progres de ceux qui vous entourent.",
+          "Il a appris que l'autorite sans relation est creuse, et que la confiance des pairs se merite plus difficilement — et est plus precieuse — que tout titre. Trois annees en tant que delegue ont aiguise en lui un engagement envers le leadership au service des autres, qui n'a jamais faibli.",
+        ],
+        quote: null,
+      },
+      {
+        year: "2017",
+        title: "Directeur General — Cash Washing Bay, Mpohor",
+        body: [
+          "Avant son dix-huitieme anniversaire, Samuel a fonde et dirige une entreprise de lavage de voitures a Mpohor. En tant que Directeur General de Cash Washing Bay, il a affonte le poids total de la realite entrepreneuriale : profits et pertes, decisions en matiere de personnel, relations clients et la discipline implacable de gerer une petite entreprise avec integrite.",
+          "L'experience etait une education qu'aucune salle de classe ne pouvait reproduire. Elle lui a inculque la comprehension que le leadership dans les institutions commence par le leadership de soi — et que les instincts d'un serviteur ont plus de valeur que n'importe quel titre.",
+        ],
+        quote: null,
+      },
+      {
+        year: "2018 — 2022",
+        title: "Universite du Ghana, Legon — Sciences Politiques & Sciences de l'Information",
+        body: [
+          "Samuel a poursuivi ses etudes de premier cycle a l'Universite du Ghana, Legon, ou il a obtenu une licence. Ses annees academiques ont ete marquees par la curiosite intellectuelle, le leadership etudiant et la conviction croissante que l'intersection de la connaissance, de la gouvernance et de l'action collective detenait la cle de la transformation de l'Afrique.",
+          "Il a siege dans des organes de direction etudiante, anime des groupes d'etude et s'est forge une reputation de penseur capable de tenir la complexite sans perdre la clarte — une competence qui allait le servir dans chaque saison qui suivrait.",
+        ],
+        quote: null,
+      },
+      {
+        year: "2022",
+        title: "Bourse du Gouvernement du Ghana — Une Mission, Pas Seulement une Recompense",
+        body: [
+          "L'obtention d'une bourse du Gouvernement du Ghana representait pour Samuel non pas la fin de l'effort, mais le debut d'une obligation plus profonde. Il comprit — comme peu le font — qu'une bourse est une mission : l'investissement d'une societe dans un individu, avec l'attente que cet investissement retourne a la communaute, multiplie.",
+          "Cette conviction l'a porte a travers la Mediterranee jusqu'au Maroc, ou il allait poursuivre des etudes superieures et decouvrir une nouvelle dimension du leadership dans une nouvelle culture.",
+        ],
+        quote: "Une bourse est une mission : l'investissement d'une societe dans un individu, avec l'attente que cet investissement retourne a la communaute, multiplie.",
+      },
+      {
+        year: "2023 — 2025",
+        title: "Master en Intelligence Collective — UM6P, Maroc",
+        body: [
+          "A la School of Collective Intelligence de l'Universite Mohammed VI Polytechnique (UM6P) a Ben Guerir, Maroc, Samuel a acheve un programme rigoureux de Master en Intelligence Collective. Le programme fusionnait la science des donnees, la theorie organisationnelle, la pensee de la complexite et les pratiques de facilitation en une discipline avec une question centrale : comment les groupes pensent-ils, decident-ils et creent-ils ensemble ?",
+          "Sa these et ses cours ont approfondi son vocabulaire de recherche, mais c'est le laboratoire vivant de la vie marocaine — explorer une nouvelle langue, culture et communaute — qui a affine sa comprehension de la transformation comme quelque chose qui ne commence pas par des strategies, mais par la volonte d'etre renouvele.",
+        ],
+        quote: null,
+      },
+      {
+        year: "2025 — Maintenant",
+        title: "Construire, Servir, S'Enraciner",
+        body: [
+          "Samuel habite aujourd'hui plusieurs spheres de service interconnectees, chacune etant une expression differente de la meme conviction : qu'une vie qui vaut la peine d'etre vecue est une vie offerte aux autres.",
+          "En tant que Junior Program Officer a la School of Collective Intelligence (SCI), UM6P, il concoit et anime des programmes qui aident les organisations et les communautes a liberer l'intelligence collective. A l'Eglise Evangelique Au Maroc, il sert comme ancien — dirigeant l'equipe d'intercession et l'equipe de bibliotheque. Et au-dela des institutions, Samuel accompagne discretement et fidelement des individus qui naviguent dans les questions qu'il a lui-meme autrefois traversees.",
+        ],
+        quote: null,
+      },
     ],
-    quote: null,
-  },
-  {
-    year: "2018 — 2022",
-    title: "University of Ghana, Legon — Political Science & Information Studies",
-    body: [
-      "Samuel pursued his undergraduate studies at the University of Ghana, Legon, earning a Bachelor's degree. His academic years were marked by intellectual curiosity, student leadership, and a growing conviction that the intersection of knowledge, governance, and collective action held the key to Africa's transformation.",
-      "He served in student leadership bodies, led study groups, and developed a reputation as a thinker who could hold complexity without losing clarity — a skill that would serve him well in every season that followed.",
+    nowCards: [
+      {
+        num: "01",
+        title: "Junior Program Officer · SCI, UM6P",
+        body: "A la School of Collective Intelligence de l'Universite Mohammed VI Polytechnique (UM6P) au Maroc, Samuel concoit et anime des programmes d'apprentissage qui liberent l'intelligence collective des organisations, communautes et equipes.",
+      },
+      {
+        num: "02",
+        title: "Ancien · Eglise Evangelique Au Maroc",
+        body: "Samuel sert comme ancien de l'eglise a l'Eglise Evangelique Au Maroc, responsable de la formation spirituelle, de la responsabilite communautaire et du soin pastoral — dirigeant a la fois l'equipe d'intercession et l'equipe de bibliotheque.",
+      },
+      {
+        num: "03",
+        title: "Mentor",
+        body: "Discretement et fidelement, Samuel accompagne des individus qui naviguent dans des questions de foi, de vocation, de leadership et d'identite — offrant le type de mentorat dont il avait lui-meme besoin autrefois.",
+      },
     ],
-    quote: null,
   },
-  {
-    year: "2022",
-    title: "Government of Ghana Scholarship — A Commission, Not a Reward",
-    body: [
-      "The arrival of a Government of Ghana scholarship was, for Samuel, not the end of striving but the beginning of a deeper obligation. He understood — as few do — that a scholarship is a commission: a society's investment in an individual with the expectation that the investment will return, multiplied, to the community.",
-      "This conviction carried him across the Mediterranean to Morocco, where he would pursue graduate study and discover a new dimension of leadership in a new culture.",
-    ],
-    quote: "A scholarship is a commission: a society's investment in an individual with the expectation that the investment will return, multiplied, to the community.",
-  },
-  {
-    year: "2023 — 2025",
-    title: "Master's in Collective Intelligence — UM6P, Morocco",
-    body: [
-      "At the School of Collective Intelligence, University Mohammed VI Polytechnic (UM6P) in Ben Guerir, Morocco, Samuel completed a rigorous Master's programme in Collective Intelligence. The programme fused data science, organisational theory, complexity thinking, and facilitation practice into a discipline with one central question: how do groups think, decide, and create together?",
-      "His thesis and coursework deepened his research vocabulary, but it was the living laboratory of Moroccan life — navigating a new language, culture, and community — that sharpened his understanding of transformation as something that begins not with strategies but with the willingness to be made new.",
-    ],
-    quote: null,
-  },
-  {
-    year: "2025 — Now",
-    title: "Building, Serving, Rooting",
-    body: [
-      "Samuel today inhabits several interconnected spheres of service, each a different expression of the same conviction: that a life worth living is one poured out for others.",
-      "As Junior Program Officer at the School of Collective Intelligence (SCI), UM6P, he designs and facilitates programmes that help organisations and communities unlock collective intelligence. In the Eglise Évangélique Au Maroc, he serves as an elder — leading the intercession team and the library team. And beyond institution, Samuel mentors quietly, faithfully, walking alongside individuals who are navigating the questions he once navigated alone.",
-    ],
-    quote: null,
-  },
-];
+};
 
-const nowCards = [
-  {
-    num: "01",
-    title: "Junior Program Officer · SCI, UM6P",
-    body: "At the School of Collective Intelligence, University Mohammed VI Polytechnic (UM6P) in Morocco, Samuel designs and facilitates learning programmes that unlock the collective intelligence of organisations, communities, and teams.",
-  },
-  {
-    num: "02",
-    title: "Elder · Eglise Évangélique Au Maroc",
-    body: "Samuel serves as a church elder in the Eglise Évangélique Au Maroc, responsible for spiritual formation, community accountability, and pastoral care — leading both the intercession team and the library team.",
-  },
-  {
-    num: "03",
-    title: "Mentor",
-    body: "Quietly and faithfully, Samuel walks alongside individuals navigating questions of faith, purpose, leadership, and identity — offering the kind of mentorship he once needed himself.",
-  },
+const PARTICLES = [
+  { id: 0, size: 90,  left: 8,  top: 15, dur: 10, delay: 0 },
+  { id: 1, size: 140, left: 22, top: 55, dur: 14, delay: 2 },
+  { id: 2, size: 70,  left: 38, top: 30, dur: 9,  delay: 4 },
+  { id: 3, size: 110, left: 48, top: 70, dur: 12, delay: 1 },
+  { id: 4, size: 80,  left: 15, top: 80, dur: 11, delay: 3 },
+  { id: 5, size: 60,  left: 30, top: 20, dur: 8,  delay: 5 },
+  { id: 6, size: 100, left: 5,  top: 45, dur: 13, delay: 2 },
+  { id: 7, size: 75,  left: 42, top: 10, dur: 9,  delay: 6 },
 ];
 
 export default function MyStoryPage() {
+  const [lang, setLang] = useState<Lang>("en");
+  const t = translations[lang];
+
+  const switchLang = useCallback((l: Lang) => {
+    setLang(l);
+    setTimeout(() => {
+      const els = document.querySelectorAll(".msp-item, .msp-now-card");
+      els.forEach((el) => el.classList.remove("msp-visible"));
+      setTimeout(() => {
+        els.forEach((el, i) => setTimeout(() => el.classList.add("msp-visible"), i * 55));
+      }, 80);
+    }, 50);
+  }, []);
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("msp-visible"); }),
       { threshold: 0.08 }
     );
-    document.querySelectorAll(".msp-item").forEach((el) => observer.observe(el));
+    document.querySelectorAll(".msp-item, .msp-now-card").forEach((el) => observer.observe(el));
     return () => observer.disconnect();
-  }, []);
+  }, [lang]);
 
   return (
     <>
@@ -345,24 +545,57 @@ export default function MyStoryPage() {
       <div className="msp">
         <style>{css}</style>
 
-        {/* â”€â”€ HERO â”€â”€ */}
+        {/* HERO */}
         <div className="msp-hero">
-          <p className="msp-hero-eyebrow">Samuel Kobina Gyasi · Born 22 June 1999 · Mpohor, Ghana</p>
-          <h1 className="msp-hero-headline">My<br />Story</h1>
+          <div className="msp-hero-glow" aria-hidden />
+
+          <div className="msp-particles" aria-hidden>
+            {PARTICLES.map((p) => (
+              <div
+                key={p.id}
+                className="msp-particle"
+                style={{
+                  width: p.size,
+                  height: p.size,
+                  left: `${p.left}%`,
+                  top: `${p.top}%`,
+                  animationDuration: `${p.dur}s`,
+                  animationDelay: `${p.delay}s`,
+                }}
+              />
+            ))}
+          </div>
+
+          <div className="msp-lang-toggle" role="group" aria-label="Language">
+            <button
+              className={`msp-lang-btn${lang === "en" ? " active" : ""}`}
+              onClick={() => switchLang("en")}
+            >
+              EN
+            </button>
+            <button
+              className={`msp-lang-btn${lang === "fr" ? " active" : ""}`}
+              onClick={() => switchLang("fr")}
+            >
+              FR
+            </button>
+          </div>
+
+          <p className="msp-hero-eyebrow">{t.eyebrow}</p>
+          <h1 className="msp-hero-headline">
+            {t.headlineMain}
+            <span className="msp-hl-gold">{t.headlineItalic}</span>
+          </h1>
           <div className="msp-hero-rule" />
-          <p className="msp-hero-sub">
-            Son of a tailor. Third of three brothers. Class Prefect at ten.
-            Scholar across continents. Program Officer. Elder. Mentor.
-            This is the story of a life built chapter by chapter.
-          </p>
+          <p className="msp-hero-sub">{t.sub}</p>
         </div>
 
-        {/* â”€â”€ TIMELINE â”€â”€ */}
+        {/* TIMELINE */}
         <div className="msp-section">
           <div className="msp-timeline">
-            {timelineEntries.map((entry, i) => (
+            {t.timeline.map((entry, i) => (
               <div
-                key={i}
+                key={`${lang}-${i}`}
                 className="msp-item"
                 style={{ transitionDelay: `${i * 0.04}s` }}
               >
@@ -386,14 +619,18 @@ export default function MyStoryPage() {
           </div>
         </div>
 
-        {/* â”€â”€ WHAT I DO NOW â”€â”€ */}
+        {/* WHAT I DO NOW */}
         <section className="msp-now">
           <div className="msp-now-inner">
-            <p className="msp-now-label">The Present Chapter</p>
-            <h2 className="msp-now-heading">What I Do Now</h2>
+            <p className="msp-now-label">{t.nowLabel}</p>
+            <h2 className="msp-now-heading">{t.nowHeading}</h2>
             <div className="msp-now-grid">
-              {nowCards.map((card, i) => (
-                <div key={i} className="msp-now-card">
+              {t.nowCards.map((card, i) => (
+                <div
+                  key={`${lang}-nc-${i}`}
+                  className="msp-now-card"
+                  style={{ transitionDelay: `${i * 0.1}s` }}
+                >
                   <div className="msp-now-num">{card.num}</div>
                   <div className="msp-now-card-title">{card.title}</div>
                   <div className="msp-now-card-body">{card.body}</div>
@@ -404,9 +641,7 @@ export default function MyStoryPage() {
         </section>
       </div>
 
-      <Suspense fallback={null}><SiteFooter /></Suspense>
+      <SiteFooter />
     </>
   );
 }
-
-

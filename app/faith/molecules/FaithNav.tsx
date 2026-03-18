@@ -13,10 +13,9 @@ interface FaithNavProps {
 }
 
 const NAV_LINKS = [
-  { href: "/faith/blog",        label: "Blog"          },
-  { href: "/faith/ebooks",      label: "Ebooks"        },
-  { href: "/credo",             label: "Credo"         },
-  { href: "/faith/discipleship",label: "Discipleship"  },
+  { href: "/faith/blog", label: { en: "Journal",     fr: "Journal"      } },
+  { href: "/my-story",   label: { en: "My Story",   fr: "Mon Histoire"  } },
+  { href: "/faith#connect", label: { en: "Connect",  fr: "Connexion"   } },
 ];
 
 export function FaithNav({ lang, onToggleLang }: FaithNavProps) {
@@ -24,16 +23,15 @@ export function FaithNav({ lang, onToggleLang }: FaithNavProps) {
 
   return (
     <nav>
-      <Link href="/" className="nav-back">{t.nav.back[lang]}</Link>
-      <div className="nav-logo">{t.nav.logo[lang]}</div>
+      <Link href="/faith" className="nav-back">{t.nav.back[lang]}</Link>
       <div className="nav-links">
         {NAV_LINKS.map(({ href, label }) => (
           <Link
             key={href}
             href={href}
-            className={`nav-link${pathname === href ? " nav-link--active" : ""}`}
+            className={`nav-link${pathname.startsWith(href) && href !== "/faith#connect" ? " nav-link--active" : ""}`}
           >
-            {label}
+            {label[lang]}
           </Link>
         ))}
       </div>

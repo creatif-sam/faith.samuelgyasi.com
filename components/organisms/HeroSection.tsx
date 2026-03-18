@@ -5,10 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 
 const heroPillars = [
-  { num: "01", label: "Beliefs",            href: "/faith"           },
-  { num: "02", label: "Leadership",        href: "/leadership"      },
-  { num: "03", label: "Intellectuality",   href: "/intellectuality" },
-  { num: "04", label: "Transformation",    href: "/transformation"  },
+  { num: "01", label: "Faith & Beliefs",  href: "/faith"       },
+  { num: "02", label: "Faith Journal",    href: "/faith/blog"  },
+  { num: "03", label: "My Story",         href: "/my-story"    },
 ];
 
 export function HeroSection() {
@@ -40,20 +39,33 @@ export function HeroSection() {
         <polygon points="400,720 100,260 700,260" />
       </svg>
 
+      {/* ── 3D faith / mental-transformation animation ── */}
+      <div className="hf3d" aria-hidden="true">
+        <div className="hf3d-scene">
+          <div className="hf3d-cross">
+            <div className="hf3d-bar hf3d-bar-v" />
+            <div className="hf3d-bar hf3d-bar-h" />
+          </div>
+          <div className="hf3d-ring hf3d-ring-1" />
+          <div className="hf3d-ring hf3d-ring-2" />
+          <div className="hf3d-ring hf3d-ring-3" />
+        </div>
+      </div>
+
       {/* ── left panel: text ── */}
       <div className="hero-left-v2">
-        <p className="hero-eyebrow-v2">Leader · Group Intelligence Facilitator · Thinker · Transformation Contributor</p>
+        <p className="hero-eyebrow-v2">Christian · Thinker · Servant · Rooted in the Word</p>
         <h1 className="hero-name-v2">
           <span className="hn-first">Samuel</span>
           <span className="hn-last">Gyasi</span>
         </h1>
         <div className="hero-divider-v2" />
         <p className="hero-tagline-v2">
-          &ldquo;Rooted in the Word.<br />Refined by Purpose.<br />Rising to Transform.&rdquo;
+          &ldquo;Rooted in the Word.<br />Walking by Faith.<br />Living for His Glory.&rdquo;
         </p>
         <div className="hero-cta-row">
-          <a href="#about" className="hero-btn-primary">Explore</a>
-          <a href="#connect" className="hero-btn-ghost">Connect</a>
+          <a href="/faith" className="hero-btn-primary">Explore Faith</a>
+          <a href="/faith/blog" className="hero-btn-ghost">Read Journal</a>
         </div>
       </div>
 
@@ -70,9 +82,9 @@ export function HeroSection() {
             className="hero-photo-img"
           />
         </div>
-        <Link href="/group-intelligence-facilitator" className="hero-photo-badge" style={{ textDecoration: 'none', cursor: 'pointer' }}>
-          <span className="hpb-line">Group Intelligence Facilitator</span>
-          <span className="hpb-sub"></span>
+        <Link href="/faith" className="hero-photo-badge" style={{ textDecoration: 'none', cursor: 'pointer' }}>
+          <span className="hpb-line">Walking by Faith · Not by Sight</span>
+          <span className="hpb-sub">2 Corinthians 5:7</span>
         </Link>
       </div>
 

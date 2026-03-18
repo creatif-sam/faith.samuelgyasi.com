@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import { createAnonClient } from "@/lib/supabase/anon";
 
@@ -16,25 +16,22 @@ interface Post {
 }
 
 const SAMPLE_POSTS: Post[] = [
-  { id: "s1", title: "When the Word Becomes the Map: Navigating Life Abroad by Scripture", slug: "when-the-word-becomes-the-map", category: "faith", excerpt: "What does it mean to orient a 21st-century intellectual life by a 2,000-year-old text? Samuel explores the surprising coherence of Biblical wisdom and modern academic life.", created_at: "2026-03-01", read_time_minutes: 7, featured_image_url: null },
-  { id: "s2", title: "Fifteen Years of Leading: What No One Taught Me", slug: "fifteen-years-of-leading", category: "leadership", excerpt: "A personal inventory of hard-won lessons — from Class Prefect to Consortium President — about what leadership actually costs and what it gives back.", created_at: "2026-02-10", read_time_minutes: 6, featured_image_url: null },
-  { id: "s3", title: "SARIMAX and the Sermon: Forecasting, Faith & Uncertainty", slug: "sarimax-and-the-sermon", category: "intellectuality", excerpt: "While modelling irradiation data in Benguerrir, Samuel found unexpected parallels between statistical confidence intervals and theological trust.", created_at: "2026-01-22", read_time_minutes: 5, featured_image_url: null },
-  { id: "s4", title: "Why Africa's Next Revolution Will Be Intellectual", slug: "africa-next-revolution", category: "transformation", excerpt: "Resources are not what Africa lacks. The missing ingredient is epistemic infrastructure — ways of knowing and deciding that belong to Africa itself.", created_at: "2025-12-15", read_time_minutes: 8, featured_image_url: null },
-  { id: "s5", title: "On Gratitude as a Daily Discipline", slug: "on-gratitude", category: "faith", excerpt: "Four scholarships. Three countries. One life. Samuel reflects on the practice of gratitude not as an emotion but as a deliberate posture of the will.", created_at: "2025-11-10", read_time_minutes: 4, featured_image_url: null },
-  { id: "s6", title: "The Servant at the Centre: Rethinking Authority", slug: "servant-at-the-centre", category: "leadership", excerpt: "True authority is not claimed from above — it is granted from below, by the people you serve.", created_at: "2025-10-05", read_time_minutes: 5, featured_image_url: null },
-  { id: "s7", title: "Collective Intelligence: A Primer for the Genuinely Curious", slug: "collective-intelligence-primer", category: "intellectuality", excerpt: "How do groups think? What happens when diverse minds work on the same problem? A beginner's guide to the science Samuel studies every day.", created_at: "2025-09-18", read_time_minutes: 6, featured_image_url: null },
-  { id: "s8", title: "The Scholarship That Changed Everything", slug: "scholarship-that-changed-everything", category: "transformation", excerpt: "The moment a Government of Ghana award letter arrived — and the quiet understanding that it was not a reward for past effort but a commission for future work.", created_at: "2025-08-22", read_time_minutes: 4, featured_image_url: null },
-  { id: "s9", title: "What Proverbs 3:5 Taught Me About Uncertainty", slug: "proverbs-3-5-uncertainty", category: "faith", excerpt: '"Lean not on your own understanding." For a data scientist who builds predictive models, this instruction is both counter-intuitive and deeply clarifying.', created_at: "2025-07-14", read_time_minutes: 4, featured_image_url: null },
-  { id: "s10", title: "Managing Director at 17: What Running a Business Early Taught Me", slug: "managing-director-at-17", category: "leadership", excerpt: "Cash Washing Bay, Mpohor, 2017. Samuel's first experience of P&L, staff decisions, and the sharp education of early entrepreneurship.", created_at: "2025-06-08", read_time_minutes: 5, featured_image_url: null },
-  { id: "s11", title: "Reading Non-Fiction as a Spiritual Practice", slug: "nonfiction-as-spiritual-practice", category: "intellectuality", excerpt: "Every book is a conversation with a mind sharper than the moment. Samuel reflects on how reading non-fiction has been as formative as any formal education.", created_at: "2025-05-20", read_time_minutes: 5, featured_image_url: null },
-  { id: "s12", title: "Ghana to Morocco: The Interior Journey", slug: "ghana-to-morocco", category: "transformation", excerpt: "Geography changes everything — the food, the language, the weather — but the deepest transformation happens in the interior landscape of assumptions and certainties.", created_at: "2025-04-11", read_time_minutes: 7, featured_image_url: null },
+  { id: "s1", title: "When the Word Becomes the Map: Navigating Life Abroad by Scripture", slug: "when-the-word-becomes-the-map", category: "faith", excerpt: "What does it mean to orient a 21st-century life by a 2,000-year-old text? Samuel explores the surprising coherence of Biblical wisdom and modern daily life.", created_at: "2026-03-01", read_time_minutes: 7, featured_image_url: null },
+  { id: "s5", title: "On Gratitude as a Daily Discipline", slug: "on-gratitude", category: "faith", excerpt: "Four scholarships. Three countries. One life. Samuel reflects on the practice of gratitude not as an emotion but as a deliberate posture of the will before God.", created_at: "2025-11-10", read_time_minutes: 4, featured_image_url: null },
+  { id: "s9", title: "What Proverbs 3:5 Taught Me About Uncertainty", slug: "proverbs-3-5-uncertainty", category: "faith", excerpt: '"Lean not on your own understanding." In a world driven by data and analysis, this ancient instruction is both counter-intuitive and deeply clarifying.', created_at: "2025-07-14", read_time_minutes: 4, featured_image_url: null },
+  { id: "s13", title: "Walking by Faith, Not by Sight: A Meditation", slug: "walking-by-faith-not-by-sight", category: "faith", excerpt: "2 Corinthians 5:7 has become the compass of Samuel's life — a verse about trust rooted not in circumstances but in the unchanging character of God.", created_at: "2025-06-02", read_time_minutes: 5, featured_image_url: null },
+  { id: "s14", title: "The Bible as Architecture: How Scripture Builds a Life", slug: "bible-as-architecture", category: "faith", excerpt: "More than a book of promises, the Bible is a blueprint for living. Samuel reflects on how consistent engagement with Scripture has restructured his thinking.", created_at: "2025-05-14", read_time_minutes: 6, featured_image_url: null },
+  { id: "s15", title: "Prayer in the Desert: Lessons from Silence", slug: "prayer-in-the-desert", category: "faith", excerpt: "During a year of study in Morocco, the desert became an unlikely sanctuary. Samuel writes on discovering the power of contemplative prayer.", created_at: "2025-04-01", read_time_minutes: 5, featured_image_url: null },
+  { id: "s16", title: "Lordship and Stewardship: A Christian View of Ambition", slug: "lordship-and-stewardship", category: "faith", excerpt: "Is ambition a sin or a gift? Samuel wrestles with the biblical tension between striving and surrendering, between drive and dependence on God.", created_at: "2025-03-10", read_time_minutes: 6, featured_image_url: null },
+  { id: "s17", title: "The Sermon on the Mount as Life Policy", slug: "sermon-on-the-mount-life-policy", category: "faith", excerpt: "What if the Beatitudes were not poetry but policy? Samuel reads Matthew 5–7 as a practical manifesto for a counter-cultural, Spirit-led life.", created_at: "2025-02-20", read_time_minutes: 8, featured_image_url: null },
+  { id: "s18", title: "Advent in Africa: Waiting as a Spiritual Discipline", slug: "advent-in-africa", category: "faith", excerpt: "In a culture that prizes speed and progress, Advent is a radical act. Samuel reflects on what the season of waiting reveals about trust and expectation.", created_at: "2024-12-01", read_time_minutes: 5, featured_image_url: null },
 ];
 
 const CAT_MAP: Record<string, { label: string; cls: string; href: string }> = {
   faith:          { label: "Faith & Beliefs",  cls: "faith",    href: "/faith" },
-  leadership:     { label: "Leadership",        cls: "lead",     href: "/leadership" },
-  intellectuality:{ label: "Intellectuality",   cls: "intel",    href: "/intellectuality" },
-  transformation: { label: "Transformation",    cls: "trans",    href: "/transformation" },
+  scripture:      { label: "Scripture",         cls: "faith",    href: "/faith" },
+  prayer:         { label: "Prayer",            cls: "faith",    href: "/faith" },
+  devotion:       { label: "Devotion",          cls: "faith",    href: "/faith" },
 };
 
 function fmt(d: string) {
@@ -486,8 +483,44 @@ const journalCss = `
 }
 .gj-f-link:hover { color:var(--parchment); }
 
-/* RESPONSIVE */
-@media(max-width:1100px){
+/* SEARCH BAR */
+.gj-search-wrap {
+  padding:16px 56px;
+  background:var(--parchment);
+  border-bottom:1px solid var(--rule);
+  position:sticky; top:106px; z-index:150;
+}
+.gj-search-inner {
+  display:flex; align-items:center; gap:12px;
+  max-width:600px;
+}
+.gj-search-icon {
+  font-size:14px; color:var(--ink-faint); flex-shrink:0;
+}
+.gj-search-input {
+  flex:1; background:transparent; border:none; border-bottom:1px solid var(--rule);
+  font-family:'Libre Baskerville',serif; font-style:italic; font-size:15px;
+  color:var(--ink); padding:6px 0; outline:none;
+  transition:border-color .25s;
+}
+.gj-search-input::placeholder { color:var(--ink-faint); }
+.gj-search-input:focus { border-bottom-color:var(--gold); }
+.gj-search-clear {
+  background:none; border:none; color:var(--ink-faint); cursor:pointer;
+  font-size:16px; padding:0; line-height:1; transition:color .2s;
+  flex-shrink:0;
+}
+.gj-search-clear:hover { color:var(--ink); }
+.gj-search-count {
+  font-family:'Azeret Mono',monospace; font-size:9px;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--ink-faint);
+  white-space:nowrap;
+}
+.gj-no-results {
+  padding:60px 56px; text-align:center;
+  font-family:'Libre Baskerville',serif; font-style:italic;
+  font-size:17px; color:var(--ink-mid);
+}
   .gj-hero-layout { grid-template-columns:1fr 2px 1fr; }
   .gj-right-col { display:none; }
   .gj-articles-grid { grid-template-columns:1fr 1fr; }
@@ -513,13 +546,62 @@ const journalCss = `
   .gj-footer { grid-template-columns:1fr; gap:16px; padding:28px 20px; }
   .gj-f-links { justify-content:flex-start; }
 }
+
+/* SEARCH BAR */
+.gj-search-wrap {
+  padding:14px 56px;
+  background:var(--parchment);
+  border-bottom:2px solid var(--ink);
+  position:sticky; top:106px; z-index:150;
+}
+.gj-search-inner {
+  display:flex; align-items:center; gap:12px; max-width:640px;
+}
+.gj-search-icon { font-size:13px; color:var(--ink-faint); flex-shrink:0; }
+.gj-search-input {
+  flex:1; background:transparent; border:none;
+  border-bottom:1px solid var(--rule);
+  font-family:'Libre Baskerville',serif; font-style:italic; font-size:14px;
+  color:var(--ink); padding:6px 0; outline:none; transition:border-color .25s;
+}
+.gj-search-input::placeholder { color:var(--ink-faint); }
+.gj-search-input:focus { border-bottom-color:var(--gold); }
+.gj-search-clear {
+  background:none; border:none; color:var(--ink-faint); cursor:pointer;
+  font-size:18px; padding:0; line-height:1; transition:color .2s; flex-shrink:0;
+}
+.gj-search-clear:hover { color:var(--ink); }
+.gj-search-count {
+  font-family:'Azeret Mono',monospace; font-size:8px;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--ink-faint); white-space:nowrap;
+}
+@media(max-width:760px) {
+  .gj-search-wrap { padding:12px 20px; top:90px; }
+}
 `;
 
 export default function BlogPage() {
   const [posts, setPosts] = useState<Post[]>(SAMPLE_POSTS);
   const [filter, setFilter] = useState<string>("all");
+  const [search, setSearch] = useState("");
   const [email, setEmail] = useState("");
   const [subMsg, setSubMsg] = useState("");
+  const searchRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    // sync search from URL on mount
+    const params = new URLSearchParams(window.location.search);
+    const q = params.get("q") ?? "";
+    if (q) setSearch(q);
+  }, []);
+
+  function handleSearch(val: string) {
+    setSearch(val);
+    const url = new URL(window.location.href);
+    if (val.trim()) url.searchParams.set("q", val);
+    else url.searchParams.delete("q");
+    window.history.replaceState({}, "", url.toString());
+  }
 
   const load = useCallback(async () => {
     try {
@@ -546,7 +628,15 @@ export default function BlogPage() {
     return () => observer.disconnect();
   }, [posts, filter]);
 
-  const displayed = filter === "all" ? posts : posts.filter((p) => p.category === filter);
+  const searchTerm = search.trim().toLowerCase();
+  const byFilter = filter === "all" ? posts : posts.filter((p) => p.category === filter);
+  const displayed = searchTerm
+    ? byFilter.filter((p) =>
+        p.title.toLowerCase().includes(searchTerm) ||
+        (p.excerpt ?? "").toLowerCase().includes(searchTerm) ||
+        p.category.toLowerCase().includes(searchTerm)
+      )
+    : byFilter;
   const featured = displayed[0];
   const midPosts = displayed.slice(1, 4);
   const allPosts = displayed;
@@ -583,21 +673,20 @@ export default function BlogPage() {
       {/* NAV */}
       <nav className="gj-nav">
         <div className="gj-masthead">
-          <Link href="/" className="gj-back">Portfolio</Link>
+          <Link href="/faith" className="gj-back">Faith</Link>
           <div className="gj-nav-date">{dateStr}</div>
           <div className="gj-nav-issue">The Journal · Vol. I</div>
         </div>
         <div className="gj-title-row">
-          <div className="gj-journal-name">The Gyasi Journal</div>
-          <div className="gj-tagline">On Faith, Leadership, Intellectuality &amp; Transformation</div>
+          <div className="gj-journal-name">The Faith Journal</div>
+          <div className="gj-tagline">Reflections on Scripture, Prayer &amp; Walking with God</div>
         </div>
         <div className="gj-topics">
           {[
-            { key: "all", label: "All", cls: "" },
+            { key: "all", label: "All Reflections", cls: "" },
             { key: "faith", label: "Faith & Beliefs", cls: "faith" },
-            { key: "leadership", label: "Leadership", cls: "lead" },
-            { key: "intellectuality", label: "Intellectuality", cls: "intel" },
-            { key: "transformation", label: "Transformation", cls: "trans" },
+            { key: "scripture", label: "Scripture", cls: "faith" },
+            { key: "prayer", label: "Prayer", cls: "faith" },
           ].map((t) => (
             <button
               key={t.key}
@@ -609,6 +698,28 @@ export default function BlogPage() {
           ))}
         </div>
       </nav>
+
+      {/* SEARCH BAR */}
+      <div className="gj-search-wrap">
+        <div className="gj-search-inner">
+          <span className="gj-search-icon">◎</span>
+          <input
+            ref={searchRef}
+            type="text"
+            className="gj-search-input"
+            placeholder="Search reflections, scripture, topics…"
+            value={search}
+            onChange={(e) => handleSearch(e.target.value)}
+            aria-label="Search articles"
+          />
+          {search && (
+            <button className="gj-search-clear" onClick={() => handleSearch("")} aria-label="Clear search">&times;</button>
+          )}
+          {search && (
+            <span className="gj-search-count">{displayed.length} result{displayed.length !== 1 ? "s" : ""}</span>
+          )}
+        </div>
+      </div>
 
       {/* HERO */}
       <section id="gj-hero">
@@ -631,7 +742,7 @@ export default function BlogPage() {
                   <span className="dot">{featured.read_time_minutes} min read</span>
                 </div>
                 <Link
-                  href={`/${featured.category}/blog/${featured.slug}`}
+                  href={`/blog/${featured.slug}`}
                   className="gj-feat-readmore"
                 >
                   Continue Reading →
@@ -647,7 +758,7 @@ export default function BlogPage() {
           {/* MIDDLE */}
           <div className="gj-mid-col">
             {midPosts.map((p) => (
-              <Link key={p.id} href={`/${p.category}/blog/${p.slug}`} style={{ textDecoration: "none", color: "inherit" }}>
+              <Link key={p.id} href={`/blog/${p.slug}`} style={{ textDecoration: "none", color: "inherit" }}>
                 <div className="gj-mid-art">
                   <div className={`gj-mid-cat ${getCatCls(p.category)}`}>
                     {CAT_MAP[p.category]?.label ?? p.category}
@@ -666,7 +777,7 @@ export default function BlogPage() {
           <div className="gj-right-col">
             <h3>Most Recent</h3>
             {allPosts.slice(0, 5).map((p, i) => (
-              <Link key={p.id} href={`/${p.category}/blog/${p.slug}`} style={{ textDecoration: "none", color: "inherit" }}>
+              <Link key={p.id} href={`/blog/${p.slug}`} style={{ textDecoration: "none", color: "inherit" }}>
                 <div className="gj-sidebar-item">
                   <div className="gj-si-num">0{i + 1}</div>
                   <div>
@@ -677,8 +788,8 @@ export default function BlogPage() {
               </Link>
             ))}
             <div className="gj-sidebar-quote">
-              <div className="gj-sq-text">&ldquo;The purpose of knowledge is not merely to know — it is to serve.&rdquo;</div>
-              <div className="gj-sq-attr">— Samuel K. Gyasi</div>
+              <div className="gj-sq-text">&ldquo;Trust in the Lord with all your heart, and do not lean on your own understanding.&rdquo;</div>
+              <div className="gj-sq-attr">— Proverbs 3:5</div>
             </div>
           </div>
         </div>
@@ -686,7 +797,7 @@ export default function BlogPage() {
 
       {/* ALL ARTICLES */}
       <div className="gj-section-banner">
-        <span className="gj-sb-title">All Articles</span>
+        <span className="gj-sb-title">{search ? `Search: "${search}"` : "All Articles"}</span>
         <span className="gj-sb-rule" />
         <span className="gj-sb-count">{allPosts.length} {allPosts.length === 1 ? "Essay" : "Essays & Reflections"}</span>
       </div>
@@ -694,11 +805,10 @@ export default function BlogPage() {
       <section id="gj-articles">
         <div className="gj-filter-bar">
           {[
-            { key: "all", label: "All", cls: "" },
+            { key: "all", label: "All Reflections", cls: "" },
             { key: "faith", label: "Faith & Beliefs", cls: "faith" },
-            { key: "leadership", label: "Leadership", cls: "lead" },
-            { key: "intellectuality", label: "Intellectuality", cls: "intel" },
-            { key: "transformation", label: "Transformation", cls: "trans" },
+            { key: "scripture", label: "Scripture", cls: "faith" },
+            { key: "prayer", label: "Prayer", cls: "faith" },
           ].map((t) => (
             <button
               key={t.key}
@@ -711,10 +821,20 @@ export default function BlogPage() {
         </div>
 
         <div className="gj-articles-grid">
+          {allPosts.length === 0 && (
+            <div style={{ gridColumn:"1/-1", padding:"72px 24px", textAlign:"center" }}>
+              <div style={{ fontFamily:"var(--font-playfair),'Playfair Display',serif", fontSize:"32px", fontStyle:"italic", color:"rgba(245,243,239,.25)", marginBottom:"16px" }}>
+                ◆
+              </div>
+              <p style={{ fontFamily:"var(--font-cormorant),'Cormorant Garamond',serif", fontSize:"19px", fontStyle:"italic", color:"rgba(245,243,239,.4)" }}>
+                No essays match &ldquo;{search}&rdquo;. Try a different term or <button onClick={() => handleSearch("")} style={{ background:"none", border:"none", cursor:"pointer", textDecoration:"underline", color:"rgba(201,168,76,.7)", fontSize:"inherit", fontFamily:"inherit", fontStyle:"inherit" }}>clear the search</button>.
+              </p>
+            </div>
+          )}
           {allPosts.map((p, i) => (
             <Link
               key={p.id}
-              href={`/${p.category}/blog/${p.slug}`}
+              href={`/blog/${p.slug}`}
               className={`gj-card${i === 0 ? " wide" : ""}`}
               data-cat={p.category}
             >
@@ -754,7 +874,7 @@ export default function BlogPage() {
       <div id="gj-topics">
         <span className="gj-topics-label">Browse by Topic</span>
         <div className="gj-topic-tags">
-          {["Scripture", "Leadership Philosophy", "Collective Intelligence", "Data Science", "Africa", "Student Life", "Scholarships", "Morocco", "Ghana", "Research", "Gratitude", "Identity", "Purpose", "Technology", "Personal Growth"].map((tag) => (
+          {["Scripture", "Prayer", "Gratitude", "Trust in God", "Biblical Wisdom", "Discipleship", "Christology", "Psalms", "New Testament", "Gospel", "Holy Spirit", "Faith Over Fear", "Providence", "Worship", "Servanthood"].map((tag) => (
             <span key={tag} className="gj-tag">{tag}</span>
           ))}
         </div>
@@ -763,8 +883,8 @@ export default function BlogPage() {
       {/* NEWSLETTER */}
       <section id="gj-newsletter">
         <div>
-          <div className="gj-nl-heading">Subscribe to<br /><span>The Journal</span></div>
-          <p className="gj-nl-subtext">New essays on faith, leadership, intellect, and transformation — delivered when the thinking is ready. No noise. Just depth.</p>
+          <div className="gj-nl-heading">Subscribe to<br /><span>The Faith Journal</span></div>
+          <p className="gj-nl-subtext">New reflections on Scripture, prayer, and walking with God — delivered when the writing is ready. No noise. Just the Word.</p>
         </div>
         <form className="gj-nl-form" onSubmit={handleSubscribe}>
           <div className="gj-nl-label">Your Email Address</div>
@@ -787,14 +907,12 @@ export default function BlogPage() {
 
       {/* FOOTER */}
       <footer className="gj-footer">
-        <div className="gj-f-name">The Gyasi Journal</div>
-        <div className="gj-f-center">© {today.getFullYear()} Samuel Kobina Gyasi · Vol. I</div>
+        <div className="gj-f-name">The Faith Journal</div>
+        <div className="gj-f-center">© {today.getFullYear()} Samuel Kobina Gyasi · Walking by Faith</div>
         <div className="gj-f-links">
-          <Link href="/" className="gj-f-link">Portfolio</Link>
-          <Link href="/leadership" className="gj-f-link">Leadership</Link>
           <Link href="/faith" className="gj-f-link">Faith</Link>
-          <Link href="/intellectuality" className="gj-f-link">Intellect</Link>
-          <Link href="/transformation" className="gj-f-link">Transform</Link>
+          <Link href="/blog" className="gj-f-link">Journal</Link>
+          <Link href="/my-story" className="gj-f-link">My Story</Link>
         </div>
       </footer>
     </div>

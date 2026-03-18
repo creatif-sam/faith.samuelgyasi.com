@@ -5,11 +5,11 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 
 const INTERESTS = [
-  { value: "faith",           label: "Faith & Spirituality" },
-  { value: "leadership",      label: "Leadership"            },
-  { value: "intellectuality", label: "Intellectuality"       },
-  { value: "transformation",  label: "Transformation"        },
-  { value: "group_intelligence", label: "Group Intelligence" },
+  { value: "faith",        label: "Faith & Spirituality" },
+  { value: "theology",     label: "Theology"              },
+  { value: "prayer",       label: "Prayer & Devotion"     },
+  { value: "scripture",    label: "Scripture Study"       },
+  { value: "discipleship", label: "Discipleship"          },
 ];
 
 const socialLinks = [
@@ -52,10 +52,10 @@ const socialLinks = [
 ];
 
 const pillarsLinks = [
-  { href: "/faith",           label: "Beliefs"        },
-  { href: "/leadership",      label: "Leadership"     },
-  { href: "/intellectuality", label: "Intellectuality" },
-  { href: "/transformation",  label: "Transformation" },
+  { href: "/faith",         label: "Faith & Beliefs"      },
+  { href: "/blog",          label: "Faith Journal"         },
+  { href: "/my-story",      label: "My Story"              },
+  { href: "/faith#connect", label: "Connect"              },
 ];
 
 export function SiteFooter() {
@@ -107,7 +107,7 @@ export function SiteFooter() {
       <div className="sf-brand-row">
         <div className="sf-brand-name">Samuel Kobina Gyasi</div>
         <p className="sf-brand-tagline">
-          Rooted in the Word.&ensp;Refined by Purpose.&ensp;Rising to Transform.
+          Rooted in the Word.&ensp;Walking by Faith.&ensp;Living for His Glory.
         </p>
         <div className="sf-social-row">
           {socialLinks.map((s) => (
@@ -133,8 +133,8 @@ export function SiteFooter() {
         <div className="sf-nl-left">
           <p className="sf-nl-heading">Join the Conversation</p>
           <p className="sf-nl-sub">
-            Reflections on faith, leadership, and the pursuit of purpose —
-            delivered to your inbox.
+            Reflections on faith, scripture, and the sacred journey of walking
+            with God — delivered to your inbox.
           </p>
         </div>
         <form className="sf-nl-form" onSubmit={handleSubscribe} noValidate>
@@ -216,18 +216,16 @@ export function SiteFooter() {
         <div className="sf-col">
           <p className="sf-col-label">Site</p>
           <ul className="sf-col-list">
-            <li><Link href="/" className="sf-col-link">Home</Link></li>
-            <li><a href="/#about"   className="sf-col-link">About</a></li>
-            <li><a href="/#vision"  className="sf-col-link">Vision</a></li>
-            <li><a href="/#connect" className="sf-col-link">Contact</a></li>
+            <li><Link href="/faith" className="sf-col-link">Faith</Link></li>
+            <li><Link href="/blog" className="sf-col-link">Journal</Link></li>
+            <li><Link href="/my-story" className="sf-col-link">My Story</Link></li>
           </ul>
         </div>
 
         <div className="sf-col">
           <p className="sf-col-label">Legal</p>
           <ul className="sf-col-list">
-            <li><Link href="/privacy-policy" className="sf-col-link">Privacy Policy</Link></li>
-            <li><Link href="/privacy-policy#cookies" className="sf-col-link">Cookie Policy</Link></li>
+            <li><span className="sf-col-link" style={{opacity:0.5}}>Privacy Policy</span></li>
           </ul>
         </div>
       </div>

@@ -1,11 +1,31 @@
-<a href="https://demo-nextjs-with-supabase.vercel.app/">
-  <img alt="Next.js and Supabase Starter Kit - the fastest way to build apps with Next.js and Supabase" src="https://demo-nextjs-with-supabase.vercel.app/opengraph-image.png">
-  <h1 align="center">Next.js and Supabase Starter Kit</h1>
-</a>
+# Faith — Samuel Kobina Gyasi
 
-<p align="center">
- The fastest way to build apps with Next.js and Supabase
-</p>
+A bilingual (English / French) faith website built with Next.js and Supabase.
+
+## Stack
+
+- **Next.js 15** (App Router)
+- **Supabase** (Auth + Postgres)
+- **Tailwind CSS** + custom CSS design tokens
+- **Resend** (email)
+
+## Getting Started
+
+```bash
+npm install
+npm run dev
+```
+
+Configure `.env.local` with your Supabase and Resend credentials.
+
+## Structure
+
+- `app/faith/` — Main faith landing page (bilingual EN/FR)
+- `app/faith/blog/` — Faith blog listing + articles (bilingual)
+- `app/credo/` — Personal statement of faith
+- `app/api/` — API routes (mail, analytics, testimonials)
+- `app/auth/` — Authentication pages
+- `app/admin/` — Admin panel
 
 <p align="center">
   <a href="#features"><strong>Features</strong></a> ·

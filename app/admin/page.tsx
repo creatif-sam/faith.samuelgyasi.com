@@ -9,7 +9,7 @@ import {
   LayoutDashboard, BarChart3, FileText, Users, MessageSquare,
   Mail, Phone, Send, Inbox, Clock, BookOpen, Eye, Trash2,
   Pencil, Plus, CheckCheck, X, Globe, ExternalLink,
-  Code, AlignLeft, Reply, Menu, Copy, Star, LogOut,
+  Code, AlignLeft, Reply, Menu, Copy, Star, LogOut, Calendar,
 } from "lucide-react";
 
 // ── TYPES ──────────────────────────────────────────────────────────────────
@@ -58,7 +58,34 @@ interface Testimonial {
   published: boolean; sort_order: number; created_at: string;
 }
 
-type Tab = "overview" | "analytics" | "posts" | "subscribers" | "messages" | "mail" | "whatsapp" | "testimonials";
+interface LibraryItem {
+  id: string;
+  title: string;
+  author: string | null;
+  category: "ebook" | "review";
+  description: string | null;
+  rating: number | null;
+  download_url: string | null;
+  cover_url: string | null;
+  published: boolean;
+  sort_order: number;
+  created_at: string;
+}
+
+interface UpcomingEvent {
+  id: string;
+  title: string;
+  description: string | null;
+  date_text: string | null;
+  location: string | null;
+  tag: string | null;
+  category: "intervention" | "masterclass" | "session";
+  published: boolean;
+  sort_order: number;
+  created_at: string;
+}
+
+type Tab = "overview" | "analytics" | "posts" | "subscribers" | "messages" | "mail" | "whatsapp" | "testimonials" | "library" | "upcoming";
 type MailSubTab = "compose" | "inbox" | "sent" | "templates";
 
 const CATEGORIES = ["faith", "leadership", "intellectuality", "transformation"] as const;
@@ -76,6 +103,8 @@ const NAV: { id: Tab; label: string; Icon: React.ComponentType<{ size?: number }
   { id: "mail",        label: "Mail",          Icon: Mail            },
   { id: "whatsapp",    label: "WhatsApp",      Icon: Phone           },
   { id: "testimonials",label: "Testimonials",  Icon: Star            },
+  { id: "library",     label: "Library",       Icon: BookOpen        },
+  { id: "upcoming",    label: "Upcoming",      Icon: Calendar        },
 ];
 
 // ── ADMIN PAGE ─────────────────────────────────────────────────────────────
@@ -97,6 +126,12 @@ export default function AdminPage() {
   const [showTestimonial, setShowTestimonial] = useState(false);
   const [editTestimonial, setEditTestimonial] = useState<Testimonial | null>(null);
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const [libraryItems, setLibraryItems] = useState<LibraryItem[]>([]);
+  const [showLibItem, setShowLibItem] = useState(false);
+  const [editLibItem, setEditLibItem] = useState<LibraryItem | null>(null);
+  const [upcomingEvents, setUpcomingEvents]   = useState<UpcomingEvent[]>([]);
+  const [showUpcoming, setShowUpcoming]       = useState(false);
+  const [editUpcoming, setEditUpcoming]       = useState<UpcomingEvent | null>(null);
   const [confirm, setConfirm]     = useState<{ msg: string; fn: () => Promise<void> } | null>(null);
   const [navOpen, setNavOpen]     = useState(false);
   const router = useRouter();
@@ -110,7 +145,7 @@ export default function AdminPage() {
 
   const load = useCallback(async () => {
     setLoading(true);
-    const [pR, sR, mR, lR, iR, tR, aR, tsR] = await Promise.all([
+    const [pR, sR, mR, lR, iR, tR, aR, tsR, libR, upR] = await Promise.all([
       db.from("blog_posts").select("*").order("created_at", { ascending: false }),
       db.from("newsletter_subscribers").select("*").order("created_at", { ascending: false }),
       db.from("contact_messages").select("*").order("created_at", { ascending: false }),
@@ -120,6 +155,8 @@ export default function AdminPage() {
       db.from("page_views").select("page_path,visitor_id,created_at")
         .gte("created_at", new Date(Date.now() - 30 * 86400000).toISOString()),
       db.from("testimonials").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: false }),
+      db.from("library_items").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: false }),
+      db.from("upcoming_events").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: false }),
     ]);
     setPosts(pR.data ?? []);
     setSubs(sR.data ?? []);
@@ -128,6 +165,8 @@ export default function AdminPage() {
     setInbox(iR.data ?? []);
     setTemplates(tR.data ?? []);
     setTestimonials(tsR.data ?? []);
+    setLibraryItems(libR.data ?? []);
+    setUpcomingEvents(upR.data ?? []);
 
     const views: PageViewRow[] = aR.data ?? [];
     const totalViews     = views.length;
@@ -274,6 +313,40 @@ export default function AdminPage() {
                 }}
               />
             )}
+            {tab === "library" && (
+              <LibraryTab
+                items={libraryItems}
+                onNew={() => { setEditLibItem(null); setShowLibItem(true); }}
+                onEdit={(item) => { setEditLibItem(item); setShowLibItem(true); }}
+                onDelete={(id, title) => ask(`Delete "${title}"?`, async () => {
+                  const { error } = await db.from("library_items").delete().eq("id", id);
+                  if (error) { toast.error("Delete failed"); return; }
+                  toast.success("Deleted"); await load();
+                })}
+                onToggle={async (id, val) => {
+                  const { error } = await db.from("library_items").update({ published: val }).eq("id", id);
+                  if (error) { toast.error("Update failed"); return; }
+                  toast.success(val ? "Published" : "Unpublished"); await load();
+                }}
+              />
+            )}
+            {tab === "upcoming" && (
+              <UpcomingTab
+                events={upcomingEvents}
+                onNew={() => { setEditUpcoming(null); setShowUpcoming(true); }}
+                onEdit={(ev) => { setEditUpcoming(ev); setShowUpcoming(true); }}
+                onDelete={(id, title) => ask(`Delete "${title}"?`, async () => {
+                  const { error } = await db.from("upcoming_events").delete().eq("id", id);
+                  if (error) { toast.error("Delete failed"); return; }
+                  toast.success("Deleted"); await load();
+                })}
+                onToggle={async (id, val) => {
+                  const { error } = await db.from("upcoming_events").update({ published: val }).eq("id", id);
+                  if (error) { toast.error("Update failed"); return; }
+                  toast.success(val ? "Published" : "Unpublished"); await load();
+                }}
+              />
+            )}
           </>
         )}
       </main>
@@ -283,6 +356,22 @@ export default function AdminPage() {
           testimonial={editTestimonial}
           onClose={() => setShowTestimonial(false)}
           onSave={async () => { setShowTestimonial(false); await load(); }}
+          db={db}
+        />
+      )}
+      {showLibItem && (
+        <LibraryItemModal
+          item={editLibItem}
+          onClose={() => setShowLibItem(false)}
+          onSave={async () => { setShowLibItem(false); await load(); }}
+          db={db}
+        />
+      )}
+      {showUpcoming && (
+        <UpcomingEventModal
+          event={editUpcoming}
+          onClose={() => setShowUpcoming(false)}
+          onSave={async () => { setShowUpcoming(false); await load(); }}
           db={db}
         />
       )}
@@ -1238,6 +1327,439 @@ function TestimonialModal({ testimonial, onClose, onSave, db }: {
           <button className="adm-btn adm-btn--ghost" onClick={onClose}>Cancel</button>
           <button className="adm-btn adm-btn--gold" onClick={handleSave} disabled={saving}>
             {saving ? "Saving…" : testimonial ? "Update" : "Add Testimonial"}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+  );
+}
+
+// ── LIBRARY TAB ────────────────────────────────────────────────────────────
+function LibraryTab({ items, onNew, onEdit, onDelete, onToggle }: {
+  items: LibraryItem[];
+  onNew: () => void;
+  onEdit: (item: LibraryItem) => void;
+  onDelete: (id: string, title: string) => void;
+  onToggle: (id: string, val: boolean) => Promise<void>;
+}) {
+  const [subTab, setSubTab] = useState<"ebook" | "review">("ebook");
+  const filtered = items.filter((i) => i.category === subTab);
+  const published = filtered.filter((i) => i.published).length;
+
+  return (
+    <>
+      <div className="adm-header">
+        <div>
+          <div className="adm-page-title">Library</div>
+          <p className="adm-page-sub">{published} published · {filtered.length} {subTab === "ebook" ? "eBooks" : "Reviews"}</p>
+        </div>
+        <button className="adm-btn adm-btn--gold" onClick={onNew} style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+          <Plus size={12} /> Add {subTab === "ebook" ? "eBook" : "Review"}
+        </button>
+      </div>
+
+      {/* Sub-tabs */}
+      <div style={{ display: "flex", gap: "0", borderBottom: "1px solid rgba(240,236,228,.08)", marginBottom: "24px" }}>
+        {(["ebook", "review"] as const).map((t) => (
+          <button key={t} onClick={() => setSubTab(t)} style={{
+            fontFamily: "'Space Mono',monospace", fontSize: "9px", letterSpacing: ".2em", textTransform: "uppercase",
+            padding: "12px 20px", background: "none", border: "none", cursor: "pointer",
+            color: subTab === t ? "#c9a84c" : "rgba(240,236,228,.35)",
+            borderBottom: subTab === t ? "2px solid #c9a84c" : "2px solid transparent",
+            transition: "color .2s",
+          }}>
+            {t === "ebook" ? "eBooks" : "Book Reviews"} ({items.filter((i) => i.category === t).length})
+          </button>
+        ))}
+      </div>
+
+      {filtered.length === 0 ? (
+        <div className="adm-empty" style={{ padding: "60px 0", textAlign: "center" }}>
+          No {subTab === "ebook" ? "eBooks" : "reviews"} yet. Add the first one.
+        </div>
+      ) : (
+        <div className="adm-table-wrap">
+          <table className="adm-table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                {subTab === "review" && <th>Author</th>}
+                {subTab === "review" && <th>Rating</th>}
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filtered.map((item) => (
+                <tr key={item.id}>
+                  <td style={{ color: "#f0ece4", maxWidth: "260px" }}>
+                    <div style={{ fontWeight: 600 }}>{item.title}</div>
+                    {item.description && (
+                      <div style={{ fontSize: "11px", color: "rgba(240,236,228,.4)", marginTop: "2px", fontStyle: "italic" }}>
+                        {item.description.slice(0, 70)}{item.description.length > 70 ? "…" : ""}
+                      </div>
+                    )}
+                  </td>
+                  {subTab === "review" && (
+                    <td style={{ fontSize: "12px", color: "rgba(240,236,228,.5)" }}>{item.author ?? "—"}</td>
+                  )}
+                  {subTab === "review" && (
+                    <td>
+                      {item.rating !== null ? (
+                        <span style={{ color: "#c9a84c", letterSpacing: "2px" }}>
+                          {"★".repeat(item.rating)}{"☆".repeat(5 - item.rating)}
+                        </span>
+                      ) : "—"}
+                    </td>
+                  )}
+                  <td>
+                    <button
+                      className={`adm-badge ${item.published ? "adm-badge--published" : "adm-badge--draft"}`}
+                      style={{ cursor: "pointer", background: "none", border: "none" }}
+                      onClick={() => onToggle(item.id, !item.published)}
+                    >
+                      {item.published ? "Published" : "Draft"}
+                    </button>
+                  </td>
+                  <td>
+                    <div className="adm-action-row">
+                      <button className="adm-btn adm-btn--ghost adm-btn--sm" onClick={() => onEdit(item)}><Pencil size={10} /></button>
+                      <button className="adm-btn adm-btn--danger adm-btn--sm" onClick={() => onDelete(item.id, item.title)}><Trash2 size={10} /></button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </>
+  );
+}
+
+// ── LIBRARY ITEM MODAL ─────────────────────────────────────────────────────
+function LibraryItemModal({ item, onClose, onSave, db }: {
+  item: LibraryItem | null;
+  onClose: () => void;
+  onSave: () => Promise<void>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  db: any;
+}) {
+  const [title,       setTitle]      = useState(item?.title        ?? "");
+  const [author,      setAuthor]     = useState(item?.author       ?? "");
+  const [category,    setCategory]   = useState<"ebook" | "review">(item?.category ?? "ebook");
+  const [description, setDesc]       = useState(item?.description  ?? "");
+  const [rating,      setRating]     = useState(item?.rating       ?? 5);
+  const [downloadUrl, setDlUrl]      = useState(item?.download_url ?? "");
+  const [coverUrl,    setCoverUrl]   = useState(item?.cover_url    ?? "");
+  const [published,   setPub]        = useState(item?.published    ?? false);
+  const [sortOrder,   setSort]       = useState(item?.sort_order   ?? 0);
+  const [saving,      setSaving]     = useState(false);
+
+  async function handleSave() {
+    if (!title.trim()) { toast.error("Title is required"); return; }
+    setSaving(true);
+    const payload = {
+      title: title.trim(),
+      author: author.trim() || null,
+      category,
+      description: description.trim() || null,
+      rating: category === "review" ? rating : null,
+      download_url: category === "ebook" ? (downloadUrl.trim() || null) : null,
+      cover_url: coverUrl.trim() || null,
+      published,
+      sort_order: sortOrder,
+    };
+    const { error } = item
+      ? await db.from("library_items").update(payload).eq("id", item.id)
+      : await db.from("library_items").insert(payload);
+    setSaving(false);
+    if (error) { toast.error("Save failed: " + error.message); return; }
+    toast.success(item ? "Item updated" : "Item added");
+    await onSave();
+  }
+
+  return (
+    <div className="adm-form-overlay" onClick={onClose}>
+      <div className="adm-form-panel" onClick={(e) => e.stopPropagation()}>
+        <div className="adm-form-header">
+          <div className="adm-form-title">{item ? "Edit Library Item" : "New Library Item"}</div>
+          <button className="adm-icon-btn" onClick={onClose}><X size={16} /></button>
+        </div>
+        <div className="adm-form-body">
+          <div className="adm-field">
+            <label className="adm-label">Type</label>
+            <div style={{ display: "flex", gap: "0", border: "1px solid rgba(240,236,228,.08)" }}>
+              {(["ebook", "review"] as const).map((t) => (
+                <button key={t} type="button" onClick={() => setCategory(t)} style={{
+                  flex: 1, padding: "8px", fontFamily: "'Space Mono',monospace", fontSize: "9px",
+                  letterSpacing: ".2em", textTransform: "uppercase", border: "none", cursor: "pointer",
+                  background: category === t ? "rgba(201,168,76,.12)" : "transparent",
+                  color: category === t ? "#c9a84c" : "rgba(240,236,228,.35)",
+                }}>
+                  {t === "ebook" ? "eBook" : "Book Review"}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="adm-form-row">
+            <div className="adm-field">
+              <label className="adm-label">Title *</label>
+              <input className="adm-input" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Title" />
+            </div>
+            <div className="adm-field">
+              <label className="adm-label">{category === "ebook" ? "Author (optional)" : "Author"}</label>
+              <input className="adm-input" value={author} onChange={(e) => setAuthor(e.target.value)} placeholder="Author name" />
+            </div>
+          </div>
+          <div className="adm-field">
+            <label className="adm-label">Description</label>
+            <textarea className="adm-textarea" style={{ minHeight: "80px" }} value={description} onChange={(e) => setDesc(e.target.value)} placeholder="Short description or review excerpt…" />
+          </div>
+          <div className="adm-form-row">
+            <div className="adm-field">
+              <label className="adm-label">Cover Image URL</label>
+              <input className="adm-input" value={coverUrl} onChange={(e) => setCoverUrl(e.target.value)} placeholder="https://…" />
+            </div>
+            {category === "ebook" ? (
+              <div className="adm-field">
+                <label className="adm-label">Download URL</label>
+                <input className="adm-input" value={downloadUrl} onChange={(e) => setDlUrl(e.target.value)} placeholder="https://…" />
+              </div>
+            ) : (
+              <div className="adm-field">
+                <label className="adm-label">Rating (1–5)</label>
+                <div style={{ display: "flex", gap: "4px", alignItems: "center", paddingTop: "6px" }}>
+                  {[1,2,3,4,5].map((n) => (
+                    <button key={n} type="button" onClick={() => setRating(n)} style={{ background: "none", border: "none", cursor: "pointer", fontSize: "22px", color: n <= rating ? "#c9a84c" : "rgba(201,168,76,.2)", padding: "0" }}>★</button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+          <div className="adm-form-row">
+            <div className="adm-field">
+              <label className="adm-label">Sort Order (lower = first)</label>
+              <input className="adm-input" type="number" min={0} value={sortOrder} onChange={(e) => setSort(Number(e.target.value))} />
+            </div>
+          </div>
+          <div className="adm-field" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <input type="checkbox" id="lib-pub" checked={published} onChange={(e) => setPub(e.target.checked)}
+              style={{ width: "16px", height: "16px", accentColor: "#c9a84c", cursor: "pointer" }} />
+            <label htmlFor="lib-pub" className="adm-label" style={{ margin: 0, cursor: "pointer" }}>
+              Publish immediately (visible on site)
+            </label>
+          </div>
+        </div>
+        <div className="adm-form-actions">
+          <button className="adm-btn adm-btn--ghost" onClick={onClose}>Cancel</button>
+          <button className="adm-btn adm-btn--gold" onClick={handleSave} disabled={saving}>
+            {saving ? "Saving…" : item ? "Update" : "Add Item"}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── UPCOMING TAB ──────────────────────────────────────────────────────────
+function UpcomingTab({ events, onNew, onEdit, onDelete, onToggle }: {
+  events: UpcomingEvent[];
+  onNew: () => void;
+  onEdit: (ev: UpcomingEvent) => void;
+  onDelete: (id: string, title: string) => void;
+  onToggle: (id: string, val: boolean) => Promise<void>;
+}) {
+  const [subTab, setSubTab] = useState<"intervention" | "masterclass" | "session">("intervention");
+  const filtered  = events.filter((e) => e.category === subTab);
+  const published = filtered.filter((e) => e.published).length;
+
+  const SUB_TABS: { id: "intervention" | "masterclass" | "session"; label: string }[] = [
+    { id: "intervention", label: "Interventions"  },
+    { id: "masterclass",  label: "Masterclass"    },
+    { id: "session",      label: "Sessions"       },
+  ];
+
+  return (
+    <>
+      <div className="adm-header">
+        <div>
+          <div className="adm-page-title">Upcoming</div>
+          <p className="adm-page-sub">{published} published · {filtered.length} {SUB_TABS.find((t) => t.id === subTab)?.label}</p>
+        </div>
+        <button className="adm-btn adm-btn--gold" onClick={onNew} style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+          <Plus size={12} /> Add Event
+        </button>
+      </div>
+
+      <div style={{ display: "flex", gap: "0", borderBottom: "1px solid rgba(240,236,228,.08)", marginBottom: "24px" }}>
+        {SUB_TABS.map((t) => (
+          <button key={t.id} onClick={() => setSubTab(t.id)} style={{
+            fontFamily: "'Space Mono',monospace", fontSize: "9px", letterSpacing: ".2em", textTransform: "uppercase",
+            padding: "12px 20px", background: "none", border: "none", cursor: "pointer",
+            color: subTab === t.id ? "#c9a84c" : "rgba(240,236,228,.35)",
+            borderBottom: subTab === t.id ? "2px solid #c9a84c" : "2px solid transparent",
+            transition: "color .2s",
+          }}>
+            {t.label} ({events.filter((e) => e.category === t.id).length})
+          </button>
+        ))}
+      </div>
+
+      {filtered.length === 0 ? (
+        <div className="adm-empty" style={{ padding: "60px 0", textAlign: "center" }}>
+          No {SUB_TABS.find((t) => t.id === subTab)?.label ?? "events"} yet. Add the first one.
+        </div>
+      ) : (
+        <div className="adm-table-wrap">
+          <table className="adm-table">
+            <thead>
+              <tr><th>Title</th><th>Date</th><th>Location</th><th>Status</th><th>Actions</th></tr>
+            </thead>
+            <tbody>
+              {filtered.map((ev) => (
+                <tr key={ev.id}>
+                  <td style={{ color: "#f0ece4", maxWidth: "260px" }}>
+                    <div style={{ fontWeight: 600 }}>{ev.title}</div>
+                    {ev.description && (
+                      <div style={{ fontSize: "11px", color: "rgba(240,236,228,.4)", marginTop: "2px", fontStyle: "italic" }}>
+                        {ev.description.slice(0, 70)}{ev.description.length > 70 ? "…" : ""}
+                      </div>
+                    )}
+                  </td>
+                  <td style={{ fontSize: "11px", fontFamily: "'Space Mono',monospace", color: "rgba(240,236,228,.5)", whiteSpace: "nowrap" }}>{ev.date_text ?? "—"}</td>
+                  <td style={{ fontSize: "11px", color: "rgba(240,236,228,.4)" }}>{ev.location ?? "—"}</td>
+                  <td>
+                    <button className={`adm-badge ${ev.published ? "adm-badge--published" : "adm-badge--draft"}`}
+                      style={{ cursor: "pointer", background: "none", border: "none" }}
+                      onClick={() => onToggle(ev.id, !ev.published)}>
+                      {ev.published ? "Published" : "Draft"}
+                    </button>
+                  </td>
+                  <td>
+                    <div className="adm-action-row">
+                      <button className="adm-btn adm-btn--ghost adm-btn--sm" onClick={() => onEdit(ev)}><Pencil size={10} /></button>
+                      <button className="adm-btn adm-btn--danger adm-btn--sm" onClick={() => onDelete(ev.id, ev.title)}><Trash2 size={10} /></button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </>
+  );
+}
+
+// ── UPCOMING EVENT MODAL ──────────────────────────────────────────────────
+function UpcomingEventModal({ event, onClose, onSave, db }: {
+  event: UpcomingEvent | null;
+  onClose: () => void;
+  onSave: () => Promise<void>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  db: any;
+}) {
+  const [title,     setTitle]    = useState(event?.title        ?? "");
+  const [desc,      setDesc]     = useState(event?.description  ?? "");
+  const [dateText,  setDateText] = useState(event?.date_text    ?? "Coming Soon");
+  const [location,  setLocation] = useState(event?.location     ?? "");
+  const [tag,       setTag]      = useState(event?.tag          ?? "");
+  const [category,  setCategory] = useState<"intervention" | "masterclass" | "session">(event?.category ?? "intervention");
+  const [published, setPub]      = useState(event?.published    ?? false);
+  const [sortOrder, setSort]     = useState(event?.sort_order   ?? 0);
+  const [saving,    setSaving]   = useState(false);
+
+  const CAT_LABELS = { intervention: "Intervention", masterclass: "Masterclass", session: "Session" };
+
+  async function handleSave() {
+    if (!title.trim()) { toast.error("Title is required"); return; }
+    setSaving(true);
+    const payload = {
+      title: title.trim(),
+      description: desc.trim() || null,
+      date_text: dateText.trim() || "Coming Soon",
+      location: location.trim() || null,
+      tag: tag.trim() || null,
+      category,
+      published,
+      sort_order: sortOrder,
+    };
+    const { error } = event
+      ? await db.from("upcoming_events").update(payload).eq("id", event.id)
+      : await db.from("upcoming_events").insert(payload);
+    setSaving(false);
+    if (error) { toast.error("Save failed: " + error.message); return; }
+    toast.success(event ? "Event updated" : "Event added");
+    await onSave();
+  }
+
+  return (
+    <div className="adm-form-overlay" onClick={onClose}>
+      <div className="adm-form-panel" onClick={(e) => e.stopPropagation()}>
+        <div className="adm-form-header">
+          <div className="adm-form-title">{event ? "Edit Event" : "New Upcoming Event"}</div>
+          <button className="adm-icon-btn" onClick={onClose}><X size={16} /></button>
+        </div>
+        <div className="adm-form-body">
+          <div className="adm-field">
+            <label className="adm-label">Type</label>
+            <div style={{ display: "flex", gap: "0", border: "1px solid rgba(240,236,228,.08)" }}>
+              {(["intervention", "masterclass", "session"] as const).map((t) => (
+                <button key={t} type="button" onClick={() => setCategory(t)} style={{
+                  flex: 1, padding: "8px", fontFamily: "'Space Mono',monospace", fontSize: "9px",
+                  letterSpacing: ".2em", textTransform: "uppercase", border: "none", cursor: "pointer",
+                  background: category === t ? "rgba(201,168,76,.12)" : "transparent",
+                  color: category === t ? "#c9a84c" : "rgba(240,236,228,.35)",
+                }}>
+                  {CAT_LABELS[t]}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="adm-field">
+            <label className="adm-label">Title *</label>
+            <input className="adm-input" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Event title" />
+          </div>
+          <div className="adm-field">
+            <label className="adm-label">Description</label>
+            <textarea className="adm-textarea" style={{ minHeight: "80px" }} value={desc} onChange={(e) => setDesc(e.target.value)} placeholder="Short description…" />
+          </div>
+          <div className="adm-form-row">
+            <div className="adm-field">
+              <label className="adm-label">Date / Period</label>
+              <input className="adm-input" value={dateText} onChange={(e) => setDateText(e.target.value)} placeholder="e.g. March 2026 or Coming Soon" />
+            </div>
+            <div className="adm-field">
+              <label className="adm-label">Tag label</label>
+              <input className="adm-input" value={tag} onChange={(e) => setTag(e.target.value)} placeholder="e.g. Intervention" />
+            </div>
+          </div>
+          <div className="adm-form-row">
+            <div className="adm-field">
+              <label className="adm-label">Location</label>
+              <input className="adm-input" value={location} onChange={(e) => setLocation(e.target.value)} placeholder="City, Country" />
+            </div>
+            <div className="adm-field">
+              <label className="adm-label">Sort Order (lower = first)</label>
+              <input className="adm-input" type="number" min={0} value={sortOrder} onChange={(e) => setSort(Number(e.target.value))} />
+            </div>
+          </div>
+          <div className="adm-field" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <input type="checkbox" id="up-pub" checked={published} onChange={(e) => setPub(e.target.checked)}
+              style={{ width: "16px", height: "16px", accentColor: "#c9a84c", cursor: "pointer" }} />
+            <label htmlFor="up-pub" className="adm-label" style={{ margin: 0, cursor: "pointer" }}>
+              Publish immediately (visible on site)
+            </label>
+          </div>
+        </div>
+        <div className="adm-form-actions">
+          <button className="adm-btn adm-btn--ghost" onClick={onClose}>Cancel</button>
+          <button className="adm-btn adm-btn--gold" onClick={handleSave} disabled={saving}>
+            {saving ? "Saving…" : event ? "Update" : "Add Event"}
           </button>
         </div>
       </div>

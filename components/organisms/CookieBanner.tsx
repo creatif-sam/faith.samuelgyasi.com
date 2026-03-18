@@ -37,7 +37,7 @@ export function CookieBanner() {
           <p>
             This site uses cookies to improve your experience and to analyse
             visitor behaviour. Read our{" "}
-            <Link href="/privacy-policy#cookies" className="ck-link">
+            <Link href="/faith" className="ck-link">
               Cookie Policy
             </Link>
             .

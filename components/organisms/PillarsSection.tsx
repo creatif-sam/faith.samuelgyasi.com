@@ -4,36 +4,36 @@ import { ScrollReveal } from "@/components/molecules/ScrollReveal";
 
 const pillars = [
   {
-    icon: "◯",
-    name: "Beliefs",
+    icon: "◆",
+    name: "Faith & Beliefs",
     href: "/faith",
     description:
-      "Samuel's life is anchored in deep spiritual conviction and the wisdom found in sacred scripture. His faith is not passive doctrine but a living, active force that shapes how he thinks, leads, and engages with the world — the quiet centre from which everything else radiates.",
+      "Samuel's life is anchored in deep spiritual conviction and the living Word of God. His faith is not passive doctrine but an active force — shaping how he thinks, serves, and walks through every season. Christ is the quiet centre from which everything else radiates.",
     verse: '"Your word is a lamp to my feet and a light to my path." — Psalm 119:105',
   },
   {
-    icon: "▲",
-    name: "Leadership",
-    href: "/leadership",
+    icon: "✦",
+    name: "Scripture & Prayer",
+    href: "/faith",
     description:
-      "Samuel leads as a servant first — drawing from the model of Christ-centred leadership. He inspires, empowers, and calls forth greatness in others, understanding that true authority is born of character, not position.",
-    verse: '"Whoever wants to become great among you must be your servant." — Matthew 20:26',
-  },
-  {
-    icon: "◆",
-    name: "Intellectuality",
-    href: "/intellectuality",
-    description:
-      "The mind is a gift from God and Samuel wields it with discipline. He pursues deep thinking, rigorous study, and intellectual honesty — believing that faith and reason are not adversaries but partners in the search for truth.",
-    verse: '"Love the Lord your God with all your mind." — Matthew 22:37',
+      "Daily engagement with Scripture and a consistent discipline of prayer are the pillars of Samuel's spiritual life. He believes that the Bible is both a love letter and a blueprint — and that prayer is the conversation that builds every relationship with God.",
+    verse: '"Pray without ceasing." — 1 Thessalonians 5:17',
   },
   {
     icon: "◎",
-    name: "Transformation",
-    href: "/transformation",
+    name: "The Word Made Life",
+    href: "/blog",
     description:
-      "Change that lasts begins from within and works outward. Samuel is a catalyst — carrying a vision for individuals, communities, and nations to be renewed, restored, and elevated to the fullness of their God-given potential.",
-    verse: '"Be transformed by the renewing of your mind." — Romans 12:2',
+      "In the Faith Journal, Samuel reflects on how Scripture speaks into modern life — from doubt and certainty, to gratitude and calling. Every reflection is an invitation to encounter the living God through the written Word.",
+    verse: '"The Word became flesh and dwelt among us." — John 1:14',
+  },
+  {
+    icon: "◎",
+    name: "My Story",
+    href: "/my-story",
+    description:
+      "Every life is a testimony. Samuel's journey — from Ghana to Morocco and beyond — is the story of a man learning to trust God in every chapter. His story is not about him; it is about the God who authored it.",
+    verse: '"For we are God\'s masterpiece, created in Christ Jesus to do good works." — Ephesians 2:10',
   },
 ];
 
@@ -44,10 +44,9 @@ export function PillarsSection() {
         <SectionLabel>Four Pillars</SectionLabel>
 
         <ScrollReveal className="pillars-header">
-          <h2 className="pillars-title">Four Pillars of a Life Well-Lived</h2>
+          <h2 className="pillars-title">Four Foundations of Faith</h2>
           <p className="pillars-sub">
-            Every pillar is a commitment — to belief, to excellence, and to the flourishing of
-            humanity.
+            Every pillar is a commitment — to the Word, to prayer, to testimony, and to walking in the fullness of what God has called.
           </p>
         </ScrollReveal>
 

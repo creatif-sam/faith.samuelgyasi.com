@@ -23,8 +23,8 @@ export function ConnectSection() {
               <em>Eternal</em>
             </h2>
             <p className="connect-body">
-              Whether you&apos;re seeking spiritual counsel, leadership collaboration,
-              intellectual dialogue, or transformational partnership — Samuel is open to
+              Whether you are seeking spiritual counsel, a word of encouragement, prayer
+              partnership, or simply a conversation rooted in faith — Samuel is open to
               meaningful connection.
             </p>
           </ScrollReveal>

@@ -233,8 +233,31 @@ body.on-fdp .cursor-ring { border-color: rgba(201,168,76,.35); mix-blend-mode: n
   to{opacity:1;transform:none;}
 }
 
+/* ── CREED DECLARATION STRIP ── */
+.fdp .fdp-creed-strip {
+  background:var(--bg2);
+  padding:40px 56px;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  overflow:hidden;
+}
+.fdp .fcs-inner {
+  display:flex;justify-content:center;align-items:center;
+  gap:36px;flex-wrap:wrap;
+  font-family:'Space Mono',monospace;font-size:9px;
+  letter-spacing:.35em;text-transform:uppercase;
+  background:linear-gradient(90deg,#ffde59,#ff914d);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.fdp .fcs-dot { opacity:.3; }
+@media(max-width:600px){
+  .fdp .fdp-creed-strip { padding:28px 24px; }
+  .fdp .fcs-inner { gap:18px;font-size:8px; }
+}
+
 /* ── SHARED SECTION ── */
-.fdp .section { padding:110px 56px;position:relative;z-index:1; }
+.fdp .section { padding:120px 56px;position:relative;z-index:1; }
 .fdp .s-label {
   font-family:'Space Mono',monospace;font-size:9px;
   letter-spacing:.35em;text-transform:uppercase;
@@ -270,13 +293,13 @@ body.on-fdp .cursor-ring { border-color: rgba(201,168,76,.35); mix-blend-mode: n
 }
 .fdp .belief-card:hover::after { opacity:.5; }
 .fdp .bc-number {
-  font-family:var(--font-playfair),'Playfair Display',serif;font-size:72px;
-  color:transparent;-webkit-text-stroke:1px rgba(201,168,76,.12);
+  font-family:var(--font-playfair),'Playfair Display',serif;font-size:80px;
+  color:transparent;-webkit-text-stroke:1px rgba(201,168,76,.2);
   line-height:1;margin-bottom:8px;
 }
 .fdp .bc-title {
-  font-family:var(--font-playfair),'Playfair Display',serif;font-size:30px;
-  color:var(--white);line-height:1.1;
+  font-family:var(--font-playfair),'Playfair Display',serif;font-size:32px;
+  color:var(--white);line-height:1.1;margin-top:4px;
 }
 .fdp .bc-body {
   font-size:16px;line-height:1.8;color:var(--dim);
@@ -420,7 +443,7 @@ body.on-fdp .cursor-ring { border-color: rgba(201,168,76,.35); mix-blend-mode: n
 .fdp #reflection {
   background:var(--bg2);
   text-align:center;
-  padding:120px 56px;
+  padding:140px 56px;
 }
 .fdp .reflection-inner { max-width:780px;margin:0 auto; }
 .fdp .refl-ornament {
@@ -437,9 +460,9 @@ body.on-fdp .cursor-ring { border-color: rgba(201,168,76,.35); mix-blend-mode: n
 }
 .fdp .refl-quote {
   font-family:var(--font-playfair),'Playfair Display',serif;
-  font-size:clamp(26px,3.5vw,44px);
+  font-size:clamp(28px,3.8vw,50px);
   font-style:italic;color:var(--white);
-  line-height:1.3;
+  line-height:1.25;
 }
 .fdp .refl-quote strong {
   font-style:normal;
@@ -596,6 +619,19 @@ export default function FaithPage() {
 
       {/* ── Hero ── */}
       <FaithHero lang={lang} />
+
+      {/* ── Creed Declaration Strip ── */}
+      <div className="fdp-creed-strip">
+        <div className="fcs-inner">
+          <span>Rooted in the Word</span>
+          <span className="fcs-dot">·</span>
+          <span>Shaped by Prayer</span>
+          <span className="fcs-dot">·</span>
+          <span>Called to Serve</span>
+          <span className="fcs-dot">·</span>
+          <span>Living by Grace</span>
+        </div>
+      </div>
 
       {/* ── Core Beliefs ── */}
       <FaithBeliefs lang={lang} />

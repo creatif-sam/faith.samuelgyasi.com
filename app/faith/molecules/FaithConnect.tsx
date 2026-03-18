@@ -21,11 +21,11 @@ export function FaithConnect({ lang }: { lang: Lang }) {
         <a href="mailto:samuel.gyasi@um6p.ma" className="c-link">
           {c.links.email[lang]} <span>→</span>
         </a>
-        <Link href="/leadership" className="c-link">
-          {c.links.leadership[lang]} <span>→</span>
+        <Link href="/my-story" className="c-link">
+          {c.links.credo[lang]} <span>→</span>
         </Link>
-        <Link href="/" className="c-link">
-          {c.links.portfolio[lang]} <span>→</span>
+        <Link href="/faith/blog" className="c-link">
+          {c.links.blog[lang]} <span>→</span>
         </Link>
       </div>
     </section>

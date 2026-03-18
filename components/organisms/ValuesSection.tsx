@@ -4,28 +4,28 @@ import { useEffect, useRef } from "react";
 
 const values = [
   {
-    letter: "E",
-    word: "Execution",
+    letter: "F",
+    word: "Faith",
     number: "01",
     body:
-      "Ideas without action are just dreams. Samuel converts vision into measurable outcomes — moving with precision from conception to completion, leaving nothing half-done.",
-    glyph: "◎",
-  },
-  {
-    letter: "E",
-    word: "Efficiency",
-    number: "02",
-    body:
-      "Every resource — time, energy, attention — is sacred. Samuel operates with intentional economy, eliminating waste and maximising impact across every domain he touches.",
+      "Not a feeling but a decision — to trust God with every chapter of life. Faith is the foundation on which Samuel stands: confident in what is not yet seen, anchored in what God has already promised.",
     glyph: "◆",
   },
   {
-    letter: "E",
-    word: "Excellence",
+    letter: "G",
+    word: "Grace",
+    number: "02",
+    body:
+      "Everything good in Samuel's life is unearned gift. He receives grace daily and strives to extend it generously — in forgiveness, in patience, in the refusal to reduce any person to their worst moment.",
+    glyph: "✦",
+  },
+  {
+    letter: "W",
+    word: "The Word",
     number: "03",
     body:
-      "Mediocrity is never an option. Excellence is not a ceiling to reach but a standard to embody — in thought, in craft, in character, in service.",
-    glyph: "◯",
+      "Scripture is not a rule book — it is a living encounter with God. Samuel reads, meditates on, and lives by the Bible, believing that the Word of God is the surest light in every kind of darkness.",
+    glyph: "◎",
   },
 ];
 
@@ -344,8 +344,8 @@ export function ValuesSection() {
       <div className="values-inner">
         <header className="values-header">
           <p className="values-eyebrow">Core Values</p>
-          <h2 className="values-title">The Three <em>E&apos;s</em></h2>
-          <p className="values-sub">Principles that govern every endeavour, every decision, every day.</p>
+          <h2 className="values-title">Faith, Grace &amp; <em>The Word</em></h2>
+          <p className="values-sub">Three pillars that anchor every step of this walk with God.</p>
         </header>
 
         <div className="values-grid">

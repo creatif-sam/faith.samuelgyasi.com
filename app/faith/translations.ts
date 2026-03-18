@@ -5,7 +5,7 @@ export type Lang = "en" | "fr";
 
 export const faithTranslations = {
   nav: {
-    back: { en: "Portfolio", fr: "Accueil" },
+    back: { en: "Faith", fr: "Foi" },
     logo: { en: "Samuel Kobina Gyasi", fr: "Samuel Kobina Gyasi" },
     tag:  { en: "Beliefs", fr: "Convictions" },
   },
@@ -139,8 +139,8 @@ export const faithTranslations = {
       en: "Essays on scripture, sacred conviction, and the daily practice of trusting God — pen to paper, heart to page.",
       fr: "Essais sur l'Écriture, la conviction sacrée et la pratique quotidienne de la confiance en Dieu — plume sur papier, cœur sur page.",
     },
-    btnBlog:  { en: "Read the Blog →",              fr: "Lire le Blog →" },
-    btnAll:   { en: "All Writings →",               fr: "Tous les Écrits →" },
+    btnBlog:  { en: "Read the Journal →",           fr: "Lire le Journal →" },
+    btnCredo: { en: "Statement of Faith →",          fr: "Profession de Foi →" },
   },
 
   connect: {
@@ -148,13 +148,13 @@ export const faithTranslations = {
     title2:   { en: "Dialogue &",                   fr: "Spirituel &" },
     titleEm:  { en: "Connection",                   fr: "Connexion" },
     body: {
-      en: "Samuel welcomes conversations about faith, belief, meaning, and the intersection of spirituality with leadership, intellect, and transformation.",
-      fr: "Samuel accueille les conversations sur la foi, la croyance, le sens, et l'intersection de la spiritualité avec le leadership, l'intellect et la transformation.",
+      en: "Samuel welcomes conversations about faith, belief, Scripture, and the sacred journey of walking with God. Whether you have questions or simply seek prayer — you are welcome.",
+      fr: "Samuel accueille les conversations sur la foi, la croyance, l'Écriture et le chemin sacré de suivre Dieu. Que vous ayez des questions ou cherchiez simplement la prière — vous êtes le bienvenu.",
     },
     links: {
       email:      { en: "Email Samuel",             fr: "Écrire à Samuel" },
-      leadership: { en: "Leadership Page",          fr: "Page Leadership" },
-      portfolio:  { en: "Full Portfolio",           fr: "Portfolio Complet" },
+      credo:      { en: "My Story",                fr: "Mon Histoire" },
+      blog:       { en: "Faith Journal",            fr: "Journal de Foi" },
     },
   },
 

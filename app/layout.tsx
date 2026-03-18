@@ -26,28 +26,29 @@ const spaceMono = Space_Mono({
   weight: ["400", "700"],
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://samuelgyasi.com";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://faith.samuelgyasi.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Samuel Gyasi — Spirituality · Leadership · Transformation",
+    default: "Faith — Samuel Kobina Gyasi",
     template: "%s | Samuel Kobina Gyasi",
   },
   description:
-    "Samuel Kobina Gyasi — Rooted in the Word. Refined by Purpose. Rising to Transform. Scholar, leader, and speaker committed to faith-driven transformation.",
+    "A bilingual (EN/FR) space of faith, scripture, and sacred conviction. Samuel Kobina Gyasi — anchored in the Word, walking in purpose.",
   keywords: [
-    "Samuel Gyasi",
-    "Samuel Kobina Gyasi",
-    "Samuel K Gyasi",
-    "Samuel Gyasi Ghana",
-    "Samuel Gyasi leadership",
     "Samuel Gyasi faith",
-    "Samuel Gyasi transformation",
-    "Samuel Gyasi speaker",
-    "Samuel Gyasi scholar",
-    "Ghanaian leader",
-    "faith leadership transformation",
+    "Samuel Kobina Gyasi",
+    "biblical faith",
+    "Christian blog",
+    "foi chrétienne",
+    "Samuel Gyasi Ghana",
+    "faith and scripture",
+    "spiritual reflections",
+    "theology blog bilingual",
+    "Ghanaian Christian writer",
+    "faith over fear",
+    "foi et conviction",
   ],
   authors: [{ name: "Samuel Kobina Gyasi", url: siteUrl }],
   creator: "Samuel Kobina Gyasi",
@@ -56,10 +57,10 @@ export const metadata: Metadata = {
     type: "profile",
     locale: "en_US",
     url: siteUrl,
-    siteName: "Samuel Kobina Gyasi",
-    title: "Samuel Kobina Gyasi — Spirituality · Leadership · Transformation",
+    siteName: "Samuel Kobina Gyasi — Faith",
+    title: "Faith — Samuel Kobina Gyasi",
     description:
-      "Rooted in the Word. Refined by Purpose. Rising to Transform.",
+      "Bilingual reflections on faith, scripture, and the sacred journey of trusting God.",
     images: [
       {
         url: "/photo-hero.png",
@@ -73,8 +74,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Samuel Kobina Gyasi",
-    description: "Rooted in the Word. Refined by Purpose. Rising to Transform.",
+    title: "Faith — Samuel Kobina Gyasi",
+    description: "Bilingual reflections on faith, scripture, and the sacred journey of trusting God.",
     images: ["/photo-hero.png"],
     creator: "@samuel_gsi",
   },
