@@ -1,4 +1,3 @@
-import { Navbar } from "@/components/organisms/Navbar";
 import { HeroSection } from "@/components/organisms/HeroSection";
 import { PillarsSection } from "@/components/organisms/PillarsSection";
 import { ValuesSection } from "@/components/organisms/ValuesSection";
@@ -12,7 +11,6 @@ import { SiteFooter } from "@/components/organisms/SiteFooter";
 export default function Home() {
   return (
     <>
-      <Navbar />
       <HeroSection />
       <PillarsSection />
       <ValuesSection />

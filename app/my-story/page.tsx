@@ -1,7 +1,6 @@
 ﻿"use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { Navbar } from "@/components/organisms/Navbar";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
 
 type Lang = "en" | "fr";
@@ -541,7 +540,6 @@ export default function MyStoryPage() {
 
   return (
     <>
-      <Navbar />
       <div className="msp">
         <style>{css}</style>
 

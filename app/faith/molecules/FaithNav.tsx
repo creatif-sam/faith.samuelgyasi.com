@@ -13,9 +13,9 @@ interface FaithNavProps {
 }
 
 const NAV_LINKS = [
-  { href: "/faith/blog", label: { en: "Journal",     fr: "Journal"      } },
-  { href: "/my-story",   label: { en: "My Story",   fr: "Mon Histoire"  } },
-  { href: "/faith#connect", label: { en: "Connect",  fr: "Connexion"   } },
+  { href: "/blog",      label: { en: "Journal",     fr: "Journal"      } },
+  { href: "/my-story", label: { en: "My Story",   fr: "Mon Histoire"  } },
+  { href: "/#connect", label: { en: "Connect",    fr: "Connexion"     } },
 ];
 
 export function FaithNav({ lang, onToggleLang }: FaithNavProps) {

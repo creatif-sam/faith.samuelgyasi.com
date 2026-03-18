@@ -5,6 +5,7 @@ import { CustomCursor } from "@/components/organisms/CustomCursor";
 import { CookieBanner } from "@/components/organisms/CookieBanner";
 import { Analytics } from "@/components/Analytics";
 import { Providers } from "./providers";
+import { NavWrapper } from "@/components/organisms/NavWrapper";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -144,6 +145,7 @@ export default function RootLayout({
         <Providers>
           <CustomCursor />
           <Analytics />
+          <NavWrapper />
           {children}
           <CookieBanner />
         </Providers>

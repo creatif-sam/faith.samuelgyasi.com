@@ -2,7 +2,6 @@
 
 import { Suspense, useEffect, useState, useCallback } from "react";
 import Link from "next/link";
-import { Navbar } from "@/components/organisms/Navbar";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
 import { createAnonClient } from "@/lib/supabase/anon";
 
@@ -291,7 +290,6 @@ export default function BookReviewsPage() {
 
   return (
     <>
-      <Navbar />
       <div className="reviews-pg">
         <style>{css}</style>
 

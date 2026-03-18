@@ -1,7 +1,6 @@
 "use client";
 
 import { Suspense, useEffect } from "react";
-import { Navbar } from "@/components/organisms/Navbar";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
 
 const css = `
@@ -279,7 +278,6 @@ export default function CredoPage() {
 
   return (
     <>
-      <Navbar />
       <div className="credo-pg">
         <style>{css}</style>
 

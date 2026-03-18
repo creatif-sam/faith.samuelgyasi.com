@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Navbar } from "@/components/organisms/Navbar";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
 import { createClient } from "@/lib/supabase/client";
 
@@ -338,7 +337,6 @@ export default function UpcomingPage() {
 
   return (
     <>
-      <Navbar />
       <div className="up-pg">
         <style>{css}</style>
 

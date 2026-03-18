@@ -2,7 +2,6 @@
 
 import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
-import { Navbar } from "@/components/organisms/Navbar";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
 
 const css = `
@@ -211,7 +210,6 @@ export default function LibraryPage() {
 
   return (
     <>
-      <Navbar />
       <div className="lib-pg">
         <style>{css}</style>
 

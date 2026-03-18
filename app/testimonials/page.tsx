@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Navbar } from "@/components/organisms/Navbar";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
 
 interface Testimonial {
@@ -354,7 +353,6 @@ export default function TestimonialsPage() {
 
   return (
     <>
-      <Navbar />
       <div className="tm-pg">
         <style>{css}</style>
 
