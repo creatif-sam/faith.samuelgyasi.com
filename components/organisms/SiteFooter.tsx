@@ -53,7 +53,7 @@ const socialLinks = [
 
 const pillarsLinks = [
   { href: "/faith",         label: "Faith & Beliefs"      },
-  { href: "/blog",          label: "Faith Journal"         },
+  { href: "/blog",          label: "Journal"               },
   { href: "/my-story",      label: "My Story"              },
   { href: "/faith#connect", label: "Connect"              },
 ];

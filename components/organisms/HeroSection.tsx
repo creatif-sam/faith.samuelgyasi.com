@@ -65,7 +65,7 @@ export function HeroSection() {
         </p>
         <div className="hero-cta-row">
           <a href="/faith" className="hero-btn-primary">Explore Faith</a>
-          <a href="/faith/blog" className="hero-btn-ghost">Read Journal</a>
+          <a href="/blog" className="hero-btn-ghost">Read Journal</a>
         </div>
       </div>
 

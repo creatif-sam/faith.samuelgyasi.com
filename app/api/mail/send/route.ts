@@ -2,11 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { createClient } from "@/lib/supabase/server";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
 const FROM = process.env.RESEND_FROM_EMAIL ?? "impact@samuelgyasi.com";
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://samuelgyasi.com";
 
 export async function POST(req: NextRequest) {
+  const resend = new Resend(process.env.RESEND_API_KEY);
   const supabase = await createClient();
   const {
     data: { user },
