@@ -261,7 +261,7 @@ export default function BookReviewsPage() {
       const { data } = await sb
         .from("library_items")
         .select("*")
-        .eq("category_type", "review")
+        .eq("category", "review")
         .eq("published", true)
         .order("sort_order", { ascending: true })
         .order("created_at", { ascending: false });

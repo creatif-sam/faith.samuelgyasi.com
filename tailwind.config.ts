@@ -10,7 +10,31 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        display: ["Playfair Display", "Georgia", "serif"],
+        serif:   ["Cormorant Garamond", "Georgia", "serif"],
+        mono:    ["Space Mono", "Courier New", "monospace"],
+      },
+      keyframes: {
+        "adm-pulse": {
+          "0%, 80%, 100%": { opacity: "0.15", transform: "scale(0.8)" },
+          "40%":           { opacity: "1",    transform: "scale(1.1)" },
+        },
+      },
+      animation: {
+        "adm-pulse": "adm-pulse 1.2s ease-in-out infinite",
+      },
       colors: {
+        gold: {
+          DEFAULT: "#d4a843",
+          light:   "#f0cc7a",
+          dark:    "#c49838",
+        },
+        adm: {
+          bg:      "#07080c",
+          sidebar: "#0d0e15",
+          border:  "rgba(255,255,255,0.06)",
+        },
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {

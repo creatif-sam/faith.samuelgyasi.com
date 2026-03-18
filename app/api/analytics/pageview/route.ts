@@ -2,12 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 
 export async function POST(req: NextRequest) {
-  const body = await req.json();
-  const { path, visitorId, referrer } = body as {
-    path?: string;
-    visitorId?: string;
-    referrer?: string;
-  };
+  let body: { path?: string; visitorId?: string; referrer?: string } = {};
+  try {
+    const text = await req.text();
+    if (text) body = JSON.parse(text);
+  } catch {
+    return NextResponse.json({ ok: true });
+  }
+  const { path, visitorId, referrer } = body;
 
   if (!path || !visitorId) {
     return NextResponse.json({ ok: true }); // silent ignore

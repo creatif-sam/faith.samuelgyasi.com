@@ -215,7 +215,7 @@ export default function EbooksPage() {
       const { data } = await sb
         .from("library_items")
         .select("*")
-        .eq("category_type", "ebook")
+        .eq("category", "ebook")
         .eq("published", true)
         .order("sort_order", { ascending: true })
         .order("created_at", { ascending: false });
