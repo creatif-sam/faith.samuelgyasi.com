@@ -74,15 +74,8 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* ── centre: photo + fire ── */}
+      {/* ── centre: photo ── */}
       <div className="hero-photo-wrap" ref={photoRef}>
-        <div className="hero-fire" aria-hidden="true">
-          <div className="hero-fire-flame" />
-          <div className="hero-fire-flame" />
-          <div className="hero-fire-flame" />
-          <div className="hero-fire-flame" />
-          <div className="hero-fire-flame" />
-        </div>
         <div className="hero-photo-glow" />
         <div className="hero-photo-frame">
           <Image

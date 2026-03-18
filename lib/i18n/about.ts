@@ -8,6 +8,33 @@ export const aboutTranslations = {
     fr: "Une Vie Bâtie sur le But, la Foi et la Croissance Collective",
   },
 
+  // ── Transformation tagline ────────────────────────────────────
+  transforming: {
+    label:    { en: "The Journey",          fr: "Le Parcours"       },
+    heading:  { en: "The Transformation",   fr: "La Transformation" },
+    steps: [
+      { en: "Frustrated",  fr: "Égarés"    },
+      { en: "Followers",   fr: "Engagés"   },
+      { en: "Fathers",     fr: "Établis"   },
+      { en: "Figures",     fr: "Élevés"    },
+    ],
+    description: {
+      en: "Transforming the Frustrated into Followers, Followers into Fathers, Fathers into Figures.",
+      fr: "Transformer les Égarés en Engagés, les Engagés en Établis, les Établis en Élevés.",
+    },
+  },
+
+  // ── 4 Cardinal Points ─────────────────────────────────────────
+  cardinalPoints: {
+    label:   { en: "The 4 Cardinal Points", fr: "Les 4 Points Cardinaux" },
+    points: [
+      { en: "Faith and Beliefs",          fr: "Foi et Convictions"           },
+      { en: "Scripture and Prayer",       fr: "Écriture et Prière"           },
+      { en: "Technology and Productivity",fr: "Technologie et Productivité"  },
+      { en: "Mentorship",                 fr: "Mentorat"                     },
+    ],
+  },
+
   // ── 7 Mountains of Culture section ──────────────────────────
   mountains: {
     intro: {

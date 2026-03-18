@@ -255,9 +255,9 @@ const beliefs = [
     verse: "\"And day by day, attending the temple together and breaking bread in their homes, they received their food with glad and generous hearts.\" — Acts 2:46",
   },
   {
-    title: "I believe that suffering has redemptive meaning",
-    body: "I do not celebrate suffering. But I have learned — at cost — that suffering is not the evidence of God's absence. It is often the furnace in which He does His deepest work. Every trial I have walked through has, in retrospect, been the place where I was most formed, most dependent, most certain of His presence.",
-    verse: "\"And we know that for those who love God all things work together for good, for those who are called according to his purpose.\" — Romans 8:28",
+    title: "I believe that Intelligence and Spirituality are not in conflict — they are companions",
+    body: "The world has long presented a false choice between the life of the mind and the life of the Spirit. I reject that choice. Jesus — our perfect model — was a carpenter who confounded the Pharisees, teachers, and scholars. Daniel, taken as a captive into Babylon, rose to the pinnacle of an empire through both the wisdom of God and the sharpest of minds: 'in whom was no blemish, but well-favoured, and skilful in all wisdom, and cunning in knowledge.' I finished my undergraduate studies at the University of Ghana as the top student in my cohort — while being actively, publicly, and deeply committed to my faith. That is not a contradiction. It is a confirmation. Paul, one of the greatest intellects of the ancient world, did not abandon his mind when he met Christ — he consecrated it. I have seen in the lives of Jesus, Paul, and Daniel, and in the arc of my own life, that the fear of God is not the enemy of inquiry. It is its foundation.",
+    verse: "\"But Daniel resolved that he would not defile himself... As for these four youths, God gave them learning and skill in all literature and wisdom.\" — Daniel 1:8, 17",
   },
   {
     title: "I believe I was made for a purpose larger than myself",

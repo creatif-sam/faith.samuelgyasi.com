@@ -200,8 +200,10 @@ export default function AdminPage() {
         <button className="adm-hamburger" onClick={() => setNavOpen(!navOpen)} aria-label="Menu">
           <Menu size={18} />
         </button>
-        <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "14px", fontWeight: 700, color: "#f0ece4" }}>Admin</span>
-        <Link href="/" style={{ color: "rgba(240,236,228,.4)", lineHeight: 0 }}><Globe size={16} /></Link>
+        <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "14px", fontWeight: 700, color: "#f0ece4", display: "flex", alignItems: "center", gap: "8px" }}>
+          <span style={{ color: "#c9a84c", fontSize: "12px" }}>✦</span>Samuel Gyasi
+        </span>
+        <Link href="/" style={{ color: "rgba(240,236,228,.35)", lineHeight: 0 }}><Globe size={16} /></Link>
       </div>
 
       {/* Sidebar */}

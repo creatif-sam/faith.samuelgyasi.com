@@ -3,13 +3,42 @@
 import { useState, useRef } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
+import { useLang } from "@/lib/i18n";
+
+const ft = {
+  tagline:       { en: "Rooted in the Word.\u2003Walking by Faith.\u2003Living for His Glory.", fr: "Ancr\u00e9 dans la Parole.\u2003Marchant par la Foi.\u2003Vivant pour Sa Gloire." },
+  nlHeading:     { en: "Join the Conversation",               fr: "Rejoindre la Conversation" },
+  nlSub:         { en: "Reflections on faith, scripture, and the sacred journey of walking with God \u2014 delivered to your inbox.", fr: "R\u00e9flexions sur la foi, les \u00c9critures et le voyage sacr\u00e9 de marcher avec Dieu \u2014 livr\u00e9es dans votre bo\u00eete mail." },
+  interestedIn:  { en: "I\u2019m interested in:",             fr: "Je m\u2019int\u00e9resse \u00e0\u00a0:" },
+  emailPh:       { en: "Your email address",                  fr: "Votre adresse email" },
+  emailLabel:    { en: "Email address",                       fr: "Adresse email" },
+  btnIdle:       { en: "Subscribe \u2192",                    fr: "S\u2019abonner \u2192" },
+  btnLoading:    { en: "\u2026",                              fr: "\u2026" },
+  btnSuccess:    { en: "\u2713 Subscribed",                   fr: "\u2713 Abonn\u00e9" },
+  errEmail:      { en: "Please enter a valid email address.", fr: "Veuillez entrer une adresse email valide." },
+  errAlready:    { en: "You\u2019re already subscribed \u2014 thank you!", fr: "Vous \u00eates d\u00e9j\u00e0 abonn\u00e9 \u2014 merci\u00a0!" },
+  successMsg:    { en: "Subscribed! Expect words that matter.", fr: "Abonn\u00e9\u00a0! Attendez-vous \u00e0 des mots qui comptent." },
+  errGeneric:    { en: "Something went wrong. Please try again.", fr: "Une erreur s\u2019est produite. Veuillez r\u00e9essayer." },
+  colPillars:    { en: "Pillars",     fr: "Piliers"     },
+  colConnect:    { en: "Connect",     fr: "Contact"     },
+  colSite:       { en: "Site",        fr: "Site"        },
+  colLegal:      { en: "Legal",       fr: "L\u00e9gal"  },
+  linkFaith:     { en: "Faith & Beliefs", fr: "Foi &amp; Convictions" },
+  linkJournal:   { en: "Journal",     fr: "Journal"     },
+  linkStory:     { en: "My Story",    fr: "Mon Histoire"},
+  linkConnect:   { en: "Connect",     fr: "Contact"     },
+  linkEmail:     { en: "Email",       fr: "Email"       },
+  linkPrivacy:   { en: "Privacy Policy", fr: "Politique de Confidentialit\u00e9" },
+  copyright:     { en: "All Rights Reserved", fr: "Tous Droits R\u00e9serv\u00e9s" },
+  builtWith:     { en: "Built with purpose", fr: "Construit avec intention" },
+};
 
 const INTERESTS = [
-  { value: "faith",        label: "Faith & Spirituality" },
-  { value: "theology",     label: "Theology"              },
-  { value: "prayer",       label: "Prayer & Devotion"     },
-  { value: "scripture",    label: "Scripture Study"       },
-  { value: "discipleship", label: "Discipleship"          },
+  { value: "faith",        en: "Faith & Spirituality", fr: "Foi & Spiritualit\u00e9" },
+  { value: "theology",     en: "Theology",             fr: "Th\u00e9ologie"          },
+  { value: "prayer",       en: "Prayer & Devotion",    fr: "Pri\u00e8re & D\u00e9votion" },
+  { value: "scripture",    en: "Scripture Study",      fr: "\u00c9tude des \u00c9critures" },
+  { value: "discipleship", en: "Discipleship",         fr: "Disciples"               },
 ];
 
 const socialLinks = [
@@ -51,14 +80,8 @@ const socialLinks = [
   },
 ];
 
-const pillarsLinks = [
-  { href: "/faith",         label: "Faith & Beliefs"      },
-  { href: "/blog",          label: "Journal"               },
-  { href: "/my-story",      label: "My Story"              },
-  { href: "/faith#connect", label: "Connect"              },
-];
-
 export function SiteFooter() {
+  const { lang } = useLang();
   const [email, setEmail]         = useState("");
   const [interests, setInterests] = useState<string[]>([]);
   const [status, setStatus]       = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -75,7 +98,7 @@ export function SiteFooter() {
     e.preventDefault();
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setStatus("error");
-      setMessage("Please enter a valid email address.");
+      setMessage(ft.errEmail[lang]);
       return;
     }
     setStatus("loading");
@@ -86,18 +109,18 @@ export function SiteFooter() {
         .insert({ email: email.trim().toLowerCase(), interests });
       if (error && error.code === "23505") {
         setStatus("success");
-        setMessage("You're already subscribed — thank you!");
+        setMessage(ft.errAlready[lang]);
       } else if (error) {
         throw error;
       } else {
         setStatus("success");
-        setMessage("Subscribed! Expect words that matter.");
+        setMessage(ft.successMsg[lang]);
         setEmail("");
         setInterests([]);
       }
     } catch {
       setStatus("error");
-      setMessage("Something went wrong. Please try again.");
+      setMessage(ft.errGeneric[lang]);
     }
   }
 
@@ -106,9 +129,7 @@ export function SiteFooter() {
       {/* ── TOP BRAND ROW ── */}
       <div className="sf-brand-row">
         <div className="sf-brand-name">Samuel Kobina Gyasi</div>
-        <p className="sf-brand-tagline">
-          Rooted in the Word.&ensp;Walking by Faith.&ensp;Living for His Glory.
-        </p>
+        <p className="sf-brand-tagline">{ft.tagline[lang]}</p>
         <div className="sf-social-row">
           {socialLinks.map((s) => (
             <a
@@ -131,16 +152,12 @@ export function SiteFooter() {
       {/* ── NEWSLETTER ── */}
       <div className="sf-newsletter">
         <div className="sf-nl-left">
-          <p className="sf-nl-heading">Join the Conversation</p>
-          <p className="sf-nl-sub">
-            Reflections on faith, scripture, and the sacred journey of walking
-            with God — delivered to your inbox.
-          </p>
+          <p className="sf-nl-heading">{ft.nlHeading[lang]}</p>
+          <p className="sf-nl-sub">{ft.nlSub[lang]}</p>
         </div>
         <form className="sf-nl-form" onSubmit={handleSubscribe} noValidate>
-          {/* Interest checkboxes */}
           <div className="sf-nl-interests">
-            <p className="sf-nl-interests-label">I&apos;m interested in:</p>
+            <p className="sf-nl-interests-label">{ft.interestedIn[lang]}</p>
             <div className="sf-nl-checks">
               {INTERESTS.map((item) => (
                 <label key={item.value} className="sf-nl-check-item">
@@ -152,7 +169,7 @@ export function SiteFooter() {
                     onChange={() => toggleInterest(item.value)}
                     disabled={status === "loading" || status === "success"}
                   />
-                  <span>{item.label}</span>
+                  <span>{item[lang]}</span>
                 </label>
               ))}
             </div>
@@ -163,17 +180,17 @@ export function SiteFooter() {
             type="email"
             value={email}
             onChange={(e) => { setEmail(e.target.value); setStatus("idle"); }}
-            placeholder="Your email address"
+            placeholder={ft.emailPh[lang]}
             className="sf-nl-input"
             disabled={status === "loading" || status === "success"}
-            aria-label="Email address"
+            aria-label={ft.emailLabel[lang]}
           />
           <button
             type="submit"
             className="sf-nl-btn"
             disabled={status === "loading" || status === "success"}
           >
-            {status === "loading" ? "…" : status === "success" ? "✓ Subscribed" : "Subscribe →"}
+            {status === "loading" ? ft.btnLoading[lang] : status === "success" ? ft.btnSuccess[lang] : ft.btnIdle[lang]}
           </button>
           {message && (
             <p className={`sf-nl-msg ${status === "error" ? "sf-nl-msg--error" : ""}`}>
@@ -189,20 +206,19 @@ export function SiteFooter() {
       {/* ── LINKS COLUMNS ── */}
       <div className="sf-columns">
         <div className="sf-col">
-          <p className="sf-col-label">Pillars</p>
+          <p className="sf-col-label">{ft.colPillars[lang]}</p>
           <ul className="sf-col-list">
-            {pillarsLinks.map((l) => (
-              <li key={l.href}>
-                <Link href={l.href} className="sf-col-link">{l.label}</Link>
-              </li>
-            ))}
+            <li><Link href="/faith"         className="sf-col-link">{lang === "en" ? "Faith & Beliefs"  : "Foi & Convictions"}</Link></li>
+            <li><Link href="/blog"          className="sf-col-link">{ft.linkJournal[lang]}</Link></li>
+            <li><Link href="/my-story"      className="sf-col-link">{ft.linkStory[lang]}</Link></li>
+            <li><Link href="/faith#connect" className="sf-col-link">{ft.linkConnect[lang]}</Link></li>
           </ul>
         </div>
 
         <div className="sf-col">
-          <p className="sf-col-label">Connect</p>
+          <p className="sf-col-label">{ft.colConnect[lang]}</p>
           <ul className="sf-col-list">
-            <li><a href="mailto:impact@samuelgyasi.com" className="sf-col-link">Email</a></li>
+            <li><a href="mailto:impact@samuelgyasi.com" className="sf-col-link">{ft.linkEmail[lang]}</a></li>
             {socialLinks.map((s) => (
               <li key={s.label}>
                 <a href={s.href} target="_blank" rel="noopener noreferrer" className="sf-col-link">
@@ -214,18 +230,18 @@ export function SiteFooter() {
         </div>
 
         <div className="sf-col">
-          <p className="sf-col-label">Site</p>
+          <p className="sf-col-label">{ft.colSite[lang]}</p>
           <ul className="sf-col-list">
-            <li><Link href="/faith" className="sf-col-link">Faith</Link></li>
-            <li><Link href="/blog" className="sf-col-link">Journal</Link></li>
-            <li><Link href="/my-story" className="sf-col-link">My Story</Link></li>
+            <li><Link href="/faith"     className="sf-col-link">{lang === "en" ? "Faith" : "Foi"}</Link></li>
+            <li><Link href="/blog"      className="sf-col-link">{ft.linkJournal[lang]}</Link></li>
+            <li><Link href="/my-story"  className="sf-col-link">{ft.linkStory[lang]}</Link></li>
           </ul>
         </div>
 
         <div className="sf-col">
-          <p className="sf-col-label">Legal</p>
+          <p className="sf-col-label">{ft.colLegal[lang]}</p>
           <ul className="sf-col-list">
-            <li><span className="sf-col-link" style={{opacity:0.5}}>Privacy Policy</span></li>
+            <li><span className="sf-col-link" style={{opacity:0.5}}>{ft.linkPrivacy[lang]}</span></li>
           </ul>
         </div>
       </div>
@@ -233,11 +249,10 @@ export function SiteFooter() {
       {/* ── BOTTOM BAR ── */}
       <div className="sf-rule" />
       <div className="sf-bottom">
-        <span className="sf-copy" suppressHydrationWarning>© {new Date().getFullYear()} Samuel Kobina Gyasi · All Rights Reserved</span>
+        <span className="sf-copy" suppressHydrationWarning>© {new Date().getFullYear()} Samuel Kobina Gyasi · {ft.copyright[lang]}</span>
         <span className="sf-emblem">✦</span>
-        <span className="sf-credit">Built with purpose · samuelgyasi.com</span>
+        <span className="sf-credit">{ft.builtWith[lang]} · samuelgyasi.com</span>
       </div>
     </footer>
   );
 }
-

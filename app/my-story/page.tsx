@@ -157,6 +157,81 @@ const css = `
   max-width: 1100px;
   margin: 0 auto;
 }
+
+/* ── PUBLIC NARRATIVE ── */
+.msp-narrative {
+  padding: 72px 8%;
+  max-width: 1100px;
+  margin: 0 auto;
+  border-bottom: 1px solid rgba(201,168,76,.12);
+}
+.msp-narrative-eyebrow {
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 20px;
+}
+.msp-narrative-heading {
+  font-family: var(--font-playfair), 'Playfair Display', serif;
+  font-size: clamp(22px, 3vw, 36px);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.2;
+  margin-bottom: 24px;
+}
+.msp-narrative-lead {
+  font-family: var(--font-cormorant), 'Cormorant Garamond', serif;
+  font-size: clamp(17px, 1.9vw, 20px);
+  font-style: italic;
+  color: rgba(245,243,239,.72);
+  line-height: 1.75;
+  max-width: 780px;
+  margin-bottom: 48px;
+}
+.msp-three-acts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-top: 16px;
+}
+.msp-act {
+  border-top: 2px solid rgba(201,168,76,.45);
+  padding-top: 20px;
+}
+.msp-act-num {
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.28em;
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 10px;
+}
+.msp-act-title {
+  font-family: var(--font-playfair), 'Playfair Display', serif;
+  font-size: clamp(16px, 1.8vw, 20px);
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 10px;
+}
+.msp-act-body {
+  font-family: var(--font-cormorant), 'Cormorant Garamond', serif;
+  font-size: 15px;
+  font-style: italic;
+  line-height: 1.8;
+  color: rgba(245,243,239,.6);
+}
+@media (max-width: 768px) {
+  .msp-narrative { padding: 56px 6%; }
+  .msp-three-acts { grid-template-columns: 1fr; gap: 24px; }
+}
+
 .msp-timeline {
   position: relative;
   padding-left: 0;
@@ -326,6 +401,26 @@ const translations = {
     headlineMain: "My",
     headlineItalic: "Story",
     sub: "Son of a tailor. Third of three brothers. Class Prefect at ten. Scholar across continents. Program Officer. Elder. Mentor. This is the story of a life built chapter by chapter.",
+    narrativeEyebrow: "Why I Share This Story",
+    narrativeHeading: "Every Story is Part of a Greater Genealogy",
+    narrativeLead: "Matthew's Gospel opens not with a miracle but with a genealogy — forty-two generations of flawed, extraordinary, and ordinary people, each one a necessary thread in the fabric of redemption. Rahab the prostitute. Ruth the foreigner. David the adulterer. And yet: from them, through them, for them — the Messiah came. I share my story for the same reason Matthew wrote that genealogy: because personal stories matter, broken stories matter, and no life is too small to be part of something eternal.",
+    narrativeActs: [
+      {
+        num: "Story of Self",
+        title: "Why I was called to this work",
+        body: "My story begins in Mpohor, Ghana — a tailor's son who found in Scripture the first map of his life. The faith of my mother, the discipline of my father, the prefect badge at ten, the scholarship across continents — these are not personal trivia. They are the making of a person who believes what he teaches.",
+      },
+      {
+        num: "Story of Us",
+        title: "What we share",
+        body: "You may not have grown up in Ghana. You may not have crossed the Mediterranean on a scholarship. But you know what it is to be formed by something larger than yourself — family, community, faith, suffering, grace. That shared human experience is the ground on which we meet. Your story and mine overlap in the places that truly matter.",
+      },
+      {
+        num: "Story of Now",
+        title: "The challenge before us",
+        body: "We live in a moment that needs people who are spiritually rooted and intellectually sharp, who can hold the Word of God in one hand and the complexity of the world in the other. The invitation of this page is simple: let what has been built in me be of use to what God is building in you.",
+      },
+    ],
     nowLabel: "The Present Chapter",
     nowHeading: "What I Do Now",
     timeline: [
@@ -416,6 +511,26 @@ const translations = {
     headlineMain: "Mon",
     headlineItalic: "Histoire",
     sub: "Fils d'un tailleur. Troisieme de trois freres. Delegue de classe a dix ans. Chercheur a travers les continents. Programme Officer. Ancien. Mentor. Voici l'histoire d'une vie construite chapitre par chapitre.",
+    narrativeEyebrow: "Pourquoi Je Partage Cette Histoire",
+    narrativeHeading: "Chaque Histoire fait partie d'une Généalogie plus Grande",
+    narrativeLead: "L'Évangile de Matthieu s'ouvre non par un miracle, mais par une généalogie — quarante-deux générations de personnes imparfaites, extraordinaires et ordinaires, chacune un fil nécessaire dans le tissu de la rédemption. Rahab la prostituée. Ruth l'étrangère. David l'adultère. Et pourtant : d'eux, à travers eux, pour eux — le Messie est venu. Je partage mon histoire pour la même raison que Matthieu a écrit cette généalogie : parce que les histoires personnelles comptent, les histoires brisées comptent, et aucune vie n'est trop petite pour faire partie de quelque chose d'éternel.",
+    narrativeActs: [
+      {
+        num: "Histoire de Soi",
+        title: "Pourquoi j'ai été appelé à ce travail",
+        body: "Mon histoire commence à Mpohor, au Ghana — le fils d'un tailleur qui a trouvé dans l'Écriture la première carte de sa vie. La foi de ma mère, la discipline de mon père, le badge de délégué à dix ans, la bourse à travers les continents — ce ne sont pas des anecdotes personnelles. Ce sont la fabrication d'une personne qui croit ce qu'elle enseigne.",
+      },
+      {
+        num: "Histoire de Nous",
+        title: "Ce que nous partageons",
+        body: "Vous n'avez peut-être pas grandi au Ghana. Vous n'avez peut-être pas traversé la Méditerranée avec une bourse. Mais vous savez ce que c'est d'être formé par quelque chose de plus grand que soi — famille, communauté, foi, souffrance, grâce. Cette expérience humaine partagée est le terrain sur lequel nous nous rencontrons. Votre histoire et la mienne se recoupent dans les endroits qui comptent vraiment.",
+      },
+      {
+        num: "Histoire de Maintenant",
+        title: "Le défi devant nous",
+        body: "Nous vivons dans un moment qui a besoin de personnes spirituellement enracinées et intellectuellement aiguisées, capables de tenir la Parole de Dieu dans une main et la complexité du monde dans l'autre. L'invitation de cette page est simple : que ce qui a été construit en moi soit utile à ce que Dieu construit en vous.",
+      },
+    ],
     nowLabel: "Le Present Chapitre",
     nowHeading: "Ce Que Je Fais Aujourd'hui",
     timeline: [
@@ -586,6 +701,22 @@ export default function MyStoryPage() {
           </h1>
           <div className="msp-hero-rule" />
           <p className="msp-hero-sub">{t.sub}</p>
+        </div>
+
+        {/* PUBLIC NARRATIVE */}
+        <div className="msp-narrative">
+          <p className="msp-narrative-eyebrow">{t.narrativeEyebrow}</p>
+          <h2 className="msp-narrative-heading">{t.narrativeHeading}</h2>
+          <p className="msp-narrative-lead">{t.narrativeLead}</p>
+          <div className="msp-three-acts">
+            {t.narrativeActs.map((act, i) => (
+              <div key={`${lang}-act-${i}`} className="msp-act">
+                <div className="msp-act-num">{act.num}</div>
+                <div className="msp-act-title">{act.title}</div>
+                <div className="msp-act-body">{act.body}</div>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* TIMELINE */}
