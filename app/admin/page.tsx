@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 export const dynamic = "force-dynamic";
 
@@ -20,6 +20,7 @@ interface BlogPost {
   id: string; title: string; slug: string; category: string;
   published: boolean; excerpt: string | null; content: string | null;
   read_time_minutes: number; featured_image_url: string | null;
+  infographie_url: string | null;
   created_at: string;
 }
 interface Subscriber {
@@ -1771,12 +1772,41 @@ function PostModal({ post, onClose, onSave, db }: {
     content:            post?.content            ?? "",
     read_time_minutes:  post?.read_time_minutes  ?? 5,
     featured_image_url: post?.featured_image_url ?? "",
+    infographie_url:    post?.infographie_url    ?? "",
     published:          post?.published          ?? false,
   });
   const [busy, setBusy] = useState(false);
+  const [uploading, setUploading] = useState({ cover: false, infographie: false });
 
   function setF<K extends keyof typeof form>(k: K, v: (typeof form)[K]) {
     setForm((p) => ({ ...p, [k]: v }));
+  }
+
+  async function uploadImage(file: File, folder: string): Promise<string | null> {
+    const ext = file.name.split(".").pop();
+    const filename = `${folder}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+    const { error } = await db.storage.from("blog-images").upload(filename, file, { upsert: true });
+    if (error) { toast.error(`Upload failed: ${error.message}`); return null; }
+    const { data } = db.storage.from("blog-images").getPublicUrl(filename);
+    return data.publicUrl;
+  }
+
+  async function handleCoverPhoto(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading((p) => ({ ...p, cover: true }));
+    const url = await uploadImage(file, "covers");
+    setUploading((p) => ({ ...p, cover: false }));
+    if (url) setF("featured_image_url", url);
+  }
+
+  async function handleInfographie(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading((p) => ({ ...p, infographie: true }));
+    const url = await uploadImage(file, "infographies");
+    setUploading((p) => ({ ...p, infographie: false }));
+    if (url) setF("infographie_url", url);
   }
 
   async function save(e: React.FormEvent) {
@@ -1815,8 +1845,33 @@ function PostModal({ post, onClose, onSave, db }: {
           <div className={TW.field}><label className={TW.label}>Excerpt</label><textarea className={cn(TW.tarea, "min-h-[80px]")} value={form.excerpt} onChange={(e) => setF("excerpt", e.target.value)} placeholder="Short summaryâ€¦" /></div>
           <div className={TW.field}><label className={TW.label}>Content (HTML)</label><textarea className={TW.tarea} value={form.content} onChange={(e) => setF("content", e.target.value)} placeholder="<p>Full articleâ€¦</p>" /></div>
           <div className={TW.fRow}>
-            <div className={TW.field}><label className={TW.label}>Featured Image URL</label><input className={TW.input} value={form.featured_image_url} onChange={(e) => setF("featured_image_url", e.target.value)} placeholder="https://â€¦" /></div>
+            <div className={TW.field}>
+              <label className={TW.label}>Cover Photo</label>
+              <label className={cn(TW.input, "flex items-center gap-3 cursor-pointer py-2.5 px-4 border-dashed")}>
+                <input type="file" accept="image/*" className="hidden" onChange={handleCoverPhoto} disabled={uploading.cover} />
+                {uploading.cover ? (
+                  <span className="text-white/40 text-sm">Uploading\u2026</span>
+                ) : form.featured_image_url ? (
+                  <><img src={form.featured_image_url} alt="cover" className="w-10 h-10 object-cover rounded" /><span className="text-white/50 text-xs truncate max-w-[140px]">{form.featured_image_url.split("/").pop()}</span></>
+                ) : (
+                  <span className="text-white/30 text-sm">Click to upload cover photo\u2026</span>
+                )}
+              </label>
+            </div>
             <div className={TW.field}><label className={TW.label}>Read Time (min)</label><input className={TW.input} type="number" min={1} max={60} value={form.read_time_minutes} onChange={(e) => setF("read_time_minutes", parseInt(e.target.value, 10) || 5)} /></div>
+          </div>
+          <div className={TW.field}>
+            <label className={TW.label}>Summary Infographie</label>
+            <label className={cn(TW.input, "flex items-center gap-3 cursor-pointer py-2.5 px-4 border-dashed")}>
+              <input type="file" accept="image/*" className="hidden" onChange={handleInfographie} disabled={uploading.infographie} />
+              {uploading.infographie ? (
+                <span className="text-white/40 text-sm">Uploading\u2026</span>
+              ) : form.infographie_url ? (
+                <><img src={form.infographie_url} alt="infographie" className="w-10 h-10 object-cover rounded" /><span className="text-white/50 text-xs truncate max-w-[280px]">{form.infographie_url.split("/").pop()}</span></>
+              ) : (
+                <span className="text-white/30 text-sm">Click to upload summary infographie\u2026</span>
+              )}
+            </label>
           </div>
           <div className="flex items-center gap-3 mb-5 py-4 border-y border-white/[.05]">
             <label className="relative inline-flex items-center cursor-pointer">

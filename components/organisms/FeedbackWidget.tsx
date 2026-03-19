@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
+import { toast } from "sonner";
 import { MessageSquarePlus, X, Bug, Lightbulb, Send, Check } from "lucide-react";
 
 type FeedbackType = "bug" | "idea";
@@ -53,19 +54,25 @@ export function FeedbackWidget() {
     setBusy(false);
     if (error) {
       console.error("Feedback error:", error.message);
+      toast.error("Failed to send feedback. Please try again.");
       return;
     }
+    toast.success(
+      type === "bug"
+        ? "Bug report received — thank you!"
+        : "Improvement idea received — thank you!"
+    );
     setStage("done");
   }
 
   return (
-    <div className="fixed bottom-6 right-6 z-[8000] flex flex-col items-end gap-3">
+    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[8000] flex flex-col items-end gap-3">
       {/* Card */}
       {stage !== "closed" && (
         <div
           ref={cardRef}
           className={cn(
-            "w-[320px] rounded-2xl border border-white/[.08] bg-[#0d0e15]",
+            "w-[calc(100vw-32px)] max-w-[320px] rounded-2xl border border-white/[.08] bg-[#0d0e15]",
             "shadow-[0_24px_64px_rgba(0,0,0,.7),0_0_0_1px_rgba(255,255,255,.04)]",
             "overflow-hidden transition-all duration-300"
           )}

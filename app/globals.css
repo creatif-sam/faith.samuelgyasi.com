@@ -1877,6 +1877,21 @@ body {
   color: rgba(245,243,239,0.25);
 }
 .sf-emblem { color: var(--gold); font-size: 16px; letter-spacing: 0.2em; }
+/* Footer responsive */
+@media (max-width: 768px) {
+  .sf-footer { padding: 48px 24px 32px; }
+  .sf-newsletter { grid-template-columns: 1fr; gap: 28px; }
+  .sf-nl-form { grid-template-columns: 1fr; }
+  .sf-nl-btn { width: 100%; border-left: 1px solid rgba(245,243,239,0.12); }
+  .sf-nl-input { border-right: 1px solid rgba(245,243,239,0.12); }
+  .sf-columns { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+  .sf-rule { margin: 32px 0; }
+}
+@media (max-width: 480px) {
+  .sf-footer { padding: 40px 16px 24px; }
+  .sf-columns { grid-template-columns: 1fr; }
+  .sf-rule { margin: 24px 0; }
+}
 
 /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    COOKIE BANNER
