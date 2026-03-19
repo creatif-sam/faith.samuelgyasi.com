@@ -7,7 +7,7 @@ export async function LatestBlogsSection() {
   const supabase = await createClient();
   const { data: posts } = await supabase
     .from("blog_posts")
-    .select("id,title,slug,category,excerpt,read_time_minutes,created_at")
+    .select("id,title,slug,category,excerpt,read_time_minutes,featured_image_url,created_at")
     .eq("published", true)
     .order("created_at", { ascending: false })
     .limit(3);
@@ -29,7 +29,17 @@ export async function LatestBlogsSection() {
         <div className="pillars-grid">
           {posts.map((post) => (
             <ScrollReveal key={post.id}>
-              <div className="pillar-card">
+              <div className="pillar-card" style={{ padding: 0, overflow: 'hidden' }}>
+                {post.featured_image_url && (
+                  <div style={{ overflow: 'hidden', height: '180px' }}>
+                    <img
+                      src={post.featured_image_url}
+                      alt={post.title}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                    />
+                  </div>
+                )}
+                <div style={{ padding: '28px 32px 32px' }}>
                 <span className="pillar-icon" style={{ fontSize: "12px", fontFamily: "var(--font-space-mono,'Space Mono',monospace)", letterSpacing: ".24em", textTransform: "uppercase", color: "var(--gold)" }}>
                   {post.category}
                 </span>
@@ -49,6 +59,7 @@ export async function LatestBlogsSection() {
                 <Link href={`/blog/${post.slug}`} className="pillar-cta">
                   Read Reflection →
                 </Link>
+                </div>
               </div>
             </ScrollReveal>
           ))}

@@ -17,9 +17,9 @@ type DbPost = {
 
 const CATEGORIES = [
   { value: "faith", label: "Faith" },
+  { value: "problems-and-solutions", label: "Problems & Solutions" },
+  { value: "wisdom", label: "Wisdom" },
   { value: "leadership", label: "Leadership" },
-  { value: "intellectuality", label: "Intellectuality" },
-  { value: "transformation", label: "Transformation" },
 ];
 
 export default function FaithBlogPage() {
@@ -103,6 +103,11 @@ export default function FaithBlogPage() {
         <div className="fb-content">
           {featured && (
             <Link href={`/blog/${featured.slug}`} className="fb-featured">
+              {featured.featured_image_url && (
+                <div className="fb-featured-cover">
+                  <img src={featured.featured_image_url} alt={featured.title} className="fb-featured-cover-img" />
+                </div>
+              )}
               <div className="fb-featured-tag">{featured.category}</div>
               <h2 className="fb-featured-title">{featured.title}</h2>
               {featured.excerpt && (
@@ -126,6 +131,11 @@ export default function FaithBlogPage() {
             <div className="fb-grid">
               {rest.map((post) => (
                 <Link key={post.slug} href={`/blog/${post.slug}`} className="fb-card">
+                  {post.featured_image_url && (
+                    <div className="fb-card-cover">
+                      <img src={post.featured_image_url} alt={post.title} className="fb-card-cover-img" />
+                    </div>
+                  )}
                   <div className="fb-card-tag">{post.category}</div>
                   <h3 className="fb-card-title">{post.title}</h3>
                   {post.excerpt && (
@@ -199,6 +209,12 @@ body.on-fdp { background:#080807; color:#f0ece4; font-family:'Cormorant Garamond
 .fb-footer-link { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); text-decoration:none; transition:opacity .3s; }
 .fb-footer-link:hover { opacity:.7; }
 .fb-footer-copy { font-family:'Space Mono',monospace; font-size:9px; color:var(--dimmer); letter-spacing:.1em; }
+.fb-featured-cover { margin-bottom:32px; overflow:hidden; }
+.fb-featured-cover-img { width:100%; max-height:420px; object-fit:cover; display:block; transition:transform .5s; }
+.fb-featured:hover .fb-featured-cover-img { transform:scale(1.02); }
+.fb-card-cover { overflow:hidden; margin:-0px -0px 0; }
+.fb-card-cover-img { width:100%; height:200px; object-fit:cover; display:block; transition:transform .5s; }
+.fb-card:hover .fb-card-cover-img { transform:scale(1.04); }
 @media(max-width:900px){
   .fdp-blog-nav { padding:18px 24px; }
   .fb-header { padding:130px 24px 48px; }

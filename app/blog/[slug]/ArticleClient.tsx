@@ -12,6 +12,7 @@ type DbPost = {
   content: string | null;
   read_time_minutes: number;
   featured_image_url: string | null;
+  infographie_url: string | null;
   created_at: string;
 };
 
@@ -66,6 +67,11 @@ export function ArticleClient({
             <span>Samuel Kobina Gyasi</span>
           </div>
           {post.excerpt && <p className="fa-lead">{post.excerpt}</p>}
+          {post.featured_image_url && (
+            <div className="fa-cover">
+              <img src={post.featured_image_url} alt={post.title} className="fa-cover-img" />
+            </div>
+          )}
         </header>
 
         {post.content && (
@@ -75,7 +81,15 @@ export function ArticleClient({
           />
         )}
 
+        {post.infographie_url && (
+          <div className="fa-infographie">
+            <div className="fa-infographie-label">Summary Infographie</div>
+            <img src={post.infographie_url} alt="Summary infographie" className="fa-infographie-img" />
+          </div>
+        )}
+
         {related.length > 0 && (
+
           <aside className="fa-related">
             <div className="fa-related-label">More in this Category</div>
             <div className="fa-related-grid">
@@ -141,6 +155,11 @@ body.on-fdp { background:#080807; color:#f0ece4; font-family:'Cormorant Garamond
 .fa-back-link:hover { color:var(--gold); }
 .fa-credo-link { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); text-decoration:none; transition:opacity .3s; }
 .fa-credo-link:hover { opacity:.7; }
+.fa-cover { margin:40px 0 56px; overflow:hidden; }
+.fa-cover-img { width:100%; max-height:520px; object-fit:cover; display:block; }
+.fa-infographie { margin:56px 0 0; padding-top:56px; border-top:1px solid var(--line); }
+.fa-infographie-label { font-family:'Space Mono',monospace; font-size:9px; letter-spacing:.3em; text-transform:uppercase; color:var(--gold); margin-bottom:28px; }
+.fa-infographie-img { width:100%; display:block; border:1px solid var(--line); }
 @media(max-width:768px) {
   .fdp-article-nav { padding:18px 24px; }
   .fa-article { padding:130px 24px 60px; }
