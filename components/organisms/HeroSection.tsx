@@ -29,7 +29,7 @@ export function HeroSection() {
           </div>
           <div className="hero-image-label">
             <span className="label-line"></span>
-            <span className="label-text">BUILDING MY FAITH · NOT BY SIGHT</span>
+            <span className="label-text">{t.imageLabel[lang]}</span>
           </div>
         </div>
         
@@ -37,31 +37,31 @@ export function HeroSection() {
         <div className="hero-content-wrapper">
           <div className="hero-content">
             <div className="hero-eyebrow">
-              CHRISTIAN · THINKER · SERVANT
+              {t.eyebrow[lang]}
             </div>
             
             <h1 className="hero-title">
-              Samuel Kobina
-              <span className="hero-title-accent">Gyasi</span>
+              {t.firstName[lang]}
+              <span className="hero-title-accent">{t.lastName[lang]}</span>
             </h1>
             
             <p className="hero-description">
-              Rooted in the Word. Walking by Faith. Living for His Glory.
+              {t.description[lang]}
             </p>
             
             <div className="hero-values-list">
-              <span className="value-badge">Kingdom Influence</span>
-              <span className="value-badge">Power</span>
-              <span className="value-badge">Wisdom</span>
-              <span className="value-badge">Pragmatism</span>
+              <span className="value-badge">{t.values.influence[lang]}</span>
+              <span className="value-badge">{t.values.power[lang]}</span>
+              <span className="value-badge">{t.values.wisdom[lang]}</span>
+              <span className="value-badge">{t.values.pragmatism[lang]}</span>
             </div>
             
             <div className="hero-actions">
               <Link href="/faith" className="hero-btn hero-btn-primary">
-                Explore Faith
+                {t.ctaFaith[lang]}
               </Link>
               <Link href="/blog" className="hero-btn hero-btn-secondary">
-                Read Journal
+                {t.ctaJournal[lang]}
               </Link>
             </div>
           </div>
@@ -69,16 +69,16 @@ export function HeroSection() {
           {/* Quick Links */}
           <nav className="hero-quick-nav">
             <Link href="/faith" className="quick-nav-item">
-              <span className="qn-number">01</span>
-              <span className="qn-label">Faith & Beliefs</span>
+              <span className="qn-number">{t.quickNav.faith.number[lang]}</span>
+              <span className="qn-label">{t.quickNav.faith.label[lang]}</span>
             </Link>
             <Link href="/blog" className="quick-nav-item">
-              <span className="qn-number">02</span>
-              <span className="qn-label">Faith Journal</span>
+              <span className="qn-number">{t.quickNav.journal.number[lang]}</span>
+              <span className="qn-label">{t.quickNav.journal.label[lang]}</span>
             </Link>
             <Link href="/my-story" className="quick-nav-item">
-              <span className="qn-number">03</span>
-              <span className="qn-label">My Story</span>
+              <span className="qn-number">{t.quickNav.story.number[lang]}</span>
+              <span className="qn-label">{t.quickNav.story.label[lang]}</span>
             </Link>
           </nav>
         </div>

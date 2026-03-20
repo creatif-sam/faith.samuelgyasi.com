@@ -1,35 +1,11 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-
-const values = [
-  {
-    letter: "F",
-    word: "Faith",
-    number: "01",
-    body:
-      "Not a feeling but a decision — to trust God with every chapter of life. Faith is the foundation on which Samuel stands: confident in what is not yet seen, anchored in what God has already promised.",
-    glyph: "◆",
-  },
-  {
-    letter: "G",
-    word: "Grace",
-    number: "02",
-    body:
-      "Everything good in Samuel's life is unearned gift. He receives grace daily and strives to extend it generously — in forgiveness, in patience, in the refusal to reduce any person to their worst moment.",
-    glyph: "✦",
-  },
-  {
-    letter: "W",
-    word: "The Word",
-    number: "03",
-    body:
-      "Scripture is not a rule book — it is a living encounter with God. Samuel reads, meditates on, and lives by the Bible, believing that the Word of God is the surest light in every kind of darkness.",
-    glyph: "◎",
-  },
-];
+import { useLang } from "@/lib/i18n";
+import { valuesTranslations as t } from "@/lib/i18n/values";
 
 export function ValuesSection() {
+  const { lang } = useLang();
   const sectionRef = useRef<HTMLElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -349,27 +325,27 @@ export function ValuesSection() {
         </header>
 
         <div className="values-grid">
-          {values.map((v, i) => (
+          {t.values.map((v, i) => (
             <div
-              key={v.word}
+              key={v.word[lang]}
               className="vs-card"
               ref={(el) => { cardsRef.current[i] = el; }}
             >
               <span className="vs-card-bg-letter">{v.letter}</span>
               <p className="vs-card-num">{v.number}</p>
               <span className="vs-card-glyph">{v.glyph}</span>
-              <h3 className="vs-card-word">{v.word}</h3>
-              <p className="vs-card-body">{v.body}</p>
+              <h3 className="vs-card-word">{v.word[lang]}</h3>
+              <p className="vs-card-body">{v.body[lang]}</p>
             </div>
           ))}
         </div>
 
         {/* Animated trio footer */}
         <div className="values-trio-strip">
-          {values.map((v) => (
-            <div key={v.word} className="vts-item">
+          {t.values.map((v) => (
+            <div key={v.word[lang]} className="vts-item">
               <span className="vts-big">{v.letter}</span>
-              <span className="vts-label">{v.word}</span>
+              <span className="vts-label">{v.word[lang]}</span>
             </div>
           ))}
         </div>

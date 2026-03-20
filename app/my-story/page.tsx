@@ -2,8 +2,20 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
+import { createClient } from "@/lib/supabase/client";
 
 type Lang = "en" | "fr";
+
+interface MyStoryContent {
+  id: string;
+  title_en: string;
+  title_fr: string;
+  content_en: string;
+  content_fr: string;
+  images: string[];
+  updated_at: string;
+  created_at: string;
+}
 
 const css = `
 .msp {
@@ -631,7 +643,19 @@ const PARTICLES = [
 
 export default function MyStoryPage() {
   const [lang, setLang] = useState<Lang>("en");
+  const [dbContent, setDbContent] = useState<MyStoryContent | null>(null);
+  const [loading, setLoading] = useState(true);
   const t = translations[lang];
+
+  useEffect(() => {
+    const fetchContent = async () => {
+      const db = createClient();
+      const { data } = await db.from("my_story").select("*").single();
+      setDbContent(data);
+      setLoading(false);
+    };
+    fetchContent();
+  }, []);
 
   const switchLang = useCallback((l: Lang) => {
     setLang(l);
@@ -768,6 +792,88 @@ export default function MyStoryPage() {
             </div>
           </div>
         </section>
+
+        {/* DATABASE-DRIVEN CONTENT */}
+        {dbContent && (
+          <section style={{
+            maxWidth: '1100px',
+            margin: '0 auto',
+            padding: '100px 8% 80px',
+            borderTop: '1px solid rgba(201,168,76,.18)',
+          }}>
+            <div style={{
+              fontFamily: "var(--font-space-mono),'Space Mono',monospace",
+              fontSize: '10px',
+              letterSpacing: '0.32em',
+              textTransform: 'uppercase',
+              background: 'var(--gold-gradient)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              marginBottom: '20px',
+              animation: 'msp-rise .8s .05s ease both',
+            }}>
+              {lang === "fr" && dbContent.title_fr ? "Mon Histoire" : "My Story"}
+            </div>
+            <h2 style={{
+              fontFamily: "var(--font-cormorant),'Cormorant Garamond',serif",
+              fontSize: 'clamp(32px, 5vw, 52px)',
+              fontWeight: 500,
+              lineHeight: 1.2,
+              color: 'var(--white)',
+              marginBottom: '32px',
+              animation: 'msp-rise .8s .1s ease both',
+            }}>
+              {lang === "fr" && dbContent.title_fr ? dbContent.title_fr : dbContent.title_en}
+            </h2>
+            <div style={{
+              fontFamily: "var(--font-poppins),Poppins,sans-serif",
+              fontSize: 'clamp(15px, 1.8vw, 18px)',
+              lineHeight: 1.75,
+              color: 'rgba(245,243,239,.72)',
+              marginBottom: dbContent.images.length > 0 ? '60px' : '0',
+              maxWidth: '840px',
+              whiteSpace: 'pre-wrap',
+              animation: 'msp-rise .8s .15s ease both',
+            }}>
+              {lang === "fr" && dbContent.content_fr ? dbContent.content_fr : dbContent.content_en}
+            </div>
+
+            {/* IMAGE GALLERY */}
+            {dbContent.images.length > 0 && (
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                gap: '20px',
+                marginTop: '40px',
+                animation: 'msp-rise .8s .2s ease both',
+              }}>
+                {dbContent.images.map((img, idx) => (
+                  <div
+                    key={idx}
+                    style={{
+                      position: 'relative',
+                      aspectRatio: '4/3',
+                      borderRadius: '8px',
+                      overflow: 'hidden',
+                      border: '1px solid rgba(201,168,76,.2)',
+                      background: 'rgba(0,0,0,.3)',
+                    }}
+                  >
+                    <img
+                      src={img}
+                      alt={`${lang === "fr" && dbContent.title_fr ? dbContent.title_fr : dbContent.title_en} - ${idx + 1}`}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
+        )}
       </div>
 
       <SiteFooter />

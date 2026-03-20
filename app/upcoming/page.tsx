@@ -72,9 +72,9 @@ const css = `
   animation: up-rise .8s .36s ease forwards;
 }
 .up-sub {
-  font-family: var(--font-cormorant),'Cormorant Garamond',serif;
-  font-size: clamp(17px,2vw,21px);
-  font-style: italic;
+  font-family: var(--font-poppins),'Poppins',sans-serif;
+  font-size: clamp(16px,2vw,19px);
+  font-weight: 300;
   color: rgba(245,243,239,.6);
   max-width: 560px;
   line-height: 1.7;
@@ -173,9 +173,9 @@ const css = `
   margin-bottom: 12px;
 }
 .up-card-body {
-  font-family: var(--font-cormorant),'Cormorant Garamond',serif;
-  font-size: 15px;
-  font-style: italic;
+  font-family: var(--font-poppins),'Poppins',sans-serif;
+  font-size: 14px;
+  font-weight: 300;
   line-height: 1.8;
   color: rgba(245,243,239,.5);
   margin-bottom: 20px;
@@ -207,9 +207,9 @@ const css = `
 }
 @keyframes up-pulse { 0%,100%{opacity:.3;} 50%{opacity:.7;} }
 .up-coming-soon p {
-  font-family: var(--font-cormorant),'Cormorant Garamond',serif;
-  font-size: 18px;
-  font-style: italic;
+  font-family: var(--font-poppins),'Poppins',sans-serif;
+  font-size: 16px;
+  font-weight: 300;
   color: rgba(245,243,239,.3);
 }
 
@@ -242,9 +242,9 @@ const css = `
   line-height: 1.2;
 }
 .up-notify-sub {
-  font-family: var(--font-cormorant),'Cormorant Garamond',serif;
-  font-size: 18px;
-  font-style: italic;
+  font-family: var(--font-poppins),'Poppins',sans-serif;
+  font-size: 16px;
+  font-weight: 300;
   color: rgba(245,243,239,.45);
   margin-bottom: 32px;
   line-height: 1.6;
@@ -309,8 +309,8 @@ const css = `
 
 .up-card--past .up-card-title { font-size: clamp(14px,1.2vw,16px); color: rgba(245,243,239,.55); }
 .up-card-desc {
-  font-family: var(--font-cormorant),'Cormorant Garamond',serif;
-  font-size: 15px; font-style: italic; line-height: 1.75;
+  font-family: var(--font-poppins),'Poppins',sans-serif;
+  font-size: 14px; font-weight: 300; line-height: 1.75;
   color: rgba(245,243,239,.45); margin-bottom: 12px;
 }
 .up-card-host {
@@ -375,8 +375,8 @@ const css = `
   font-size: clamp(18px,2.5vw,24px); font-weight: 700; color: var(--white); line-height: 1.2;
 }
 .up-modal-sub {
-  font-family: var(--font-cormorant),'Cormorant Garamond',serif;
-  font-size: 15px; font-style: italic; color: rgba(245,243,239,.45);
+  font-family: var(--font-poppins),'Poppins',sans-serif;
+  font-size: 14px; font-weight: 300; color: rgba(245,243,239,.45);
   line-height: 1.6; padding: 12px 32px 0;
 }
 .up-modal-close {
@@ -394,7 +394,7 @@ const css = `
 .up-form-input, .up-form-textarea {
   background: rgba(245,243,239,.04); border: 1px solid rgba(245,243,239,.1);
   color: var(--white);
-  font-family: var(--font-cormorant),'Cormorant Garamond',serif; font-size: 15px;
+  font-family: var(--font-poppins),'Poppins',sans-serif; font-size: 14px;
   padding: 11px 16px; width: 100%; outline: none; transition: border-color .25s; box-sizing: border-box;
 }
 .up-form-input:focus, .up-form-textarea:focus { border-color: rgba(201,168,76,.4); }
@@ -409,7 +409,7 @@ const css = `
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 8px;
 }
 .up-modal-done-h { font-family: var(--font-playfair),'Playfair Display',serif; font-size: 24px; font-weight: 700; color: var(--white); }
-.up-modal-done-sub { font-family: var(--font-cormorant),'Cormorant Garamond',serif; font-size: 16px; font-style: italic; color: rgba(245,243,239,.45); line-height: 1.6; }
+.up-modal-done-sub { font-family: var(--font-poppins),'Poppins',sans-serif; font-size: 15px; font-weight: 300; color: rgba(245,243,239,.45); line-height: 1.6; }
 .up-modal-done .up-btn--gold { margin-top: 16px; }
 
 @media(max-width:900px) {

@@ -2,28 +2,46 @@
 import type { Lang } from "./types";
 
 export const heroTranslations = {
+  imageLabel: {
+    en: "BUILDING MY FAITH · NOT BY SIGHT",
+    fr: "CONSTRUIRE MA FOI · PAS PAR LA VUE",
+  },
   eyebrow: {
-    en: "Thinker · Leader · Innovator · Grounded in Purpose",
-    fr: "Penseur · Leader · Innovateur · Ancré dans le But",
+    en: "CHRISTIAN · THINKER · SERVANT",
+    fr: "CHRÉTIEN · PENSEUR · SERVITEUR",
   },
-  tagline: {
-    en: "Rooted in Purpose.\nDriven by Vision.\nLiving with Intention.",
-    fr: "Ancré dans le But.\nAnimé par la Vision.\nVivant avec Intention.",
+  firstName: {
+    en: "Samuel Kobina",
+    fr: "Samuel Kobina",
   },
-  badgeLine: {
-    en: "Living with Purpose · Leading with Vision",
-    fr: "Vivre avec But · Diriger avec Vision",
+  lastName: {
+    en: "Gyasi",
+    fr: "Gyasi",
   },
-  badgeSub: {
-    en: "Explore",
-    fr: "Explorer",
+  description: {
+    en: "Rooted in the Word. Walking by Faith. Living for His Glory.",
+    fr: "Enraciné dans la Parole. Marchant par la Foi. Vivant pour Sa Gloire.",
   },
-  ctaFaith:   { en: "Explore Values",   fr: "Explorer les Valeurs"  },
-  ctaJournal: { en: "Read Journal",    fr: "Lire le Journal"  },
-  scroll:     { en: "Scroll",          fr: "Défiler"          },
-  pillars: {
-    faith:   { en: "Values & Beliefs", fr: "Valeurs & Convictions" },
-    journal: { en: "Thought Journal",   fr: "Journal de Pensée"    },
-    story:   { en: "My Story",        fr: "Mon Histoire"      },
+  values: {
+    influence: { en: "Kingdom Influence", fr: "Influence du Royaume" },
+    power: { en: "Power", fr: "Puissance" },
+    wisdom: { en: "Wisdom", fr: "Sagesse" },
+    pragmatism: { en: "Pragmatism", fr: "Pragmatisme" },
   },
-} satisfies Record<string, Record<Lang, string> | Record<string, Record<Lang, string>>>;
+  ctaFaith: { en: "Explore Faith", fr: "Explorer la Foi" },
+  ctaJournal: { en: "Read Journal", fr: "Lire le Journal" },
+  quickNav: {
+    faith: {
+      number: { en: "01", fr: "01" },
+      label: { en: "Faith & Beliefs", fr: "Foi & Convictions" },
+    },
+    journal: {
+      number: { en: "02", fr: "02" },
+      label: { en: "Faith Journal", fr: "Journal de Foi" },
+    },
+    story: {
+      number: { en: "03", fr: "03" },
+      label: { en: "My Story", fr: "Mon Histoire" },
+    },
+  },
+} satisfies Record<string, any>;

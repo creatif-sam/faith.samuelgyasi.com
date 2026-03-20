@@ -17,8 +17,9 @@ import {
 
 // â”€â”€ TYPES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 interface BlogPost {
-  id: string; title: string; slug: string; category: string;
-  published: boolean; excerpt: string | null; content: string | null;
+  id: string; title: string; title_fr?: string | null; slug: string; category: string;
+  published: boolean; excerpt: string | null; excerpt_fr?: string | null;
+  content: string | null; content_fr?: string | null;
   read_time_minutes: number; featured_image_url: string | null;
   infographie_url: string | null;
   created_at: string;
@@ -108,7 +109,28 @@ interface Feedback {
   created_at: string;
 }
 
-type Tab = "overview" | "analytics" | "posts" | "subscribers" | "messages" | "mail" | "whatsapp" | "testimonials" | "library" | "upcoming" | "feedback";
+interface MyStoryContent {
+  id: string;
+  title_en: string;
+  title_fr: string;
+  content_en: string;
+  content_fr: string;
+  images: string[];
+  updated_at: string;
+  created_at: string;
+}
+
+interface CredoContent {
+  id: string;
+  title_en: string;
+  title_fr: string;
+  content_en: string;
+  content_fr: string;
+  updated_at: string;
+  created_at: string;
+}
+
+type Tab = "overview" | "analytics" | "posts" | "subscribers" | "messages" | "mail" | "whatsapp" | "testimonials" | "library" | "upcoming" | "feedback" | "my-story" | "credo";
 type MailSubTab = "compose" | "inbox" | "sent" | "templates";
 
 const CATEGORIES = ["faith", "problems-and-solutions", "wisdom", "leadership"] as const;
@@ -123,6 +145,8 @@ const NAV: { id: Tab; label: string; Icon: React.ComponentType<{ size?: number }
   { id: "overview",     label: "Overview",      Icon: LayoutDashboard },
   { id: "analytics",   label: "Analytics",     Icon: BarChart3       },
   { id: "posts",       label: "Blog Posts",    Icon: FileText        },
+  { id: "my-story",    label: "My Story",      Icon: BookOpen        },
+  { id: "credo",       label: "Credo",         Icon: FileText        },
   { id: "subscribers", label: "Subscribers",   Icon: Users           },
   { id: "messages",    label: "Messages",      Icon: MessageSquare   },
   { id: "mail",        label: "Mail",          Icon: Mail            },
@@ -228,6 +252,8 @@ export default function AdminPage() {
   const [showUpcoming, setShowUpcoming]       = useState(false);
   const [editUpcoming, setEditUpcoming]       = useState<UpcomingEvent | null>(null);
   const [feedbacks, setFeedbacks]             = useState<Feedback[]>([]);
+  const [myStory, setMyStory]                 = useState<MyStoryContent | null>(null);
+  const [credoContent, setCredoContent]       = useState<CredoContent | null>(null);
   const [confirm, setConfirm]     = useState<{ msg: string; fn: () => Promise<void> } | null>(null);
   const [navOpen, setNavOpen]     = useState(false);
   const router = useRouter();
@@ -246,7 +272,7 @@ export default function AdminPage() {
       return;
     }
     setLoading(true);
-    const [pR, sR, mR, lR, iR, tR, aR, tsR, libR, upR, fbR] = await Promise.all([
+    const [pR, sR, mR, lR, iR, tR, aR, tsR, libR, upR, fbR, msR, crR] = await Promise.all([
       db.from("blog_posts").select("*").order("created_at", { ascending: false }),
       db.from("newsletter_subscribers").select("*").order("created_at", { ascending: false }),
       db.from("contact_messages").select("*").order("created_at", { ascending: false }),
@@ -259,6 +285,8 @@ export default function AdminPage() {
       db.from("library_items").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: false }),
       db.from("upcoming_events").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: false }),
       db.from("feedback").select("*").order("created_at", { ascending: false }),
+      db.from("my_story").select("*").single(),
+      db.from("credo_content").select("*").single(),
     ]);
     setPosts(pR.data ?? []);
     setSubs(sR.data ?? []);
@@ -270,6 +298,8 @@ export default function AdminPage() {
     setLibraryItems(libR.data ?? []);
     setUpcomingEvents(upR.data ?? []);
     setFeedbacks(fbR.data ?? []);
+    setMyStory(msR.data ?? null);
+    setCredoContent(crR.data ?? null);
 
     const views: PageViewRow[] = aR.data ?? [];
     const totalViews     = views.length;
@@ -510,6 +540,20 @@ export default function AdminPage() {
                   if (error) { toast.error("Delete failed"); return; }
                   toast.success("Deleted"); await load();
                 })}
+              />
+            )}
+            {tab === "my-story" && (
+              <MyStoryEditorTab
+                story={myStory}
+                onSave={async () => { await load(); }}
+                db={db}
+              />
+            )}
+            {tab === "credo" && (
+              <CredoEditorTab
+                content={credoContent}
+                onSave={async () => { await load(); }}
+                db={db}
               />
             )}
           </>
@@ -1877,10 +1921,13 @@ function PostModal({ post, onClose, onSave, db }: {
 }) {
   const [form, setForm] = useState({
     title:              post?.title              ?? "",
+    title_fr:           post?.title_fr           ?? "",
     slug:               post?.slug               ?? "",
     category:           post?.category           ?? "faith",
     excerpt:            post?.excerpt            ?? "",
+    excerpt_fr:         post?.excerpt_fr         ?? "",
     content:            post?.content            ?? "",
+    content_fr:         post?.content_fr         ?? "",
     read_time_minutes:  post?.read_time_minutes  ?? 5,
     featured_image_url: post?.featured_image_url ?? "",
     infographie_url:    post?.infographie_url    ?? "",
@@ -1945,6 +1992,9 @@ function PostModal({ post, onClose, onSave, db }: {
           <div className={TW.field}><label className={TW.label}>Title *</label>
             <input className={TW.input} value={form.title} onChange={(e) => { setF("title", e.target.value); if (!post) setF("slug", slugify(e.target.value)); }} placeholder="Post title" required />
           </div>
+          <div className={TW.field}><label className={TW.label}>Title (French)</label>
+            <input className={TW.input} value={form.title_fr} onChange={(e) => setF("title_fr", e.target.value)} placeholder="Titre du post" />
+          </div>
           <div className={TW.fRow}>
             <div className={TW.field}><label className={TW.label}>Slug *</label><input className={TW.input} value={form.slug} onChange={(e) => setF("slug", e.target.value)} placeholder="url-slug" required /></div>
             <div className={TW.field}><label className={TW.label}>Category *</label>
@@ -1969,8 +2019,10 @@ function PostModal({ post, onClose, onSave, db }: {
               )}
             </div>
           </div>
-          <div className={TW.field}><label className={TW.label}>Excerpt</label><textarea className={cn(TW.tarea, "min-h-[80px]")} value={form.excerpt} onChange={(e) => setF("excerpt", e.target.value)} placeholder="Short summaryâ€¦" /></div>
-          <div className={TW.field}><label className={TW.label}>Content (HTML)</label><textarea className={TW.tarea} value={form.content} onChange={(e) => setF("content", e.target.value)} placeholder="<p>Full articleâ€¦</p>" /></div>
+          <div className={TW.field}><label className={TW.label}>Excerpt</label><textarea className={cn(TW.tarea, "min-h-[80px]")} value={form.excerpt} onChange={(e) => setF("excerpt", e.target.value)} placeholder="Short summary…" /></div>
+          <div className={TW.field}><label className={TW.label}>Excerpt (French)</label><textarea className={cn(TW.tarea, "min-h-[80px]")} value={form.excerpt_fr} onChange={(e) => setF("excerpt_fr", e.target.value)} placeholder="Résumé court…" /></div>
+          <div className={TW.field}><label className={TW.label}>Content (HTML)</label><textarea className={TW.tarea} value={form.content} onChange={(e) => setF("content", e.target.value)} placeholder="<p>Full article…</p>" /></div>
+          <div className={TW.field}><label className={TW.label}>Content (French, HTML)</label><textarea className={TW.tarea} value={form.content_fr} onChange={(e) => setF("content_fr", e.target.value)} placeholder="<p>Article complet…</p>" /></div>
           <div className={TW.fRow}>
             <div className={TW.field}>
               <label className={TW.label}>Cover Photo</label>
@@ -2108,6 +2160,297 @@ function FeedbackTab({ feedbacks, onToggleResolved, onDelete }: {
           ))}
         </div>
       )}
+    </>
+  );
+}
+
+// ── MY STORY EDITOR ────────────────────────────────────────────────────────────────────
+function MyStoryEditorTab({ story, onSave, db }: {
+  story: MyStoryContent | null;
+  onSave: () => Promise<void>;
+  db: ReturnType<typeof createClient>;
+}) {
+  const [titleEn, setTitleEn] = useState(story?.title_en ?? "");
+  const [titleFr, setTitleFr] = useState(story?.title_fr ?? "");
+  const [contentEn, setContentEn] = useState(story?.content_en ?? "");
+  const [contentFr, setContentFr] = useState(story?.content_fr ?? "");
+  const [images, setImages] = useState<string[]>(story?.images ?? []);
+  const [imageUrl, setImageUrl] = useState("");
+  const [saving, setSaving] = useState(false);
+
+  const handleSave = async () => {
+    if (!titleEn.trim() || !contentEn.trim()) {
+      toast.error("English title and content are required");
+      return;
+    }
+
+    setSaving(true);
+    const payload = {
+      title_en: titleEn,
+      title_fr: titleFr,
+      content_en: contentEn,
+      content_fr: contentFr,
+      images: images,
+      updated_at: new Date().toISOString(),
+    };
+
+    let error;
+    if (story) {
+      ({ error } = await db.from("my_story").update(payload).eq("id", story.id));
+    } else {
+      ({ error } = await db.from("my_story").insert({ ...payload, id: crypto.randomUUID() }));
+    }
+
+    setSaving(false);
+    if (error) {
+      toast.error(`Save failed: ${error.message}`);
+      return;
+    }
+    toast.success("My Story saved successfully");
+    await onSave();
+  };
+
+  const addImage = () => {
+    if (!imageUrl.trim()) return;
+    if (images.length >= 6) {
+      toast.error("Maximum 6 images allowed");
+      return;
+    }
+    setImages([...images, imageUrl.trim()]);
+    setImageUrl("");
+  };
+
+  const removeImage = (idx: number) => {
+    setImages(images.filter((_, i) => i !== idx));
+  };
+
+  return (
+    <>
+      <div className="flex items-center justify-between mb-10 pb-7 border-b border-white/[.05]">
+        <div>
+          <div className={TW.pgTitle}>My Story Editor</div>
+          <p className={TW.pgSub}>Edit your personal story in English and French</p>
+        </div>
+        <button className={cn(TW.btn, TW.gold)} onClick={handleSave} disabled={saving}>
+          {saving ? "Saving..." : "Save Changes"}
+        </button>
+      </div>
+
+      <div className="space-y-8 max-w-4xl">
+        {/* English Section */}
+        <div className="border border-white/10 rounded-lg p-6 bg-[#0d0e15]">
+          <div className="flex items-center gap-2 mb-5">
+            <span className={cn(TW.badge, "bg-blue-500/10 text-blue-400 border border-blue-500/20")}>English</span>
+            <h3 className="font-[family-name:'Poppins',sans-serif] text-sm font-semibold text-white/80">English Version</h3>
+          </div>
+          <div className="space-y-4">
+            <div>
+              <label className={TW.label}>Title *</label>
+              <input
+                type="text"
+                value={titleEn}
+                onChange={(e) => setTitleEn(e.target.value)}
+                className={TW.input}
+                placeholder="My Story"
+              />
+            </div>
+            <div>
+              <label className={TW.label}>Content *</label>
+              <textarea
+                value={contentEn}
+                onChange={(e) => setContentEn(e.target.value)}
+                className={cn(TW.input, "min-h-[280px] resize-y")}
+                placeholder="Share your story in English..."
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* French Section */}
+        <div className="border border-white/10 rounded-lg p-6 bg-[#0d0e15]">
+          <div className="flex items-center gap-2 mb-5">
+            <span className={cn(TW.badge, "bg-purple-500/10 text-purple-400 border border-purple-500/20")}>Français</span>
+            <h3 className="font-[family-name:'Poppins',sans-serif] text-sm font-semibold text-white/80">French Version</h3>
+          </div>
+          <div className="space-y-4">
+            <div>
+              <label className={TW.label}>Titre</label>
+              <input
+                type="text"
+                value={titleFr}
+                onChange={(e) => setTitleFr(e.target.value)}
+                className={TW.input}
+                placeholder="Mon Histoire"
+              />
+            </div>
+            <div>
+              <label className={TW.label}>Contenu</label>
+              <textarea
+                value={contentFr}
+                onChange={(e) => setContentFr(e.target.value)}
+                className={cn(TW.input, "min-h-[280px] resize-y")}
+                placeholder="Partagez votre histoire en français..."
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Images Section */}
+        <div className="border border-white/10 rounded-lg p-6 bg-[#0d0e15]">
+          <div className="flex items-center gap-2 mb-5">
+            <span className={cn(TW.badge, "bg-green-500/10 text-green-400 border border-green-500/20")}>Images ({images.length}/6)</span>
+            <h3 className="font-[family-name:'Poppins',sans-serif] text-sm font-semibold text-white/80">Photo Gallery</h3>
+          </div>
+          <div className="space-y-4">
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={imageUrl}
+                onChange={(e) => setImageUrl(e.target.value)}
+                className={cn(TW.input, "flex-1")}
+                placeholder="Image URL"
+                onKeyPress={(e) => e.key === "Enter" && addImage()}
+              />
+              <button className={cn(TW.btn, TW.gold)} onClick={addImage} disabled={images.length >= 6}>
+                Add Image
+              </button>
+            </div>
+            {images.length > 0 && (
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mt-4">
+                {images.map((img, idx) => (
+                  <div key={idx} className="relative group aspect-square rounded-lg overflow-hidden border border-white/10 bg-black/40">
+                    <img src={img} alt={`Gallery ${idx + 1}`} className="w-full h-full object-cover" />
+                    <button
+                      onClick={() => removeImage(idx)}
+                      className="absolute top-2 right-2 bg-red-500/90 text-white p-1.5 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      <Trash2 size={14} />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+// ── CREDO EDITOR ───────────────────────────────────────────────────────────────────────
+function CredoEditorTab({ content, onSave, db }: {
+  content: CredoContent | null;
+  onSave: () => Promise<void>;
+  db: ReturnType<typeof createClient>;
+}) {
+  const [titleEn, setTitleEn] = useState(content?.title_en ?? "");
+  const [titleFr, setTitleFr] = useState(content?.title_fr ?? "");
+  const [contentEn, setContentEn] = useState(content?.content_en ?? "");
+  const [contentFr, setContentFr] = useState(content?.content_fr ?? "");
+  const [saving, setSaving] = useState(false);
+
+  const handleSave = async () => {
+    if (!titleEn.trim() || !contentEn.trim()) {
+      toast.error("English title and content are required");
+      return;
+    }
+
+    setSaving(true);
+    const payload = {
+      title_en: titleEn,
+      title_fr: titleFr,
+      content_en: contentEn,
+      content_fr: contentFr,
+      updated_at: new Date().toISOString(),
+    };
+
+    let error;
+    if (content) {
+      ({ error } = await db.from("credo_content").update(payload).eq("id", content.id));
+    } else {
+      ({ error } = await db.from("credo_content").insert({ ...payload, id: crypto.randomUUID() }));
+    }
+
+    setSaving(false);
+    if (error) {
+      toast.error(`Save failed: ${error.message}`);
+      return;
+    }
+    toast.success("Credo saved successfully");
+    await onSave();
+  };
+
+  return (
+    <>
+      <div className="flex items-center justify-between mb-10 pb-7 border-b border-white/[.05]">
+        <div>
+          <div className={TW.pgTitle}>Credo Editor</div>
+          <p className={TW.pgSub}>Edit your faith credo in English and French</p>
+        </div>
+        <button className={cn(TW.btn, TW.gold)} onClick={handleSave} disabled={saving}>
+          {saving ? "Saving..." : "Save Changes"}
+        </button>
+      </div>
+
+      <div className="space-y-8 max-w-4xl">
+        {/* English Section */}
+        <div className="border border-white/10 rounded-lg p-6 bg-[#0d0e15]">
+          <div className="flex items-center gap-2 mb-5">
+            <span className={cn(TW.badge, "bg-blue-500/10 text-blue-400 border border-blue-500/20")}>English</span>
+            <h3 className="font-[family-name:'Poppins',sans-serif] text-sm font-semibold text-white/80">English Version</h3>
+          </div>
+          <div className="space-y-4">
+            <div>
+              <label className={TW.label}>Title *</label>
+              <input
+                type="text"
+                value={titleEn}
+                onChange={(e) => setTitleEn(e.target.value)}
+                className={TW.input}
+                placeholder="My Credo"
+              />
+            </div>
+            <div>
+              <label className={TW.label}>Content *</label>
+              <textarea
+                value={contentEn}
+                onChange={(e) => setContentEn(e.target.value)}
+                className={cn(TW.input, "min-h-[280px] resize-y")}
+                placeholder="Share your faith credo in English..."
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* French Section */}
+        <div className="border border-white/10 rounded-lg p-6 bg-[#0d0e15]">
+          <div className="flex items-center gap-2 mb-5">
+            <span className={cn(TW.badge, "bg-purple-500/10 text-purple-400 border border-purple-500/20")}>Français</span>
+            <h3 className="font-[family-name:'Poppins',sans-serif] text-sm font-semibold text-white/80">French Version</h3>
+          </div>
+          <div className="space-y-4">
+            <div>
+              <label className={TW.label}>Titre</label>
+              <input
+                type="text"
+                value={titleFr}
+                onChange={(e) => setTitleFr(e.target.value)}
+                className={TW.input}
+                placeholder="Mon Credo"
+              />
+            </div>
+            <div>
+              <label className={TW.label}>Contenu</label>
+              <textarea
+                value={contentFr}
+                onChange={(e) => setContentFr(e.target.value)}
+                className={cn(TW.input, "min-h-[280px] resize-y")}
+                placeholder="Partagez votre credo en français..."
+              />
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

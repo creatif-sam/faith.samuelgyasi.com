@@ -1,7 +1,20 @@
 "use client";
 
-import { Suspense, useEffect } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
+import { createClient } from "@/lib/supabase/client";
+
+type Lang = "en" | "fr";
+
+interface CredoContent {
+  id: string;
+  title_en: string;
+  title_fr: string;
+  content_en: string;
+  content_fr: string;
+  updated_at: string;
+  created_at: string;
+}
 
 const css = `
 .credo-pg {
@@ -267,6 +280,20 @@ const beliefs = [
 ];
 
 export default function CredoPage() {
+  const [lang, setLang] = useState<Lang>("en");
+  const [dbContent, setDbContent] = useState<CredoContent | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchContent = async () => {
+      const db = createClient();
+      const { data } = await db.from("credo_content").select("*").single();
+      setDbContent(data);
+      setLoading(false);
+    };
+    fetchContent();
+  }, []);
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("credo-visible"); }),
@@ -318,6 +345,96 @@ export default function CredoPage() {
             </div>
           ))}
         </div>
+
+        {/* DATABASE-DRIVEN CONTENT */}
+        {dbContent && (
+          <section style={{
+            maxWidth: '1100px',
+            margin: '60px auto 0',
+            padding: '0 8% 80px',
+            borderTop: '1px solid rgba(201,168,76,.18)',
+          }}>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginTop: '60px',
+              marginBottom: '40px',
+            }}>
+              <div style={{
+                fontFamily: "var(--font-space-mono),'Space Mono',monospace",
+                fontSize: '10px',
+                letterSpacing: '0.32em',
+                textTransform: 'uppercase',
+                background: 'var(--gold-gradient)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}>
+                {lang === "fr" ? "Mon Credo" : "My Credo"}
+              </div>
+              <div style={{
+                display: 'inline-flex',
+                gap: 0,
+                border: '1px solid rgba(201,168,76,.3)',
+              }}>
+                <button
+                  onClick={() => setLang("en")}
+                  style={{
+                    fontFamily: "var(--font-space-mono),'Space Mono',monospace",
+                    fontSize: '9px',
+                    letterSpacing: '0.28em',
+                    textTransform: 'uppercase',
+                    padding: '8px 18px',
+                    background: lang === "en" ? 'rgba(201,168,76,.1)' : 'transparent',
+                    border: 'none',
+                    color: lang === "en" ? 'rgba(201,168,76,.9)' : 'rgba(245,243,239,.4)',
+                    cursor: 'pointer',
+                    transition: 'color .2s, background .2s',
+                  }}
+                >
+                  EN
+                </button>
+                <button
+                  onClick={() => setLang("fr")}
+                  style={{
+                    fontFamily: "var(--font-space-mono),'Space Mono',monospace",
+                    fontSize: '9px',
+                    letterSpacing: '0.28em',
+                    textTransform: 'uppercase',
+                    padding: '8px 18px',
+                    background: lang === "fr" ? 'rgba(201,168,76,.1)' : 'transparent',
+                    border: 'none',
+                    color: lang === "fr" ? 'rgba(201,168,76,.9)' : 'rgba(245,243,239,.4)',
+                    cursor: 'pointer',
+                    transition: 'color .2s, background .2s',
+                  }}
+                >
+                  FR
+                </button>
+              </div>
+            </div>
+            <h2 style={{
+              fontFamily: "var(--font-cormorant),'Cormorant Garamond',serif",
+              fontSize: 'clamp(32px, 5vw, 52px)',
+              fontWeight: 500,
+              lineHeight: 1.2,
+              color: 'var(--white)',
+              marginBottom: '32px',
+            }}>
+              {lang === "fr" && dbContent.title_fr ? dbContent.title_fr : dbContent.title_en}
+            </h2>
+            <div style={{
+              fontFamily: "var(--font-poppins),Poppins,sans-serif",
+              fontSize: 'clamp(15px, 1.8vw, 18px)',
+              lineHeight: 1.75,
+              color: 'rgba(245,243,239,.72)',
+              maxWidth: '840px',
+              whiteSpace: 'pre-wrap',
+            }}>
+              {lang === "fr" && dbContent.content_fr ? dbContent.content_fr : dbContent.content_en}
+            </div>
+          </section>
+        )}
 
         {/* ── CLOSING DECLARATION ── */}
         <section className="credo-close">

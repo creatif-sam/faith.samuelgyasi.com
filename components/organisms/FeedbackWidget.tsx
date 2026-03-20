@@ -5,11 +5,14 @@ import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
 import { MessageSquarePlus, X, Bug, Lightbulb, Send, Check } from "lucide-react";
+import { useLang } from "@/lib/i18n";
+import { feedbackTranslations as t } from "@/lib/i18n/feedback";
 
 type FeedbackType = "bug" | "idea";
 type Stage = "closed" | "form" | "done";
 
 export function FeedbackWidget() {
+  const { lang } = useLang();
   const [stage, setStage] = useState<Stage>("closed");
   const [type, setType]   = useState<FeedbackType>("idea");
   const [msg, setMsg]     = useState("");
@@ -54,13 +57,11 @@ export function FeedbackWidget() {
     setBusy(false);
     if (error) {
       console.error("Feedback error:", error.message);
-      toast.error("Failed to send feedback. Please try again.");
+      toast.error(t.toasts.error[lang]);
       return;
     }
     toast.success(
-      type === "bug"
-        ? "Bug report received — thank you!"
-        : "Improvement idea received — thank you!"
+      type === "bug" ? t.toasts.bugSuccess[lang] : t.toasts.ideaSuccess[lang]
     );
     setStage("done");
   }
@@ -83,10 +84,10 @@ export function FeedbackWidget() {
                 <Check size={20} className="text-[#d4a843]" />
               </div>
               <p className="font-[family-name:'Playfair_Display',serif] text-[17px] text-[#eef0f5]">
-                Thank you!
+                {t.success.title[lang]}
               </p>
-              <p className="font-mono text-[9px] tracking-[.12em] text-white/40 uppercase">
-                Your feedback was received
+              <p className="font-[family-name:'Poppins',sans-serif] text-[9px] tracking-[.12em] text-white/40 uppercase font-medium">
+                {t.success.message[lang]}
               </p>
             </div>
           ) : (
@@ -94,7 +95,7 @@ export function FeedbackWidget() {
               {/* Header */}
               <div className="flex items-center justify-between px-5 py-4 border-b border-white/[.06]">
                 <span className="font-[family-name:'Playfair_Display',serif] text-[15px] text-[#eef0f5]">
-                  Share Feedback
+                  {t.title[lang]}
                 </span>
                 <button
                   onClick={() => setStage("closed")}
@@ -109,14 +110,14 @@ export function FeedbackWidget() {
                 {/* Type toggle */}
                 <div className="flex gap-2">
                   {([
-                    { id: "bug"  as FeedbackType, Icon: Bug,       label: "Bug Report"  },
-                    { id: "idea" as FeedbackType, Icon: Lightbulb, label: "Idea / Improvement" },
+                    { id: "bug"  as FeedbackType, Icon: Bug,       label: t.types.bug[lang]  },
+                    { id: "idea" as FeedbackType, Icon: Lightbulb, label: t.types.idea[lang] },
                   ] as const).map(({ id, Icon, label }) => (
                     <button
                       key={id}
                       onClick={() => setType(id)}
                       className={cn(
-                        "flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg border text-[9px] font-mono tracking-[.15em] uppercase transition-all cursor-pointer",
+                        "flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg border text-[9px] font-[family-name:'Poppins',sans-serif] font-semibold tracking-[.15em] uppercase transition-all cursor-pointer",
                         type === id
                           ? "bg-[rgba(212,168,67,.1)] border-[rgba(212,168,67,.3)] text-[#d4a843]"
                           : "bg-white/[.03] border-white/[.07] text-white/35 hover:text-white/60 hover:border-white/15"
@@ -130,29 +131,29 @@ export function FeedbackWidget() {
 
                 {/* Message */}
                 <div>
-                  <label className="font-mono text-[8px] tracking-[.2em] uppercase text-white/30 block mb-1.5">
-                    {type === "bug" ? "Describe the bug" : "Describe your idea"}
+                  <label className="font-[family-name:'Poppins',sans-serif] font-semibold text-[8px] tracking-[.2em] uppercase text-white/30 block mb-1.5">
+                    {type === "bug" ? t.labels.bugDescription[lang] : t.labels.ideaDescription[lang]}
                   </label>
                   <textarea
                     value={msg}
                     onChange={(e) => setMsg(e.target.value)}
-                    placeholder={type === "bug" ? "What happened? What did you expect?" : "What would make this better?"}
+                    placeholder={type === "bug" ? t.placeholders.bugMessage[lang] : t.placeholders.ideaMessage[lang]}
                     rows={4}
-                    className="w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-serif text-sm px-3.5 py-2.5 outline-none transition-all focus:border-[rgba(212,168,67,.4)] focus:bg-white/[.06] resize-none placeholder:text-white/20"
+                    className="w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-[family-name:'Poppins',sans-serif] font-light text-sm px-3.5 py-2.5 outline-none transition-all focus:border-[rgba(212,168,67,.4)] focus:bg-white/[.06] resize-none placeholder:text-white/20"
                   />
                 </div>
 
                 {/* Email */}
                 <div>
-                  <label className="font-mono text-[8px] tracking-[.2em] uppercase text-white/30 block mb-1.5">
-                    Email <span className="text-white/20 normal-case tracking-normal">(optional)</span>
+                  <label className="font-[family-name:'Poppins',sans-serif] font-semibold text-[8px] tracking-[.2em] uppercase text-white/30 block mb-1.5">
+                    {t.labels.email[lang]} <span className="text-white/20 normal-case tracking-normal">{t.labels.optional[lang]}</span>
                   </label>
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="you@example.com"
-                    className="w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-serif text-sm px-3.5 py-2.5 outline-none transition-all focus:border-[rgba(212,168,67,.4)] focus:bg-white/[.06] placeholder:text-white/20"
+                    placeholder={t.placeholders.email[lang]}
+                    className="w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-[family-name:'Poppins',sans-serif] font-light text-sm px-3.5 py-2.5 outline-none transition-all focus:border-[rgba(212,168,67,.4)] focus:bg-white/[.06] placeholder:text-white/20"
                   />
                 </div>
 
@@ -161,14 +162,14 @@ export function FeedbackWidget() {
                   onClick={submit}
                   disabled={busy || !msg.trim()}
                   className={cn(
-                    "inline-flex items-center justify-center gap-2 font-mono text-[9px] tracking-[.18em] uppercase rounded-lg px-5 py-3 transition-all border-0 cursor-pointer",
+                    "inline-flex items-center justify-center gap-2 font-[family-name:'Poppins',sans-serif] font-semibold text-[9px] tracking-[.18em] uppercase rounded-lg px-5 py-3 transition-all border-0 cursor-pointer",
                     msg.trim()
                       ? "bg-gradient-to-br from-[#d4a843] to-[#c49838] text-[#09090d] hover:from-[#e0b84e] hover:to-[#d4a843] shadow-[0_2px_12px_rgba(212,168,67,.25)]"
                       : "bg-white/[.05] text-white/25 cursor-not-allowed"
                   )}
                 >
                   <Send size={11} />
-                  {busy ? "Sending…" : "Send Feedback"}
+                  {busy ? t.buttons.sending[lang] : t.buttons.send[lang]}
                 </button>
               </div>
             </>

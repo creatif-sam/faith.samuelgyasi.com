@@ -3,26 +3,30 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
+import { useLang } from "@/lib/i18n";
 
 type DbPost = {
   id: string;
   title: string;
+  title_fr: string | null;
   slug: string;
   category: string;
   excerpt: string | null;
+  excerpt_fr: string | null;
   read_time_minutes: number;
   featured_image_url: string | null;
   created_at: string;
 };
 
 const CATEGORIES = [
-  { value: "faith", label: "Faith" },
-  { value: "problems-and-solutions", label: "Problems & Solutions" },
-  { value: "wisdom", label: "Wisdom" },
-  { value: "leadership", label: "Leadership" },
+  { value: "faith", label: { en: "Faith", fr: "Foi" } },
+  { value: "problems-and-solutions", label: { en: "Problems & Solutions", fr: "Problèmes & Solutions" } },
+  { value: "wisdom", label: { en: "Wisdom", fr: "Sagesse" } },
+  { value: "leadership", label: { en: "Leadership", fr: "Leadership" } },
 ];
 
 export default function FaithBlogPage() {
+  const { lang } = useLang();
   const [posts, setPosts] = useState<DbPost[]>([]);
   const [activeCat, setActiveCat] = useState<string>("all");
   const [loading, setLoading] = useState(true);
@@ -36,7 +40,7 @@ export default function FaithBlogPage() {
     const supabase = createClient();
     supabase
       .from("blog_posts")
-      .select("id,title,slug,category,excerpt,read_time_minutes,featured_image_url,created_at")
+      .select("id,title,title_fr,slug,category,excerpt,excerpt_fr,read_time_minutes,featured_image_url,created_at")
       .eq("published", true)
       .order("created_at", { ascending: false })
       .then(({ data }) => {
@@ -49,6 +53,10 @@ export default function FaithBlogPage() {
     activeCat === "all" ? posts : posts.filter((p) => p.category === activeCat);
   const featured = filtered[0];
   const rest = filtered.slice(1);
+
+  // Helper to get translated content
+  const getTitle = (post: DbPost) => lang === "fr" && post.title_fr ? post.title_fr : post.title;
+  const getExcerpt = (post: DbPost) => lang === "fr" && post.excerpt_fr ? post.excerpt_fr : post.excerpt;
 
   return (
     <div className="fdp" style={{ minHeight: "100vh" }}>
@@ -63,15 +71,16 @@ export default function FaithBlogPage() {
 
       {/* HEADER */}
       <header className="fb-header">
-        <div className="fb-eyebrow">Faith Journal</div>
+        <div className="fb-eyebrow">{lang === "fr" ? "Journal de Foi" : "Faith Journal"}</div>
         <h1 className="fb-title">
-          <span>Words That</span>
+          <span>{lang === "fr" ? "Mots Qui" : "Words That"}</span>
           <br />
-          <em>Anchor</em>
+          <em>{lang === "fr" ? "Ancrent" : "Anchor"}</em>
         </h1>
         <p className="fb-subtitle">
-          Reflections on scripture, sacred conviction, and the daily practice of
-          trusting God with every step.
+          {lang === "fr" 
+            ? "Réflexions sur les Écritures, la conviction sacrée et la pratique quotidienne de faire confiance à Dieu à chaque pas."
+            : "Reflections on scripture, sacred conviction, and the daily practice of trusting God with every step."}
         </p>
       </header>
 
@@ -81,7 +90,7 @@ export default function FaithBlogPage() {
           className={`fb-filter${activeCat === "all" ? " fb-filter--active" : ""}`}
           onClick={() => setActiveCat("all")}
         >
-          All
+          {lang === "fr" ? "Tout" : "All"}
         </button>
         {CATEGORIES.map((cat) => (
           <button
@@ -89,40 +98,40 @@ export default function FaithBlogPage() {
             className={`fb-filter${activeCat === cat.value ? " fb-filter--active" : ""}`}
             onClick={() => setActiveCat(cat.value)}
           >
-            {cat.label}
+            {cat.label[lang]}
           </button>
         ))}
       </div>
 
       {/* POSTS */}
       {loading ? (
-        <p className="fb-empty">Loading reflections...</p>
+        <p className="fb-empty">{lang === "fr" ? "Chargement des réflexions..." : "Loading reflections..."}</p>
       ) : filtered.length === 0 ? (
-        <p className="fb-empty">No reflections in this category yet.</p>
+        <p className="fb-empty">{lang === "fr" ? "Aucune réflexion dans cette catégorie pour le moment." : "No reflections in this category yet."}</p>
       ) : (
         <div className="fb-content">
           {featured && (
             <Link href={`/blog/${featured.slug}`} className="fb-featured">
               {featured.featured_image_url && (
                 <div className="fb-featured-cover">
-                  <img src={featured.featured_image_url} alt={featured.title} className="fb-featured-cover-img" />
+                  <img src={featured.featured_image_url} alt={getTitle(featured)} className="fb-featured-cover-img" />
                 </div>
               )}
               <div className="fb-featured-tag">{featured.category}</div>
-              <h2 className="fb-featured-title">{featured.title}</h2>
-              {featured.excerpt && (
-                <p className="fb-featured-excerpt">{featured.excerpt}</p>
+              <h2 className="fb-featured-title">{getTitle(featured)}</h2>
+              {getExcerpt(featured) && (
+                <p className="fb-featured-excerpt">{getExcerpt(featured)}</p>
               )}
               <div className="fb-meta">
                 <span>
-                  {new Date(featured.created_at).toLocaleDateString("en-GB", {
+                  {new Date(featured.created_at).toLocaleDateString(lang === "fr" ? "fr-FR" : "en-GB", {
                     day: "numeric",
                     month: "long",
                     year: "numeric",
                   })}
                 </span>
                 <span>.</span>
-                <span>{featured.read_time_minutes} min read</span>
+                <span>{featured.read_time_minutes} min {lang === "fr" ? "de lecture" : "read"}</span>
               </div>
             </Link>
           )}
@@ -133,17 +142,17 @@ export default function FaithBlogPage() {
                 <Link key={post.slug} href={`/blog/${post.slug}`} className="fb-card">
                   {post.featured_image_url && (
                     <div className="fb-card-cover">
-                      <img src={post.featured_image_url} alt={post.title} className="fb-card-cover-img" />
+                      <img src={post.featured_image_url} alt={getTitle(post)} className="fb-card-cover-img" />
                     </div>
                   )}
                   <div className="fb-card-tag">{post.category}</div>
-                  <h3 className="fb-card-title">{post.title}</h3>
-                  {post.excerpt && (
-                    <p className="fb-card-excerpt">{post.excerpt}</p>
+                  <h3 className="fb-card-title">{getTitle(post)}</h3>
+                  {getExcerpt(post) && (
+                    <p className="fb-card-excerpt">{getExcerpt(post)}</p>
                   )}
                   <div className="fb-meta">
                     <span>
-                      {new Date(post.created_at).toLocaleDateString("en-GB", {
+                      {new Date(post.created_at).toLocaleDateString(lang === "fr" ? "fr-FR" : "en-GB", {
                         day: "numeric",
                         month: "long",
                         year: "numeric",
