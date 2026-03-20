@@ -2,75 +2,88 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { useLang } from "@/lib/i18n";
 import { heroTranslations as t } from "@/lib/i18n/hero";
 
 export function HeroSection() {
   const { lang } = useLang();
 
-  const heroPillars = [
-    { labelKey: "faith"   as const, href: "/faith", description: "Explore the values, beliefs, and principles that guide my journey and purpose." },
-    { labelKey: "journal" as const, href: "/blog", description: "Leading pioneering studies that push the boundaries of innovation and knowledge." },
-    { labelKey: "story"   as const, href: "/my-story", description: "Bridging research to drive innovation and real-world progress." },
-  ];
-
   useEffect(() => {
-    const cards = document.querySelectorAll('.hero-card-modern');
-    cards.forEach((card, i) => {
+    const items = document.querySelectorAll('.hero-nav-item');
+    items.forEach((item, i) => {
       setTimeout(() => {
-        card.classList.add('hero-card-visible');
+        item.classList.add('hero-nav-item--visible');
       }, i * 150);
     });
   }, []);
 
   return (
-    <section id="hero" className="hero-modern">
-      <div className="hero-modern-container">
-        {/* Left side - Large heading with image */}
-        <div className="hero-modern-left">
-          <div className="hero-image-wrapper">
-            <img 
-              src="/photo-hero.png" 
-              alt="Samuel Kobina Gyasi" 
-              className="hero-profile-image"
-            />
+    <section id="hero" className="hero-split">
+      {/* Left Panel - Info */}
+      <div className="hero-split-left">
+        <div className="hero-split-content">
+          <div className="hero-eyebrow">
+            CHRISTIAN · THINKER · SERVANT<br/>
+            ROOTED IN THE WORD
           </div>
-          <h1 className="hero-modern-heading">
-            <span className="hero-modern-heading-line">Driven by</span>
-            <span className="hero-modern-heading-emphasis">Purpose</span>
+          
+          <h1 className="hero-title">
+            Samuel<br/>
+            <span className="hero-title-accent">Gyasi</span>
           </h1>
-          <p className="hero-modern-tagline">
-            {t.tagline[lang]}
+          
+          <p className="hero-subtitle">
+            Rooted in the Word,<br/>
+            Walking by Faith,<br/>
+            Living for His Glory.
           </p>
           
-          {/* Kingdom Values */}
-          <div className="hero-values">
-            <span className="hero-value" data-value="influence">Kingdom Influence</span>
-            <span className="hero-value" data-value="power">Power</span>
-            <span className="hero-value" data-value="wisdom">Wisdom</span>
-            <span className="hero-value" data-value="pragmatism">Pragmatism</span>
+          <div className="hero-actions">
+            <Link href="/faith" className="hero-btn hero-btn-primary">
+              EXPLORE FAITH
+            </Link>
+            <Link href="/blog" className="hero-btn hero-btn-secondary">
+              READ JOURNAL
+            </Link>
           </div>
         </div>
-
-        {/* Right side - Cards */}
-        <div className="hero-modern-right">
-          {heroPillars.map((pillar, idx) => (
-            <Link 
-              key={pillar.href} 
-              href={pillar.href} 
-              className="hero-card-modern"
-              style={{ transitionDelay: `${idx * 100}ms` }}
-            >
-              <div className="hero-card-label">{t.pillars[pillar.labelKey][lang].toUpperCase()}</div>
-              <h3 className="hero-card-title">{t.pillars[pillar.labelKey][lang]}</h3>
-              <p className="hero-card-description">{pillar.description}</p>
-              <div className="hero-card-button">
-                <span>Learn More</span>
-                <ArrowRight className="hero-card-arrow" size={20} strokeWidth={2} />
-              </div>
-            </Link>
-          ))}
+      </div>
+      
+      {/* Right Panel - Image & Navigation */}
+      <div className="hero-split-right">
+        <div className="hero-image-container">
+          <img 
+            src="/photo-hero.png" 
+            alt="Samuel Kobina Gyasi" 
+            className="hero-main-image"
+          />
+          
+          <div className="hero-image-caption">
+            BUILDING MY FAITH · NOT BY SIGHT
+          </div>
+        </div>
+        
+        <nav className="hero-nav">
+          <Link href="/faith" className="hero-nav-item">
+            <span className="hero-nav-number">01</span>
+            <span className="hero-nav-text">Faith & Beliefs</span>
+          </Link>
+          <Link href="/blog" className="hero-nav-item">
+            <span className="hero-nav-number">02</span>
+            <span className="hero-nav-text">Faith Journal</span>
+          </Link>
+          <Link href="/my-story" className="hero-nav-item">
+            <span className="hero-nav-number">03</span>
+            <span className="hero-nav-text">My Story</span>
+          </Link>
+        </nav>
+        
+        {/* Kingdom Values */}
+        <div className="hero-values-vertical">
+          <span className="hero-value-label">Kingdom Influence</span>
+          <span className="hero-value-label">Power</span>
+          <span className="hero-value-label">Wisdom</span>
+          <span className="hero-value-label">Pragmatism</span>
         </div>
       </div>
     </section>
