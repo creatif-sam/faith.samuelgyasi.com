@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Cormorant_Garamond, Space_Mono } from "next/font/google";
+import { Playfair_Display, Cormorant_Garamond, Space_Mono, Poppins } from "next/font/google";
 import "./globals.css";
 import { CustomCursor } from "@/components/organisms/CustomCursor";
 import { CookieBanner } from "@/components/organisms/CookieBanner";
@@ -26,6 +26,12 @@ const spaceMono = Space_Mono({
   variable: "--font-space-mono",
   subsets: ["latin"],
   weight: ["400", "700"],
+});
+
+const poppins = Poppins({
+  variable: "--font-poppins",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://faith.samuelgyasi.com";
@@ -141,7 +147,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${playfair.variable} ${cormorant.variable} ${spaceMono.variable}`}
+        className={`${playfair.variable} ${cormorant.variable} ${spaceMono.variable} ${poppins.variable}`}
       >
         <Providers>
           <CustomCursor />

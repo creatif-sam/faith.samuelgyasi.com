@@ -9,81 +9,78 @@ export function HeroSection() {
   const { lang } = useLang();
 
   useEffect(() => {
-    const items = document.querySelectorAll('.hero-nav-item');
-    items.forEach((item, i) => {
-      setTimeout(() => {
-        item.classList.add('hero-nav-item--visible');
-      }, i * 150);
-    });
+    const heroContent = document.querySelector('.hero-content-wrapper');
+    if (heroContent) {
+      setTimeout(() => heroContent.classList.add('hero-visible'), 100);
+    }
   }, []);
 
   return (
-    <section id="hero" className="hero-split">
-      {/* Left Panel - Info */}
-      <div className="hero-split-left">
-        <div className="hero-split-content">
-          <div className="hero-eyebrow">
-            CHRISTIAN · THINKER · SERVANT<br/>
-            ROOTED IN THE WORD
+    <section id="hero" className="hero-clean">
+      <div className="hero-container">
+        {/* Image Section */}
+        <div className="hero-image-section">
+          <div className="hero-image-frame">
+            <img 
+              src="/photo-hero.png" 
+              alt="Samuel Kobina Gyasi" 
+              className="hero-image"
+            />
           </div>
-          
-          <h1 className="hero-title">
-            Samuel<br/>
-            <span className="hero-title-accent">Gyasi</span>
-          </h1>
-          
-          <p className="hero-subtitle">
-            Rooted in the Word,<br/>
-            Walking by Faith,<br/>
-            Living for His Glory.
-          </p>
-          
-          <div className="hero-actions">
-            <Link href="/faith" className="hero-btn hero-btn-primary">
-              EXPLORE FAITH
-            </Link>
-            <Link href="/blog" className="hero-btn hero-btn-secondary">
-              READ JOURNAL
-            </Link>
-          </div>
-        </div>
-      </div>
-      
-      {/* Right Panel - Image & Navigation */}
-      <div className="hero-split-right">
-        <div className="hero-image-container">
-          <img 
-            src="/photo-hero.png" 
-            alt="Samuel Kobina Gyasi" 
-            className="hero-main-image"
-          />
-          
-          <div className="hero-image-caption">
-            BUILDING MY FAITH · NOT BY SIGHT
+          <div className="hero-image-label">
+            <span className="label-line"></span>
+            <span className="label-text">BUILDING MY FAITH · NOT BY SIGHT</span>
           </div>
         </div>
         
-        <nav className="hero-nav">
-          <Link href="/faith" className="hero-nav-item">
-            <span className="hero-nav-number">01</span>
-            <span className="hero-nav-text">Faith & Beliefs</span>
-          </Link>
-          <Link href="/blog" className="hero-nav-item">
-            <span className="hero-nav-number">02</span>
-            <span className="hero-nav-text">Faith Journal</span>
-          </Link>
-          <Link href="/my-story" className="hero-nav-item">
-            <span className="hero-nav-number">03</span>
-            <span className="hero-nav-text">My Story</span>
-          </Link>
-        </nav>
-        
-        {/* Kingdom Values */}
-        <div className="hero-values-vertical">
-          <span className="hero-value-label">Kingdom Influence</span>
-          <span className="hero-value-label">Power</span>
-          <span className="hero-value-label">Wisdom</span>
-          <span className="hero-value-label">Pragmatism</span>
+        {/* Content Section */}
+        <div className="hero-content-wrapper">
+          <div className="hero-content">
+            <div className="hero-eyebrow">
+              CHRISTIAN · THINKER · SERVANT
+            </div>
+            
+            <h1 className="hero-title">
+              Samuel Kobina
+              <span className="hero-title-accent">Gyasi</span>
+            </h1>
+            
+            <p className="hero-description">
+              Rooted in the Word. Walking by Faith. Living for His Glory.
+            </p>
+            
+            <div className="hero-values-list">
+              <span className="value-badge">Kingdom Influence</span>
+              <span className="value-badge">Power</span>
+              <span className="value-badge">Wisdom</span>
+              <span className="value-badge">Pragmatism</span>
+            </div>
+            
+            <div className="hero-actions">
+              <Link href="/faith" className="hero-btn hero-btn-primary">
+                Explore Faith
+              </Link>
+              <Link href="/blog" className="hero-btn hero-btn-secondary">
+                Read Journal
+              </Link>
+            </div>
+          </div>
+          
+          {/* Quick Links */}
+          <nav className="hero-quick-nav">
+            <Link href="/faith" className="quick-nav-item">
+              <span className="qn-number">01</span>
+              <span className="qn-label">Faith & Beliefs</span>
+            </Link>
+            <Link href="/blog" className="quick-nav-item">
+              <span className="qn-number">02</span>
+              <span className="qn-label">Faith Journal</span>
+            </Link>
+            <Link href="/my-story" className="quick-nav-item">
+              <span className="qn-number">03</span>
+              <span className="qn-label">My Story</span>
+            </Link>
+          </nav>
         </div>
       </div>
     </section>
