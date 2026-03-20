@@ -1,15 +1,21 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useLang } from "@/lib/i18n";
+import { createClient } from "@/lib/supabase/client";
+import { toast } from "sonner";
 
 type DbPost = {
   id: string;
   title: string;
+  title_fr?: string | null;
   slug: string;
   category: string;
   excerpt: string | null;
+  excerpt_fr?: string | null;
   content: string | null;
+  content_fr?: string | null;
   read_time_minutes: number;
   featured_image_url: string | null;
   infographie_url: string | null;
@@ -32,6 +38,100 @@ export function ArticleClient({
   post: DbPost;
   related: RelatedPost[];
 }) {
+  const { lang } = useLang();
+  const [showEvalModal, setShowEvalModal] = useState(false);
+  const [hasShownModal, setHasShownModal] = useState(false);
+  const [rating, setRating] = useState(0);
+  const [hoveredRating, setHoveredRating] = useState(0);
+  const [pragmatic, setPragmatic] = useState(false);
+  const [faithBuilding, setFaithBuilding] = useState(false);
+  const [clear, setClear] = useState(false);
+  const [confusing, setConfusing] = useState(false);
+  const [relatedToMe, setRelatedToMe] = useState(false);
+  const [feedbackText, setFeedbackText] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+
+  // Get language-aware content
+  const title = lang === "fr" && post.title_fr ? post.title_fr : post.title;
+  const excerpt = lang === "fr" && post.excerpt_fr ? post.excerpt_fr : post.excerpt;
+  const content = lang === "fr" && post.content_fr ? post.content_fr : post.content;
+
+  const translations = {
+    minRead: lang === "fr" ? "min de lecture" : "min read",
+    moreInCategory: lang === "fr" ? "Plus dans cette catégorie" : "More in this Category",
+    allReflections: lang === "fr" ? "← Toutes les réflexions" : "← All Reflections",
+    myStory: lang === "fr" ? "Mon Histoire →" : "My Story →",
+    evalTitle: lang === "fr" ? "Évaluez cette réflexion" : "Rate this Reflection",
+    evalSub: lang === "fr" ? "Votre feedback nous aide à créer un meilleur contenu" : "Your feedback helps us create better content",
+    rateLabel: lang === "fr" ? "Note (1-5 étoiles)" : "Rating (1-5 stars)",
+    categoriesLabel: lang === "fr" ? "Cette réflexion était:" : "This reflection was:",
+    pragmaticLabel: lang === "fr" ? "Pragmatique" : "Pragmatic",
+    faithLabel: lang === "fr" ? "A renforcé ma foi" : "Built my faith",
+    clearLabel: lang === "fr" ? "Claire" : "Clear",
+    confusingLabel: lang === "fr" ? "Confus" : "Confusing",
+    relatedLabel: lang === "fr" ? "Pertinent" : "Related",
+    commentLabel: lang === "fr" ? "Commentaires additionnels (optionnel)" : "Additional comments (optional)",
+    submitBtn: lang === "fr" ? "Soumettre l'évaluation" : "Submit Evaluation",
+    skipBtn: lang === "fr" ? "Passer" : "Skip",
+    thankYou: lang === "fr" ? "Merci pour votre feedback!" : "Thank you for your feedback!",
+    errorMsg: lang === "fr" ? "Erreur lors de la soumission" : "Error submitting feedback",
+    rateRequired: lang === "fr" ? "Veuillez sélectionner une note" : "Please select a rating",
+  };
+
+  // Scroll tracking to show modal at 50%
+  useEffect(() => {
+    const handleScroll = () => {
+      if (hasShownModal) return;
+
+      const article = document.querySelector(".fa-body");
+      if (!article) return;
+
+      const articleRect = article.getBoundingClientRect();
+      const articleHeight = article.scrollHeight;
+      const scrolledAmount = window.scrollY + window.innerHeight - articleRect.top;
+      const scrollPercentage = (scrolledAmount / articleHeight) * 100;
+
+      if (scrollPercentage >= 50) {
+        setShowEvalModal(true);
+        setHasShownModal(true);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [hasShownModal]);
+
+  const handleSubmitEvaluation = async () => {
+    if (rating === 0) {
+      toast.error(translations.rateRequired);
+      return;
+    }
+
+    setSubmitting(true);
+    const supabase = createClient();
+    
+    const { error } = await supabase.from("blog_evaluations").insert({
+      blog_post_id: post.id,
+      rating,
+      is_pragmatic: pragmatic,
+      built_faith: faithBuilding,
+      is_clear: clear,
+      is_confusing: confusing,
+      is_related: relatedToMe,
+      feedback_text: feedbackText.trim() || null,
+    });
+
+    setSubmitting(false);
+
+    if (error) {
+      toast.error(translations.errorMsg);
+      return;
+    }
+
+    toast.success(translations.thankYou);
+    setShowEvalModal(false);
+  };
+
   useEffect(() => {
     document.body.classList.add("on-fdp");
     return () => document.body.classList.remove("on-fdp");
@@ -52,32 +152,32 @@ export function ArticleClient({
       <article className="fa-article">
         <header className="fa-header">
           <div className="fa-tag">{post.category}</div>
-          <h1 className="fa-title">{post.title}</h1>
+          <h1 className="fa-title">{title}</h1>
           <div className="fa-meta">
             <span>
-              {new Date(post.created_at).toLocaleDateString("en-GB", {
+              {new Date(post.created_at).toLocaleDateString(lang === "fr" ? "fr-FR" : "en-GB", {
                 day: "numeric",
                 month: "long",
                 year: "numeric",
               })}
             </span>
             <span>·</span>
-            <span>{post.read_time_minutes} min read</span>
+            <span>{post.read_time_minutes} {translations.minRead}</span>
             <span>·</span>
             <span>Samuel Kobina Gyasi</span>
           </div>
-          {post.excerpt && <p className="fa-lead">{post.excerpt}</p>}
+          {excerpt && <p className="fa-lead">{excerpt}</p>}
           {post.featured_image_url && (
             <div className="fa-cover">
-              <img src={post.featured_image_url} alt={post.title} className="fa-cover-img" />
+              <img src={post.featured_image_url} alt={title} className="fa-cover-img" />
             </div>
           )}
         </header>
 
-        {post.content && (
+        {content && (
           <div
             className="fa-body"
-            dangerouslySetInnerHTML={{ __html: post.content }}
+            dangerouslySetInnerHTML={{ __html: content }}
           />
         )}
 
@@ -91,7 +191,7 @@ export function ArticleClient({
         {related.length > 0 && (
 
           <aside className="fa-related">
-            <div className="fa-related-label">More in this Category</div>
+            <div className="fa-related-label">{translations.moreInCategory}</div>
             <div className="fa-related-grid">
               {related.map((p) => (
                 <Link
@@ -101,7 +201,7 @@ export function ArticleClient({
                 >
                   <div className="fa-rc-tag">{p.category}</div>
                   <div className="fa-rc-title">{p.title}</div>
-                  <div className="fa-rc-meta">{p.read_time_minutes} min read</div>
+                  <div className="fa-rc-meta">{p.read_time_minutes} {translations.minRead}</div>
                 </Link>
               ))}
             </div>
@@ -109,10 +209,114 @@ export function ArticleClient({
         )}
 
         <footer className="fa-footer">
-          <Link href="/blog" className="fa-back-link">← All Reflections</Link>
-          <Link href="/my-story" className="fa-credo-link">My Story →</Link>
+          <Link href="/blog" className="fa-back-link">{translations.allReflections}</Link>
+          <Link href="/my-story" className="fa-credo-link">{translations.myStory}</Link>
         </footer>
       </article>
+
+      {/* EVALUATION MODAL */}
+      {showEvalModal && (
+        <div className="eval-modal-overlay" onClick={() => setShowEvalModal(false)}>
+          <div className="eval-modal" onClick={(e) => e.stopPropagation()}>
+            <button className="eval-close" onClick={() => setShowEvalModal(false)}>×</button>
+            
+            <div className="eval-header">
+              <h3>{translations.evalTitle}</h3>
+              <p>{translations.evalSub}</p>
+            </div>
+
+            <div className="eval-body">
+              <label className="eval-label">{translations.rateLabel} <span className="eval-required">*</span></label>
+              <div className="star-rating">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <button
+                    key={star}
+                    type="button"
+                    className={star <= (hoveredRating || rating) ? 'star-active' : ''}
+                    onMouseEnter={() => setHoveredRating(star)}
+                    onMouseLeave={() => setHoveredRating(0)}
+                    onClick={() => setRating(star)}
+                    aria-label={`Rate ${star} stars`}
+                  >
+                    {star <= (hoveredRating || rating) ? '★' : '☆'}
+                  </button>
+                ))}
+              </div>
+
+              <label className="eval-label eval-label-categories">{translations.categoriesLabel || "What resonated with you?"}</label>
+              <div className="eval-checkboxes">
+                <label className="eval-checkbox-label">
+                  <input
+                    type="checkbox"
+                    checked={pragmatic}
+                    onChange={(e) => setPragmatic(e.target.checked)}
+                  />
+                  <span>{translations.pragmaticLabel}</span>
+                </label>
+                <label className="eval-checkbox-label">
+                  <input
+                    type="checkbox"
+                    checked={faithBuilding}
+                    onChange={(e) => setFaithBuilding(e.target.checked)}
+                  />
+                  <span>{translations.faithBuildingLabel}</span>
+                </label>
+                <label className="eval-checkbox-label">
+                  <input
+                    type="checkbox"
+                    checked={clear}
+                    onChange={(e) => setClear(e.target.checked)}
+                  />
+                  <span>{translations.clearLabel}</span>
+                </label>
+                <label className="eval-checkbox-label">
+                  <input
+                    type="checkbox"
+                    checked={confusing}
+                    onChange={(e) => setConfusing(e.target.checked)}
+                  />
+                  <span>{translations.confusingLabel}</span>
+                </label>
+                <label className="eval-checkbox-label">
+                  <input
+                    type="checkbox"
+                    checked={relatedToMe}
+                    onChange={(e) => setRelatedToMe(e.target.checked)}
+                  />
+                  <span>{translations.relatedLabel}</span>
+                </label>
+              </div>
+
+              <label className="eval-label eval-label-comment">{translations.commentLabel}</label>
+              <textarea
+                className="eval-textarea"
+                value={feedbackText}
+                onChange={(e) => setFeedbackText(e.target.value)}
+                placeholder={lang === "fr" ? "Partagez vos réflexions (optionnel)..." : "Share your thoughts (optional)..."}
+                rows={4}
+              />
+            </div>
+
+            <div className="eval-actions">
+              <button
+                type="button"
+                className="eval-btn eval-btn-skip"
+                onClick={() => setShowEvalModal(false)}
+              >
+                {translations.skipBtn}
+              </button>
+              <button
+                type="button"
+                className="eval-btn eval-btn-submit"
+                onClick={handleSubmitEvaluation}
+                disabled={submitting}
+              >
+                {submitting ? "..." : translations.submitBtn}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -160,10 +364,52 @@ body.on-fdp { background:#080807; color:#f0ece4; font-family:'Cormorant Garamond
 .fa-infographie { margin:56px 0 0; padding-top:56px; border-top:1px solid var(--line); }
 .fa-infographie-label { font-family:'Space Mono',monospace; font-size:9px; letter-spacing:.3em; text-transform:uppercase; color:var(--gold); margin-bottom:28px; }
 .fa-infographie-img { width:100%; display:block; border:1px solid var(--line); }
+
+/* EVALUATION MODAL */
+.eval-modal-overlay { position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.88); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); display:flex; align-items:center; justify-content:center; padding:20px; animation:fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+.eval-modal { background:var(--bg2); border:1px solid var(--line); border-radius:8px; max-width:540px; width:100%; max-height:90vh; overflow-y:auto; padding:40px; position:relative; animation:slideUp 0.3s ease; box-shadow:0 20px 60px rgba(0,0,0,0.6); }
+@keyframes slideUp { from { transform:translateY(30px); opacity:0; } to { transform:translateY(0); opacity:1; } }
+.eval-close { position:absolute; top:16px; right:16px; background:transparent; border:none; color:var(--dim); font-size:28px; line-height:1; cursor:pointer; transition:color 0.2s, transform 0.2s; width:32px; height:32px; display:flex; align-items:center; justify-content:center; }
+.eval-close:hover { color:var(--white); transform:rotate(90deg); }
+.eval-header { margin-bottom:32px; }
+.eval-header h3 { font-family:var(--font-playfair),'Playfair Display',serif; font-size:28px; color:var(--white); margin-bottom:12px; line-height:1.2; }
+.eval-header p { font-family:var(--font-cormorant),'Cormorant Garamond',serif; font-size:16px; color:var(--dim); line-height:1.5; }
+.eval-body { margin-bottom:32px; }
+.eval-label { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); display:block; margin-bottom:12px; }
+.eval-label-categories { margin-top:28px; }
+.eval-label-comment { margin-top:24px; }
+.eval-required { color:#ff914d; }
+.star-rating { display:flex; gap:8px; margin-bottom:24px; }
+.star-rating button { background:transparent; border:none; cursor:pointer; font-size:40px; color:var(--dimmer); transition:all 0.2s ease; padding:0; line-height:1; }
+.star-rating button:hover, .star-rating button.star-active { color:var(--gold); transform:scale(1.15); }
+.eval-checkboxes { display:flex; flex-direction:column; gap:12px; }
+.eval-checkbox-label { display:flex; align-items:center; gap:12px; font-family:var(--font-cormorant),'Cormorant Garamond',serif; font-size:16px; color:var(--cream); cursor:pointer; transition:color 0.2s; }
+.eval-checkbox-label:hover { color:var(--white); }
+.eval-checkbox-label input[type="checkbox"] { width:18px; height:18px; border:1px solid var(--dim); background:transparent; cursor:pointer; appearance:none; -webkit-appearance:none; border-radius:3px; position:relative; transition:all 0.2s; }
+.eval-checkbox-label input[type="checkbox"]:checked { background:var(--gold); border-color:var(--gold); }
+.eval-checkbox-label input[type="checkbox"]:checked::after { content:'✓'; position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:var(--bg); font-size:14px; font-weight:bold; }
+.eval-textarea { width:100%; background:var(--card); border:1px solid var(--line); border-radius:6px; padding:14px 16px; font-family:var(--font-cormorant),'Cormorant Garamond',serif; font-size:16px; color:var(--white); resize:vertical; min-height:100px; transition:border-color 0.2s; }
+.eval-textarea:focus { outline:none; border-color:var(--gold); }
+.eval-textarea::placeholder { color:var(--dimmer); }
+.eval-actions { display:flex; gap:12px; justify-content:flex-end; }
+.eval-btn { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.2em; text-transform:uppercase; padding:14px 28px; border-radius:6px; cursor:pointer; transition:all 0.2s; border:none; }
+.eval-btn-skip { background:transparent; color:var(--dim); border:1px solid var(--line); }
+.eval-btn-skip:hover { color:var(--white); border-color:var(--dim); }
+.eval-btn-submit { background:linear-gradient(135deg,#ffde59,#ff914d); color:var(--bg); border:none; }
+.eval-btn-submit:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(255,222,89,0.3); }
+.eval-btn-submit:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
+
 @media(max-width:768px) {
   .fdp-article-nav { padding:18px 24px; }
   .fa-article { padding:130px 24px 60px; }
   .fa-related-grid { grid-template-columns:1fr; }
   .fa-footer { flex-direction:column; align-items:flex-start; }
+  .eval-modal { padding:28px 24px; max-width:calc(100vw - 32px); }
+  .eval-header h3 { font-size:24px; }
+  .star-rating { gap:4px; }
+  .star-rating button { font-size:32px; }
+  .eval-actions { flex-direction:column; }
+  .eval-btn { width:100%; }
 }
 `;

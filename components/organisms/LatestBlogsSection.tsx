@@ -7,10 +7,10 @@ export async function LatestBlogsSection() {
   const supabase = await createClient();
   const { data: posts } = await supabase
     .from("blog_posts")
-    .select("id,title,slug,category,excerpt,read_time_minutes,featured_image_url,created_at")
+    .select("id,title,title_fr,slug,category,excerpt,excerpt_fr,read_time_minutes,featured_image_url,created_at")
     .eq("published", true)
     .order("created_at", { ascending: false })
-    .limit(3);
+    .limit(2);
 
   if (!posts || posts.length === 0) return null;
 

@@ -29,6 +29,7 @@ export default function FaithBlogPage() {
   const { lang } = useLang();
   const [posts, setPosts] = useState<DbPost[]>([]);
   const [activeCat, setActiveCat] = useState<string>("all");
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -51,8 +52,20 @@ export default function FaithBlogPage() {
 
   const filtered =
     activeCat === "all" ? posts : posts.filter((p) => p.category === activeCat);
-  const featured = filtered[0];
-  const rest = filtered.slice(1);
+  
+  // Apply search filter
+  const searchFiltered = searchQuery.trim()
+    ? filtered.filter((p) => {
+        const searchLower = searchQuery.toLowerCase();
+        const title = getTitle(p).toLowerCase();
+        const excerpt = getExcerpt(p)?.toLowerCase() || "";
+        const category = p.category.toLowerCase();
+        return title.includes(searchLower) || excerpt.includes(searchLower) || category.includes(searchLower);
+      })
+    : filtered;
+
+  const featured = searchFiltered[0];
+  const rest = searchFiltered.slice(1);
 
   // Helper to get translated content
   const getTitle = (post: DbPost) => lang === "fr" && post.title_fr ? post.title_fr : post.title;
@@ -84,6 +97,37 @@ export default function FaithBlogPage() {
         </p>
       </header>
 
+      {/* SEARCH BAR */}
+      <div className="fb-search-container">
+        <div className="fb-search-wrapper">
+          <svg className="fb-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="m21 21-4.35-4.35"/>
+          </svg>
+          <input
+            type="text"
+            className="fb-search-input"
+            placeholder={lang === "fr" ? "Rechercher des réflexions..." : "Search reflections..."}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          {searchQuery && (
+            <button 
+              className="fb-search-clear"
+              onClick={() => setSearchQuery("")}
+              aria-label="Clear search"
+            >
+              ×
+            </button>
+          )}
+        </div>
+        {searchQuery && (
+          <p className="fb-search-results">
+            {searchFiltered.length} {lang === "fr" ? "résultat(s) trouvé(s)" : "result(s) found"}
+          </p>
+        )}
+      </div>
+
       {/* CATEGORY FILTERS */}
       <div className="fb-filters">
         <button
@@ -106,8 +150,12 @@ export default function FaithBlogPage() {
       {/* POSTS */}
       {loading ? (
         <p className="fb-empty">{lang === "fr" ? "Chargement des réflexions..." : "Loading reflections..."}</p>
-      ) : filtered.length === 0 ? (
-        <p className="fb-empty">{lang === "fr" ? "Aucune réflexion dans cette catégorie pour le moment." : "No reflections in this category yet."}</p>
+      ) : searchFiltered.length === 0 ? (
+        <p className="fb-empty">
+          {searchQuery 
+            ? (lang === "fr" ? "Aucun résultat pour votre recherche." : "No results found for your search.")
+            : (lang === "fr" ? "Aucune réflexion dans cette catégorie pour le moment." : "No reflections in this category yet.")}
+        </p>
       ) : (
         <div className="fb-content">
           {featured && (
@@ -213,6 +261,15 @@ body.on-fdp { background:#080807; color:#f0ece4; font-family:'Cormorant Garamond
   50% { opacity: 0.8; }
 }
 .fb-subtitle { font-family:var(--font-cormorant),'Cormorant Garamond',serif; font-size:clamp(16px,1.8vw,20px); font-style:italic; color:var(--dim); max-width:560px; line-height:1.65; font-weight:300; animation: fadeIn 0.8s ease-out 0.5s both; }
+.fb-search-container { padding: 32px 56px 20px; background:var(--bg); border-bottom:1px solid var(--line); animation: slideUp 0.6s ease-out 0.6s both; }
+.fb-search-wrapper { position: relative; max-width: 600px; margin: 0 auto; }
+.fb-search-icon { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--dim); pointer-events: none; }
+.fb-search-input { width: 100%; padding: 14px 48px 14px 48px; background: rgba(245,243,239,.04); border: 1px solid var(--line); border-radius: 8px; color: var(--white); font-family: var(--font-poppins),'Poppins',sans-serif; font-size: 15px; outline: none; transition: all 0.3s ease; }
+.fb-search-input::placeholder { color: var(--dimmer); }
+.fb-search-input:focus { background: rgba(245,243,239,.06); border-color: rgba(201,168,76,.4); box-shadow: 0 0 0 3px rgba(201,168,76,.1); }
+.fb-search-clear { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); background: transparent; border: none; color: var(--dim); font-size: 24px; cursor: pointer; padding: 4px 8px; line-height: 1; transition: color 0.2s ease; }
+.fb-search-clear:hover { color: var(--gold); }
+.fb-search-results { text-align: center; margin-top: 12px; font-family: var(--font-space-mono),'Space Mono',monospace; font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); }
 .fb-filters { padding:24px 56px; display:flex; gap:10px; flex-wrap:wrap; background:var(--bg2); border-bottom:1px solid var(--line); position:sticky; top:65px; z-index:100; transition: all 0.3s ease; }
 .fb-filter { font-family:'Space Mono',monospace; font-size:9px; letter-spacing:.2em; text-transform:uppercase; padding:10px 20px; background:transparent; border:1px solid var(--line); color:var(--dim); cursor:pointer; transition:all .3s ease; border-radius: 4px; position: relative; overflow: hidden; }
 .fb-filter::before { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg,#ffde59,#ff914d); opacity: 0; transition: opacity 0.3s ease; z-index: -1; }
