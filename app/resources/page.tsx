@@ -255,6 +255,28 @@ export default function ResourcesPage() {
             </p>
             <span className="lib-card-cta">{lang === "en" ? "Browse Reviews →" : "Parcourir les Critiques →"}</span>
           </Link>
+
+          <Link href="/resources/audio" className="lib-section-card" style={{ transitionDelay: "0.16s" }}>
+            <div className="lib-card-num">03</div>
+            <h2 className="lib-card-title">{lang === "en" ? "Audio Library" : "Bibliothèque Audio"}</h2>
+            <p className="lib-card-body">
+              {lang === "en"
+                ? "Spoken teachings, sermons, and reflections on faith, Scripture, and the Christian walk. Listen to messages that encourage, challenge, and inspire deeper devotion to Christ."
+                : "Enseignements parlés, sermons et réflexions sur la foi, les Écritures et la marche chrétienne. Écoutez des messages qui encouragent, défient et inspirent une dévotion plus profonde au Christ."}
+            </p>
+            <span className="lib-card-cta">{lang === "en" ? "Listen Now →" : "Écouter Maintenant →"}</span>
+          </Link>
+
+          <Link href="/resources/visual" className="lib-section-card" style={{ transitionDelay: "0.24s" }}>
+            <div className="lib-card-num">04</div>
+            <h2 className="lib-card-title">{lang === "en" ? "Visual Library" : "Bibliothèque Visuelle"}</h2>
+            <p className="lib-card-body">
+              {lang === "en"
+                ? "Video teachings, talks, and visual content exploring the depths of faith, theology, and spiritual formation. Watch engaging messages designed to strengthen your understanding and walk with God."
+                : "Enseignements vidéo, conférences et contenu visuel explorant les profondeurs de la foi, de la théologie et de la formation spirituelle. Regardez des messages captivants conçus pour renforcer votre compréhension et votre marche avec Dieu."}
+            </p>
+            <span className="lib-card-cta">{lang === "en" ? "Watch Now →" : "Regarder Maintenant →"}</span>
+          </Link>
         </div>
 
         {/* ── QUOTE ── */}

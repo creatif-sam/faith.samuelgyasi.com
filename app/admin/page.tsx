@@ -67,7 +67,7 @@ interface LibraryItem {
   id: string;
   title: string;
   author: string | null;
-  category: "ebook" | "review";
+  category: "ebook" | "review" | "audio" | "visual";
   description: string | null;
   rating: number | null;
   download_url: string | null;
@@ -75,6 +75,7 @@ interface LibraryItem {
   published: boolean;
   sort_order: number;
   created_at: string;
+  duration?: string | null;
 }
 
 interface UpcomingEvent {
@@ -711,7 +712,7 @@ function AnalyticsTab({ analytics }: { analytics: AnalyticsData | null }) {
   return (
     <>
       <div className="flex justify-between items-start mb-10 pb-7 border-b border-white/[.05]">
-        <div><div className={TW.pgTitle}>Analytics</div><p className={TW.pgSub}>Last 30 days Â· samuelgyasi.com</p></div>
+        <div><div className={TW.pgTitle}>Analytics</div><p className={TW.pgSub}>Last 30 days · samuelgyasi.com</p></div>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-10">
@@ -869,7 +870,7 @@ function MsgsTab({ msgs, templates, onRead }: {
               <div className={TW.msgHead}>
                 <div>
                   <div className={TW.msgName}>{m.name}{!m.read && <span className={cn(TW.badge, TW.bNew, "ml-2")}>NEW</span>}</div>
-                  <div className={TW.msgMeta}>{m.email} Â· {new Date(m.created_at).toLocaleDateString("en-GB")}</div>
+                  <div className={TW.msgMeta}>{m.email} · {new Date(m.created_at).toLocaleDateString("en-GB")}</div>
                   {m.subject && <div className={TW.msgSubj}>Re: {m.subject}</div>}
                 </div>
                 <div className={cn(TW.actRow, "flex-shrink-0")}>
@@ -936,9 +937,9 @@ function QuickReply({ to, subject, templates, onClose }: {
         <button className={cn(TW.btn, TW.sm, mode === "text" ? TW.gold : TW.ghost)} onClick={() => setMode("text")}><AlignLeft size={9} />Text</button>
         <button className={cn(TW.btn, TW.sm, mode === "html" ? TW.gold : TW.ghost)} onClick={() => setMode("html")}><Code size={9} />HTML</button>
       </div>
-      <textarea className={cn(TW.tarea, "min-h-[110px]")} value={body} onChange={(e) => setBody(e.target.value)} placeholder={mode === "html" ? "<p>Your replyâ€¦</p>" : "Your replyâ€¦"} />
+      <textarea className={cn(TW.tarea, "min-h-[110px]")} value={body} onChange={(e) => setBody(e.target.value)} placeholder={mode === "html" ? "<p>Your reply...</p>" : "Your reply..."} />
       <div className="flex justify-end mt-2">
-        <button className={cn(TW.btn, TW.gold)} onClick={send} disabled={busy}><Send size={10} />{busy ? "Sendingâ€¦" : "Send Reply"}</button>
+        <button className={cn(TW.btn, TW.gold)} onClick={send} disabled={busy}><Send size={10} />{busy ? "Sending..." : "Send Reply"}</button>
       </div>
     </div>
   );
@@ -966,7 +967,7 @@ function MailTab({ sub, setSub, logs, inbox, templates, onReload, db, onEditTpl,
   return (
     <>
       <div className="flex justify-between items-start mb-10 pb-7 border-b border-white/[.05]">
-        <div><div className={TW.pgTitle}>Mail</div><p className={TW.pgSub}>impact@samuelgyasi.com Â· via Resend</p></div>
+        <div><div className={TW.pgTitle}>Mail</div><p className={TW.pgSub}>impact@samuelgyasi.com · via Resend</p></div>
       </div>
       <div className={TW.mNav}>
         {SUBS.map(({ id, label, Icon, badge }) => (
@@ -1043,7 +1044,7 @@ function ComposeView({ templates, onReload }: { templates: EmailTemplate[]; onRe
         }
       </div>
       <div className="flex justify-end">
-        <button className={cn(TW.btn, TW.gold)} onClick={send} disabled={busy}><Send size={11} />{busy ? "Sendingâ€¦" : "Send Email"}</button>
+        <button className={cn(TW.btn, TW.gold)} onClick={send} disabled={busy}><Send size={11} />{busy ? "Sending..." : "Send Email"}</button>
       </div>
     </div>
   );
@@ -1081,7 +1082,7 @@ function InboxView({ emails, db, onReload, templates }: {
           <div className={TW.msgHead}>
             <div>
               <div className={TW.msgName}>{e.from_name ?? e.from_email}{!e.read && <span className={cn(TW.badge, TW.bNew, "ml-2")}>NEW</span>}</div>
-              <div className={TW.msgMeta}>{e.from_email} Â· {new Date(e.received_at).toLocaleDateString("en-GB")}</div>
+              <div className={TW.msgMeta}>{e.from_email} · {new Date(e.received_at).toLocaleDateString("en-GB")}</div>
               {e.subject && <div className={TW.msgSubj}>{e.subject}</div>}
             </div>
             <div className={cn(TW.actRow, "flex-shrink-0")}>
@@ -1129,8 +1130,8 @@ function SentView({ logs }: { logs: EmailLog[] }) {
                 {l.subject}{statusBadge(l)}
               </div>
               <div className={TW.msgMeta}>
-                To: {l.to_email} Â· {new Date(l.sent_at).toLocaleDateString("en-GB")}
-                {l.opened_at && ` Â· Opened ${new Date(l.opened_at).toLocaleDateString("en-GB")}`}
+                To: {l.to_email} · {new Date(l.sent_at).toLocaleDateString("en-GB")}
+                {l.opened_at && ` · Opened ${new Date(l.opened_at).toLocaleDateString("en-GB")}`}
               </div>
             </div>
             <button className={cn(TW.btn, TW.ghost, TW.sm)} onClick={() => setExp(exp === l.id ? null : l.id)}>{exp === l.id ? "Collapse" : "View"}</button>
@@ -1166,7 +1167,7 @@ function TplsView({ templates, onNew, onEdit, onDelete }: {
                 <div>
                   <div className={TW.msgName}>{t.name}</div>
                   <div className={TW.msgSubj} style={{ marginTop: 3 }}>{t.subject}</div>
-                  <div className={TW.msgMeta} style={{ marginTop: 3 }}>Created {new Date(t.created_at).toLocaleDateString("en-GB")} Â· {t.body_html.length} HTML chars</div>
+                  <div className={TW.msgMeta} style={{ marginTop: 3 }}>Created {new Date(t.created_at).toLocaleDateString("en-GB")} · {t.body_html.length} HTML chars</div>
                 </div>
                 <div className={cn(TW.actRow, "flex-shrink-0")}>
                   <button className={cn(TW.btn, TW.ghost, TW.sm)} onClick={() => onEdit(t)}><Pencil size={9} /></button>
@@ -1240,7 +1241,7 @@ function TplModal({ tpl, onClose, onSave }: {
           )}
           <div className="flex gap-2.5 justify-end mt-6">
             <button type="button" className={cn(TW.btn, TW.ghost)} onClick={onClose}>Cancel</button>
-            <button type="submit" className={cn(TW.btn, TW.gold)} disabled={busy}>{busy ? "Savingâ€¦" : tpl ? "Save Changes" : "Create Template"}</button>
+            <button type="submit" className={cn(TW.btn, TW.gold)} disabled={busy}>{busy ? "Saving..." : tpl ? "Save Changes" : "Create Template"}</button>
           </div>
         </form>
       </div>
@@ -1307,7 +1308,7 @@ function WhatsApp() {
           <div className={TW.field}><label className={TW.label}>Message</label><textarea className={cn(TW.tarea, "min-h-[90px]")} value={msg} onChange={(e) => setMsg(e.target.value)} /></div>
           <div className={cn(TW.actRow, "flex-wrap mb-3.5")}>
             {QUICK.map((q) => (
-              <button key={q} className={cn(TW.btn, TW.ghost, TW.sm, "text-[9px]")} onClick={() => setMsg(q)}>{q.slice(0, 30)}â€¦</button>
+              <button key={q} className={cn(TW.btn, TW.ghost, TW.sm, "text-[9px]")} onClick={() => setMsg(q)}>{q.slice(0, 30)}...</button>
             ))}
           </div>
           {composeLink
@@ -1344,7 +1345,7 @@ function TestimonialsTab({ testimonials, onNew, onEdit, onDelete, onToggle }: {
       <div className="flex justify-between items-start mb-10 pb-7 border-b border-white/[.05]">
         <div>
           <div className={TW.pgTitle}>Testimonials</div>
-          <p className={TW.pgSub}>{published} published Â· {testimonials.length} total</p>
+          <p className={TW.pgSub}>{published} published · {testimonials.length} total</p>
         </div>
         <button className={cn(TW.btn, TW.gold)} onClick={onNew}><Plus size={12} />Add Testimonial</button>
       </div>
@@ -1357,10 +1358,10 @@ function TestimonialsTab({ testimonials, onNew, onEdit, onDelete, onToggle }: {
                 <tr key={t.id} className="hover:[&>td]:bg-[rgba(212,168,67,.04)]">
                   <td className={TW.td} style={{ color: "#f0ece4", maxWidth: "200px" }}>
                     <div className="font-semibold">{t.name}</div>
-                    <div className="text-[11px] text-white/40 mt-0.5 italic">{t.quote.slice(0, 60)}{t.quote.length > 60 ? "â€¦" : ""}</div>
+                    <div className="text-[11px] text-white/40 mt-0.5 italic">{t.quote.slice(0, 60)}{t.quote.length > 60 ? "..." : ""}</div>
                   </td>
-                  <td className={TW.td} style={{ fontSize: "12px" }}>{[t.role, t.company].filter(Boolean).join(" Â· ") || "â€”"}</td>
-                  <td className={TW.td} style={{ color: "#c9a84c", letterSpacing: "2px" }}>{"â˜…".repeat(t.rating)}{"â˜†".repeat(5 - t.rating)}</td>
+                  <td className={TW.td} style={{ fontSize: "12px" }}>{[t.role, t.company].filter(Boolean).join(" · ") || "â€”"}</td>
+                  <td className={TW.td} style={{ color: "#c9a84c", letterSpacing: "2px" }}>{"★".repeat(t.rating)}{"☆".repeat(5 - t.rating)}</td>
                   <td className={TW.td}>
                     <button className={cn(TW.badge, t.published ? TW.bPub : TW.bDft, "cursor-pointer bg-transparent border-none")}
                       onClick={() => onToggle(t.id, !t.published)} title={t.published ? "Click to unpublish" : "Click to publish"}>
@@ -1437,7 +1438,7 @@ function TestimonialModal({ testimonial, onClose, onSave, db }: {
           </div>
           <div className={TW.fRow}>
             <div className={TW.field}><label className={TW.label}>Company / Organisation</label><input className={TW.input} value={company} onChange={(e) => setCompany(e.target.value)} placeholder="e.g. UM6P, World Bank" /></div>
-            <div className={TW.field}><label className={TW.label}>Avatar URL</label><input className={TW.input} value={avatarUrl} onChange={(e) => setAvatarUrl(e.target.value)} placeholder="https://â€¦" /></div>
+            <div className={TW.field}><label className={TW.label}>Avatar URL</label><input className={TW.input} value={avatarUrl} onChange={(e) => setAvatarUrl(e.target.value)} placeholder="https://..." /></div>
           </div>
           <div className={TW.field}><label className={TW.label}>Quote *</label><textarea className={cn(TW.tarea, "min-h-[100px]")} value={quote} onChange={(e) => setQuote(e.target.value)} placeholder="What did they say about Samuel?" /></div>
           <div className={TW.fRow}>
@@ -1447,7 +1448,7 @@ function TestimonialModal({ testimonial, onClose, onSave, db }: {
                 {[1,2,3,4,5].map((n) => (
                   <button key={n} type="button" onClick={() => setRating(n)}
                     className="bg-transparent border-0 cursor-pointer text-[24px] p-0"
-                    style={{ color: n <= rating ? "#c9a84c" : "rgba(201,168,76,.2)" }}>â˜…</button>
+                    style={{ color: n <= rating ? "#c9a84c" : "rgba(201,168,76,.2)" }}>★</button>
                 ))}
               </div>
             </div>
@@ -1462,7 +1463,7 @@ function TestimonialModal({ testimonial, onClose, onSave, db }: {
         <div className={TW.pFoot}>
           <button className={cn(TW.btn, TW.ghost)} onClick={onClose}>Cancel</button>
           <button className={cn(TW.btn, TW.gold)} onClick={handleSave} disabled={saving}>
-            {saving ? "Savingâ€¦" : testimonial ? "Update" : "Add Testimonial"}
+            {saving ? "Saving..." : testimonial ? "Update" : "Add Testimonial"}
           </button>
         </div>
       </div>
@@ -1478,38 +1479,46 @@ function LibraryTab({ items, onNew, onEdit, onDelete, onToggle }: {
   onDelete: (id: string, title: string) => void;
   onToggle: (id: string, val: boolean) => Promise<void>;
 }) {
-  const [subTab, setSubTab] = useState<"ebook" | "review">("ebook");
+  const [subTab, setSubTab] = useState<"ebook" | "review" | "audio" | "visual">("ebook");
   const filtered  = items.filter((i) => i.category === subTab);
   const published = filtered.filter((i) => i.published).length;
+
+  const SUB_TABS: { id: "ebook" | "review" | "audio" | "visual"; label: string }[] = [
+    { id: "ebook",   label: "eBooks" },
+    { id: "review",  label: "Book Reviews" },
+    { id: "audio",   label: "Audio" },
+    { id: "visual",  label: "Visual" },
+  ];
 
   return (
     <>
       <div className="flex justify-between items-start mb-10 pb-7 border-b border-white/[.05]">
         <div>
           <div className={TW.pgTitle}>Library</div>
-          <p className={TW.pgSub}>{published} published Â· {filtered.length} {subTab === "ebook" ? "eBooks" : "Reviews"}</p>
+          <p className={TW.pgSub}>{published} published · {filtered.length} {SUB_TABS.find((t) => t.id === subTab)?.label}</p>
         </div>
-        <button className={cn(TW.btn, TW.gold)} onClick={onNew}><Plus size={12} />Add {subTab === "ebook" ? "eBook" : "Review"}</button>
+        <button className={cn(TW.btn, TW.gold)} onClick={onNew}><Plus size={12} />Add Item</button>
       </div>
 
       <div className="flex gap-0 border-b border-white/[.08] mb-6">
-        {(["ebook", "review"] as const).map((t) => (
-          <button key={t} onClick={() => setSubTab(t)}
+        {SUB_TABS.map((t) => (
+          <button key={t.id} onClick={() => setSubTab(t.id)}
             className={cn("font-mono text-[9px] tracking-[.2em] uppercase px-5 py-3 bg-transparent border-0 cursor-pointer transition-colors",
-              subTab === t ? "text-[#c9a84c] border-b-2 border-[#c9a84c]" : "text-white/35 border-b-2 border-transparent"
+              subTab === t.id ? "text-[#c9a84c] border-b-2 border-[#c9a84c]" : "text-white/35 border-b-2 border-transparent"
             )}>
-            {t === "ebook" ? "eBooks" : "Book Reviews"} ({items.filter((i) => i.category === t).length})
+            {t.label} ({items.filter((i) => i.category === t.id).length})
           </button>
         ))}
       </div>
 
-      {filtered.length === 0 ? <p className={TW.empty}>No {subTab === "ebook" ? "eBooks" : "reviews"} yet.</p> : (
+      {filtered.length === 0 ? <p className={TW.empty}>No {SUB_TABS.find((t) => t.id === subTab)?.label.toLowerCase()} yet.</p> : (
         <div className={TW.tWrap}>
           <table className="w-full border-collapse">
             <thead><tr>
               <th className={TW.th}>Title</th>
               {subTab === "review" && <th className={TW.th}>Author</th>}
               {subTab === "review" && <th className={TW.th}>Rating</th>}
+              {(subTab === "audio" || subTab === "visual") && <th className={TW.th}>Duration</th>}
               <th className={TW.th}>Status</th>
               <th className={TW.th}>Actions</th>
             </tr></thead>
@@ -1518,13 +1527,13 @@ function LibraryTab({ items, onNew, onEdit, onDelete, onToggle }: {
                 <tr key={item.id} className="hover:[&>td]:bg-[rgba(212,168,67,.04)]">
                   <td className={TW.td} style={{ color: "#f0ece4", maxWidth: "260px" }}>
                     <div className="font-semibold">{item.title}</div>
-                    {item.description && <div className="text-[11px] text-white/40 mt-0.5 italic">{item.description.slice(0, 70)}{item.description.length > 70 ? "â€¦" : ""}</div>}
+                    {item.description && <div className="text-[11px] text-white/40 mt-0.5 italic">{item.description.slice(0, 70)}{item.description.length > 70 ? "..." : ""}</div>}
                   </td>
                   {subTab === "review" && <td className={TW.td} style={{ fontSize: "12px" }}>{item.author ?? "â€”"}</td>}
                   {subTab === "review" && (
                     <td className={TW.td}>
                       {item.rating !== null
-                        ? <span style={{ color: "#c9a84c", letterSpacing: "2px" }}>{"â˜…".repeat(item.rating)}{"â˜†".repeat(5 - item.rating)}</span>
+                        ? <span style={{ color: "#c9a84c", letterSpacing: "2px" }}>{"★".repeat(item.rating)}{"☆".repeat(5 - item.rating)}</span>
                         : "â€”"}
                     </td>
                   )}
@@ -1560,11 +1569,12 @@ function LibraryItemModal({ item, onClose, onSave, db }: {
 }) {
   const [title,       setTitle]      = useState(item?.title        ?? "");
   const [author,      setAuthor]     = useState(item?.author       ?? "");
-  const [category,    setCategory]   = useState<"ebook" | "review">(item?.category ?? "ebook");
+  const [category,    setCategory]   = useState<"ebook" | "review" | "audio" | "visual">(item?.category ?? "ebook");
   const [description, setDesc]       = useState(item?.description  ?? "");
   const [rating,      setRating]     = useState(item?.rating       ?? 5);
   const [downloadUrl, setDlUrl]      = useState(item?.download_url ?? "");
   const [coverUrl,    setCoverUrl]   = useState(item?.cover_url    ?? "");
+  const [duration,    setDuration]   = useState(item?.duration     ?? "");
   const [published,   setPub]        = useState(item?.published    ?? false);
   const [sortOrder,   setSort]       = useState(item?.sort_order   ?? 0);
   const [saving,      setSaving]     = useState(false);
@@ -1598,12 +1608,13 @@ function LibraryItemModal({ item, onClose, onSave, db }: {
     setSaving(true);
     const payload = {
       title: title.trim(),
-      author: author.trim() || null,
+      author: (category === "review" && author.trim()) || null,
       category,
       description: description.trim() || null,
       rating: category === "review" ? rating : null,
-      download_url: category === "ebook" ? (downloadUrl.trim() || null) : null,
+      download_url: downloadUrl.trim() || null,
       cover_url: coverUrl.trim() || null,
+      duration: (category === "audio" || category === "visual") ? (duration.trim() || null) : null,
       published,
       sort_order: sortOrder,
     };
@@ -1626,20 +1637,30 @@ function LibraryItemModal({ item, onClose, onSave, db }: {
         <div className={TW.pBody}>
           <div className={TW.field}>
             <label className={TW.label}>Type</label>
-            <div className="flex gap-0 border border-white/[.08]">
-              {(["ebook", "review"] as const).map((t) => (
-                <button key={t} type="button" onClick={() => setCategory(t)}
-                  className={cn("flex-1 py-2 font-mono text-[9px] tracking-[.2em] uppercase border-0 cursor-pointer transition-colors",
-                    category === t ? "bg-[rgba(201,168,76,.12)] text-[#c9a84c]" : "bg-transparent text-white/35"
+            <div className="grid grid-cols-2 gap-2">
+              {([
+                { id: "ebook", label: "eBook" },
+                { id: "review", label: "Book Review" },
+                { id: "audio", label: "Audio" },
+                { id: "visual", label: "Visual" },
+              ] as const).map((t) => (
+                <button key={t.id} type="button" onClick={() => setCategory(t.id)}
+                  className={cn("py-2.5 px-3 font-mono text-[9px] tracking-[.2em] uppercase border border-white/[.08] cursor-pointer transition-colors",
+                    category === t.id ? "bg-[rgba(201,168,76,.12)] text-[#c9a84c] border-[#c9a84c]/30" : "bg-transparent text-white/35"
                   )}>
-                  {t === "ebook" ? "eBook" : "Book Review"}
+                  {t.label}
                 </button>
               ))}
             </div>
           </div>
           <div className={TW.fRow}>
             <div className={TW.field}><label className={TW.label}>Title *</label><input className={TW.input} value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Title" /></div>
-            <div className={TW.field}><label className={TW.label}>{category === "ebook" ? "Author (optional)" : "Author"}</label><input className={TW.input} value={author} onChange={(e) => setAuthor(e.target.value)} placeholder="Author name" /></div>
+            {category === "review" && (
+              <div className={TW.field}><label className={TW.label}>Author</label><input className={TW.input} value={author} onChange={(e) => setAuthor(e.target.value)} placeholder="Author name" /></div>
+            )}
+            {(category === "audio" || category === "visual") && (
+              <div className={TW.field}><label className={TW.label}>Duration (optional)</label><input className={TW.input} value={duration} onChange={(e) => setDuration(e.target.value)} placeholder="e.g., 45 min, 1hr 20min" /></div>
+            )}
           </div>
           <div className={TW.field}><label className={TW.label}>Description</label><textarea className={cn(TW.tarea, "min-h-[80px]")} value={description} onChange={(e) => setDesc(e.target.value)} placeholder="Short description or review excerpt…" /></div>
           <div className={TW.field}>
@@ -1658,14 +1679,14 @@ function LibraryItemModal({ item, onClose, onSave, db }: {
           </div>
           <div className={TW.fRow}>
             {category === "ebook" ? (
-              <div className={TW.field}><label className={TW.label}>Download URL</label><input className={TW.input} value={downloadUrl} onChange={(e) => setDlUrl(e.target.value)} placeholder="https://â€¦" /></div>
+              <div className={TW.field}><label className={TW.label}>Download URL</label><input className={TW.input} value={downloadUrl} onChange={(e) => setDlUrl(e.target.value)} placeholder="https://..." /></div>
             ) : (
               <div className={TW.field}>
                 <label className={TW.label}>Rating (1â€“5)</label>
                 <div className="flex gap-1 items-center pt-1.5">
                   {[1,2,3,4,5].map((n) => (
                     <button key={n} type="button" onClick={() => setRating(n)} className="bg-transparent border-0 cursor-pointer text-[22px] p-0"
-                      style={{ color: n <= rating ? "#c9a84c" : "rgba(201,168,76,.2)" }}>â˜…</button>
+                      style={{ color: n <= rating ? "#c9a84c" : "rgba(201,168,76,.2)" }}>★</button>
                   ))}
                 </div>
               </div>
@@ -1681,7 +1702,7 @@ function LibraryItemModal({ item, onClose, onSave, db }: {
         </div>
         <div className={TW.pFoot}>
           <button className={cn(TW.btn, TW.ghost)} onClick={onClose}>Cancel</button>
-          <button className={cn(TW.btn, TW.gold)} onClick={handleSave} disabled={saving}>{saving ? "Savingâ€¦" : item ? "Update" : "Add Item"}</button>
+          <button className={cn(TW.btn, TW.gold)} onClick={handleSave} disabled={saving}>{saving ? "Saving..." : item ? "Update" : "Add Item"}</button>
         </div>
       </div>
     </div>
@@ -1711,7 +1732,7 @@ function UpcomingTab({ events, onNew, onEdit, onDelete, onToggle }: {
       <div className="flex justify-between items-start mb-10 pb-7 border-b border-white/[.05]">
         <div>
           <div className={TW.pgTitle}>Upcoming</div>
-          <p className={TW.pgSub}>{published} published Â· {filtered.length} {SUB_TABS.find((t) => t.id === subTab)?.label}</p>
+          <p className={TW.pgSub}>{published} published · {filtered.length} {SUB_TABS.find((t) => t.id === subTab)?.label}</p>
         </div>
         <button className={cn(TW.btn, TW.gold)} onClick={onNew}><Plus size={12} />Add Event</button>
       </div>
@@ -1736,7 +1757,7 @@ function UpcomingTab({ events, onNew, onEdit, onDelete, onToggle }: {
                 <tr key={ev.id} className="hover:[&>td]:bg-[rgba(212,168,67,.04)]">
                   <td className={TW.td} style={{ color: "#f0ece4", maxWidth: "260px" }}>
                     <div className="font-semibold">{ev.title}</div>
-                    {ev.description && <div className="text-[11px] text-white/40 mt-0.5 italic">{ev.description.slice(0, 70)}{ev.description.length > 70 ? "â€¦" : ""}</div>}
+                    {ev.description && <div className="text-[11px] text-white/40 mt-0.5 italic">{ev.description.slice(0, 70)}{ev.description.length > 70 ? "..." : ""}</div>}
                   </td>
                   <td className={TW.td} style={{ fontSize: "11px", fontFamily: "'Poppins',sans-serif", whiteSpace: "nowrap" }}>{ev.date_text ?? "â€”"}</td>
                   <td className={TW.td} style={{ fontSize: "11px" }}>{ev.location ?? "â€”"}</td>
@@ -2098,7 +2119,7 @@ function PostModal({ post, onClose, onSave, db }: {
           </div>
           <div className="flex gap-2.5 justify-end mt-6">
             <button type="button" className={cn(TW.btn, TW.ghost)} onClick={onClose}>Cancel</button>
-            <button type="submit" className={cn(TW.btn, TW.gold)} disabled={busy}>{busy ? "Savingâ€¦" : post ? "Save Changes" : "Create Post"}</button>
+            <button type="submit" className={cn(TW.btn, TW.gold)} disabled={busy}>{busy ? "Saving..." : post ? "Save Changes" : "Create Post"}</button>
           </div>
         </form>
       </div>

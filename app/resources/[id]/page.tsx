@@ -10,7 +10,7 @@ interface Params {
 
 export default async function BookViewPage({ params }: Params) {
   const { id } = params;
-  const db = createClient();
+  const db = await createClient();
   
   const { data: item } = await db
     .from("library_items")
