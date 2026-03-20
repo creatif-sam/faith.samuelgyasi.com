@@ -27,8 +27,15 @@ export function HeroSection() {
   return (
     <section id="hero" className="hero-modern">
       <div className="hero-modern-container">
-        {/* Left side - Large heading */}
+        {/* Left side - Large heading with image */}
         <div className="hero-modern-left">
+          <div className="hero-image-wrapper">
+            <img 
+              src="/photo-hero.png" 
+              alt="Samuel Kobina Gyasi" 
+              className="hero-profile-image"
+            />
+          </div>
           <h1 className="hero-modern-heading">
             <span className="hero-modern-heading-line">Driven by</span>
             <span className="hero-modern-heading-emphasis">Purpose</span>
@@ -36,6 +43,14 @@ export function HeroSection() {
           <p className="hero-modern-tagline">
             {t.tagline[lang]}
           </p>
+          
+          {/* Kingdom Values */}
+          <div className="hero-values">
+            <span className="hero-value" data-value="influence">Kingdom Influence</span>
+            <span className="hero-value" data-value="power">Power</span>
+            <span className="hero-value" data-value="wisdom">Wisdom</span>
+            <span className="hero-value" data-value="pragmatism">Pragmatism</span>
+          </div>
         </div>
 
         {/* Right side - Cards */}
