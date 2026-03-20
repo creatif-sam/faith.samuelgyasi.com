@@ -677,18 +677,18 @@ export default function MyStoryPage() {
             ))}
           </div>
 
-          <div className="msp-lang-toggle" role="group" aria-label="Language">
-            <button
-              className={`msp-lang-btn${lang === "en" ? " active" : ""}`}
-              onClick={() => switchLang("en")}
-            >
-              EN
-            </button>
-            <button
-              className={`msp-lang-btn${lang === "fr" ? " active" : ""}`}
-              onClick={() => switchLang("fr")}
-            >
-           p className="msp-narrative-eyebrow">{t.narrativeEyebrow}</p>
+          <p className="msp-hero-eyebrow">{t.eyebrow}</p>
+          <h1 className="msp-hero-headline">
+            {t.headlineMain}
+            <span className="msp-hl-gold">{t.headlineItalic}</span>
+          </h1>
+          <div className="msp-hero-rule" />
+          <p className="msp-hero-sub">{t.sub}</p>
+        </div>
+
+        {/* PUBLIC NARRATIVE */}
+        <div className="msp-narrative">
+          <p className="msp-narrative-eyebrow">{t.narrativeEyebrow}</p>
           <h2 className="msp-narrative-heading">{t.narrativeHeading}</h2>
           <p className="msp-narrative-lead">{t.narrativeLead}</p>
           <div className="msp-three-acts">
