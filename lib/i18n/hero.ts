@@ -3,27 +3,27 @@ import type { Lang } from "./types";
 
 export const heroTranslations = {
   eyebrow: {
-    en: "Christian · Thinker · Servant · Rooted in the Word",
-    fr: "Chrétien · Penseur · Serviteur · Ancré dans la Parole",
+    en: "Thinker · Leader · Innovator · Grounded in Purpose",
+    fr: "Penseur · Leader · Innovateur · Ancré dans le But",
   },
   tagline: {
-    en: "Rooted in the Word.\nWalking by Faith.\nLiving for His Glory.",
-    fr: "Ancré dans la Parole.\nMarchant par la Foi.\nVivant pour Sa Gloire.",
+    en: "Rooted in Purpose.\nDriven by Vision.\nLiving with Intention.",
+    fr: "Ancré dans le But.\nAnimé par la Vision.\nVivant avec Intention.",
   },
   badgeLine: {
-    en: "Walking by Faith · Not by Sight",
-    fr: "Marchant par la Foi · Non par la Vue",
+    en: "Living with Purpose · Leading with Vision",
+    fr: "Vivre avec But · Diriger avec Vision",
   },
   badgeSub: {
-    en: "2 Corinthians 5:7",
-    fr: "2 Corinthiens 5:7",
+    en: "Explore",
+    fr: "Explorer",
   },
-  ctaFaith:   { en: "Explore Faith",   fr: "Explorer la Foi"  },
+  ctaFaith:   { en: "Explore Values",   fr: "Explorer les Valeurs"  },
   ctaJournal: { en: "Read Journal",    fr: "Lire le Journal"  },
   scroll:     { en: "Scroll",          fr: "Défiler"          },
   pillars: {
-    faith:   { en: "Faith & Beliefs", fr: "Foi & Convictions" },
-    journal: { en: "Faith Journal",   fr: "Journal de Foi"    },
+    faith:   { en: "Values & Beliefs", fr: "Valeurs & Convictions" },
+    journal: { en: "Thought Journal",   fr: "Journal de Pensée"    },
     story:   { en: "My Story",        fr: "Mon Histoire"      },
   },
 } satisfies Record<string, Record<Lang, string> | Record<string, Record<Lang, string>>>;

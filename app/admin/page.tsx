@@ -136,7 +136,7 @@ const NAV: { id: Tab; label: string; Icon: React.ComponentType<{ size?: number }
 // â”€â”€ TAILWIND CLASS CONSTANTS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const TW = {
   // Buttons
-  btn:     "inline-flex items-center gap-2 font-poppins text-[11px] font-medium cursor-pointer rounded-xl transition-all duration-200 active:scale-[.97] border-0",
+  btn:     "inline-flex items-center gap-2 font-poppins text-[11px] font-medium cursor-pointer rounded-lg transition-all duration-200 active:scale-[.97] border-0",
   gold:    "bg-gradient-to-br from-[#d4a843] to-[#c49838] text-[#09090d] px-5 py-2.5 shadow-[0_2px_12px_rgba(212,168,67,.25)] hover:from-[#e0b84e] hover:to-[#d4a843] hover:shadow-[0_4px_18px_rgba(212,168,67,.4)]",
   ghost:   "bg-white/5 text-white/50 border border-white/10 px-5 py-2.5 hover:bg-white/[.09] hover:text-white/85 hover:border-white/[.18]",
   danger:  "bg-red-500/10 text-red-400 border border-red-500/20 px-5 py-2.5 hover:bg-red-500/[.18] hover:border-red-500/30",
@@ -151,16 +151,16 @@ const TW = {
   // Form
   field:   "mb-5",
   label:   "font-poppins text-[11px] font-medium text-white/50 block mb-2",
-  input:   "w-full bg-white/[.04] border border-white/[.09] rounded-xl text-[#eef0f5] font-poppins text-sm px-4 py-3 outline-none transition-all focus:border-[rgba(212,168,67,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(212,168,67,.08)]",
-  select:  "w-full bg-white/[.04] border border-white/[.09] rounded-xl text-[#eef0f5] font-poppins text-sm px-4 py-3 outline-none transition-all focus:border-[rgba(212,168,67,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(212,168,67,.08)]",
-  tarea:   "w-full bg-white/[.04] border border-white/[.09] rounded-xl text-[#eef0f5] font-poppins text-sm px-4 py-3 outline-none transition-all focus:border-[rgba(212,168,67,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(212,168,67,.08)] resize-y min-h-[200px]",
+  input:   "w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-poppins text-sm px-4 py-3 outline-none transition-all focus:border-[rgba(212,168,67,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(212,168,67,.08)]",
+  select:  "w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-poppins text-sm px-4 py-3 outline-none transition-all focus:border-[rgba(212,168,67,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(212,168,67,.08)]",
+  tarea:   "w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-poppins text-sm px-4 py-3 outline-none transition-all focus:border-[rgba(212,168,67,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(212,168,67,.08)] resize-y min-h-[200px]",
   // Typography
   pgTitle: "font-poppins text-[30px] font-bold text-[#eef0f5] leading-tight tracking-tight",
   pgSub:   "font-poppins text-[13px] text-white/40 mt-1.5",
   sTitle:  "font-poppins text-[18px] font-semibold text-[#eef0f5]",
   sHead:   "flex justify-between items-center mb-6",
   // Table
-  tWrap:   "overflow-x-auto rounded-2xl border border-white/[.06] overflow-hidden",
+  tWrap:   "overflow-x-auto rounded-lg border border-white/[.06] overflow-hidden",
   th:      "font-poppins text-[11px] font-semibold text-white/[.35] px-5 py-3.5 text-left border-b border-white/[.06] bg-white/[.025] whitespace-nowrap",
   td:      "px-5 py-4 text-sm text-white/60 border-b border-white/[.04] align-middle font-poppins",
   // Actions
@@ -169,14 +169,14 @@ const TW = {
   empty:   "font-poppins text-base text-white/25 py-16 text-center",
   // Overlay / modal
   overlay: "fixed inset-0 bg-black/[.82] backdrop-blur-xl z-[9000] flex items-center justify-center p-5",
-  modal:   "bg-[#0b0c12] border border-white/[.08] rounded-2xl w-full max-w-[720px] max-h-[90vh] overflow-y-auto p-10 shadow-[0_32px_80px_rgba(0,0,0,.7),0_0_0_1px_rgba(255,255,255,.04)]",
-  panel:   "bg-[#0b0c12] border border-white/[.08] rounded-2xl w-full max-w-[640px] max-h-[90vh] overflow-y-auto flex flex-col shadow-[0_32px_80px_rgba(0,0,0,.7),0_0_0_1px_rgba(255,255,255,.04)]",
+  modal:   "bg-[#0b0c12] border border-white/[.08] rounded-lg w-full max-w-[720px] max-h-[90vh] overflow-y-auto p-10 shadow-[0_32px_80px_rgba(0,0,0,.7),0_0_0_1px_rgba(255,255,255,.04)]",
+  panel:   "bg-[#0b0c12] border border-white/[.08] rounded-lg w-full max-w-[640px] max-h-[90vh] overflow-y-auto flex flex-col shadow-[0_32px_80px_rgba(0,0,0,.7),0_0_0_1px_rgba(255,255,255,.04)]",
   pHead:   "flex justify-between items-center px-7 py-6 border-b border-white/[.06] flex-shrink-0",
   pBody:   "p-7 flex-1 overflow-y-auto",
   pFoot:   "flex gap-2.5 justify-end px-7 py-5 border-t border-white/[.055] bg-black/[.12] flex-shrink-0 rounded-b-2xl",
   fTitle:  "font-poppins text-[20px] font-bold text-[#eef0f5]",
   // Message cards
-  msgCard: "bg-[#0b0c12] border border-white/[.06] border-l-[3px] border-l-transparent rounded-2xl p-5 transition-all duration-200 mb-2 hover:border-l-[rgba(212,168,67,.35)] hover:shadow-[0_4px_20px_rgba(0,0,0,.25)]",
+  msgCard: "bg-[#0b0c12] border border-white/[.06] border-l-[3px] border-l-transparent rounded-lg p-5 transition-all duration-200 mb-2 hover:border-l-[rgba(212,168,67,.35)] hover:shadow-[0_4px_20px_rgba(0,0,0,.25)]",
   msgNew:  "!bg-[rgba(212,168,67,.03)] !border-[rgba(212,168,67,.15)] !border-l-[rgba(212,168,67,.6)]",
   msgHead: "flex justify-between items-start gap-4 flex-wrap",
   msgName: "font-poppins text-[15px] font-semibold text-[#eef0f5] flex items-center gap-2 flex-wrap",
@@ -184,19 +184,19 @@ const TW = {
   msgSubj: "font-poppins text-[12px] italic text-white/45 mt-1",
   msgBody: "mt-4 pt-4 border-t border-white/[.05] font-poppins text-sm leading-[1.8] text-white/[.65] break-words",
   // Mail sub-nav
-  mNav:    "flex gap-1 mb-8 overflow-x-auto bg-white/[.03] border border-white/[.06] rounded-xl p-1",
+  mNav:    "flex gap-1 mb-8 overflow-x-auto bg-white/[.03] border border-white/[.06] rounded-lg p-1",
   mTab:    "flex items-center gap-2 px-4 py-2.5 font-poppins text-[12px] font-medium text-white/40 bg-transparent border-0 cursor-pointer rounded-lg flex-shrink-0 transition-all whitespace-nowrap hover:text-white/75 hover:bg-white/5",
   mAct:    "!text-[#d4a843] !bg-[rgba(212,168,67,.1)]",
   // Stats
-  stat:    "bg-[#0b0c12] p-6 border border-white/[.06] rounded-2xl relative overflow-hidden cursor-default transition-all duration-[250ms] group hover:border-[rgba(212,168,67,.22)] hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(0,0,0,.4),0_0_0_1px_rgba(212,168,67,.1)]",
+  stat:    "bg-[#0b0c12] p-6 border border-white/[.06] rounded-lg relative overflow-hidden cursor-default transition-all duration-[250ms] group hover:border-[rgba(212,168,67,.22)] hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(0,0,0,.4),0_0_0_1px_rgba(212,168,67,.1)]",
   statNum: "font-poppins text-[36px] font-bold leading-none mb-2 bg-gradient-to-br from-[#d4a843] to-[#f0cc7a] bg-clip-text text-transparent",
   statLbl: "font-poppins text-[12px] font-medium text-white/[.40]",
   // Icon button
-  iconBtn: "bg-white/5 border border-white/[.08] text-white/40 cursor-pointer p-2 rounded-xl flex items-center transition-all hover:bg-white/10 hover:text-white/80",
+  iconBtn: "bg-white/5 border border-white/[.08] text-white/40 cursor-pointer p-2 rounded-lg flex items-center transition-all hover:bg-white/10 hover:text-white/80",
   // Quick reply
   qReply:  "mt-4 p-5 bg-white/[.02] border-t border-white/5 border-l-[3px] border-l-[rgba(212,168,67,.25)] rounded-b-xl",
   // WA
-  waCard:  "bg-[#0b0c12] border border-white/[.06] rounded-2xl p-7",
+  waCard:  "bg-[#0b0c12] border border-white/[.06] rounded-lg p-7",
   // Compose
   compose: "max-w-[780px]",
   // Form row
@@ -300,7 +300,7 @@ export default function AdminPage() {
       {/* Mobile header */}
       <div className="flex md:hidden fixed top-0 left-0 right-0 z-[600] bg-[#0b0c12] border-b border-white/[.06] px-5 py-3.5 items-center justify-between shadow-[0_2px_20px_rgba(0,0,0,.4)]">
         <button
-          className="bg-white/[.06] border border-white/[.09] rounded-xl text-white/60 cursor-pointer flex items-center justify-center p-1.5 transition-all hover:bg-white/10"
+          className="bg-white/[.06] border border-white/[.09] rounded-lg text-white/60 cursor-pointer flex items-center justify-center p-1.5 transition-all hover:bg-white/10"
           onClick={() => setNavOpen(!navOpen)}
           aria-label="Menu"
         >
@@ -324,7 +324,7 @@ export default function AdminPage() {
         {/* Brand */}
         <div className="px-5 py-5 border-b border-white/[.06]">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#d4a843] to-[#c49838] flex items-center justify-center flex-shrink-0 shadow-[0_4px_14px_rgba(212,168,67,.3)]">
+            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#d4a843] to-[#c49838] flex items-center justify-center flex-shrink-0 shadow-[0_4px_14px_rgba(212,168,67,.3)]">
               <span className="font-poppins text-[13px] font-bold text-[#09090d]">SG</span>
             </div>
             <div>
@@ -347,7 +347,7 @@ export default function AdminPage() {
                 className={cn(
                   "flex items-center gap-3 px-4 py-2.5",
                   "font-poppins text-[13px] font-medium",
-                  "cursor-pointer border-0 w-full text-left transition-all duration-200 rounded-xl relative mb-1",
+                  "cursor-pointer border-0 w-full text-left transition-all duration-200 rounded-lg relative mb-1",
                   isActive
                     ? "text-[#d4a843] bg-[rgba(212,168,67,.12)]"
                     : "text-white/[.42] bg-transparent hover:text-white/[.80] hover:bg-white/[.05]"
@@ -370,7 +370,7 @@ export default function AdminPage() {
           </Link>
           <button
             onClick={handleLogout}
-            className="font-poppins text-[11px] font-medium text-white/40 bg-transparent border border-white/[.1] px-3 py-2.5 cursor-pointer flex items-center gap-2 w-full rounded-xl transition-all hover:border-[rgba(201,168,76,.4)] hover:text-[#c9a84c]"
+            className="font-poppins text-[11px] font-medium text-white/40 bg-transparent border border-white/[.1] px-3 py-2.5 cursor-pointer flex items-center gap-2 w-full rounded-lg transition-all hover:border-[rgba(201,168,76,.4)] hover:text-[#c9a84c]"
           >
             <LogOut size={13} /> Log Out
           </button>
@@ -548,7 +548,7 @@ export default function AdminPage() {
       )}
       {confirm && (
         <div className={TW.overlay} onClick={() => setConfirm(null)}>
-          <div className="bg-[#0d0e15] border border-white/10 rounded-2xl p-8 w-[min(440px,92vw)] shadow-[0_28px_60px_rgba(0,0,0,.6)]" onClick={(e) => e.stopPropagation()}>
+          <div className="bg-[#0d0e15] border border-white/10 rounded-lg p-8 w-[min(440px,92vw)] shadow-[0_28px_60px_rgba(0,0,0,.6)]" onClick={(e) => e.stopPropagation()}>
             <p style={{ fontFamily: "'Poppins',sans-serif", fontSize: "18px", fontWeight: 500, color: "#eef0f5", marginBottom: "26px", lineHeight: 1.6 }}>{confirm.msg}</p>
             <div className="flex gap-2.5 justify-end">
               <button className={cn(TW.btn, TW.ghost)} onClick={() => setConfirm(null)}>Cancel</button>
@@ -565,7 +565,7 @@ export default function AdminPage() {
 function MiniBarChart({ data }: { data: { date: string; count: number }[] }) {
   const max = Math.max(...data.map((d) => d.count), 1);
   return (
-    <div className="flex items-end gap-1 h-[140px] bg-[#0d0e15] border border-white/[.06] rounded-xl px-4 pt-4 pb-8 overflow-x-auto mb-2">
+    <div className="flex items-end gap-1 h-[140px] bg-[#0d0e15] border border-white/[.06] rounded-lg px-4 pt-4 pb-8 overflow-x-auto mb-2">
       {data.map((d) => (
         <div key={d.date} className="flex-1 min-w-[20px] flex flex-col items-center justify-end h-full relative" title={`${d.date}: ${d.count}`}>
           <div
@@ -1839,7 +1839,7 @@ function UpcomingEventModal({ event, onClose, onSave, db }: {
           </div>
 
           {/* Options */}
-          <div className="border border-white/[.07] rounded-xl p-4 flex flex-col gap-3 mb-5">
+          <div className="border border-white/[.07] rounded-lg p-4 flex flex-col gap-3 mb-5">
             <p className="font-mono text-[9px] tracking-[.2em] uppercase text-white/30 mb-1">Options</p>
             <label className="flex items-center gap-2.5 cursor-pointer">
               <input type="checkbox" checked={needsReg} onChange={(e) => setNeedsReg(e.target.checked)} className="w-4 h-4 cursor-pointer accent-[#c9a84c]" />
@@ -2111,3 +2111,4 @@ function FeedbackTab({ feedbacks, onToggleResolved, onDelete }: {
     </>
   );
 }
+

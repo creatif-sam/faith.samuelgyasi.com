@@ -36,11 +36,13 @@ export function Navbar() {
   return (
     <>
       {/* ── NAV BAR ── */}
-      <nav className={`portfolio-nav ${scrolled ? "nav-scrolled" : ""}`}>
-        <Link href="/" className="nav-logo" onClick={close}>SKG</Link>
+      <nav className={`portfolio-nav nav-modern ${scrolled ? "nav-scrolled" : ""}`}>
+        <Link href="/" className="nav-logo-modern" onClick={close}>
+          <span className="nav-logo-initials">SKG</span>
+        </Link>
 
         {/* Desktop links */}
-        <ul className="nav-links nav-desktop">
+        <ul className="nav-links nav-desktop nav-modern-links">
           {navLinks.map((l) => (
             <li key={l.href}>
               <Link
@@ -55,7 +57,7 @@ export function Navbar() {
 
         {/* Language toggle — desktop */}
         <button
-          className="nav-lang-btn"
+          className="nav-lang-btn nav-lang-modern"
           onClick={toggleLang}
           aria-label={lang === "en" ? t.langLabel.en : t.langLabel.fr}
           title={lang === "en" ? t.langLabel.en : t.langLabel.fr}

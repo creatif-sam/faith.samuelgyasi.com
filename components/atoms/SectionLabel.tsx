@@ -7,7 +7,7 @@ interface SectionLabelProps {
 
 export function SectionLabel({ children, dark = false }: SectionLabelProps) {
   return (
-    <div className={`section-label${dark ? " section-label--dark" : ""}`}>
+    <div className={`section-label-modern${dark ? " section-label--dark" : ""}`}>
       {children}
     </div>
   );

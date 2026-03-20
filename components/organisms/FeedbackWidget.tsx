@@ -72,7 +72,7 @@ export function FeedbackWidget() {
         <div
           ref={cardRef}
           className={cn(
-            "w-[calc(100vw-32px)] max-w-[320px] rounded-2xl border border-white/[.08] bg-[#0d0e15]",
+            "w-[calc(100vw-32px)] max-w-[320px] rounded-lg border border-white/[.08] bg-[#0d0e15]",
             "shadow-[0_24px_64px_rgba(0,0,0,.7),0_0_0_1px_rgba(255,255,255,.04)]",
             "overflow-hidden transition-all duration-300"
           )}

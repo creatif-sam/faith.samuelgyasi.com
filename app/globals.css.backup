@@ -17,104 +17,13 @@
   --gold-end: #ff914d;
   --nav-bg: rgba(10,10,10,0.96);
   /* Faith palette */
-  --brand-navy: #1a1f2e;
-  --brand-teal: #2c7a7b;
-  --brand-amber: #d97706;
-  --brand-cream: #faf8f5;
-  --brand-blue: #2563eb;
-  --brand-gold: #d4a843;
+  --faith-deep:   #0e1a12;
+  --faith-green:  #2d5a3d;
+  --faith-amber:  #c9823a;
+  --faith-parchment: #f0ead8;
+  --scripture-blue: #1a3a5c;
+  --cross-gold:   #c9a84c;
 }
-
-@layer base {
-  :root {
-    /* ---- SHADCN/UI NEW YORK STYLE VARIABLES ---- */
-    --radius: 0.5rem;
-    
-    /* Light Theme (Default for Modern Design) */
-    --background: 0 0% 100%;
-    --foreground: 0 0% 10%;
-    
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 10%;
-    
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 10%;
-    
-    --primary: 45 70% 55%;
-    --primary-foreground: 0 0% 100%;
-    
-    --secondary: 40 10% 92%;
-    --secondary-foreground: 0 0% 10%;
-    
-    --muted: 40 10% 90%;
-    --muted-foreground: 40 5% 35%;
-    
-    --accent: 40 10% 92%;
-    --accent-foreground: 0 0% 10%;
-    
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-    
-    --border: 40 15% 85%;
-    --input: 40 15% 85%;
-    --ring: 45 70% 55%;
-    
-    --chart-1: 45 70% 55%;
-    --chart-2: 140 40% 35%;
-    --chart-3: 30 50% 50%;
-    --chart-4: 210 45% 35%;
-    --chart-5: 40 15% 85%;
-  }
-  
-  .dark {
-    --background: 0 0% 4%;
-    --foreground: 40 20% 96%;
-    
-    --card: 0 0% 6%;
-    --card-foreground: 40 20% 96%;
-    
-    --popover: 0 0% 4%;
-    --popover-foreground: 40 20% 96%;
-    
-    --primary: 45 70% 55%;
-    --primary-foreground: 0 0% 4%;
-    
-    --secondary: 40 15% 85%;
-    --secondary-foreground: 0 0% 4%;
-    
-    --muted: 40 10% 15%;
-    --muted-foreground: 40 10% 65%;
-    
-    --accent: 40 15% 85%;
-    --accent-foreground: 0 0% 4%;
-    
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 40 20% 96%;
-    
-    --border: 40 20% 20%;
-    --input: 40 20% 18%;
-    --ring: 45 70% 55%;
-    
-    --chart-1: 45 70% 55%;
-    --chart-2: 140 40% 35%;
-    --chart-3: 30 50% 50%;
-    --chart-4: 210 45% 35%;
-    --chart-5: 40 15% 85%;
-  }
-    --chart-4: 210 45% 35%;
-    --chart-5: 40 10% 92%;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-}
-
 
 /* â”€â”€ LIGHT THEME OVERRIDES â”€â”€ */
 .light {
@@ -164,10 +73,11 @@
 html { scroll-behavior: smooth; }
 
 body {
-  background: #fafafa;
-  color: #1a1a1a;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font-cormorant), 'Cormorant Garamond', serif;
   overflow-x: hidden;
+  cursor: none;
 }
 
 /* â”€â”€ CUSTOM CURSOR â”€â”€ */
@@ -564,7 +474,7 @@ body {
   to   { transform: rotate(360deg); }
 }
 
-/* ── Modern 3D Hero Animation ── */
+/* â”€â”€ 3D Faith / Mental Transformation Hero Animation â”€â”€ */
 .hf3d {
   position: absolute;
   top: 50%; left: 50%;
@@ -580,32 +490,27 @@ body {
   transform-style: preserve-3d;
   animation: hf3d-float 7s ease-in-out infinite;
 }
-.hf3d-sphere {
+.hf3d-cross {
   position: absolute;
   top: 50%; left: 50%;
-  width: 120px; height: 120px;
+  width: 110px; height: 110px;
   transform-style: preserve-3d;
-  animation: hf3d-sphere-spin 18s linear infinite;
+  animation: hf3d-cross-spin 20s linear infinite;
 }
-.hf3d-circle {
+.hf3d-bar {
   position: absolute;
-  top: 50%; left: 50%;
-  border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, rgba(212,168,67,0.25), rgba(212,168,67,0.08));
-  border: 1px solid rgba(212,168,67,0.4);
-  box-shadow: 0 0 20px rgba(212,168,67,0.15), 0 0 40px rgba(212,168,67,0.08), inset 0 0 12px rgba(212,168,67,0.06);
-  transform-style: preserve-3d;
+  background: linear-gradient(135deg, rgba(255,222,89,0.22) 0%, rgba(255,145,77,0.18) 100%);
+  border: 1px solid rgba(255,222,89,0.45);
+  border-radius: 3px;
+  box-shadow: 0 0 28px rgba(255,222,89,0.18), 0 0 55px rgba(255,145,77,0.1), inset 0 0 14px rgba(255,222,89,0.08);
 }
-.hf3d-circle-inner {
-  width: 60px; height: 60px;
-  margin: -30px 0 0 -30px;
-  animation: hf3d-pulse 3s ease-in-out infinite;
+.hf3d-bar-v {
+  width: 22%; height: 100%;
+  top: 0; left: 39%;
 }
-.hf3d-circle-middle {
-  width: 100px; height: 100px;
-  margin: -50px 0 0 -50px;
-  opacity: 0.6;
-  animation: hf3d-pulse 3s ease-in-out infinite 0.5s;
+.hf3d-bar-h {
+  width: 100%; height: 22%;
+  top: 30%; left: 0;
 }
 .hf3d-ring {
   position: absolute;
@@ -616,13 +521,13 @@ body {
 .hf3d-ring-1 {
   width: 210px; height: 210px;
   margin: -105px 0 0 -105px;
-  border: 1px solid rgba(212,168,67,0.28);
+  border: 1px solid rgba(255,222,89,0.28);
   animation: hf3d-ring-a 13s linear infinite;
 }
 .hf3d-ring-2 {
   width: 280px; height: 280px;
   margin: -140px 0 0 -140px;
-  border: 1px solid rgba(180,150,80,0.18);
+  border: 1px solid rgba(255,145,77,0.18);
   animation: hf3d-ring-b 19s linear infinite;
 }
 .hf3d-ring-3 {
@@ -635,16 +540,12 @@ body {
   0%, 100% { transform: translateY(0px); }
   50%       { transform: translateY(-14px); }
 }
-@keyframes hf3d-sphere-spin {
+@keyframes hf3d-cross-spin {
   0%   { transform: translate(-50%, -50%) rotateX(0deg)   rotateY(0deg)   rotateZ(0deg); }
-  25%  { transform: translate(-50%, -50%) rotateX(45deg)  rotateY(90deg)  rotateZ(10deg); }
-  50%  { transform: translate(-50%, -50%) rotateX(-30deg) rotateY(180deg) rotateZ(-10deg); }
-  75%  { transform: translate(-50%, -50%) rotateX(30deg)  rotateY(270deg) rotateZ(15deg); }
+  25%  { transform: translate(-50%, -50%) rotateX(55deg)  rotateY(90deg)  rotateZ(12deg); }
+  50%  { transform: translate(-50%, -50%) rotateX(-25deg) rotateY(180deg) rotateZ(-8deg); }
+  75%  { transform: translate(-50%, -50%) rotateX(35deg)  rotateY(270deg) rotateZ(18deg); }
   100% { transform: translate(-50%, -50%) rotateX(0deg)   rotateY(360deg) rotateZ(0deg); }
-}
-@keyframes hf3d-pulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50%      { transform: scale(1.12); opacity: 0.8; }
 }
 @keyframes hf3d-ring-a {
   from { transform: rotateX(68deg) rotateZ(0deg); }
@@ -1695,29 +1596,34 @@ body {
 
 /* â”€â”€ FOOTER â”€â”€ */
 .site-footer {
-  background: #ffffff;
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
-  padding: 60px 60px 40px;
+  background: var(--black);
+  border-top: 1px solid rgba(245, 243, 239, 0.08);
+  padding: 40px 60px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .footer-name {
+  font-family: var(--font-playfair), 'Playfair Display', serif;
   font-size: 14px;
   font-weight: 700;
-  color: #1a1a1a;
+  color: var(--white);
 }
 
 .footer-copy {
-  font-size: 13px;
-  color: #666;
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--gray-mid);
+  text-transform: uppercase;
 }
 
 .footer-emblem {
   font-size: 18px;
-  color: var(--brand-gold);
+  color: var(--gold);
   letter-spacing: 0.2em;
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
 }
 
 /* â”€â”€ SCROLL REVEAL â”€â”€ */
@@ -2149,501 +2055,6 @@ body {
   -webkit-text-fill-color: var(--white) !important;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   MODERN HERO DESIGN - University Style with Cards
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-.hero-modern {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  background: linear-gradient(135deg, #fafafa 0%, #ffffff 50%, #f5f5f5 100%);
-  padding: 120px 40px 80px;
-  position: relative;
-}
-
-.hero-modern-container {
-  max-width: 1400px;
-  width: 100%;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: center;
-}
-
-/* Left Side - Large Heading */
-.hero-modern-left {
-  padding-right: 40px;
-}
-
-.hero-modern-heading {
-  font-size: clamp(72px, 8vw, 140px);
-  font-weight: 300;
-  line-height: 0.95;
-  margin-bottom: 32px;
-  color: #1a1a1a;
-}
-
-.hero-modern-heading-line {
-  display: block;
-  font-weight: 300;
-  color: #666;
-}
-
-.hero-modern-heading-emphasis {
-  display: block;
-  font-weight: 700;
-  background: linear-gradient(90deg, var(--brand-gold), var(--brand-amber));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.hero-modern-tagline {
-  font-size: clamp(16px, 1.2vw, 20px);
-  line-height: 1.6;
-  color: #666;
-  max-width: 500px;
-  font-weight: 400;
-}
-
-/* Right Side - Cards */
-.hero-modern-right {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.hero-card-modern {
-  background: white;
-  border-radius: var(--radius);
-  padding: 40px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 10px 40px rgba(0,0,0,0.03);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  text-decoration: none;
-  color: inherit;
-  display: block;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.4s ease;
-}
-
-.hero-card-modern.hero-card-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.hero-card-modern:hover {
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08), 0 20px 60px rgba(0,0,0,0.06);
-  transform: translateY(-2px);
-}
-
-.hero-card-label {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  color: var(--brand-gold);
-  margin-bottom: 12px;
-}
-
-.hero-card-title {
-  font-size: clamp(20px, 1.5vw, 28px);
-  font-weight: 700;
-  color: #1a1a1a;
-  margin-bottom: 12px;
-  line-height: 1.3;
-}
-
-.hero-card-description {
-  font-size: 15px;
-  line-height: 1.6;
-  color: #666;
-  margin-bottom: 24px;
-}
-
-.hero-card-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 24px;
-  background: #1a1a1a;
-  color: white;
-  border-radius: calc(var(--radius) - 2px);
-  font-size: 14px;
-  font-weight: 600;
-  transition: all 0.2s;
-}
-
-.hero-card-modern:hover .hero-card-button {
-  background: var(--brand-gold);
-  color: #1a1a1a;
-  gap: 12px;
-}
-
-.hero-card-arrow {
-  transition: transform 0.2s;
-}
-
-.hero-card-modern:hover .hero-card-arrow {
-  transform: translateX(4px);
-}
-
-/* Responsive */
-@media (max-width: 1024px) {
-  .hero-modern-container {
-    grid-template-columns: 1fr;
-    gap: 60px;
-  }
-  
-  .hero-modern-left {
-    padding-right: 0;
-    text-align: center;
-  }
-  
-  .hero-modern-tagline {
-    margin: 0 auto;
-  }
-}
-
-@media (max-width: 640px) {
-  .hero-modern {
-    padding: 100px 20px 60px;
-  }
-  
-  .hero-card-modern {
-    padding: 32px 24px;
-  }
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   MODERN NAVIGATION - Clean University Style
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-.portfolio-nav.nav-modern {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-  padding: 20px 60px;
-}
-
-.portfolio-nav.nav-modern.nav-scrolled {
-  background: rgba(255, 255, 255, 0.98);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
-  padding: 16px 60px;
-}
-
-.nav-logo-modern {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  transition: opacity 0.2s;
-}
-
-.nav-logo-modern:hover {
-  opacity: 0.7;
-}
-
-.nav-logo-initials {
-  font-size: 24px;
-  font-weight: 700;
-  color: #1a1a1a;
-  letter-spacing: -0.02em;
-}
-
-.nav-modern-links a {
-  font-size: 14px;
-  font-weight: 500;
-  color: #1a1a1a;
-  letter-spacing: 0;
-  text-transform: none;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  transition: color 0.2s;
-}
-
-.nav-modern-links a:hover {
-  color: var(--brand-gold);
-}
-
-.nav-modern-links a::after {
-  display: none;
-}
-
-.nav-modern-links a.nav-active {
-  color: var(--brand-gold);
-  font-weight: 600;
-}
-
-.nav-lang-modern {
-  background: #f5f5f5;
-  padding: 8px 16px;
-  border-radius: calc(var(--radius) - 2px);
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  transition: all 0.2s;
-}
-
-.nav-lang-modern:hover {
-  background: #efefef;
-}
-
-.nav-lang-modern span {
-  color: #666;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.nav-lang-modern .nlb-active {
-  color: var(--brand-gold);
-}
-
-.nav-lang-modern .nlb-sep {
-  margin: 0 6px;
-  color: #ddd;
-}
-
-@media (max-width: 768px) {
-  .portfolio-nav.nav-modern {
-    padding: 16px 24px;
-  }
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   MODERN SECTION & CARD STYLES - University Clean Design
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-.portfolio-section {
-  padding: 100px 40px;
-  background: #fafafa;
-}
-
-.portfolio-section:nth-child(even) {
-  background: #ffffff;
-}
-
-.section-inner {
-  max-width: 1280px;
-  margin: 0 auto;
-}
-
-/* Modern Section Headers */
-.pillars-header,
-.wid-header,
-.vision-header,
-.values-header {
-  text-align: center;
-  max-width: 800px;
-  margin: 0 auto 60px;
-}
-
-.pillars-title,
-.wid-title,
-.vision-title,
-.values-title,
-.connect-title,
-.tl-main-title {
-  font-size: clamp(32px, 4vw, 52px);
-  font-weight: 700;
-  color: #1a1a1a;
-  line-height: 1.2;
-  margin-bottom: 16px;
-}
-
-.pillars-sub,
-.wid-sub,
-.vision-sub,
-.values-sub {
-  font-size: 16px;
-  line-height: 1.6;
-  color: #666;
-}
-
-/* Modern Card Grid */
-.pillars-grid,
-.wid-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 24px;
-  margin-top: 48px;
-}
-
-/* Modern Pillar Cards */
-.pillar-card {
-  background: white;
-  border-radius: var(--radius);
-  padding: 40px 32px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 10px 40px rgba(0,0,0,0.03);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  text-decoration: none;
-  display: block;
-  height: 100%;
-}
-
-.pillar-card:hover {
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08), 0 20px 60px rgba(0,0,0,0.06);
-  transform: translateY(-4px);
-}
-
-.pillar-card-icon {
-  font-size: 48px;
-  display: block;
-  margin-bottom: 20px;
-  color: var(--brand-gold);
-}
-
-.pillar-card-name {
-  font-size: 22px;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin-bottom: 12px;
-}
-
-.pillar-card-description {
-  font-size: 15px;
-  line-height: 1.6;
-  color: #666;
-  margin-bottom: 16px;
-}
-
-.pillar-verse {
-  font-size: 13px;
-  font-style: italic;
-  color: var(--brand-gold);
-  padding-top: 16px;
-  border-top: 1px solid rgba(0,0,0,0.06);
-}
-
-/* What I Do Cards */
-.wid-card {
-  background: white;
-  border-radius: var(--radius);
-  padding: 40px 32px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 10px 40px rgba(0,0,0,0.03);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  height: 100%;
-}
-
-.wid-card:hover {
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08), 0 20px 60px rgba(0,0,0,0.06);
-  transform: translateY(-4px);
-}
-
-.wid-card-num {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--brand-gold);
-  margin-bottom: 12px;
-  letter-spacing: 0.1em;
-}
-
-.wid-card-title {
-  font-size: 22px;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin-bottom: 8px;
-}
-
-.wid-card-org {
-  font-size: 13px;
-  color: var(--brand-gold);
-  margin-bottom: 16px;
-  font-weight: 600;
-}
-
-.wid-card-body {
-  font-size: 15px;
-  line-height: 1.6;
-  color: #666;
-}
-
-/* Section Labels */
-.section-label-modern {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--brand-gold);
-  margin-bottom: 24px;
-}
-
-.section-label-modern::before {
-  content: '';
-  width: 40px;
-  height: 2px;
-  background: var(--brand-gold);
-}
-
-/* Testimonials Modern Style */
-.ts-section {
-  padding: 100px 40px;
-  background: #ffffff;
-}
-
-.ts-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.ts-header {
-  text-align: center;
-  margin-bottom: 60px;
-}
-
-.ts-headline {
-  font-size: clamp(32px, 4vw, 48px);
-  font-weight: 700;
-  color: #1a1a1a;
-  margin-bottom: 16px;
-}
-
-.ts-sub {
-  font-size: 16px;
-  color: #666;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.ts-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 24px;
-}
-
-.ts-card {
-  background: white;
-  border-radius: var(--radius);
-  padding: 32px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 10px 40px rgba(0,0,0,0.03);
-  transition: all 0.3s;
-}
-
-.ts-card:hover {
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08), 0 20px 60px rgba(0,0,0,0.06);
-  transform: translateY(-2px);
-}
-
-.ts-card--featured {
-  grid-column: span 2;
-}
-
-@media (max-width: 768px) {
-  .ts-card--featured {
-    grid-column: span 1;
-  }
-  
-  .portfolio-section {
-    padding: 60px 20px;
-  }
-  
-  .pillars-grid,
-  .wid-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
 /* Gold gradient on drawer hover text */
 .nd-links a:hover,
 .nd-social-link:hover {
@@ -2814,9 +2225,5 @@ body {
   .ts-inner { padding: 0 20px; }
   .ts-header { margin-bottom: 48px; }
 }
-
-
-
-
 
 
