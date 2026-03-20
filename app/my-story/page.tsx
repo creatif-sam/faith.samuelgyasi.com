@@ -1,8 +1,9 @@
 ﻿"use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
 import { createClient } from "@/lib/supabase/client";
+import { useLang } from "@/lib/i18n";
 
 type Lang = "en" | "fr";
 
@@ -57,29 +58,6 @@ const css = `
   10%  { opacity: 1; }
   90%  { opacity: .5; }
   100% { transform: translateY(-110px) scale(1.25); opacity: 0; }
-}
-.msp-lang-toggle {
-  display: inline-flex;
-  gap: 0;
-  border: 1px solid rgba(201,168,76,.3);
-  margin-bottom: 32px;
-  animation: msp-rise .8s .05s ease both;
-}
-.msp-lang-btn {
-  font-family: var(--font-space-mono),'Space Mono',monospace;
-  font-size: 9px;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  padding: 8px 18px;
-  background: transparent;
-  border: none;
-  color: rgba(245,243,239,.4);
-  cursor: pointer;
-  transition: color .2s, background .2s;
-}
-.msp-lang-btn.active {
-  background: rgba(201,168,76,.1);
-  color: rgba(201,168,76,.9);
 }
 .msp-hero-glow {
   position: absolute;
@@ -320,6 +298,13 @@ const css = `
   font-size: 17px;
   line-height: 1.88;
   color: rgba(245,243,239,.75);
+}
+@media (prefers-color-scheme: light) {
+  .msp { background: #f5f3ef; color: #1a1816; }
+  .msp::before { opacity: 0.15; }
+  .msp-hero-headline, .msp-title, .msp-narrative-heading, .msp-now-card-title, .msp-now-heading { color: #1a1816; }
+  .msp-body, .msp-act-body, .msp-now-card-body { color: rgba(26,24,22,.8); }
+  .msp-hero-sub, .msp-narrative-lead { color: rgba(26,24,22,.7); }
 }
 .msp-body p + p { margin-top: 14px; }
 .msp-pullquote {
@@ -642,7 +627,7 @@ const PARTICLES = [
 ];
 
 export default function MyStoryPage() {
-  const [lang, setLang] = useState<Lang>("en");
+  const { lang } = useLang();
   const [dbContent, setDbContent] = useState<MyStoryContent | null>(null);
   const [loading, setLoading] = useState(true);
   const t = translations[lang];
@@ -655,17 +640,6 @@ export default function MyStoryPage() {
       setLoading(false);
     };
     fetchContent();
-  }, []);
-
-  const switchLang = useCallback((l: Lang) => {
-    setLang(l);
-    setTimeout(() => {
-      const els = document.querySelectorAll(".msp-item, .msp-now-card");
-      els.forEach((el) => el.classList.remove("msp-visible"));
-      setTimeout(() => {
-        els.forEach((el, i) => setTimeout(() => el.classList.add("msp-visible"), i * 55));
-      }, 80);
-    }, 50);
   }, []);
 
   useEffect(() => {
@@ -714,22 +688,7 @@ export default function MyStoryPage() {
               className={`msp-lang-btn${lang === "fr" ? " active" : ""}`}
               onClick={() => switchLang("fr")}
             >
-              FR
-            </button>
-          </div>
-
-          <p className="msp-hero-eyebrow">{t.eyebrow}</p>
-          <h1 className="msp-hero-headline">
-            {t.headlineMain}
-            <span className="msp-hl-gold">{t.headlineItalic}</span>
-          </h1>
-          <div className="msp-hero-rule" />
-          <p className="msp-hero-sub">{t.sub}</p>
-        </div>
-
-        {/* PUBLIC NARRATIVE */}
-        <div className="msp-narrative">
-          <p className="msp-narrative-eyebrow">{t.narrativeEyebrow}</p>
+           p className="msp-narrative-eyebrow">{t.narrativeEyebrow}</p>
           <h2 className="msp-narrative-heading">{t.narrativeHeading}</h2>
           <p className="msp-narrative-lead">{t.narrativeLead}</p>
           <div className="msp-three-acts">

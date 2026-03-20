@@ -1568,6 +1568,30 @@ function LibraryItemModal({ item, onClose, onSave, db }: {
   const [published,   setPub]        = useState(item?.published    ?? false);
   const [sortOrder,   setSort]       = useState(item?.sort_order   ?? 0);
   const [saving,      setSaving]     = useState(false);
+  const [uploading, setUploading]    = useState(false);
+
+  async function handleCoverUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    
+    setUploading(true);
+    const fileName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, "_")}`;
+    const { data, error } = await db.storage.from("book-covers").upload(fileName, file, {
+      cacheControl: "3600",
+      upsert: false,
+    });
+    
+    if (error) {
+      toast.error(`Upload failed: ${error.message}`);
+      setUploading(false);
+      return;
+    }
+    
+    const { data: { publicUrl } } = db.storage.from("book-covers").getPublicUrl(data.path);
+    setCoverUrl(publicUrl);
+    setUploading(false);
+    toast.success("Cover uploaded!");
+  }
 
   async function handleSave() {
     if (!title.trim()) { toast.error("Title is required"); return; }
@@ -1617,9 +1641,22 @@ function LibraryItemModal({ item, onClose, onSave, db }: {
             <div className={TW.field}><label className={TW.label}>Title *</label><input className={TW.input} value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Title" /></div>
             <div className={TW.field}><label className={TW.label}>{category === "ebook" ? "Author (optional)" : "Author"}</label><input className={TW.input} value={author} onChange={(e) => setAuthor(e.target.value)} placeholder="Author name" /></div>
           </div>
-          <div className={TW.field}><label className={TW.label}>Description</label><textarea className={cn(TW.tarea, "min-h-[80px]")} value={description} onChange={(e) => setDesc(e.target.value)} placeholder="Short description or review excerptâ€¦" /></div>
+          <div className={TW.field}><label className={TW.label}>Description</label><textarea className={cn(TW.tarea, "min-h-[80px]")} value={description} onChange={(e) => setDesc(e.target.value)} placeholder="Short description or review excerpt…" /></div>
+          <div className={TW.field}>
+            <label className={TW.label}>Cover Image</label>
+            <label className={cn(TW.input, "flex items-center gap-3 cursor-pointer py-2.5 px-4 border-dashed")}>
+              <input type="file" accept="image/*" className="hidden" onChange={handleCoverUpload} disabled={uploading} />
+              {uploading ? (
+                <span className="text-white/40 text-sm">Uploading…</span>
+              ) : coverUrl ? (
+                <><img src={coverUrl} alt="cover" className="w-10 h-10 object-cover rounded" /><span className="text-white/50 text-xs truncate max-w-[280px]">{coverUrl.split("/").pop()}</span></>
+              ) : (
+                <span className="text-white/30 text-sm">Click to upload cover image…</span>
+              )}
+            </label>
+            <input className={cn(TW.input, "mt-2")} value={coverUrl} onChange={(e) => setCoverUrl(e.target.value)} placeholder="Or paste URL here" />
+          </div>
           <div className={TW.fRow}>
-            <div className={TW.field}><label className={TW.label}>Cover Image URL</label><input className={TW.input} value={coverUrl} onChange={(e) => setCoverUrl(e.target.value)} placeholder="https://â€¦" /></div>
             {category === "ebook" ? (
               <div className={TW.field}><label className={TW.label}>Download URL</label><input className={TW.input} value={downloadUrl} onChange={(e) => setDlUrl(e.target.value)} placeholder="https://â€¦" /></div>
             ) : (

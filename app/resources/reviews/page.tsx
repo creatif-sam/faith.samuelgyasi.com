@@ -175,6 +175,9 @@ const css = `
   align-items: start;
   opacity: 0; transform: translateX(-16px);
   transition: opacity .7s ease, transform .7s ease, border-color .3s;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
 }
 .rv-card.rv-visible { opacity: 1; transform: none; }
 .rv-card:hover { border-color: rgba(201,168,76,.2); }
@@ -326,7 +329,7 @@ export default function BookReviewsPage() {
             <p className="reviews-empty">No reviews in this category yet.</p>
           ) : (
             displayed.map((review, i) => (
-              <div key={review.id} className="rv-card" style={{ transitionDelay: `${i * 0.05}s` }}>
+              <Link key={review.id} href={`/resources/${review.id}`} className="rv-card" style={{ transitionDelay: `${i * 0.05}s` }}>
                 <div className="rv-cover">
                   {review.cover_url ? (
                     <img src={review.cover_url} alt={review.title} />
@@ -344,7 +347,7 @@ export default function BookReviewsPage() {
                   {review.description && <p className="rv-review">{review.description}</p>}
                   <div className="rv-date">{fmt(review.created_at)}</div>
                 </div>
-              </div>
+              </Link>
             ))
           )}
         </div>

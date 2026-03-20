@@ -75,9 +75,9 @@ const css = `
   animation: lib-rise .9s .4s ease forwards;
 }
 .lib-sub {
-  font-family: var(--font-cormorant), 'Cormorant Garamond', serif;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: clamp(16px, 1.8vw, 20px);
-  font-style: italic;
+  font-weight: 300;
   color: rgba(245,243,239,.62);
   max-width: 540px;
   line-height: 1.7;
@@ -140,9 +140,9 @@ const css = `
   line-height: 1.1;
 }
 .lib-card-body {
-  font-family: var(--font-cormorant), 'Cormorant Garamond', serif;
-  font-size: 17px;
-  font-style: italic;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 300;
   color: rgba(245,243,239,.6);
   line-height: 1.75;
 }

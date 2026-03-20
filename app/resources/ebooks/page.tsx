@@ -133,6 +133,9 @@ const css = `
   display: flex; flex-direction: column; gap: 16px;
   opacity: 0; transform: translateY(18px);
   transition: opacity .7s ease, transform .7s ease, border-color .3s;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
 }
 .ebook-card.eb-visible { opacity: 1; transform: none; }
 .ebook-card:hover { border-color: rgba(201,168,76,.22); }
@@ -261,7 +264,7 @@ export default function EbooksPage() {
             <p className="ebooks-empty">No eBooks published yet. Check back soon.</p>
           ) : (
             ebooks.map((book, i) => (
-              <div key={book.id} className="ebook-card" style={{ transitionDelay: `${i * 0.06}s` }}>
+              <Link key={book.id} href={`/resources/${book.id}`} className="ebook-card" style={{ transitionDelay: `${i * 0.06}s` }}>
                 <div className="ebook-cat">{book.category}</div>
                 <div className="ebook-cover">
                   {book.cover_url ? (
@@ -273,14 +276,7 @@ export default function EbooksPage() {
                 <h3 className="ebook-title">{book.title}</h3>
                 {book.description && <p className="ebook-desc">{book.description}</p>}
                 <div className="ebook-date">{fmt(book.created_at)}</div>
-                {book.download_url ? (
-                  <a href={book.download_url} target="_blank" rel="noopener noreferrer" className="ebook-download-btn">
-                    Download Free →
-                  </a>
-                ) : (
-                  <div className="ebook-soon">Coming Soon</div>
-                )}
-              </div>
+              </Link>
             ))
           )}
         </div>

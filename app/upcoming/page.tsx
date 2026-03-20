@@ -128,19 +128,26 @@ const css = `
 .up-cards {
   display: grid;
   grid-template-columns: repeat(3,1fr);
-  gap: 2px;
+  gap: 20px;
 }
 .up-card {
-  padding: 36px;
-  background: rgba(245,243,239,.02);
-  border: 1px solid rgba(201,168,76,.1);
-  transition: border-color .25s, background .25s;
+  padding: 0;
+  background: rgba(245,243,239,.03);
+  border: 1px solid rgba(201,168,76,.15);
+  border-radius: 16px;
+  transition: border-color .3s, background .3s, transform .3s, box-shadow .3s;
   opacity: 0;
   transform: translateY(16px);
-  transition: opacity .55s ease, transform .55s ease, border-color .25s, background .25s;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0,0,0,.2);
 }
 .up-card.up-visible { opacity: 1; transform: none; }
-.up-card:hover { border-color: rgba(201,168,76,.28); background: rgba(245,243,239,.04); }
+.up-card:hover { 
+  border-color: rgba(201,168,76,.4); 
+  background: rgba(245,243,239,.05); 
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(201,168,76,.15);
+}
 
 .up-card-date {
   font-family: var(--font-space-mono),'Space Mono',monospace;
@@ -195,6 +202,8 @@ const css = `
   padding: 60px 40px;
   text-align: center;
   border: 1px dashed rgba(201,168,76,.15);
+  border-radius: 16px;
+  background: rgba(245,243,239,.01);
 }
 .up-coming-soon-icon {
   font-size: 28px;
@@ -268,10 +277,12 @@ const css = `
 }
 
 /* ── CARD (overrides) ── */
-.up-card { padding: 0; overflow: hidden; }
-.up-card:hover { border-color: rgba(201,168,76,.28); background: rgba(245,243,239,.04); }
-.up-card--past { border-color: rgba(245,243,239,.06); }
-.up-card--past:hover { border-color: rgba(245,243,239,.12); }
+.up-card--past { border-color: rgba(245,243,239,.08); box-shadow: 0 2px 12px rgba(0,0,0,.15); }
+.up-card--past:hover { 
+  border-color: rgba(245,243,239,.15); 
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,.2);
+}
 
 /* FLYER */
 .up-card-flyer { position: relative; overflow: hidden; }
@@ -354,17 +365,19 @@ const css = `
   position: fixed; inset: 0; z-index: 9100;
   background: rgba(4,4,3,.9); backdrop-filter: blur(12px);
   display: flex; align-items: center; justify-content: center; padding: 20px;
+  overflow-y: auto;
 }
 .up-modal {
   background: #0d0e12; border: 1px solid rgba(201,168,76,.15);
-  border-radius: 4px; width: 100%; max-width: 520px;
-  max-height: 90vh; overflow-y: auto;
+  border-radius: 12px; width: 100%; max-width: 520px;
+  max-height: 85vh; overflow-y: auto;
   box-shadow: 0 32px 80px rgba(0,0,0,.7);
+  margin: auto;
 }
 .up-modal--sm { max-width: 420px; }
 .up-modal-head {
   display: flex; justify-content: space-between; align-items: flex-start;
-  padding: 28px 32px 0; gap: 16px;
+  padding: 24px 28px 0; gap: 16px;
 }
 .up-modal-eyebrow {
   font-family: var(--font-space-mono),'Space Mono',monospace;
@@ -377,14 +390,14 @@ const css = `
 .up-modal-sub {
   font-family: var(--font-poppins),'Poppins',sans-serif;
   font-size: 14px; font-weight: 300; color: rgba(245,243,239,.45);
-  line-height: 1.6; padding: 12px 32px 0;
+  line-height: 1.6; padding: 10px 28px 0;
 }
 .up-modal-close {
   background: transparent; border: none; cursor: pointer;
   color: rgba(245,243,239,.3); font-size: 14px; padding: 4px; line-height: 1; transition: color .2s; flex-shrink: 0;
 }
 .up-modal-close:hover { color: rgba(245,243,239,.7); }
-.up-modal-form { padding: 20px 32px 32px; display: flex; flex-direction: column; gap: 4px; }
+.up-modal-form { padding: 18px 28px 28px; display: flex; flex-direction: column; gap: 4px; }
 .up-form-label {
   font-family: var(--font-space-mono),'Space Mono',monospace;
   font-size: 8px; letter-spacing: .2em; text-transform: uppercase;
@@ -402,7 +415,7 @@ const css = `
 .up-modal-form .up-btn--gold { margin-top: 20px; width: 100%; padding: 13px; font-size: 9px; }
 .up-modal-done {
   display: flex; flex-direction: column; align-items: center;
-  padding: 56px 32px; text-align: center; gap: 12px;
+  padding: 48px 28px; text-align: center; gap: 12px;
 }
 .up-modal-done-icon {
   font-size: 28px; background: var(--gold-gradient);
