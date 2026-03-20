@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useLang } from "@/lib/i18n";
 import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
+import Breadcrumbs from "@/components/atoms/Breadcrumbs";
 
 type DbPost = {
   id: string;
@@ -150,6 +151,15 @@ export function ArticleClient({
 
       {/* ARTICLE */}
       <article className="fa-article">
+        <Breadcrumbs
+          items={[
+            { label: lang === "fr" ? "Accueil" : "Home", href: "/" },
+            { label: lang === "fr" ? "Foi" : "Faith", href: "/faith" },
+            { label: lang === "fr" ? "Journal" : "Journal", href: "/blog" },
+            { label: title },
+          ]}
+        />
+
         <header className="fa-header">
           <div className="fa-tag">{post.category}</div>
           <h1 className="fa-title">{title}</h1>
@@ -259,7 +269,7 @@ export function ArticleClient({
                     checked={faithBuilding}
                     onChange={(e) => setFaithBuilding(e.target.checked)}
                   />
-                  <span>{translations.faithBuildingLabel}</span>
+                  <span>{translations.faithLabel}</span>
                 </label>
                 <label className="eval-checkbox-label">
                   <input

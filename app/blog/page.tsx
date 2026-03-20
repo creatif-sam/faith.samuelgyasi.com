@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { useLang } from "@/lib/i18n";
+import Breadcrumbs from "@/components/atoms/Breadcrumbs";
 
 type DbPost = {
   id: string;
@@ -81,6 +82,16 @@ export default function FaithBlogPage() {
         <div className="nav-logo">Samuel Kobina Gyasi</div>
         <span />
       </nav>
+
+      <div className="fb-container">
+        <Breadcrumbs
+          items={[
+            { label: lang === "fr" ? "Accueil" : "Home", href: "/" },
+            { label: lang === "fr" ? "Foi" : "Faith", href: "/faith" },
+            { label: lang === "fr" ? "Journal" : "Journal" },
+          ]}
+        />
+      </div>
 
       {/* HEADER */}
       <header className="fb-header">
@@ -243,6 +254,7 @@ body.on-fdp { background:#080807; color:#f0ece4; font-family:'Cormorant Garamond
 .nav-back { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:var(--dim); text-decoration:none; transition:all .3s ease; transform:translateX(0); }
 .nav-back:hover { color:#ffde59; transform:translateX(-4px); }
 .nav-logo { font-family:var(--font-playfair),'Playfair Display',serif; font-size:17px; color:var(--white); letter-spacing:.06em; }
+.fb-container { max-width:1400px; margin:0 auto; padding:100px 56px 0; }
 .fb-header { padding:160px 56px 72px; border-bottom:1px solid var(--line); animation: slideUp 0.8s ease-out; }
 @keyframes slideUp {
   from { opacity: 0; transform: translateY(30px); }
@@ -311,7 +323,9 @@ body.on-fdp { background:#080807; color:#f0ece4; font-family:'Cormorant Garamond
 .fb-card:hover .fb-card-cover-img { transform:scale(1.08); }
 @media(max-width:900px){
   .fdp-blog-nav { padding:18px 24px; }
+  .fb-container { padding:90px 24px 0; }
   .fb-header { padding:130px 24px 48px; }
+  .fb-search-container { padding: 24px; }
   .fb-filters { padding:20px 24px; top:61px; gap: 8px; }
   .fb-content { padding:0 24px 60px; }
   .fb-grid { grid-template-columns:1fr; gap: 20px; }
