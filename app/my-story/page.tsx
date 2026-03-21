@@ -35,8 +35,8 @@ const css = `
   background-size: cover;
   background-position: center top;
   background-attachment: fixed;
-  opacity: 0.85;
-  background-color: rgba(0, 0, 0, 0.85);
+  opacity: 0.96;
+  background-color: rgba(0, 0, 0, 0.96);
   background-blend-mode: multiply;
   pointer-events: none;
   z-index: 0;
@@ -182,7 +182,9 @@ const css = `
   to { opacity: 1; transform: scale(1) translateY(0); }
 }
 .msp-photo img {
-  width: 100%; height: 100%; object-fit: cover;
+  width: 100%; height: 100%; 
+  object-fit: cover;
+  object-position: top center;
   transition: transform .7s ease;
   display: block;
 }
@@ -522,11 +524,11 @@ const translations = {
         ],
       },
       {
-        year: "2013 — 2016",
+        year: "2014 — 2017",
         title: "Dining Hall Prefect — Saint John’s School, Sekondi-Takoradi",
         body: [
           "Samuel attended the prestigious Saint John’s School, where he pursued a General Science curriculum. This period solidified his analytical thinking and scientific rigor, providing a foundation for his future technical studies.",
-          "He was appointed Dining Hall Prefect, a role of significant logistical and disciplinary weight. Managing the sustenance and order of the entire student body further refined his ability to coordinate complex systems and serve a large community with integrity.",
+          "He was elected Dining Hall Prefect, a role of significant logistical and disciplinary weight. Managing the sustenance and order of the entire student body further refined his ability to coordinate complex systems and serve a large community with integrity.",
         ],
       },
       {
@@ -539,9 +541,9 @@ const translations = {
       },
       {
         year: "2020 — 2023",
-        title: "ESMCI Fès, Morocco — Computer Science",
+        title: "SUP Management Fès, Morocco — Computer Science",
         body: [
-          "Samuel pursued his undergraduate studies at the Ecole Supérieure de Management, de Commerce et d'Informatique (ESMCI) in Fès, Morocco. His academic years were marked by intellectual curiosity and student leadership.",
+          "Samuel pursued his undergraduate studies at the Ecole Supérieure de Management, de Commerce et d'Informatique (SUP Management) in Fès, Morocco. His academic years were marked by intellectual curiosity and student leadership.",
           "He graduated with distinction and the Highest GPA in the entire school, developing a reputation as a thinker who could hold complexity without losing clarity.",
         ],
       },
@@ -573,7 +575,7 @@ const translations = {
       {
         num: "01",
         title: "Junior Program Officer · SCI, UM6P",
-        body: "At the School of Collective Intelligence, Samuel designs and facilitates learning programmes that unlock the collective intelligence of organisations, communities, and teams.",
+        body: "At the School of Collective Intelligence, Samuel helps students navigate their careers, internship search, events logistics, and community building.Helping run the the world's first accredited masters' program in collective intelligence",
       },
       {
         num: "02",

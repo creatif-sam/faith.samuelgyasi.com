@@ -32,4 +32,24 @@ export const visionTranslations = {
       fr: "que Dieu a écrit pour moi.",
     },
   },
+  transformation: {
+    title: {
+      en: "Transforming the",
+      fr: "Transformer les",
+    },
+    stages: [
+      {
+        from: { en: "Frustrated", fr: "Égarés" },
+        to: { en: "Followers", fr: "Engagés" },
+      },
+      {
+        from: { en: "Followers", fr: "Engagés" },
+        to: { en: "Fathers", fr: "Établis" },
+      },
+      {
+        from: { en: "Fathers", fr: "Établis" },
+        to: { en: "Figures", fr: "Élevés" },
+      },
+    ],
+  },
 } satisfies Record<string, any>;

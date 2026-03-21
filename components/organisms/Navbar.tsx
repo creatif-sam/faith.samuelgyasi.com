@@ -121,23 +121,8 @@ export function Navbar() {
                 <span className="nlb-sep">|</span>
                 <span className={lang === "fr" ? "nlb-active" : ""}>FR</span>
               </button>
-              <Link
-                href="/auth/login"
-                className="nd-login-btn"
-                aria-label="Sign in"
-                onClick={close}
-              >
-                <LogIn size={15} />
-                <span>{lang === "en" ? "Sign in" : "Se connecter"}</span>
-              </Link>
             </div>
             <a href="mailto:impact@samuelgyasi.com" className="nd-email">impact@samuelgyasi.com</a>
-            <div className="nd-social-row">
-              <a href="https://www.linkedin.com/in/samuel-k-gyasi/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="nd-social-link">in</a>
-              <a href="https://www.instagram.com/samuel_gsi?igsh=MWswMzRycjk1dXZ0cw==" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="nd-social-link">ig</a>
-              <a href="https://web.facebook.com/samuel.kobinagyasi/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="nd-social-link">fb</a>
-              <a href="https://www.tiktok.com/@samuel_gsi?_r=1&_t=ZS-94iqxzPNKqm" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="nd-social-link">tt</a>
-            </div>
           </div>
         </div>
       </div>

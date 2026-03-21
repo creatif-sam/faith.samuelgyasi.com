@@ -1,7 +1,6 @@
 "use client";
 
 import { SectionLabel } from "@/components/atoms/SectionLabel";
-import { VerseStrip } from "@/components/molecules/VerseStrip";
 import { ScrollReveal } from "@/components/molecules/ScrollReveal";
 import { useLang } from "@/lib/i18n";
 import { visionTranslations as t } from "@/lib/i18n/vision";
@@ -23,7 +22,22 @@ export function VisionSection() {
             <strong>{t.statement.line4[lang]}</strong><br />
             {t.statement.line5[lang]}
           </p>
-          <VerseStrip />
+
+          {/* Transformation Journey */}
+          <div className="vision-transformation">
+            <h3 className="transformation-title">{t.transformation.title[lang]}</h3>
+            <div className="transformation-stages">
+              {t.transformation.stages.map((stage: any, index: number) => (
+                <div key={index} className="transformation-stage" style={{ "--stage-index": index } as React.CSSProperties}>
+                  <span className="stage-from">{stage.from[lang]}</span>
+                  <svg className="stage-arrow" width="40" height="16" viewBox="0 0 40 16" fill="none">
+                    <path d="M0 8H38M38 8L30 1M38 8L30 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  <span className="stage-to">{stage.to[lang]}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </ScrollReveal>
       </div>
     </section>
