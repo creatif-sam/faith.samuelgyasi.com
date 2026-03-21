@@ -361,10 +361,15 @@ body {
 .nav-burger span {
   display: block;
   width: 24px; height: 1.5px;
-  background: #ffffff !important;
+  background: #0a0a0a;
   transition: transform 0.35s ease, opacity 0.25s ease, width 0.3s ease;
   transform-origin: center;
 }
+
+.dark .nav-burger span {
+  background: #ffffff;
+}
+
 .nav-burger--open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
 .nav-burger--open span:nth-child(2) { opacity: 0; width: 0; }
 .nav-burger--open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
@@ -530,6 +535,7 @@ body {
   .portfolio-nav.nav-scrolled { padding: 12px 24px; }
   .nav-desktop { display: none; }
   .nav-burger { display: flex; }
+  .nav-login-btn { display: none; }
 }
 
 /* â”€â”€ HERO V2 â”€â”€ */
@@ -2617,6 +2623,7 @@ body {
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   padding: 20px 60px;
   transition: all 0.3s ease;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
 }
 
 .dark .portfolio-nav.nav-modern {
@@ -2901,6 +2908,12 @@ body {
 .dark .wid-sub,
 .dark .vision-sub,
 .dark .values-sub { color: rgba(245,243,239,.55); }
+
+/* Vision section dark mode visibility */
+.dark .vision-section { background: #0a0a0a; color: #f5f3ef; }
+.dark .vision-statement { color: #f5f3ef; }
+.dark .vision-bg-text { -webkit-text-stroke: 1px rgba(255, 255, 255, 0.03); }
+
 .dark .pillar-card { background: #1c1a18; border: 1px solid rgba(245,243,239,.07); box-shadow: none; }
 .dark .pillar-card:hover { background: #242220; box-shadow: 0 4px 20px rgba(0,0,0,.45); }
 .dark .pillar-card-name { color: #f5f3ef; }

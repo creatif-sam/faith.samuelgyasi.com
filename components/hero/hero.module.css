@@ -105,6 +105,10 @@
     gap: 3rem;
     text-align: center;
   }
+
+  .contentSection {
+    align-items: center;
+  }
 }
 
 /* Left Content Section */
@@ -469,7 +473,7 @@
   .heroModern {
     padding: 1rem;
     min-height: auto;
-    padding-top: 6rem;
+    padding-top: 8rem;
     padding-bottom: 4rem;
   }
 

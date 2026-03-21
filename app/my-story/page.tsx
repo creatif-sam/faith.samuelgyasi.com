@@ -539,9 +539,9 @@ const translations = {
       },
       {
         year: "2020 — 2023",
-        title: "Government of Ghana Scholarship — SUP Management Fès, Morocco — Computer Science",
+        title: "ESMCI Fès, Morocco — Computer Science",
         body: [
-          "Samuel pursued his undergraduate studies at the Ecole Supérieure de Management, de Commerce et d'Informatique (Sup Management) in Fès, Morocco after receiving the Government of Ghana Scholarship with the help of John Sanie Foundation. His academic years were marked by intellectual curiosity and student leadership.",
+          "Samuel pursued his undergraduate studies at the Ecole Supérieure de Management, de Commerce et d'Informatique (ESMCI) in Fès, Morocco. His academic years were marked by intellectual curiosity and student leadership.",
           "He graduated with distinction and the Highest GPA in the entire school, developing a reputation as a thinker who could hold complexity without losing clarity.",
         ],
       },
@@ -557,7 +557,7 @@ const translations = {
         year: "2023 — 2025",
         title: "Master's in Collective Intelligence — UM6P, Morocco",
         body: [
-          "At the School of Collective Intelligence (SCI) in Rabat ,Samuel is JPO in charge of student career development ,internship assistance, event logistics and community building.Helping run the world's first master's degree in collective intelligence.",
+          "At the School of Collective Intelligence (SCI) in Rabat, Samuel completed a rigorous Master's programme. The curriculum fused data science, organisational theory, and facilitation into a discipline focused on how groups think and create together.",
         ],
       },
       {
@@ -565,7 +565,7 @@ const translations = {
         title: "Building, Serving, Rooting",
         body: [
           "Samuel today inhabits several interconnected spheres of service. As Junior Program Officer at SCI, UM6P, he helps students navigate their careers and facilitates programs that unlock group potential.",
-          "In the Église Évangélique Au Maroc, he serves as an elder contributing to decision-making and mentoring prayer and library teams with. Beyond institutions, he mentors individuals navigating questions of purpose and leadership.",
+          "In the Église Évangélique Au Maroc, he serves as an elder — mentoring teams with faith. Beyond institutions, he mentors individuals navigating questions of purpose and leadership.",
         ],
       },
     ],
@@ -573,12 +573,12 @@ const translations = {
       {
         num: "01",
         title: "Junior Program Officer · SCI, UM6P",
-        body: "At the School of Collective Intelligence, Samuel serves as a Junior Program Officer undertaking career guidance,internship assistance,event logistics and community building helping run the world's first masters' degree in collective intelligence.",
+        body: "At the School of Collective Intelligence, Samuel designs and facilitates learning programmes that unlock the collective intelligence of organisations, communities, and teams.",
       },
       {
         num: "02",
         title: "Elder · Église Évangélique Au Maroc",
-        body: "Samuel contributes to decision-making,  and mentoring the intercession and library teams.",
+        body: "Samuel contributes to decision-making, big church events and mentoring the intercession and library team.",
       },
       {
         num: "03",
@@ -591,7 +591,7 @@ const translations = {
     eyebrow: "Samuel Kobina Gyasi · Né le 22 juin 1999 · Mpohor, Ghana",
     headlineMain: "Mon",
     headlineItalic: "Histoire",
-    sub: "Deuxième de trois frères. Leader. Program Officer. Ancien. Mentor. Voici l'histoire d'une vie construite chapitre par chapitre.",
+    sub: "Deuxième de trois frères. Leader depuis l'âge de 10 ans. Program Officer. Ancien. Mentor. Voici l'histoire d'une vie construite chapitre par chapitre.",
     narrativeEyebrow: "Pourquoi je partage cette histoire",
     narrativeHeading: "Chaque histoire fait partie d'une généalogie plus grande",
     narrativeLead: "L'Évangile de Matthieu ne s'ouvre pas sur un miracle, mais sur une généalogie — quarante-deux générations de personnes imparfaites, extraordinaires et ordinaires, chacune étant un fil nécessaire au tissu de la rédemption. Rahab la prostituée. Ruth l'étrangère. David l'adultère. Et pourtant : d'eux, par eux, pour eux — le Messie est venu. Je partage mon histoire pour la même raison : parce que les histoires personnelles comptent, les parcours brisés comptent, et aucune vie n'est trop petite pour s'inscrire dans l'éternité.",
@@ -648,7 +648,7 @@ const translations = {
         year: "2020 — 2023",
         title: "SUP Management Fès, Maroc — Informatique",
         body: [
-          "Samuel poursuit son premier cycle à l'Ecole Supérieure de Management, de Commerce et d'Informatique (ESMCI) à Fès. Ses années académiques sont marquées par une curiosité intellectuelle et un leadership étudiant reconnu.",
+          "Samuel poursuit son premier cycle à l'Ecole Supérieure de Management, de Commerce et d'Informatique (SUP Management) à Fès. Ses années académiques sont marquées par une curiosité intellectuelle et un leadership étudiant reconnu.",
           "Il obtient son diplôme avec distinction, affichant la moyenne la plus élevée de tout l'établissement, et se forge une réputation de penseur capable de naviguer dans la complexité.",
         ],
       },
@@ -685,7 +685,7 @@ const translations = {
       {
         num: "02",
         title: "Ancien · Église Évangélique Au Maroc",
-        body: "Samuel participe à la prise de décision et fait le mentorat des équipes d'intercession et de bibliothèque.",
+        body: "Samuel participe à la formation spirituelle et au soin pastoral, dirigeant notamment les équipes d'intercession et de bibliothèque.",
       },
       {
         num: "03",

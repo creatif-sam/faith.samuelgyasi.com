@@ -19,8 +19,8 @@ export const heroModernTranslations = {
     fr: "Ministre, Facilitateur et Leader",
   },
   description: {
-    en: "I help you find your purpose, maximize your potential and develop christlike mind.",
-    fr: "Je vous aide à trouver votre objectif, maximiser votre potentiel et développer un esprit christique.",
+    en: "I help you find your PURPOSE, maximize your POTENTIAL and develop CHRISTLIKE MIND.",
+    fr: "Je vous aide à trouver votre BUT, maximiser votre POTENTIEL et développer un ESPRIT CHRISTIQUE.",
   },
   quote: {
     text: {
@@ -34,8 +34,8 @@ export const heroModernTranslations = {
   },
   experience: {
     label: {
-      en: "Years Of Ministry",
-      fr: "Années de Ministère",
+      en: "Years Of Practice",
+      fr: "Années de Pratique",
     },
     years: {
       en: "10+",
