@@ -2828,7 +2828,12 @@ body {
 }
 
 /* Modern Card Grid */
-.pillars-grid,
+.pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-top: 48px;
+}
 .wid-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -2851,6 +2856,7 @@ body {
 .pillar-card:hover {
   box-shadow: 0 4px 20px rgba(0,0,0,0.08), 0 20px 60px rgba(0,0,0,0.06);
   transform: translateY(-4px);
+  background: white;
 }
 
 .pillar-card-icon {
@@ -2881,6 +2887,29 @@ body {
   padding-top: 16px;
   border-top: 1px solid rgba(0,0,0,0.06);
 }
+
+/* ── Dark mode: section & card theme adaptation ── */
+.dark .portfolio-section { background: #111111; }
+.dark .portfolio-section:nth-child(even) { background: #0d0d0d; }
+.dark .pillars-title,
+.dark .wid-title,
+.dark .vision-title,
+.dark .values-title,
+.dark .connect-title,
+.dark .tl-main-title { color: #f5f3ef; }
+.dark .pillars-sub,
+.dark .wid-sub,
+.dark .vision-sub,
+.dark .values-sub { color: rgba(245,243,239,.55); }
+.dark .pillar-card { background: #1c1a18; border: 1px solid rgba(245,243,239,.07); box-shadow: none; }
+.dark .pillar-card:hover { background: #242220; box-shadow: 0 4px 20px rgba(0,0,0,.45); }
+.dark .pillar-card-name { color: #f5f3ef; }
+.dark .pillar-card-description { color: rgba(245,243,239,.65); }
+.dark .pillar-verse { border-top-color: rgba(245,243,239,.08); }
+.dark .wid-card { background: #1c1a18; border: 1px solid rgba(245,243,239,.07); box-shadow: none; }
+.dark .wid-card:hover { background: #242220; box-shadow: 0 4px 20px rgba(0,0,0,.45); }
+.dark .wid-card-title { color: #f5f3ef; }
+.dark .wid-card-body { color: rgba(245,243,239,.65); }
 
 /* What I Do Cards */
 .wid-card {

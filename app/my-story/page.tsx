@@ -369,13 +369,20 @@ const css = `
   line-height: 1.88;
   color: rgba(245,243,239,.75);
 }
-@media (prefers-color-scheme: light) {
-  .msp { background: #f5f3ef; color: #1a1816; }
-  .msp::before { opacity: 0.15; }
-  .msp-hero-headline, .msp-title, .msp-narrative-heading, .msp-now-card-title, .msp-now-heading { color: #1a1816; }
-  .msp-body, .msp-act-body, .msp-now-card-body { color: rgba(26,24,22,.8); }
-  .msp-hero-sub, .msp-narrative-lead { color: rgba(26,24,22,.7); }
-}
+:root:not(.dark) .msp { background: #f5f3ef; color: #1a1816; }
+:root:not(.dark) .msp::before { opacity: 0.15; }
+:root:not(.dark) .msp-hero-headline,
+:root:not(.dark) .msp-title,
+:root:not(.dark) .msp-narrative-heading,
+:root:not(.dark) .msp-now-card-title,
+:root:not(.dark) .msp-act-title,
+:root:not(.dark) .msp-now-heading { color: #1a1816; }
+:root:not(.dark) .msp-body,
+:root:not(.dark) .msp-act-body,
+:root:not(.dark) .msp-now-card-body { color: rgba(26,24,22,.8); }
+:root:not(.dark) .msp-hero-sub,
+:root:not(.dark) .msp-narrative-lead { color: rgba(26,24,22,.7); }
+:root:not(.dark) .msp-pullquote { color: rgba(26,24,22,.9); background: rgba(201,168,76,.06); }
 .msp-body p + p { margin-top: 14px; }
 .msp-pullquote {
   margin: 22px 0 4px;
