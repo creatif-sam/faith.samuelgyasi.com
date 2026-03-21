@@ -71,7 +71,7 @@ export function Navbar() {
             <span className={lang === "fr" ? "nlb-active" : ""}>FR</span>
           </button>
           
-          {/* Modified: Added 'hidden md:flex' to ensure it only shows on desktop screens */}
+          {/* Keep this visible on desktop, hidden on mobile navbar */}
           <Link
             href="/auth/login"
             className="nav-login-btn hidden md:flex"
@@ -108,10 +108,10 @@ export function Navbar() {
                 <Link href={l.href} onClick={close}>{l.label}</Link>
               </li>
             ))}
+            {/* Login button removed from here (the list) to keep it off the mobile menu */}
           </ul>
 
           <div className="nd-bottom">
-            {/* Theme & Language toggle — mobile */}
             <div className="nd-controls">
               <ThemeSwitcher />
               <button
