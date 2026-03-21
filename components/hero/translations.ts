@@ -19,8 +19,8 @@ export const heroModernTranslations = {
     fr: "Ministre, Facilitateur et Leader",
   },
   description: {
-    en: "I help you find your PURPOSE, maximize your POTENTIAL and develop CHRISTLIKE MIND.",
-    fr: "Je vous aide à trouver votre BUT, maximiser votre POTENTIEL et développer un ESPRIT CHRISTIQUE.",
+    en: "I help you find your PURPOSE, maximize your POTENTIAL and develop Christlike MIND.",
+    fr: "Je vous aide à trouver votre BUT de vie, maximiser votre POTENTIEL et développer un ESPRIT Christocentrique.",
   },
   quote: {
     text: {
@@ -44,8 +44,8 @@ export const heroModernTranslations = {
   },
   cta: {
     follow: {
-      en: "Follow me",
-      fr: "Me suivre",
+      en: "My Faith Journal",
+      fr: "Mon Journal de Foi",
     },
     explore: {
       en: "Explore Faith",

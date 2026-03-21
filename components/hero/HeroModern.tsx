@@ -42,7 +42,7 @@ export function HeroModern() {
           </div>
 
           {/* Follow Button */}
-          <Link href="/faith" className={styles.followButton}>
+          <Link href="/blog" className={styles.followButton}>
             {t.cta.follow[lang]}
           </Link>
         </div>
