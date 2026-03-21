@@ -40,7 +40,7 @@ export function Navbar() {
       {/* ── NAV BAR ── */}
       <nav className={`portfolio-nav nav-modern ${scrolled ? "nav-scrolled" : ""}`}>
         <Link href="/" className="nav-logo-modern" onClick={close}>
-          <span className="nav-logo-initials">SKG</span>
+          <span className="nav-logo-initials">SKG &nbsp;</span>
         </Link>
 
         {/* Desktop links */}

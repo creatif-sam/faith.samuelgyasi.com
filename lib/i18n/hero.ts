@@ -3,20 +3,20 @@ import type { Lang } from "./types";
 
 export const heroTranslations = {
   imageLabel: {
-    en: "BUILDING MY FAITH · NOT BY SIGHT",
-    fr: "CONSTRUIRE MA FOI · PAS PAR LA VUE",
+    en: "THINK LIKE CHRIST · LIVE LIKE CHRIST",
+    fr: "PENSER COMME CHRIST · VIVRE COMME CHRIST",
   },
   eyebrow: {
     en: "CHRISTIAN · THINKER · SERVANT",
     fr: "CHRÉTIEN · PENSEUR · SERVITEUR",
   },
   firstName: {
-    en: "Samuel Kobina",
-    fr: "Samuel Kobina",
+    en: "FIND YOUR PURPOSE,MAXIMIZE YOUR POTENTIAL,THINK LIKE CHRIST",
+    fr: "TROUVEZ VOTRE BUT DE VIE,MAXIMISEZ VOTRE POTENTIEL,PENSEZ COMME CHRIST",
   },
   lastName: {
-    en: "Gyasi",
-    fr: "Gyasi",
+    en: "",
+    fr: "",
   },
   description: {
     en: "Rooted in the Word. Walking by Faith. Living for His Glory.",
