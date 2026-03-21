@@ -25,6 +25,8 @@ import type {
   Feedback,
   MyStoryContent,
   CredoContent,
+  Training,
+  GalleryTheme,
   Tab,
   MailSubTab,
   PageViewRow,
@@ -47,6 +49,8 @@ import UpcomingTab from "./components/tabs/UpcomingTab";
 import FeedbackTab from "./components/tabs/FeedbackTab";
 import MyStoryEditorTab from "./components/tabs/MyStoryEditorTab";
 import CredoEditorTab from "./components/tabs/CredoEditorTab";
+import TrainingsTab from "./components/tabs/TrainingsTab";
+import GalleryTab from "./components/tabs/GalleryTab";
 
 // Import modal components
 import PostModal from "./components/modals/PostModal";
@@ -55,6 +59,8 @@ import TestimonialModal from "./components/modals/TestimonialModal";
 import LibraryItemModal from "./components/modals/LibraryItemModal";
 import UpcomingEventModal from "./components/modals/UpcomingEventModal";
 import BlogReviewsModal from "./components/modals/BlogReviewsModal";
+import TrainingModal from "./components/modals/TrainingModal";
+import GalleryThemeModal from "./components/modals/GalleryThemeModal";
 
 export default function AdminPage() {
   //State management
@@ -86,6 +92,12 @@ export default function AdminPage() {
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
   const [myStory, setMyStory] = useState<MyStoryContent | null>(null);
   const [credoContent, setCredoContent] = useState<CredoContent | null>(null);
+  const [trainings, setTrainings] = useState<Training[]>([]);
+  const [showTraining, setShowTraining] = useState(false);
+  const [editTraining, setEditTraining] = useState<Training | null>(null);
+  const [galleryThemes, setGalleryThemes] = useState<GalleryTheme[]>([]);
+  const [showGallery, setShowGallery] = useState(false);
+  const [editGallery, setEditGallery] = useState<GalleryTheme | null>(null);
   const [confirm, setConfirm] = useState<{ msg: string; fn: () => Promise<void> } | null>(null);
   const [navOpen, setNavOpen] = useState(false);
   
@@ -106,7 +118,7 @@ export default function AdminPage() {
     }
     setLoading(true);
     
-    const [pR, sR, mR, lR, iR, tR, aR, tsR, libR, upR, fbR, msR, crR] = await Promise.all([
+    const [pR, sR, mR, lR, iR, tR, aR, tsR, libR, upR, fbR, msR, crR, trnR, galR] = await Promise.all([
       db.from("blog_posts").select("*").order("created_at", { ascending: false }),
       db.from("newsletter_subscribers").select("*").order("created_at", { ascending: false }),
       db.from("contact_messages").select("*").order("created_at", { ascending: false }),
@@ -121,6 +133,8 @@ export default function AdminPage() {
       db.from("feedback").select("*").order("created_at", { ascending: false }),
       db.from("my_story").select("*").single(),
       db.from("credo_content").select("*").single(),
+      db.from("trainings").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: false }),
+      db.from("gallery_themes").select("*, photos:gallery_photos(*)").order("sort_order", { ascending: true }),
     ]);
 
     setPosts(pR.data ?? []);
@@ -135,6 +149,8 @@ export default function AdminPage() {
     setFeedbacks(fbR.data ?? []);
     setMyStory(msR.data ?? null);
     setCredoContent(crR.data ?? null);
+    setTrainings((trnR.data as Training[]) ?? []);
+    setGalleryThemes((galR.data as GalleryTheme[]) ?? []);
 
     // Calculate analytics
     const views: PageViewRow[] = aR.data ?? [];
@@ -463,6 +479,40 @@ export default function AdminPage() {
                 db={db}
               />
             )}
+
+            {tab === "trainings" && (
+              <TrainingsTab
+                trainings={trainings}
+                onNew={() => { setEditTraining(null); setShowTraining(true); }}
+                onEdit={(t) => { setEditTraining(t); setShowTraining(true); }}
+                onDelete={(id, title) => ask(`Delete training "${title}"?`, async () => {
+                  const { error } = await db.from("trainings").delete().eq("id", id);
+                  if (error) { toast.error("Delete failed"); return; }
+                  toast.success("Deleted"); await load();
+                })}
+                onToggle={async (id, val) => {
+                  await db.from("trainings").update({ published: val }).eq("id", id);
+                  toast.success(val ? "Published" : "Unpublished"); await load();
+                }}
+              />
+            )}
+
+            {tab === "gallery" && (
+              <GalleryTab
+                themes={galleryThemes}
+                onNew={() => { setEditGallery(null); setShowGallery(true); }}
+                onEdit={(t) => { setEditGallery(t); setShowGallery(true); }}
+                onDelete={(id, title) => ask(`Delete gallery "${title}"?`, async () => {
+                  const { error } = await db.from("gallery_themes").delete().eq("id", id);
+                  if (error) { toast.error("Delete failed"); return; }
+                  toast.success("Deleted"); await load();
+                })}
+                onToggle={async (id, val) => {
+                  await db.from("gallery_themes").update({ published: val }).eq("id", id);
+                  toast.success(val ? "Published" : "Unpublished"); await load();
+                }}
+              />
+            )}
           </>
         )}
       </main>
@@ -533,6 +583,24 @@ export default function AdminPage() {
             setShowTpl(false); 
             await load(); 
           }}
+        />
+      )}
+
+      {showTraining && (
+        <TrainingModal
+          training={editTraining}
+          onClose={() => setShowTraining(false)}
+          onSave={async () => { setShowTraining(false); await load(); }}
+          db={db}
+        />
+      )}
+
+      {showGallery && (
+        <GalleryThemeModal
+          theme={editGallery}
+          onClose={() => setShowGallery(false)}
+          onSave={async () => { setShowGallery(false); await load(); }}
+          db={db}
         />
       )}
 

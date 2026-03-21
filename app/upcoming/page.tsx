@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
@@ -32,7 +32,7 @@ const css = `
   margin: 0 auto;
 }
 .up-eyebrow {
-  font-family: var(--font-space-mono),'Space Mono',monospace;
+  font-family: var(--font-poppins),'Poppins',sans-serif;
   font-size: 10px;
   letter-spacing: 0.34em;
   text-transform: uppercase;
@@ -45,7 +45,7 @@ const css = `
   animation: up-rise .8s .1s ease forwards;
 }
 .up-headline {
-  font-family: var(--font-playfair),'Playfair Display',serif;
+  font-family: var(--font-poppins),'Poppins',sans-serif;
   font-size: clamp(52px,8vw,110px);
   font-weight: 900;
   line-height: 0.9;
@@ -104,7 +104,7 @@ const css = `
 .up-section.up-visible { opacity: 1; transform: none; }
 
 .up-section-label {
-  font-family: var(--font-space-mono),'Space Mono',monospace;
+  font-family: var(--font-poppins),'Poppins',sans-serif;
   font-size: 9px;
   letter-spacing: 0.34em;
   text-transform: uppercase;
@@ -115,7 +115,7 @@ const css = `
   margin-bottom: 16px;
 }
 .up-section-title {
-  font-family: var(--font-playfair),'Playfair Display',serif;
+  font-family: var(--font-poppins),'Poppins',sans-serif;
   font-size: clamp(28px,4vw,52px);
   font-weight: 900;
   letter-spacing: -0.02em;
@@ -150,7 +150,7 @@ const css = `
 }
 
 .up-card-date {
-  font-family: var(--font-space-mono),'Space Mono',monospace;
+  font-family: var(--font-poppins),'Poppins',sans-serif;
   font-size: 9px;
   letter-spacing: 0.26em;
   text-transform: uppercase;
@@ -162,7 +162,7 @@ const css = `
 }
 .up-card-tag {
   display: inline-block;
-  font-family: var(--font-space-mono),'Space Mono',monospace;
+  font-family: var(--font-poppins),'Poppins',sans-serif;
   font-size: 8px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -172,7 +172,7 @@ const css = `
   margin-bottom: 18px;
 }
 .up-card-title {
-  font-family: var(--font-playfair),'Playfair Display',serif;
+  font-family: var(--font-poppins),'Poppins',sans-serif;
   font-size: clamp(16px,1.8vw,20px);
   font-weight: 700;
   color: var(--white);
@@ -188,7 +188,7 @@ const css = `
   margin-bottom: 20px;
 }
 .up-card-location {
-  font-family: var(--font-space-mono),'Space Mono',monospace;
+  font-family: var(--font-poppins),'Poppins',sans-serif;
   font-size: 8px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -232,7 +232,7 @@ const css = `
 }
 .up-notify-inner { max-width: 560px; margin: 0 auto; }
 .up-notify-eyebrow {
-  font-family: var(--font-space-mono),'Space Mono',monospace;
+  font-family: var(--font-poppins),'Poppins',sans-serif;
   font-size: 9px;
   letter-spacing: 0.32em;
   text-transform: uppercase;
@@ -243,7 +243,7 @@ const css = `
   margin-bottom: 18px;
 }
 .up-notify-h {
-  font-family: var(--font-playfair),'Playfair Display',serif;
+  font-family: var(--font-poppins),'Poppins',sans-serif;
   font-size: clamp(22px,3vw,36px);
   font-style: italic;
   color: var(--white);
@@ -260,7 +260,7 @@ const css = `
 }
 .up-notify-btn {
   display: inline-block;
-  font-family: var(--font-space-mono),'Space Mono',monospace;
+  font-family: var(--font-poppins),'Poppins',sans-serif;
   font-size: 10px;
   letter-spacing: 0.24em;
   text-transform: uppercase;
@@ -293,7 +293,7 @@ const css = `
 /* Past badge */
 .up-card-past-badge {
   position: absolute; top: 12px; right: 12px;
-  font-family: var(--font-space-mono),'Space Mono',monospace;
+  font-family: var(--font-poppins),'Poppins',sans-serif;
   font-size: 7px; letter-spacing: .2em; text-transform: uppercase;
   padding: 4px 9px;
   background: rgba(10,10,10,.85); border: 1px solid rgba(245,243,239,.15);
@@ -310,7 +310,7 @@ const css = `
 .up-card-meta-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
 .up-card--past .up-card-date { background: none; -webkit-text-fill-color: rgba(245,243,239,.3); color: rgba(245,243,239,.3); }
 .up-card-format {
-  font-family: var(--font-space-mono),'Space Mono',monospace;
+  font-family: var(--font-poppins),'Poppins',sans-serif;
   font-size: 7px; letter-spacing: .16em; text-transform: uppercase;
   padding: 3px 8px; border-radius: 2px; white-space: nowrap;
 }
@@ -325,7 +325,7 @@ const css = `
   color: rgba(245,243,239,.45); margin-bottom: 12px;
 }
 .up-card-host {
-  font-family: var(--font-space-mono),'Space Mono',monospace;
+  font-family: var(--font-poppins),'Poppins',sans-serif;
   font-size: 8px; letter-spacing: .14em; text-transform: uppercase;
   color: rgba(245,243,239,.28); margin-bottom: 18px;
 }
@@ -340,7 +340,7 @@ const css = `
 .up-card-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
 .up-btn {
   display: inline-flex; align-items: center; justify-content: center;
-  font-family: var(--font-space-mono),'Space Mono',monospace;
+  font-family: var(--font-poppins),'Poppins',sans-serif;
   font-size: 8px; letter-spacing: .18em; text-transform: uppercase;
   padding: 9px 18px; border: 1px solid transparent;
   cursor: pointer; text-decoration: none; transition: all .2s;
@@ -380,11 +380,11 @@ const css = `
   padding: 24px 28px 0; gap: 16px;
 }
 .up-modal-eyebrow {
-  font-family: var(--font-space-mono),'Space Mono',monospace;
+  font-family: var(--font-poppins),'Poppins',sans-serif;
   font-size: 8px; letter-spacing: .28em; text-transform: uppercase; color: #c9a84c; margin-bottom: 6px;
 }
 .up-modal-title {
-  font-family: var(--font-playfair),'Playfair Display',serif;
+  font-family: var(--font-poppins),'Poppins',sans-serif;
   font-size: clamp(18px,2.5vw,24px); font-weight: 700; color: var(--white); line-height: 1.2;
 }
 .up-modal-sub {
@@ -399,7 +399,7 @@ const css = `
 .up-modal-close:hover { color: rgba(245,243,239,.7); }
 .up-modal-form { padding: 18px 28px 28px; display: flex; flex-direction: column; gap: 4px; }
 .up-form-label {
-  font-family: var(--font-space-mono),'Space Mono',monospace;
+  font-family: var(--font-poppins),'Poppins',sans-serif;
   font-size: 8px; letter-spacing: .2em; text-transform: uppercase;
   color: rgba(245,243,239,.35); margin-top: 12px; margin-bottom: 4px;
 }
@@ -421,7 +421,7 @@ const css = `
   font-size: 28px; background: var(--gold-gradient);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 8px;
 }
-.up-modal-done-h { font-family: var(--font-playfair),'Playfair Display',serif; font-size: 24px; font-weight: 700; color: var(--white); }
+.up-modal-done-h { font-family: var(--font-poppins),'Poppins',sans-serif; font-size: 24px; font-weight: 700; color: var(--white); }
 .up-modal-done-sub { font-family: var(--font-poppins),'Poppins',sans-serif; font-size: 15px; font-weight: 300; color: rgba(245,243,239,.45); line-height: 1.6; }
 .up-modal-done .up-btn--gold { margin-top: 16px; }
 

@@ -16,15 +16,39 @@ type DbPost = {
   excerpt_fr: string | null;
   read_time_minutes: number;
   featured_image_url: string | null;
+  youtube_url: string | null;
   created_at: string;
 };
 
-const CATEGORIES = [
-  { value: "faith", label: { en: "Faith", fr: "Foi" } },
-  { value: "problems-and-solutions", label: { en: "Problems & Solutions", fr: "Problèmes & Solutions" } },
-  { value: "wisdom", label: { en: "Wisdom", fr: "Sagesse" } },
-  { value: "leadership", label: { en: "Leadership", fr: "Leadership" } },
-];
+function getYouTubeId(url: string): string | null {
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+  const match = url.match(regExp);
+  return match && match[2].length === 11 ? match[2] : null;
+}
+
+function getPostImage(post: DbPost): { url: string; isYoutube: boolean } | null {
+  if (post.featured_image_url) {
+    const ytId = getYouTubeId(post.featured_image_url);
+    if (ytId) return { url: `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg`, isYoutube: true };
+    return { url: post.featured_image_url, isYoutube: false };
+  }
+  if (post.youtube_url) {
+    const ytId = getYouTubeId(post.youtube_url);
+    if (ytId) return { url: `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg`, isYoutube: true };
+  }
+  return null;
+}
+
+const CATEGORY_LABELS: Record<string, { en: string; fr: string }> = {
+  "faith": { en: "Faith", fr: "Foi" },
+  "problems-and-solutions": { en: "Problems & Solutions", fr: "Problèmes & Solutions" },
+  "wisdom": { en: "Wisdom", fr: "Sagesse" },
+  "leadership": { en: "Leadership", fr: "Leadership" },
+};
+
+function formatCategorySlug(slug: string): string {
+  return slug.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+}
 
 export default function FaithBlogPage() {
   const { lang } = useLang();
@@ -42,7 +66,7 @@ export default function FaithBlogPage() {
     const supabase = createClient();
     supabase
       .from("blog_posts")
-      .select("id,title,title_fr,slug,category,excerpt,excerpt_fr,read_time_minutes,featured_image_url,created_at")
+      .select("id,title,title_fr,slug,category,excerpt,excerpt_fr,read_time_minutes,featured_image_url,youtube_url,created_at")
       .eq("published", true)
       .order("created_at", { ascending: false })
       .then(({ data }) => {
@@ -67,6 +91,9 @@ export default function FaithBlogPage() {
 
   const featured = searchFiltered[0];
   const rest = searchFiltered.slice(1);
+
+  // Dynamic categories derived from loaded posts
+  const categoryValues = Array.from(new Set(posts.map((p) => p.category))).sort();
 
   // Helper to get translated content
   const getTitle = (post: DbPost) => lang === "fr" && post.title_fr ? post.title_fr : post.title;
@@ -147,15 +174,19 @@ export default function FaithBlogPage() {
         >
           {lang === "fr" ? "Tout" : "All"}
         </button>
-        {CATEGORIES.map((cat) => (
-          <button
-            key={cat.value}
-            className={`fb-filter${activeCat === cat.value ? " fb-filter--active" : ""}`}
-            onClick={() => setActiveCat(cat.value)}
-          >
-            {cat.label[lang]}
-          </button>
-        ))}
+        {categoryValues.map((cat) => {
+          const labels = CATEGORY_LABELS[cat];
+          const label = labels ? labels[lang] : formatCategorySlug(cat);
+          return (
+            <button
+              key={cat}
+              className={`fb-filter${activeCat === cat ? " fb-filter--active" : ""}`}
+              onClick={() => setActiveCat(cat)}
+            >
+              {label}
+            </button>
+          );
+        })}
       </div>
 
       {/* POSTS */}
@@ -171,11 +202,17 @@ export default function FaithBlogPage() {
         <div className="fb-content">
           {featured && (
             <Link href={`/blog/${featured.slug}`} className="fb-featured">
-              {featured.featured_image_url && (
-                <div className="fb-featured-cover">
-                  <img src={featured.featured_image_url} alt={getTitle(featured)} className="fb-featured-cover-img" />
-                </div>
-              )}
+              {(() => {
+                const img = getPostImage(featured);
+                return img ? (
+                  <div className="fb-featured-cover">
+                    <img src={img.url} alt={getTitle(featured)} className="fb-featured-cover-img" />
+                    {img.isYoutube && (
+                      <div className="fb-yt-play"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+                    )}
+                  </div>
+                ) : null;
+              })()}
               <div className="fb-featured-tag">{featured.category}</div>
               <h2 className="fb-featured-title">{getTitle(featured)}</h2>
               {getExcerpt(featured) && (
@@ -199,11 +236,17 @@ export default function FaithBlogPage() {
             <div className="fb-grid">
               {rest.map((post) => (
                 <Link key={post.slug} href={`/blog/${post.slug}`} className="fb-card">
-                  {post.featured_image_url && (
-                    <div className="fb-card-cover">
-                      <img src={post.featured_image_url} alt={getTitle(post)} className="fb-card-cover-img" />
-                    </div>
-                  )}
+                  {(() => {
+                    const img = getPostImage(post);
+                    return img ? (
+                      <div className="fb-card-cover">
+                        <img src={img.url} alt={getTitle(post)} className="fb-card-cover-img" />
+                        {img.isYoutube && (
+                          <div className="fb-yt-play"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+                        )}
+                      </div>
+                    ) : null;
+                  })()}
                   <div className="fb-card-tag">{post.category}</div>
                   <h3 className="fb-card-title">{getTitle(post)}</h3>
                   {getExcerpt(post) && (
@@ -272,7 +315,7 @@ body.on-fdp { background:#080807; color:#f0ece4; font-family:'Cormorant Garamond
   0%, 100% { opacity: 1; }
   50% { opacity: 0.8; }
 }
-.fb-subtitle { font-family:var(--font-cormorant),'Cormorant Garamond',serif; font-size:clamp(16px,1.8vw,20px); font-style:italic; color:var(--dim); max-width:560px; line-height:1.65; font-weight:300; animation: fadeIn 0.8s ease-out 0.5s both; }
+.fb-subtitle { font-family:var(--font-poppins),'Poppins',sans-serif; font-size:clamp(15px,1.6vw,18px); color:var(--dim); max-width:560px; line-height:1.7; font-weight:300; animation: fadeIn 0.8s ease-out 0.5s both; }
 .fb-search-container { padding: 32px 56px 20px; background:var(--bg); border-bottom:1px solid var(--line); animation: slideUp 0.6s ease-out 0.6s both; }
 .fb-search-wrapper { position: relative; max-width: 600px; margin: 0 auto; }
 .fb-search-icon { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--dim); pointer-events: none; }
@@ -299,26 +342,29 @@ body.on-fdp { background:#080807; color:#f0ece4; font-family:'Cormorant Garamond
 .fb-featured-tag { font-family:'Space Mono',monospace; font-size:9px; letter-spacing:.3em; text-transform:uppercase; background:linear-gradient(90deg,#ffde59,#ff914d); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:20px; display: inline-block; padding: 4px 0; }
 .fb-featured-title { font-family:var(--font-playfair),'Playfair Display',serif; font-size:clamp(28px,4vw,52px); color:var(--white); line-height:1.1; margin-bottom:20px; max-width:820px; transition: color 0.3s ease; }
 .fb-featured:hover .fb-featured-title { color: #ffde59; }
-.fb-featured-excerpt { font-family:var(--font-cormorant),'Cormorant Garamond',serif; font-size:clamp(16px,1.6vw,19px); font-style:italic; color:var(--dim); line-height:1.7; max-width:680px; font-weight:300; margin-bottom:24px; }
+.fb-featured-excerpt { font-family:var(--font-poppins),'Poppins',sans-serif; font-size:clamp(14px,1.4vw,16px); color:var(--dim); line-height:1.75; max-width:680px; font-weight:300; margin-bottom:24px; }
 .fb-meta { font-family:'Space Mono',monospace; font-size:9px; letter-spacing:.15em; text-transform:uppercase; color:var(--dimmer); display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
 .fb-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:24px; padding-top:48px; }
-.fb-card { background:var(--card); border:1px solid var(--line); padding:40px 36px; text-decoration:none; color:var(--white); display:flex; flex-direction:column; gap:12px; transition:all .4s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 8px; position: relative; overflow: hidden; }
+.fb-card { background:var(--card); border:1px solid var(--line); padding:40px 36px; text-decoration:none; color:var(--white); display:flex; flex-direction:column; gap:12px; transition:all .4s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 6px; position: relative; overflow: hidden; }
 .fb-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg,#ffde59,#ff914d); transform: scaleX(0); transition: transform 0.4s ease; transform-origin: left; }
 .fb-card:hover { border-color:rgba(201,168,76,.5); transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
 .fb-card:hover::before { transform: scaleX(1); }
 .fb-card-tag { font-family:'Space Mono',monospace; font-size:9px; letter-spacing:.3em; text-transform:uppercase; color:var(--gold); transition: color 0.3s ease; }
 .fb-card:hover .fb-card-tag { color: #ffde59; }
-.fb-card-title { font-family:var(--font-playfair),'Playfair Display',serif; font-size:clamp(18px,1.8vw,22px); color:var(--white); line-height:1.2; flex:1; transition: color 0.3s ease; }
+.fb-card-title { font-family:var(--font-poppins),'Poppins',sans-serif; font-size:clamp(16px,1.6vw,19px); font-weight:600; color:var(--white); line-height:1.3; flex:1; transition: color 0.3s ease; }
 .fb-card:hover .fb-card-title { color: #e8e0d0; }
-.fb-card-excerpt { font-family:var(--font-cormorant),'Cormorant Garamond',serif; font-size:15px; font-style:italic; color:var(--dim); line-height:1.65; font-weight:300; }
+.fb-card-excerpt { font-family:var(--font-poppins),'Poppins',sans-serif; font-size:13px; color:var(--dim); line-height:1.7; font-weight:300; }
 .fb-pg-footer { padding:48px 56px; border-top:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; background:var(--bg2); }
 .fb-footer-link { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); text-decoration:none; transition:all .3s ease; }
 .fb-footer-link:hover { opacity:.8; transform: translateX(4px); }
 .fb-footer-copy { font-family:'Space Mono',monospace; font-size:9px; color:var(--dimmer); letter-spacing:.1em; }
-.fb-featured-cover { margin-bottom:32px; overflow:hidden; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+.fb-featured-cover { margin-bottom:32px; overflow:hidden; border-radius: 6px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; }
 .fb-featured-cover-img { width:100%; max-height:420px; object-fit:cover; display:block; transition:transform .6s ease; }
 .fb-featured:hover .fb-featured-cover-img { transform:scale(1.05); }
-.fb-card-cover { overflow:hidden; margin:-40px -36px 20px; border-radius: 8px 8px 0 0; }
+.fb-card-cover { overflow:hidden; margin:-40px -36px 20px; border-radius: 6px 6px 0 0; position: relative; }
+.fb-yt-play { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:52px; height:52px; background:rgba(255,255,255,.92); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#0a0a0a; pointer-events:none; opacity:0; transition:opacity .3s; }
+.fb-featured-cover:hover .fb-yt-play,
+.fb-card:hover .fb-yt-play { opacity:1; }
 .fb-card-cover-img { width:100%; height:200px; object-fit:cover; display:block; transition:transform .6s ease; }
 .fb-card:hover .fb-card-cover-img { transform:scale(1.08); }
 @media(max-width:900px){

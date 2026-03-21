@@ -33,12 +33,27 @@ export function LoginForm({
     setError(null);
 
     try {
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-      if (error) throw error;
-      router.push("/admin");
+      const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({ email, password });
+      if (signInError) throw signInError;
+
+      // Check profile role for redirect
+      const userId = signInData.user?.id;
+      let role = "believer";
+      if (userId) {
+        const { data: profile } = await supabase.from("profiles").select("role").eq("id", userId).single();
+        role = profile?.role ?? "believer";
+      }
+
+      // Honour a ?next= param (e.g. from dashboard guard), otherwise use role-based default
+      const params = new URLSearchParams(window.location.search);
+      const next = params.get("next");
+      if (next && next.startsWith("/")) {
+        router.push(next);
+      } else if (role === "admin") {
+        router.push("/admin");
+      } else {
+        router.push("/dashboard");
+      }
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "An error occurred");
     } finally {

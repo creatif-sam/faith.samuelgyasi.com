@@ -124,21 +124,37 @@ const css = `
   padding: 72px 8% 100px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
+  gap: 24px;
 }
 .ebook-card {
-  background: rgba(14,13,11,.9);
-  border: 1px solid rgba(201,168,76,.08);
-  padding: 40px 36px;
-  display: flex; flex-direction: column; gap: 16px;
+  background: rgba(14,13,11,.95);
+  border: 1px solid rgba(201,168,76,.1);
+  border-radius: 6px;
+  padding: 32px 28px;
+  display: flex; flex-direction: column; gap: 14px;
   opacity: 0; transform: translateY(18px);
-  transition: opacity .7s ease, transform .7s ease, border-color .3s;
+  transition: opacity .7s ease, transform .7s ease, border-color .3s, box-shadow .3s;
   text-decoration: none;
   color: inherit;
   cursor: pointer;
+  overflow: hidden;
+  position: relative;
+}
+.ebook-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg,#ffde59,#ff914d);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .4s ease;
 }
 .ebook-card.eb-visible { opacity: 1; transform: none; }
-.ebook-card:hover { border-color: rgba(201,168,76,.22); }
+.ebook-card:hover {
+  border-color: rgba(201,168,76,.3);
+  box-shadow: 0 12px 36px rgba(0,0,0,.45);
+  transform: translateY(-4px);
+}
+.ebook-card:hover::before { transform: scaleX(1); }
 .ebook-cat {
   font-family: var(--font-space-mono), 'Space Mono', monospace;
   font-size: 9px; letter-spacing: .25em; text-transform: uppercase;
@@ -146,47 +162,51 @@ const css = `
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 .ebook-cover {
-  width: 100%; aspect-ratio: 3/4;
-  background: rgba(201,168,76,.08);
-  border: 1px solid rgba(201,168,76,.12);
+  width: 100%; aspect-ratio: 2/3;
+  background: linear-gradient(135deg, rgba(201,168,76,.12) 0%, rgba(14,13,11,.8) 100%);
+  border: 1px solid rgba(201,168,76,.15);
+  border-radius: 4px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 40px; color: rgba(201,168,76,.3);
+  font-size: 36px; color: rgba(201,168,76,.35);
+  overflow: hidden;
 }
-.ebook-cover img { width: 100%; height: 100%; object-fit: cover; }
+.ebook-cover img { width: 100%; height: 100%; object-fit: cover; border-radius: 3px; }
 .ebook-title {
-  font-family: var(--font-playfair), 'Playfair Display', serif;
-  font-size: clamp(17px, 1.8vw, 21px); font-weight: 700;
-  color: var(--white); line-height: 1.2;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
+  font-size: clamp(15px, 1.5vw, 18px); font-weight: 600;
+  color: var(--white); line-height: 1.3;
 }
 .ebook-desc {
-  font-family: var(--font-cormorant), 'Cormorant Garamond', serif;
-  font-size: 15px; font-style: italic;
-  color: rgba(245,243,239,.58); line-height: 1.75; flex: 1;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
+  font-size: 13px; font-weight: 300;
+  color: rgba(245,243,239,.55); line-height: 1.7; flex: 1;
 }
 .ebook-date {
   font-family: var(--font-space-mono), 'Space Mono', monospace;
   font-size: 9px; letter-spacing: .15em; text-transform: uppercase;
-  color: rgba(245,243,239,.25);
+  color: rgba(245,243,239,.22);
 }
 .ebook-download-btn {
-  display: inline-block;
-  font-family: var(--font-space-mono), 'Space Mono', monospace;
-  font-size: 9px; letter-spacing: .22em; text-transform: uppercase;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
+  font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
   padding: 12px 20px;
-  background: linear-gradient(90deg,#ffde59,#ff914d);
+  background: linear-gradient(135deg,#ffde59,#ff914d);
   color: #0a0a0a; text-decoration: none;
-  transition: opacity .25s; margin-top: 8px; cursor: pointer; border: none;
-  width: 100%; text-align: center;
+  border-radius: 4px;
+  transition: opacity .25s, transform .2s; margin-top: 8px;
+  cursor: pointer; border: none; width: 100%; text-align: center;
 }
-.ebook-download-btn:hover { opacity: .8; }
+.ebook-download-btn:hover { opacity: .88; transform: translateY(-1px); }
 .ebook-soon {
-  display: inline-block;
-  font-family: var(--font-space-mono), 'Space Mono', monospace;
-  font-size: 9px; letter-spacing: .22em; text-transform: uppercase;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
+  font-size: 11px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase;
   padding: 12px 20px;
   background: transparent;
   border: 1px solid rgba(201,168,76,.2);
-  color: rgba(201,168,76,.5); margin-top: 8px; width: 100%; text-align: center;
+  border-radius: 4px;
+  color: rgba(201,168,76,.45); margin-top: 8px; width: 100%; text-align: center;
 }
 
 /* ── EMPTY ── */
@@ -264,19 +284,34 @@ export default function EbooksPage() {
             <p className="ebooks-empty">No eBooks published yet. Check back soon.</p>
           ) : (
             ebooks.map((book, i) => (
-              <Link key={book.id} href={`/resources/${book.id}`} className="ebook-card" style={{ transitionDelay: `${i * 0.06}s` }}>
+              <div key={book.id} className="ebook-card" style={{ transitionDelay: `${i * 0.06}s` }}>
                 <div className="ebook-cat">{book.category}</div>
-                <div className="ebook-cover">
-                  {book.cover_url ? (
-                    <img src={book.cover_url} alt={book.title} />
-                  ) : (
-                    <span>◆</span>
-                  )}
-                </div>
+                <Link href={`/resources/${book.id}`} style={{ textDecoration: "none", color: "inherit" }}>
+                  <div className="ebook-cover">
+                    {book.cover_url ? (
+                      <img src={book.cover_url} alt={book.title} />
+                    ) : (
+                      <span>◆</span>
+                    )}
+                  </div>
+                </Link>
                 <h3 className="ebook-title">{book.title}</h3>
                 {book.description && <p className="ebook-desc">{book.description}</p>}
                 <div className="ebook-date">{fmt(book.created_at)}</div>
-              </Link>
+                {book.download_url ? (
+                  <a
+                    href={book.download_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="ebook-download-btn"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    ⬇ Download Free
+                  </a>
+                ) : (
+                  <span className="ebook-soon">Coming Soon</span>
+                )}
+              </div>
             ))
           )}
         </div>

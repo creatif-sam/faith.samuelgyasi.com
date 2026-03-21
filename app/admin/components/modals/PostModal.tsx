@@ -26,11 +26,13 @@ export default function PostModal({ post, onClose, onSave, db }: PostModalProps)
     content_fr:         post?.content_fr         ?? "",
     read_time_minutes:  post?.read_time_minutes  ?? 5,
     featured_image_url: post?.featured_image_url ?? "",
-    infographie_url:    post?.infographie_url    ?? "",
+    youtube_url:        post?.youtube_url        ?? "",
+    infographie_url_en: post?.infographie_url_en ?? "",
+    infographie_url_fr: post?.infographie_url_fr ?? "",
     published:          post?.published          ?? false,
   });
   const [busy, setBusy] = useState(false);
-  const [uploading, setUploading] = useState({ cover: false, infographie: false });
+  const [uploading, setUploading] = useState({ cover: false, infographieEn: false, infographieFr: false });
 
   function setF<K extends keyof typeof form>(k: K, v: (typeof form)[K]) {
     setForm((p) => ({ ...p, [k]: v }));
@@ -54,13 +56,22 @@ export default function PostModal({ post, onClose, onSave, db }: PostModalProps)
     if (url) setF("featured_image_url", url);
   }
 
-  async function handleInfographie(e: React.ChangeEvent<HTMLInputElement>) {
+  async function handleInfographieEn(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
-    setUploading((p) => ({ ...p, infographie: true }));
+    setUploading((p) => ({ ...p, infographieEn: true }));
     const url = await uploadImage(file, "infographies");
-    setUploading((p) => ({ ...p, infographie: false }));
-    if (url) setF("infographie_url", url);
+    setUploading((p) => ({ ...p, infographieEn: false }));
+    if (url) setF("infographie_url_en", url);
+  }
+
+  async function handleInfographieFr(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading((p) => ({ ...p, infographieFr: true }));
+    const url = await uploadImage(file, "infographies");
+    setUploading((p) => ({ ...p, infographieFr: false }));
+    if (url) setF("infographie_url_fr", url);
   }
 
   async function save(e: React.FormEvent) {
@@ -136,17 +147,36 @@ export default function PostModal({ post, onClose, onSave, db }: PostModalProps)
             <div className={TW.field}><label className={TW.label}>Read Time (min)</label><input className={TW.input} type="number" min={1} max={60} value={form.read_time_minutes} onChange={(e) => setF("read_time_minutes", parseInt(e.target.value, 10) || 5)} /></div>
           </div>
           <div className={TW.field}>
-            <label className={TW.label}>Summary Infographie</label>
-            <label className={cn(TW.input, "flex items-center gap-3 cursor-pointer py-2.5 px-4 border-dashed")}>
-              <input type="file" accept="image/*" className="hidden" onChange={handleInfographie} disabled={uploading.infographie} />
-              {uploading.infographie ? (
-                <span className="text-white/40 text-sm">Uploading…</span>
-              ) : form.infographie_url ? (
-                <><img src={form.infographie_url} alt="infographie" className="w-10 h-10 object-cover rounded" /><span className="text-white/50 text-xs truncate max-w-[280px]">{form.infographie_url.split("/").pop()}</span></>
-              ) : (
-                <span className="text-white/30 text-sm">Click to upload summary infographie…</span>
-              )}
-            </label>
+            <label className={TW.label}>YouTube Video URL (optional – auto-shows thumbnail on card)</label>
+            <input className={TW.input} value={form.youtube_url} onChange={(e) => setF("youtube_url", e.target.value)} placeholder="https://www.youtube.com/watch?v=..." />
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className={TW.field}>
+              <label className={TW.label}>Summary Infographic (English)</label>
+              <label className={cn(TW.input, "flex items-center gap-3 cursor-pointer py-2.5 px-4 border-dashed")}>
+                <input type="file" accept="image/*" className="hidden" onChange={handleInfographieEn} disabled={uploading.infographieEn} />
+                {uploading.infographieEn ? (
+                  <span className="text-white/40 text-sm">Uploading…</span>
+                ) : form.infographie_url_en ? (
+                  <><img src={form.infographie_url_en} alt="infographic en" className="w-10 h-10 object-cover rounded" /><span className="text-white/50 text-xs truncate max-w-[120px]">{form.infographie_url_en.split("/").pop()}</span></>
+                ) : (
+                  <span className="text-white/30 text-sm">Upload EN infographic…</span>
+                )}
+              </label>
+            </div>
+            <div className={TW.field}>
+              <label className={TW.label}>Summary Infographic (French)</label>
+              <label className={cn(TW.input, "flex items-center gap-3 cursor-pointer py-2.5 px-4 border-dashed")}>
+                <input type="file" accept="image/*" className="hidden" onChange={handleInfographieFr} disabled={uploading.infographieFr} />
+                {uploading.infographieFr ? (
+                  <span className="text-white/40 text-sm">Uploading…</span>
+                ) : form.infographie_url_fr ? (
+                  <><img src={form.infographie_url_fr} alt="infographic fr" className="w-10 h-10 object-cover rounded" /><span className="text-white/50 text-xs truncate max-w-[120px]">{form.infographie_url_fr.split("/").pop()}</span></>
+                ) : (
+                  <span className="text-white/30 text-sm">Upload FR infographic…</span>
+                )}
+              </label>
+            </div>
           </div>
           <div className="flex items-center gap-3 mb-5 py-4 border-y border-white/[.05]">
             <label className="relative inline-flex items-center cursor-pointer">

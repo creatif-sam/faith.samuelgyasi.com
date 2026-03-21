@@ -1,6 +1,7 @@
 import {
   LayoutDashboard, BarChart3, FileText, Users, MessageSquare,
-  Mail, Phone, BookOpen, Star, Calendar, MessageSquarePlus
+  Mail, Phone, BookOpen, Star, Calendar, MessageSquarePlus,
+  GraduationCap, Images
 } from "lucide-react";
 import { Tab } from "./types";
 
@@ -26,6 +27,8 @@ export const NAV: { id: Tab; label: string; Icon: React.ComponentType<{ size?: n
   { id: "library",      label: "Library",       Icon: BookOpen        },
   { id: "upcoming",     label: "Upcoming",      Icon: Calendar        },
   { id: "feedback",     label: "Feedback",      Icon: MessageSquarePlus },
+  { id: "trainings",    label: "Trainings",     Icon: GraduationCap     },
+  { id: "gallery",      label: "Gallery",       Icon: Images            },
 ];
 
 // TAILWIND CLASS CONSTANTS

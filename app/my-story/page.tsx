@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
 import { createClient } from "@/lib/supabase/client";
 import { useLang } from "@/lib/i18n";
@@ -34,7 +35,9 @@ const css = `
   background-size: cover;
   background-position: center top;
   background-attachment: fixed;
-  opacity: 0.06;
+  opacity: 0.85;
+  background-color: rgba(0, 0, 0, 0.85);
+  background-blend-mode: multiply;
   pointer-events: none;
   z-index: 0;
 }
@@ -141,6 +144,73 @@ const css = `
 @keyframes msp-rise {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: none; }
+}
+
+/* ── PHOTO MOSAIC ── */
+.msp-mosaic {
+  width: 100%;
+  padding: 100px 8% 0;
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+.msp-mosaic-label {
+  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-size: 9px; letter-spacing: .32em; text-transform: uppercase;
+  background: var(--gold-gradient);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  margin-bottom: 18px;
+  opacity: 0; animation: msp-rise .7s .05s ease both;
+}
+.msp-mosaic-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 240px 240px;
+  gap: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.msp-photo {
+  overflow: hidden;
+  position: relative;
+  opacity: 0;
+  transform: scale(0.97) translateY(14px);
+  animation: msp-photo-in .85s ease both;
+}
+@keyframes msp-photo-in {
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.msp-photo img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .7s ease;
+  display: block;
+}
+.msp-photo:hover img { transform: scale(1.07); }
+.msp-photo::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(160deg, transparent 55%, rgba(0,0,0,.35));
+  pointer-events: none;
+}
+/* Layouting: p1 large left (row 1+2, col 1+2), p2 top col3, p3 top col4, p4 bottom col3, p5 bottom col4 */
+.msp-photo--1 { grid-column: 1 / 3; grid-row: 1 / 3; animation-delay: .1s; }
+.msp-photo--2 { grid-column: 3; grid-row: 1;    animation-delay: .22s; }
+.msp-photo--3 { grid-column: 4; grid-row: 1;    animation-delay: .34s; }
+.msp-photo--4 { grid-column: 3; grid-row: 2;    animation-delay: .46s; }
+.msp-photo--5 { grid-column: 4; grid-row: 2;    animation-delay: .58s; }
+
+@media (max-width: 768px) {
+  .msp-mosaic { padding: 90px 6% 0; }
+  .msp-mosaic-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 180px 120px 120px;
+  }
+  .msp-photo--1 { grid-column: 1 / 3; grid-row: 1; }
+  .msp-photo--2 { grid-column: 1; grid-row: 2; }
+  .msp-photo--3 { grid-column: 2; grid-row: 2; }
+  .msp-photo--4 { grid-column: 1; grid-row: 3; }
+  .msp-photo--5 { grid-column: 2; grid-row: 3; }
 }
 .msp-section {
   padding: 80px 8% 100px;
@@ -655,6 +725,18 @@ export default function MyStoryPage() {
     <>
       <div className="msp">
         <style>{css}</style>
+
+        {/* PHOTO MOSAIC */}
+        <div className="msp-mosaic">
+          <p className="msp-mosaic-label">Samuel Kobina Gyasi</p>
+          <div className="msp-mosaic-grid">
+            {[1,2,3,4,5].map((n) => (
+              <div key={n} className={`msp-photo msp-photo--${n}`}>
+                <img src={`/my-story/my-story${n}.jpg`} alt={`Photo ${n}`} loading={n === 1 ? "eager" : "lazy"} />
+              </div>
+            ))}
+          </div>
+        </div>
 
         {/* HERO */}
         <div className="msp-hero">

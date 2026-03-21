@@ -2721,6 +2721,56 @@ body {
   color: #ddd;
 }
 
+/* Login icon button — desktop nav */
+.nav-login-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: calc(var(--radius) - 2px);
+  background: #f5f5f5;
+  border: 1px solid rgba(0,0,0,.06);
+  color: #555;
+  text-decoration: none;
+  transition: all .2s;
+}
+.dark .nav-login-btn {
+  background: #1a1a1a;
+  border-color: rgba(255,255,255,.1);
+  color: rgba(255,255,255,.6);
+}
+.nav-login-btn:hover {
+  background: var(--brand-gold);
+  border-color: transparent;
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(201,168,76,.3);
+}
+
+/* Login button — mobile drawer */
+.nd-login-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: rgba(201,168,76,.08);
+  border: 1px solid rgba(201,168,76,.2);
+  color: var(--brand-gold);
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  transition: all .2s;
+  margin-top: 4px;
+}
+.nd-login-btn:hover {
+  background: rgba(201,168,76,.16);
+  border-color: rgba(201,168,76,.4);
+}
+
 @media (max-width: 768px) {
   .portfolio-nav.nav-modern {
     padding: 16px 24px;

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { LogIn } from "lucide-react";
 import { useLang } from "@/lib/i18n";
 import { navTranslations as t } from "@/lib/i18n/nav";
 import { ThemeSwitcher } from "@/components/theme-switcher";
@@ -69,6 +70,14 @@ export function Navbar() {
             <span className="nlb-sep">|</span>
             <span className={lang === "fr" ? "nlb-active" : ""}>FR</span>
           </button>
+          <Link
+            href="/auth/login"
+            className="nav-login-btn"
+            aria-label="Sign in"
+            title={lang === "en" ? "Sign in" : "Se connecter"}
+          >
+            <LogIn size={15} />
+          </Link>
         </div>
 
         {/* Hamburger */}
@@ -112,6 +121,15 @@ export function Navbar() {
                 <span className="nlb-sep">|</span>
                 <span className={lang === "fr" ? "nlb-active" : ""}>FR</span>
               </button>
+              <Link
+                href="/auth/login"
+                className="nd-login-btn"
+                aria-label="Sign in"
+                onClick={close}
+              >
+                <LogIn size={15} />
+                <span>{lang === "en" ? "Sign in" : "Se connecter"}</span>
+              </Link>
             </div>
             <a href="mailto:impact@samuelgyasi.com" className="nd-email">impact@samuelgyasi.com</a>
             <div className="nd-social-row">

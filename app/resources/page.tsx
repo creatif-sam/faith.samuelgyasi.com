@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Suspense, useEffect } from "react";
 import Link from "next/link";
@@ -34,7 +34,7 @@ const css = `
   margin: 0 auto;
 }
 .lib-eyebrow {
-  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 10px;
   letter-spacing: 0.35em;
   text-transform: uppercase;
@@ -47,7 +47,7 @@ const css = `
   animation: lib-rise .9s .1s ease forwards;
 }
 .lib-headline {
-  font-family: var(--font-playfair), 'Playfair Display', serif;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: clamp(48px, 7.5vw, 100px);
   font-weight: 900;
   line-height: 0.9;
@@ -123,7 +123,7 @@ const css = `
   line-height: 1;
 }
 .lib-card-num {
-  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 9px;
   letter-spacing: 0.28em;
   text-transform: uppercase;
@@ -133,7 +133,7 @@ const css = `
   background-clip: text;
 }
 .lib-card-title {
-  font-family: var(--font-playfair), 'Playfair Display', serif;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: clamp(26px, 3vw, 40px);
   font-weight: 700;
   color: var(--white);
@@ -147,7 +147,7 @@ const css = `
   line-height: 1.75;
 }
 .lib-card-cta {
-  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 9px;
   letter-spacing: 0.25em;
   text-transform: uppercase;
@@ -172,7 +172,7 @@ const css = `
   text-align: center;
 }
 .lib-quote-strip blockquote {
-  font-family: var(--font-playfair), 'Playfair Display', serif;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: clamp(20px, 2.5vw, 30px);
   font-style: italic;
   color: var(--white);
@@ -181,7 +181,7 @@ const css = `
   margin: 0 auto 20px;
 }
 .lib-quote-strip cite {
-  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 9px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
@@ -193,9 +193,25 @@ const css = `
   display: block;
 }
 
+/* 5th card spans full width */
+.lib-section-card--full {
+  grid-column: 1 / -1;
+  flex-direction: row;
+  align-items: center;
+  gap: 40px;
+  padding: 40px 48px;
+}
+.lib-section-card--full .lib-card-title {
+  font-size: clamp(22px, 2.5vw, 32px);
+}
+.lib-section-card--full .lib-card-body { max-width: 600px; }
+.lib-section-card--full .lib-card-cta { padding-top: 0; border-top: none; margin-top: 0; margin-left: auto; white-space: nowrap; }
+
 @media (max-width: 768px) {
   .lib-hero { padding: 130px 6% 56px; }
   .lib-sections { grid-template-columns: 1fr; padding: 48px 6% 72px; }
+  .lib-section-card--full { flex-direction: column; align-items: flex-start; gap: 20px; padding: 40px 28px; }
+  .lib-section-card--full .lib-card-cta { margin-left: 0; }
 }
 `;
 
@@ -276,6 +292,22 @@ export default function ResourcesPage() {
                 : "Enseignements vidéo, conférences et contenu visuel explorant les profondeurs de la foi, de la théologie et de la formation spirituelle. Regardez des messages captivants conçus pour renforcer votre compréhension et votre marche avec Dieu."}
             </p>
             <span className="lib-card-cta">{lang === "en" ? "Watch Now →" : "Regarder Maintenant →"}</span>
+          </Link>
+
+          <Link href="/resources/trainings" className="lib-section-card lib-section-card--full" style={{ transitionDelay: "0.32s" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 12, flex: "0 0 auto" }}>
+              <div className="lib-card-num">05</div>
+              <div className="lib-card-icon">🎓</div>
+            </div>
+            <div style={{ flex: 1 }}>
+              <h2 className="lib-card-title">{lang === "en" ? "Trainings" : "Formations"}</h2>
+              <p className="lib-card-body">
+                {lang === "en"
+                  ? "Structured learning journeys on faith, leadership, and personal development. Explore available courses — each one designed to take you deeper in your walk with God and your growth as a leader."
+                  : "Parcours d'apprentissage structurés sur la foi, le leadership et le développement personnel. Explorez les formations disponibles — chacune conçue pour vous approfondir dans votre marche avec Dieu et votre croissance en tant que leader."}
+              </p>
+            </div>
+            <span className="lib-card-cta">{lang === "en" ? "Explore Trainings →" : "Explorer les Formations →"}</span>
           </Link>
         </div>
 

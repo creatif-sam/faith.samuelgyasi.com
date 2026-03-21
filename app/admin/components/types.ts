@@ -13,7 +13,9 @@ export interface BlogPost {
   content_fr?: string | null;
   read_time_minutes: number;
   featured_image_url: string | null;
-  infographie_url: string | null;
+  youtube_url?: string | null;
+  infographie_url_en: string | null;
+  infographie_url_fr: string | null;
   created_at: string;
 }
 
@@ -177,6 +179,50 @@ export interface CredoContent {
   created_at: string;
 }
 
+export interface Training {
+  id: string;
+  title: string;
+  description: string | null;
+  thumbnail_url: string | null;
+  category: string;
+  total_lessons: number;
+  published: boolean;
+  sort_order: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface TrainingLesson {
+  id: string;
+  training_id: string;
+  title: string;
+  description: string | null;
+  video_url: string | null;
+  duration: string | null;
+  sort_order: number;
+  created_at: string;
+}
+
+export interface GalleryTheme {
+  id: string;
+  title: string;
+  description: string | null;
+  cover_url: string | null;
+  published: boolean;
+  sort_order: number;
+  created_at: string;
+  photos?: GalleryPhoto[];
+}
+
+export interface GalleryPhoto {
+  id: string;
+  theme_id: string;
+  photo_url: string;
+  caption: string | null;
+  sort_order: number;
+  created_at: string;
+}
+
 export type Tab = 
   | "overview" 
   | "analytics" 
@@ -190,6 +236,8 @@ export type Tab =
   | "upcoming" 
   | "feedback" 
   | "my-story" 
-  | "credo";
+  | "credo"
+  | "trainings"
+  | "gallery";
 
 export type MailSubTab = "compose" | "inbox" | "sent" | "templates";
