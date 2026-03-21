@@ -32,8 +32,8 @@ export const whatidoTranslations = {
         fr: "Eglise Évangélique Au Maroc",
       },
       description: {
-        en: "Serving as a church elder with responsibility for spiritual formation, pastoral care, and community accountability. Samuel leads the intercession team and the library team — two pillars that hold together a congregation's life of prayer and love of learning.",
-        fr: "Servant en tant qu'ancien de l'église avec la responsabilité de la formation spirituelle, des soins pastoraux et de la responsabilité communautaire. Samuel dirige l'équipe d'intercession et l'équipe de bibliothèque — deux piliers qui maintiennent ensemble la vie de prière et l'amour de l'apprentissage d'une congrégation.",
+        en: "I serve on a nine-member board of presiding elders, leading church affairs and ministry alongside our pastors for a community of 400+ believers in Rabat, Morocco.",
+        fr: "Je fais partie conseil Presbytere, assurant la direction des affaires de l’Église et du ministère aux côtés de nos pasteurs, pour une communauté de plus de 400 fidèles à Rabat, au Maroc",
       },
     },
     {
