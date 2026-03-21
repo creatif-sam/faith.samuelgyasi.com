@@ -7,7 +7,7 @@ import { LatestBlogsSection } from "@/components/organisms/LatestBlogsSection";
 import { TestimonialsSection } from "@/components/organisms/TestimonialsSection";
 import { ConnectSection } from "@/components/organisms/ConnectSection";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
-import { HeroModern } from "@/components/hero";
+import { HeroModern } from "@/components/hero/HeroModern";
 
 export default function Home() {
   return (
