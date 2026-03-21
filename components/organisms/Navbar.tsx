@@ -70,9 +70,11 @@ export function Navbar() {
             <span className="nlb-sep">|</span>
             <span className={lang === "fr" ? "nlb-active" : ""}>FR</span>
           </button>
+          
+          {/* Modified: Added 'hidden md:flex' to ensure it only shows on desktop screens */}
           <Link
             href="/auth/login"
-            className="nav-login-btn"
+            className="nav-login-btn hidden md:flex"
             aria-label="Sign in"
             title={lang === "en" ? "Sign in" : "Se connecter"}
           >
@@ -131,4 +133,3 @@ export function Navbar() {
     </>
   );
 }
-
