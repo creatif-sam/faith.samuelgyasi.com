@@ -350,11 +350,15 @@ const css = `
   font-size: 11px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  background: var(--gold-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #c9a84c;
   flex-shrink: 0;
+  background: rgba(201,168,76,.12);
+  border: 1px solid rgba(201,168,76,.3);
+  padding: 4px 12px;
+  border-radius: 4px;
+  display: inline-block;
+  align-self: flex-start;
+  margin-top: 2px;
 }
 .msp-title {
   font-family: var(--font-playfair), 'Playfair Display', serif;
@@ -371,6 +375,11 @@ const css = `
 }
 :root:not(.dark) .msp { background: #f5f3ef; color: #1a1816; }
 :root:not(.dark) .msp::before { opacity: 0.15; }
+:root:not(.dark) .msp-year {
+  background: rgba(201,168,76,.15);
+  border-color: rgba(201,168,76,.4);
+  color: #8a5c1a;
+}
 :root:not(.dark) .msp-hero-headline,
 :root:not(.dark) .msp-title,
 :root:not(.dark) .msp-narrative-heading,
@@ -474,7 +483,7 @@ const translations = {
     eyebrow: "Samuel Kobina Gyasi · Born 22 June 1999 · Mpohor, Ghana",
     headlineMain: "My",
     headlineItalic: "Story",
-    sub: "Son of a tailor. Third of three brothers. Class Prefect at ten. Scholar across continents. Program Officer. Elder. Mentor. This is the story of a life built chapter by chapter.",
+    sub: "Second child of three brothers. Dining Hall Prefect. Scholar across continents. Program Officer. Elder. Mentor. This is the story of a life built chapter by chapter.",
     narrativeEyebrow: "Why I Share This Story",
     narrativeHeading: "Every Story is Part of a Greater Genealogy",
     narrativeLead: "Matthew's Gospel opens not with a miracle but with a genealogy — forty-two generations of flawed, extraordinary, and ordinary people, each one a necessary thread in the fabric of redemption. Rahab the prostitute. Ruth the foreigner. David the adulterer. And yet: from them, through them, for them — the Messiah came. I share my story for the same reason Matthew wrote that genealogy: because personal stories matter, broken stories matter, and no life is too small to be part of something eternal.",
@@ -482,7 +491,7 @@ const translations = {
       {
         num: "Story of Self",
         title: "Why I was called to this work",
-        body: "My story begins in Mpohor, Ghana — a tailor's son who found in Scripture the first map of his life. The faith of my mother, the discipline of my father, the prefect badge at ten, the scholarship across continents — these are not personal trivia. They are the making of a person who believes what he teaches.",
+        body: "My story begins in Mpohor, Ghana — a tailor's son who found in Scripture the first map of his life. The faith of my mother, the discipline of my father, the prefect badge at ten, the science labs of Saint John's, the scholarship across continents — these are not personal trivia. They are the making of a person who believes what he teaches.",
       },
       {
         num: "Story of Us",
@@ -502,44 +511,45 @@ const translations = {
         year: "1999",
         title: "A Life Begins in Mpohor",
         body: [
-          "On the 22nd of June 1999, Samuel Kobina Gyasi was born to Mr. Emmanuel Gyasi, a tailor of quiet discipline and industrious hands, and Mrs. Regina Baidoo, a woman whose faith and warmth became the first architecture of his soul. He entered the world as the newest member of a family of brothers — three in all — raised in Mpohor, a town in the Western Region of Ghana that, for all its modesty, would prove to be the first classroom of his life.",
-          "His earliest memories are woven with the sound of a sewing machine and the smell of finished cloth. His father's tailoring shop was not merely a trade — it was a lesson in precision, patience, and the dignity of craftsmanship. His mother's quiet prayers at dawn taught him that a life built on faith is a life built on something unshakeable.",
+          "On the 22nd of June 1999, Samuel Kobina Gyasi was born to Mr. Emmanuel Gyasi, a tailor, and Mrs. Regina Baidoo, a woman whose faith and warmth became the first architecture of his soul. He entered the world as the newest member of a family of brothers — three in all — raised in Mpohor, a town in the Western Region of Ghana that, for all its modesty, would prove to be the first classroom of his life.",
         ],
-        quote: "His father's tailoring shop was not merely a trade — it was a lesson in precision, patience, and the dignity of craftsmanship.",
       },
       {
         year: "2009 — 2012",
         title: "Class Prefect — Ghana-China Friendship School, Mpohor",
         body: [
-          "At the age of ten, Samuel was appointed Class Prefect at Ghana-China Friendship School, Mpohor — a role he would hold for three years, through to Class 6. It was his first encounter with what it means to lead: to be accountable not only for yourself but for the order, spirit, and progress of those around you.",
-          "He learned that authority without relationship is hollow, and that the trust of peers is harder earned — and more precious — than any title. Three years of prefectship sharpened in him a commitment to servant leadership that has never faded.",
+          "At the age of ten, Samuel was elected Class Prefect at Ghana-China Friendship School, Mpohor — a role he would hold for three years. It was his first encounter with what it means to lead: to be accountable not only for yourself but for the order, coordination, and progress of those around you.",
         ],
-        quote: null,
+      },
+      {
+        year: "2013 — 2016",
+        title: "Dining Hall Prefect — Saint John’s School, Sekondi-Takoradi",
+        body: [
+          "Samuel attended the prestigious Saint John’s School, where he pursued a General Science curriculum. This period solidified his analytical thinking and scientific rigor, providing a foundation for his future technical studies.",
+          "He was appointed Dining Hall Prefect, a role of significant logistical and disciplinary weight. Managing the sustenance and order of the entire student body further refined his ability to coordinate complex systems and serve a large community with integrity.",
+        ],
       },
       {
         year: "2017",
-        title: "Managing Director — Cash Washing Bay, Mpohor",
+        title: "Manager — Cash Washing Bay, Mpohor",
         body: [
-          "Before his eighteenth birthday, Samuel founded and ran a car wash business in Mpohor. As Managing Director of Cash Washing Bay, he encountered the full weight of entrepreneurial reality: profit and loss, staff decisions, customer relationships, and the relentless discipline of running a small operation with integrity.",
-          "The experience was an education no classroom could replicate. It built in him an understanding that leadership in institutions begins with leadership of self — and that the instincts of a servant are more valuable than any title.",
+          "Before his eighteenth birthday, Samuel worked as a managing staff for a new car wash business in Mpohor. As Manager of Cash Washing Bay, he encountered the full weight of entrepreneurial reality: profit and loss, staff decisions, and customer relationships.",
+          "The experience was an education no classroom could replicate. It built in him an understanding that leadership in institutions begins with leadership of self.",
         ],
-        quote: null,
       },
       {
-        year: "2018 — 2022",
-        title: "University of Ghana, Legon — Political Science & Information Studies",
+        year: "2020 — 2023",
+        title: "Government of Ghana Scholarship — SUP Management Fès, Morocco — Computer Science",
         body: [
-          "Samuel pursued his undergraduate studies at the University of Ghana, Legon, earning a Bachelor's degree. His academic years were marked by intellectual curiosity, student leadership, and a growing conviction that the intersection of knowledge, governance, and collective action held the key to Africa's transformation.",
-          "He served in student leadership bodies, led study groups, and developed a reputation as a thinker who could hold complexity without losing clarity — a skill that would serve him well in every season that followed.",
+          "Samuel pursued his undergraduate studies at the Ecole Supérieure de Management, de Commerce et d'Informatique (Sup Management) in Fès, Morocco after receiving the Government of Ghana Scholarship with the help of John Sanie Foundation. His academic years were marked by intellectual curiosity and student leadership.",
+          "He graduated with distinction and the Highest GPA in the entire school, developing a reputation as a thinker who could hold complexity without losing clarity.",
         ],
-        quote: null,
       },
       {
-        year: "2022",
-        title: "Government of Ghana Scholarship — A Commission, Not a Reward",
+        year: "2023",
+        title: "Excellence Scholarship — UM6P, Morocco",
         body: [
-          "The arrival of a Government of Ghana scholarship was, for Samuel, not the end of striving but the beginning of a deeper obligation. He understood — as few do — that a scholarship is a commission: a society's investment in an individual with the expectation that the investment will return, multiplied, to the community.",
-          "This conviction carried him across the Mediterranean to Morocco, where he would pursue graduate study and discover a new dimension of leadership in a new culture.",
+          "The arrival of an Excellence Scholarship was a recognition of his academic merits. This prestigious award is granted to top students based on entrance exam results and complemented by need-based support.",
         ],
         quote: "A scholarship is a commission: a society's investment in an individual with the expectation that the investment will return, multiplied, to the community.",
       },
@@ -547,109 +557,106 @@ const translations = {
         year: "2023 — 2025",
         title: "Master's in Collective Intelligence — UM6P, Morocco",
         body: [
-          "At the School of Collective Intelligence, University Mohammed VI Polytechnic (UM6P) in Ben Guerir, Morocco, Samuel completed a rigorous Master's programme in Collective Intelligence. The programme fused data science, organisational theory, complexity thinking, and facilitation practice into a discipline with one central question: how do groups think, decide, and create together?",
-          "His thesis and coursework deepened his research vocabulary, but it was the living laboratory of Moroccan life — navigating a new language, culture, and community — that sharpened his understanding of transformation as something that begins not with strategies but with the willingness to be made new.",
+          "At the School of Collective Intelligence (SCI) in Rabat ,Samuel is JPO in charge of student career development ,internship assistance, event logistics and community building.Helping run the world's first master's degree in collective intelligence.",
         ],
-        quote: null,
       },
       {
         year: "2025 — Now",
         title: "Building, Serving, Rooting",
         body: [
-          "Samuel today inhabits several interconnected spheres of service, each a different expression of the same conviction: that a life worth living is one poured out for others.",
-          "As Junior Program Officer at the School of Collective Intelligence (SCI), UM6P, he designs and facilitates programmes that help organisations and communities unlock collective intelligence. In the Eglise Evangelique Au Maroc, he serves as an elder — leading the intercession team and the library team. And beyond institution, Samuel mentors quietly, faithfully, walking alongside individuals who are navigating the questions he once navigated alone.",
+          "Samuel today inhabits several interconnected spheres of service. As Junior Program Officer at SCI, UM6P, he helps students navigate their careers and facilitates programs that unlock group potential.",
+          "In the Église Évangélique Au Maroc, he serves as an elder contributing to decision-making and mentoring prayer and library teams with. Beyond institutions, he mentors individuals navigating questions of purpose and leadership.",
         ],
-        quote: null,
       },
     ],
     nowCards: [
       {
         num: "01",
         title: "Junior Program Officer · SCI, UM6P",
-        body: "At the School of Collective Intelligence, University Mohammed VI Polytechnic (UM6P) in Morocco, Samuel designs and facilitates learning programmes that unlock the collective intelligence of organisations, communities, and teams.",
+        body: "At the School of Collective Intelligence, Samuel serves as a Junior Program Officer undertaking career guidance,internship assistance,event logistics and community building helping run the world's first masters' degree in collective intelligence.",
       },
       {
         num: "02",
-        title: "Elder · Eglise Evangelique Au Maroc",
-        body: "Samuel serves as a church elder in the Eglise Evangelique Au Maroc, responsible for spiritual formation, community accountability, and pastoral care — leading both the intercession team and the library team.",
+        title: "Elder · Église Évangélique Au Maroc",
+        body: "Samuel contributes to decision-making,  and mentoring the intercession and library teams.",
       },
       {
         num: "03",
         title: "Mentor",
-        body: "Quietly and faithfully, Samuel walks alongside individuals navigating questions of faith, purpose, leadership, and identity — offering the kind of mentorship he once needed himself.",
+        body: "Quietly and faithfully, Samuel walks alongside individuals navigating questions of faith, purpose, leadership, and identity — offering the guidance he once sought.",
       },
     ],
   },
   fr: {
-    eyebrow: "Samuel Kobina Gyasi · Ne le 22 juin 1999 · Mpohor, Ghana",
+    eyebrow: "Samuel Kobina Gyasi · Né le 22 juin 1999 · Mpohor, Ghana",
     headlineMain: "Mon",
     headlineItalic: "Histoire",
-    sub: "Fils d'un tailleur. Troisieme de trois freres. Delegue de classe a dix ans. Chercheur a travers les continents. Programme Officer. Ancien. Mentor. Voici l'histoire d'une vie construite chapitre par chapitre.",
-    narrativeEyebrow: "Pourquoi Je Partage Cette Histoire",
-    narrativeHeading: "Chaque Histoire fait partie d'une Généalogie plus Grande",
-    narrativeLead: "L'Évangile de Matthieu s'ouvre non par un miracle, mais par une généalogie — quarante-deux générations de personnes imparfaites, extraordinaires et ordinaires, chacune un fil nécessaire dans le tissu de la rédemption. Rahab la prostituée. Ruth l'étrangère. David l'adultère. Et pourtant : d'eux, à travers eux, pour eux — le Messie est venu. Je partage mon histoire pour la même raison que Matthieu a écrit cette généalogie : parce que les histoires personnelles comptent, les histoires brisées comptent, et aucune vie n'est trop petite pour faire partie de quelque chose d'éternel.",
+    sub: "Deuxième de trois frères. Leader. Program Officer. Ancien. Mentor. Voici l'histoire d'une vie construite chapitre par chapitre.",
+    narrativeEyebrow: "Pourquoi je partage cette histoire",
+    narrativeHeading: "Chaque histoire fait partie d'une généalogie plus grande",
+    narrativeLead: "L'Évangile de Matthieu ne s'ouvre pas sur un miracle, mais sur une généalogie — quarante-deux générations de personnes imparfaites, extraordinaires et ordinaires, chacune étant un fil nécessaire au tissu de la rédemption. Rahab la prostituée. Ruth l'étrangère. David l'adultère. Et pourtant : d'eux, par eux, pour eux — le Messie est venu. Je partage mon histoire pour la même raison : parce que les histoires personnelles comptent, les parcours brisés comptent, et aucune vie n'est trop petite pour s'inscrire dans l'éternité.",
     narrativeActs: [
       {
         num: "Histoire de Soi",
         title: "Pourquoi j'ai été appelé à ce travail",
-        body: "Mon histoire commence à Mpohor, au Ghana — le fils d'un tailleur qui a trouvé dans l'Écriture la première carte de sa vie. La foi de ma mère, la discipline de mon père, le badge de délégué à dix ans, la bourse à travers les continents — ce ne sont pas des anecdotes personnelles. Ce sont la fabrication d'une personne qui croit ce qu'elle enseigne.",
+        body: "Mon histoire commence à Mpohor, au Ghana — fils d'un tailleur qui a trouvé dans les Écritures la première carte de sa vie. La foi de ma mère, la discipline de mon père, ce badge de délégué à dix ans, les laboratoires de sciences de Saint John's, les bourses d'excellence — ce ne sont pas des détails anodins. C'est la forge d'un homme qui croit en ce qu'il enseigne.",
       },
       {
         num: "Histoire de Nous",
         title: "Ce que nous partageons",
-        body: "Vous n'avez peut-être pas grandi au Ghana. Vous n'avez peut-être pas traversé la Méditerranée avec une bourse. Mais vous savez ce que c'est d'être formé par quelque chose de plus grand que soi — famille, communauté, foi, souffrance, grâce. Cette expérience humaine partagée est le terrain sur lequel nous nous rencontrons. Votre histoire et la mienne se recoupent dans les endroits qui comptent vraiment.",
+        body: "Vous n'avez peut-être pas grandi au Ghana, ni traversé la Méditerranée pour vos études. Mais vous savez ce que c'est d'être façonné par plus grand que soi — la famille, la foi, l'épreuve, la grâce. Cette expérience humaine commune est le terrain de notre rencontre. Nos histoires se rejoignent là où cela compte vraiment.",
       },
       {
         num: "Histoire de Maintenant",
         title: "Le défi devant nous",
-        body: "Nous vivons dans un moment qui a besoin de personnes spirituellement enracinées et intellectuellement aiguisées, capables de tenir la Parole de Dieu dans une main et la complexité du monde dans l'autre. L'invitation de cette page est simple : que ce qui a été construit en moi soit utile à ce que Dieu construit en vous.",
+        body: "Nous vivons une époque qui réclame des leaders spirituellement enracinés et intellectuellement aiguisés, capables de tenir la Parole de Dieu d'une main et la complexité du monde de l'autre. Mon invitation est simple : que ce qui a été bâti en moi serve à ce que Dieu bâtit en vous.",
       },
     ],
-    nowLabel: "Le Present Chapitre",
-    nowHeading: "Ce Que Je Fais Aujourd'hui",
+    nowLabel: "Le Chapitre Actuel",
+    nowHeading: "Ce que je fais aujourd'hui",
     timeline: [
       {
         year: "1999",
-        title: "Une Vie Nait a Mpohor",
+        title: "Une vie commence à Mpohor",
         body: [
-          "Le 22 juin 1999, Samuel Kobina Gyasi est ne de M. Emmanuel Gyasi, tailleur d'une discipline tranquille et aux mains laborieuses, et de Mme Regina Baidoo, une femme dont la foi et la chaleur ont constitue la premiere architecture de son ame. Il est entre dans le monde en tant que nouveau membre d'une famille de freres — trois au total — elevee a Mpohor, une ville de la Region Occidentale du Ghana qui, malgre sa modestie, allait devenir la premiere salle de classe de sa vie.",
-          "Ses premiers souvenirs sont tisses du son d'une machine a coudre et de l'odeur du tissu acheve. L'atelier de couture de son pere n'etait pas simplement un commerce — c'etait une lecon de precision, de patience et de dignite de l'artisanat. Les prieres silencieuses de sa mere a l'aube lui ont appris qu'une vie fondee sur la foi est une vie fondee sur quelque chose d'inebranlable.",
+          "Le 22 juin 1999, Samuel Kobina Gyasi naît de M. Emmanuel Gyasi, tailleur, et de Mme Regina Baidoo, une femme dont la foi et la chaleur ont constitué la première architecture de son âme. Il rejoint une fratrie de trois garçons à Mpohor, une ville de la région occidentale du Ghana qui deviendra sa toute première salle de classe.",
         ],
-        quote: "L'atelier de couture de son pere n'etait pas simplement un commerce — c'etait une lecon de precision, de patience et de dignite de l'artisanat.",
       },
       {
         year: "2009 — 2012",
-        title: "Delegue de Classe — Ghana-China Friendship School, Mpohor",
+        title: "Délégué de Classe — Ghana-China Friendship School, Mpohor",
         body: [
-          "A l'age de dix ans, Samuel a ete nomme delegue de classe a la Ghana-China Friendship School de Mpohor — une fonction qu'il exercerait pendant trois ans, jusqu'en Classe 6. C'etait sa premiere rencontre avec ce que signifie diriger : etre responsable non seulement de soi-meme, mais aussi de l'ordre, de l'esprit et du progres de ceux qui vous entourent.",
-          "Il a appris que l'autorite sans relation est creuse, et que la confiance des pairs se merite plus difficilement — et est plus precieuse — que tout titre. Trois annees en tant que delegue ont aiguise en lui un engagement envers le leadership au service des autres, qui n'a jamais faibli.",
+          "À dix ans, Samuel est élu délégué de classe, un rôle qu'il tiendra pendant trois ans. C'est son premier contact avec la responsabilité : être garant non seulement de soi, mais de l'ordre et du progrès d'un collectif.",
         ],
-        quote: null,
+      },
+      {
+        year: "2014 — 2017",
+        title: "Préfet du Réfectoire — Saint John’s School, Sekondi-Takoradi",
+        body: [
+          "Samuel a fréquenté la prestigieuse Saint John’s School, où il a suivi un cursus en Sciences Générales. Cette période a consolidé sa pensée analytique et sa rigueur scientifique, posant les bases de ses futures études techniques.",
+          "Il a été nommé Préfet du Réfectoire, une fonction d'une grande importance logistique et disciplinaire. Gérer les besoins alimentaires et l'ordre de l'ensemble du corps étudiant a affiné sa capacité à coordonner des systèmes complexes et à servir une large communauté avec intégrité.",
+        ],
       },
       {
         year: "2017",
-        title: "Directeur General — Cash Washing Bay, Mpohor",
+        title: "Gérant — Cash Washing Bay, Mpohor",
         body: [
-          "Avant son dix-huitieme anniversaire, Samuel a fonde et dirige une entreprise de lavage de voitures a Mpohor. En tant que Directeur General de Cash Washing Bay, il a affonte le poids total de la realite entrepreneuriale : profits et pertes, decisions en matiere de personnel, relations clients et la discipline implacable de gerer une petite entreprise avec integrite.",
-          "L'experience etait une education qu'aucune salle de classe ne pouvait reproduire. Elle lui a inculque la comprehension que le leadership dans les institutions commence par le leadership de soi — et que les instincts d'un serviteur ont plus de valeur que n'importe quel titre.",
+          "Avant ses dix-huit ans, Samuel gère une station de lavage automobile à Mpohor. En tant que gérant de Cash Washing Bay, il se confronte aux réalités entrepreneuriales : gestion des pertes et profits, décisions d'équipe et relation client.",
         ],
-        quote: null,
       },
       {
-        year: "2018 — 2022",
-        title: "Universite du Ghana, Legon — Sciences Politiques & Sciences de l'Information",
+        year: "2020 — 2023",
+        title: "SUP Management Fès, Maroc — Informatique",
         body: [
-          "Samuel a poursuivi ses etudes de premier cycle a l'Universite du Ghana, Legon, ou il a obtenu une licence. Ses annees academiques ont ete marquees par la curiosite intellectuelle, le leadership etudiant et la conviction croissante que l'intersection de la connaissance, de la gouvernance et de l'action collective detenait la cle de la transformation de l'Afrique.",
-          "Il a siege dans des organes de direction etudiante, anime des groupes d'etude et s'est forge une reputation de penseur capable de tenir la complexite sans perdre la clarte — une competence qui allait le servir dans chaque saison qui suivrait.",
+          "Samuel poursuit son premier cycle à l'Ecole Supérieure de Management, de Commerce et d'Informatique (ESMCI) à Fès. Ses années académiques sont marquées par une curiosité intellectuelle et un leadership étudiant reconnu.",
+          "Il obtient son diplôme avec distinction, affichant la moyenne la plus élevée de tout l'établissement, et se forge une réputation de penseur capable de naviguer dans la complexité.",
         ],
-        quote: null,
       },
       {
-        year: "2022",
-        title: "Bourse du Gouvernement du Ghana — Une Mission, Pas Seulement une Recompense",
+        year: "2023",
+        title: "Bourse d'Excellence — UM6P, Maroc",
         body: [
-          "L'obtention d'une bourse du Gouvernement du Ghana representait pour Samuel non pas la fin de l'effort, mais le debut d'une obligation plus profonde. Il comprit — comme peu le font — qu'une bourse est une mission : l'investissement d'une societe dans un individu, avec l'attente que cet investissement retourne a la communaute, multiplie.",
-          "Cette conviction l'a porte a travers la Mediterranee jusqu'au Maroc, ou il allait poursuivre des etudes superieures et decouvrir une nouvelle dimension du leadership dans une nouvelle culture.",
+          "L'obtention d'une bourse d'excellence vient couronner son parcours académique. Cette distinction, basée sur les résultats aux concours d'entrée, lui permet d'intégrer l'écosystème de l'Université Mohammed VI Polytechnique.",
         ],
         quote: "Une bourse est une mission : l'investissement d'une societe dans un individu, avec l'attente que cet investissement retourne a la communaute, multiplie.",
       },
@@ -657,36 +664,33 @@ const translations = {
         year: "2023 — 2025",
         title: "Master en Intelligence Collective — UM6P, Maroc",
         body: [
-          "A la School of Collective Intelligence de l'Universite Mohammed VI Polytechnique (UM6P) a Ben Guerir, Maroc, Samuel a acheve un programme rigoureux de Master en Intelligence Collective. Le programme fusionnait la science des donnees, la theorie organisationnelle, la pensee de la complexite et les pratiques de facilitation en une discipline avec une question centrale : comment les groupes pensent-ils, decident-ils et creent-ils ensemble ?",
-          "Sa these et ses cours ont approfondi son vocabulaire de recherche, mais c'est le laboratoire vivant de la vie marocaine — explorer une nouvelle langue, culture et communaute — qui a affine sa comprehension de la transformation comme quelque chose qui ne commence pas par des strategies, mais par la volonte d'etre renouvele.",
+          "À la School of Collective Intelligence (SCI) à Rabat, Samuel suit un programme rigoureux fusionnant science des données, théorie des organisations et facilitation. La question centrale : comment les groupes pensent-ils et créent-ils ensemble ?",
         ],
-        quote: null,
       },
       {
         year: "2025 — Maintenant",
-        title: "Construire, Servir, S'Enraciner",
+        title: "Bâtir, Servir, S'enraciner",
         body: [
-          "Samuel habite aujourd'hui plusieurs spheres de service interconnectees, chacune etant une expression differente de la meme conviction : qu'une vie qui vaut la peine d'etre vecue est une vie offerte aux autres.",
-          "En tant que Junior Program Officer a la School of Collective Intelligence (SCI), UM6P, il concoit et anime des programmes qui aident les organisations et les communautes a liberer l'intelligence collective. A l'Eglise Evangelique Au Maroc, il sert comme ancien — dirigeant l'equipe d'intercession et l'equipe de bibliotheque. Et au-dela des institutions, Samuel accompagne discretement et fidelement des individus qui naviguent dans les questions qu'il a lui-meme autrefois traversees.",
+          "Aujourd'hui, Samuel habite plusieurs sphères de service interconnectées. En tant que Junior Program Officer à la SCI (UM6P), il accompagne les étudiants dans leur carrière et anime des programmes de réflexion collective.",
+          "À l'Église Évangélique Au Maroc, il sert comme ancien, guidant les équipes avec foi. Dans l'ombre, il continue de mentorer ceux qui cherchent leur voie.",
         ],
-        quote: null,
       },
     ],
     nowCards: [
       {
         num: "01",
         title: "Junior Program Officer · SCI, UM6P",
-        body: "A la School of Collective Intelligence de l'Universite Mohammed VI Polytechnique (UM6P) au Maroc, Samuel concoit et anime des programmes d'apprentissage qui liberent l'intelligence collective des organisations, communautes et equipes.",
+        body: "À la School of Collective Intelligence, Samuel conçoit des programmes d'apprentissage pour libérer le potentiel collectif des organisations et des équipes.",
       },
       {
         num: "02",
-        title: "Ancien · Eglise Evangelique Au Maroc",
-        body: "Samuel sert comme ancien de l'eglise a l'Eglise Evangelique Au Maroc, responsable de la formation spirituelle, de la responsabilite communautaire et du soin pastoral — dirigeant a la fois l'equipe d'intercession et l'equipe de bibliotheque.",
+        title: "Ancien · Église Évangélique Au Maroc",
+        body: "Samuel participe à la prise de décision et fait le mentorat des équipes d'intercession et de bibliothèque.",
       },
       {
         num: "03",
         title: "Mentor",
-        body: "Discretement et fidelement, Samuel accompagne des individus qui naviguent dans des questions de foi, de vocation, de leadership et d'identite — offrant le type de mentorat dont il avait lui-meme besoin autrefois.",
+        body: "Avec fidélité, Samuel accompagne des individus sur les questions de foi, de vocation et d'identité, offrant le soutien qu'il a lui-même reçu autrefois.",
       },
     ],
   },
