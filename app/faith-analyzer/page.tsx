@@ -137,7 +137,7 @@ export default function AnalyzerPage() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {tests.map((test) => (
-              <Link href={`/analyzer/${test.slug}`} key={test.id} className="no-underline">
+              <Link href={`/faith-analyzer/${test.slug}`} key={test.id} className="no-underline">
                 <div className={cardStyles}>
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[#d4a843]/20 to-[#c49838]/10 flex items-center justify-center flex-shrink-0 border border-[#d4a843]/20 group-hover:border-[#d4a843]/40 transition-all">

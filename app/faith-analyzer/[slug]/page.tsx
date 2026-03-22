@@ -75,7 +75,7 @@ export default function TestPage() {
         .order("sort_order", { ascending: true })
     ]).then(async ([testRes, questionsPreRes]) => {
       if (testRes.error || !testRes.data) {
-        router.push("/analyzer");
+        router.push("/faith-analyzer");
         return;
       }
 
@@ -161,7 +161,7 @@ export default function TestPage() {
           <Breadcrumbs
             items={[
               { label: lang === "fr" ? "Accueil" : "Home", href: "/" },
-              { label: lang === "fr" ? "Analyseur" : "Analyzer", href: "/analyzer" },
+              { label: lang === "fr" ? "Analyseur" : "Analyzer", href: "/faith-analyzer" },
               { label: getName(test) },
             ]}
           />
@@ -257,7 +257,7 @@ export default function TestPage() {
                   {lang === "fr" ? "Réessayer" : "Retake Test"}
                 </button>
                 <Link
-                  href="/analyzer"
+                  href="/faith-analyzer"
                   className="px-6 py-2.5 bg-gradient-to-br from-[#d4a843] to-[#c49838] text-[#09090d] font-poppins text-[13px] font-medium rounded-lg hover:shadow-[0_4px_20px_rgba(212,168,67,.3)] transition-all no-underline"
                 >
                   {lang === "fr" ? "Plus de Tests" : "More Tests"}

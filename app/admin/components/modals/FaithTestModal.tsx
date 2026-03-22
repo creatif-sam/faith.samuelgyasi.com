@@ -107,7 +107,7 @@ export default function FaithTestModal({ test, onClose, onSave, db }: FaithTestM
               placeholder="laziness-test" 
             />
             <div className="text-[10px] text-white/30 mt-1.5">
-              URL: /analyzer/{slug || "..."}
+              URL: /faith-analyzer/{slug || "..."}
             </div>
           </div>
           

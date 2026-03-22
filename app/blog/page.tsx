@@ -7,6 +7,7 @@ import { createClient } from "@/lib/supabase/client";
 import { useLang } from "@/lib/i18n";
 import Breadcrumbs from "@/components/atoms/Breadcrumbs";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
+import { SeriesSidebar } from "@/components/blog/SeriesSidebar";
 import { Suspense } from "react";
 
 type DbPost = {
@@ -295,7 +296,10 @@ function BlogContent() {
         })}
       </div>
 
-      {/* POSTS */}
+      {/* MAIN CONTENT WITH SIDEBAR LAYOUT */}
+      <div className="fb-layout-with-sidebar">
+        {/* POSTS SECTION */}
+        <div className="fb-main-content">
       {loading ? (
         <p className="fb-empty">{lang === "fr" ? "Chargement des réflexions..." : "Loading reflections..."}</p>
       ) : searchFiltered.length === 0 ? (
@@ -388,6 +392,11 @@ function BlogContent() {
           )}
         </div>
       )}
+        </div>
+        
+        {/* SIDEBAR */}
+        <SeriesSidebar />
+      </div>
 
       {/* FOOTER */}
       <Suspense fallback={null}><SiteFooter /></Suspense>
@@ -457,7 +466,9 @@ body.on-fdp { background:#080807; color:#f0ece4; font-family:'Cormorant Garamond
 .fb-filter:hover { border-color:rgba(255,222,89,.5); color:var(--gold); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255,222,89,0.2); }
 .fb-filter--active { background:linear-gradient(90deg,#ffde59,#ff914d); color:#080807; border-color:transparent; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,222,89,0.3); }
 .fb-filter--active::before { opacity: 1; }
-.fb-content { padding:0 56px 80px; }
+.fb-layout-with-sidebar { display: flex; gap: 40px; padding: 0 56px 40px; align-items: flex-start; }
+.fb-main-content { flex: 1; min-width: 0; }
+.fb-content { padding:0; }
 .fb-empty { font-family:var(--font-cormorant),'Cormorant Garamond',serif; font-size:20px; font-style:italic; color:var(--dim); padding:80px 56px; text-align:center; }
 .fb-featured { display:block; padding:72px 0 56px; border-bottom:1px solid var(--line); text-decoration:none; color:inherit; transition:all .4s ease; animation: fadeInScale 0.8s ease-out 0.6s both; }
 @keyframes fadeInScale {
@@ -499,7 +510,8 @@ body.on-fdp { background:#080807; color:#f0ece4; font-family:'Cormorant Garamond
   .fb-header { padding:130px 24px 48px; }
   .fb-search-container { padding: 24px; }
   .fb-filters { padding:20px 24px; top:61px; gap: 8px; }
-  .fb-content { padding:0 24px 60px; }
+  .fb-layout-with-sidebar { flex-direction: column-reverse; padding: 0 24px 60px; gap: 32px; }
+  .fb-main-content { width: 100%; }
   .fb-grid { grid-template-columns:1fr; gap: 20px; }
   .fb-pg-footer { padding:36px 24px; flex-direction:column; gap:16px; text-align:center; }
   .fb-card { padding: 32px 24px; }

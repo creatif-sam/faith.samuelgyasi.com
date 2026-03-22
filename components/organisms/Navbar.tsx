@@ -15,7 +15,7 @@ export function Navbar() {
 
   const navLinks = [
     { href: "/blog",      label: t.blog[lang]      },
-    { href: "/analyzer",  label: t.analyzer[lang]  },
+    { href: "/faith-analyzer",  label: t.analyzer[lang]  },
     { href: "/my-story",  label: t.story[lang]     },
     { href: "/resources", label: t.resources[lang] },
     { href: "/credo",     label: t.credo[lang]     },

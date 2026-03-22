@@ -478,6 +478,49 @@ const css = `
   .msp-now-grid { grid-template-columns: 1fr; gap: 32px; }
   .msp-hero-glow { display: none; }
 }
+
+/* ── FOOTER VISIBILITY OVERRIDES ── */
+.msp footer {
+  position: relative;
+  z-index: 10;
+  background: rgba(8, 8, 7, 0.95);
+  border-top: 1px solid rgba(201, 168, 76, 0.3);
+}
+.msp footer * {
+  color: var(--white, #f0ece4) !important;
+}
+.msp footer .sf-brand-name,
+.msp footer .sf-brand-tagline,
+.msp footer .sf-nl-heading,
+.msp footer .sf-nl-sub,
+.msp footer .sf-col-label,
+.msp footer .sf-col-link,
+.msp footer .sf-copy,
+.msp footer .sf-credit {
+  opacity: 1 !important;
+}
+.msp footer .sf-nl-input {
+  background: rgba(245, 243, 239, 0.08) !important;
+  border-color: rgba(201, 168, 76, 0.3) !important;
+  color: var(--white, #f0ece4) !important;
+}
+.msp footer .sf-nl-input::placeholder {
+  color: rgba(245, 243, 239, 0.4) !important;
+}
+.msp footer .sf-nl-btn {
+  background: linear-gradient(90deg, #ffde59, #ff914d) !important;
+  color: #080807 !important;
+}
+.msp footer .sf-social-icon {
+  color: var(--white, #f0ece4) !important;
+  opacity: 0.8;
+}
+.msp footer .sf-social-icon:hover {
+  opacity: 1;
+}
+.msp footer .sf-rule {
+  background: rgba(201, 168, 76, 0.2) !important;
+}
 `;
 
 const translations = {
@@ -579,8 +622,8 @@ const translations = {
       },
       {
         num: "02",
-        title: "Elder · Église Évangélique Au Maroc",
-        body: "Samuel contributes to decision-making, big church events and mentoring the intercession and library team.",
+        title: "Teacher · Elder · Église Évangélique Au Maroc",
+        body: "Samuel is a member of the elders' board and participates in decision-making alongside our pastors; he serves as a mentor for the intercession and library commissions. ",
       },
       {
         num: "03",
@@ -686,8 +729,8 @@ const translations = {
       },
       {
         num: "02",
-        title: "Ancien · Église Évangélique Au Maroc",
-        body: "Samuel participe à la formation spirituelle et au soin pastoral, dirigeant notamment les équipes d'intercession et de bibliothèque.",
+        title: "Enseignant · In · Ancien · Église Évangélique Au Maroc",
+        body: "Samuel fait partie du conseil presbytéral et participe à la prise de décision aux côtés de nos pasteurs. Il sert de mentor pour la commission d'intercession et la commission bibliothèque",
       },
       {
         num: "03",
