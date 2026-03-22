@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { X } from "lucide-react";
+import { X, Upload, Image as ImageIcon } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { TW, slugify } from "../constants";
@@ -24,6 +24,44 @@ export default function BlogSeriesModal({ series, onClose, onSave, db }: BlogSer
   const [published,      setPub]            = useState(series?.published        ?? false);
   const [sortOrder,      setSort]           = useState(series?.sort_order       ?? 0);
   const [saving,         setSaving]         = useState(false);
+  const [uploading,      setUploading]      = useState(false);
+
+  async function uploadSeriesImage(file: File): Promise<string | null> {
+    const ext = file.name.split(".").pop();
+    const filename = `series/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+    const { error } = await db.storage.from("blog-images").upload(filename, file, { upsert: true });
+    if (error) { 
+      toast.error(`Upload failed: ${error.message}`); 
+      return null; 
+    }
+    const { data } = db.storage.from("blog-images").getPublicUrl(filename);
+    return data.publicUrl;
+  }
+
+  async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    
+    // Validate file type
+    if (!file.type.startsWith("image/")) {
+      toast.error("Please upload an image file");
+      return;
+    }
+    
+    // Validate file size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error("Image must be smaller than 5MB");
+      return;
+    }
+    
+    setUploading(true);
+    const url = await uploadSeriesImage(file);
+    setUploading(false);
+    if (url) {
+      setImageUrl(url);
+      toast.success("Series image uploaded successfully");
+    }
+  }
 
   async function handleSave() {
     if (!nameEn.trim() || !nameFr.trim()) { 
@@ -131,16 +169,70 @@ export default function BlogSeriesModal({ series, onClose, onSave, db }: BlogSer
           </div>
           
           <div className={TW.field}>
-            <label className={TW.label}>Series Image URL</label>
-            <input 
-              className={TW.input} 
-              value={imageUrl} 
-              onChange={(e) => setImageUrl(e.target.value)} 
-              placeholder="https://example.com/series-image.jpg" 
-            />
+            <label className={TW.label}>Series Cover Image</label>
+            
+            {/* Image Preview */}
+            {imageUrl && (
+              <div className="mb-3 relative rounded-lg overflow-hidden border border-white/10">
+                <img 
+                  src={imageUrl} 
+                  alt="Series cover preview" 
+                  className="w-full h-48 object-cover"
+                />
+                <button
+                  type="button"
+                  onClick={() => setImageUrl("")}
+                  className="absolute top-2 right-2 bg-red-500/90 hover:bg-red-600 text-white rounded-full p-1.5 transition-colors"
+                  title="Remove image"
+                >
+                  <X size={14} />
+                </button>
+              </div>
+            )}
+            
+            {/* Upload Button */}
+            <label className={cn(
+              "flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-dashed transition-all cursor-pointer",
+              uploading ? "border-[#c9a84c] bg-[#c9a84c]/10 cursor-wait" : "border-white/20 hover:border-[#c9a84c] hover:bg-white/5"
+            )}>
+              {uploading ? (
+                <>
+                  <div className="animate-spin rounded-full h-4 w-4 border-2 border-[#c9a84c] border-t-transparent" />
+                  <span className="text-sm text-white/70">Uploading...</span>
+                </>
+              ) : (
+                <>
+                  <Upload size={16} className="text-[#c9a84c]" />
+                  <span className="text-sm text-white/70">
+                    {imageUrl ? "Change Image" : "Upload Series Image"}
+                  </span>
+                </>
+              )}
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                disabled={uploading}
+                className="hidden"
+              />
+            </label>
+            
             <div className="text-[10px] text-white/30 mt-1.5">
-              This image will be displayed on the blog page when viewing this series
+              Upload a cover image for this series (JPG, PNG, WebP - max 5MB)
             </div>
+            
+            {/* Optional: Manual URL input as fallback */}
+            <details className="mt-3">
+              <summary className="text-[11px] text-white/40 cursor-pointer hover:text-white/60 transition-colors">
+                Or enter image URL manually
+              </summary>
+              <input 
+                className={cn(TW.input, "mt-2")} 
+                value={imageUrl} 
+                onChange={(e) => setImageUrl(e.target.value)} 
+                placeholder="https://example.com/series-image.jpg" 
+              />
+            </details>
           </div>
           
           <div className={TW.field}>

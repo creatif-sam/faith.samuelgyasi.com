@@ -67,6 +67,7 @@ import FaithTestsTab from "./components/tabs/FaithTestsTab";
 // Import modal components
 import PostModal from "./components/modals/PostModal";
 import BlogSeriesModal from "./components/modals/BlogSeriesModal";
+import BlogSeriesDetailModal from "./components/modals/BlogSeriesDetailModal";
 import BlogTagModal from "./components/modals/BlogTagModal";
 import TplModal from "./components/modals/TplModal";
 import TestimonialModal from "./components/modals/TestimonialModal";
@@ -97,6 +98,7 @@ export default function AdminPage() {
   const [editPost, setEditPost] = useState<BlogPost | null>(null);
   const [showSeries, setShowSeries] = useState(false);
   const [editSeries, setEditSeries] = useState<BlogSeries | null>(null);
+  const [viewSeries, setViewSeries] = useState<BlogSeries | null>(null);
   const [showTag, setShowTag] = useState(false);
   const [editTag, setEditTag] = useState<BlogTag | null>(null);
   const [showReviews, setShowReviews] = useState(false);
@@ -393,6 +395,7 @@ export default function AdminPage() {
                 series={blogSeries}
                 onNew={() => { setEditSeries(null); setShowSeries(true); }}
                 onEdit={(s) => { setEditSeries(s); setShowSeries(true); }}
+                onView={(s) => setViewSeries(s)}
                 onDelete={(id, name) => ask(`Delete series "${name}"?`, async () => {
                   const { error } = await db.from("blog_series").delete().eq("id", id);
                   if (error) { toast.error("Delete failed"); return; }
@@ -715,6 +718,19 @@ export default function AdminPage() {
           onSave={async () => { 
             setShowSeries(false); 
             await load(); 
+          }}
+          db={db}
+        />
+      )}
+      
+      {viewSeries && (
+        <BlogSeriesDetailModal
+          series={viewSeries}
+          onClose={() => setViewSeries(null)}
+          onEditPost={(post) => {
+            setEditPost(post);
+            setShowPost(true);
+            setViewSeries(null);
           }}
           db={db}
         />

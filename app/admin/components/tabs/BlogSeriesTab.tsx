@@ -1,4 +1,4 @@
-import { Plus, Pencil, Trash2 } from "lucide-react";
+import { Plus, Pencil, Trash2, Eye } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { TW } from "../constants";
 import { BlogSeries } from "../types";
@@ -9,9 +9,10 @@ interface BlogSeriesTabProps {
   onEdit: (s: BlogSeries) => void;
   onDelete: (id: string, name: string) => void;
   onToggle: (id: string, val: boolean) => Promise<void>;
+  onView: (s: BlogSeries) => void;
 }
 
-export default function BlogSeriesTab({ series, onNew, onEdit, onDelete, onToggle }: BlogSeriesTabProps) {
+export default function BlogSeriesTab({ series, onNew, onEdit, onDelete, onToggle, onView }: BlogSeriesTabProps) {
   const published = series.filter((s) => s.published).length;
   return (
     <>
@@ -57,6 +58,7 @@ export default function BlogSeriesTab({ series, onNew, onEdit, onDelete, onToggl
                   </td>
                   <td className={TW.td}>
                     <div className={TW.actRow}>
+                      <button className={cn(TW.btn, TW.ghost, TW.sm)} onClick={() => onView(s)} title="View posts in series"><Eye size={10} /></button>
                       <button className={cn(TW.btn, TW.ghost, TW.sm)} onClick={() => onEdit(s)}><Pencil size={10} /></button>
                       <button className={cn(TW.btn, TW.danger, TW.sm)} onClick={() => onDelete(s.id, s.name_en)}><Trash2 size={10} /></button>
                     </div>
