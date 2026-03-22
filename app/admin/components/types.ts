@@ -288,6 +288,32 @@ export interface DiscipleshipContent {
   created_at: string;
 }
 
+export interface Disciple {
+  id: string;
+  name: string;
+  email: string | null;
+  phone: string | null;
+  current_course: string | null;
+  status: 'active' | 'inactive' | 'graduated';
+  started_at: string;
+  photo_url: string | null;
+  notes: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface DiscipleProgress {
+  id: string;
+  disciple_id: string;
+  entry_date: string;
+  changes_observed: string | null;
+  challenges: string | null;
+  next_steps: string | null;
+  course_milestone: string | null;
+  created_by: string | null;
+  created_at: string;
+}
+
 export interface FaithTest {
   id: string;
   name_en: string;

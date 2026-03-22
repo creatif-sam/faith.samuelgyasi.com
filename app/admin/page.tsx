@@ -31,6 +31,8 @@ import type {
   EventRegistration,
   PrayerSubmission,
   DiscipleshipContent,
+  Disciple,
+  DiscipleProgress,
   FaithTest,
   FaithTestQuestion,
   Tab,
@@ -74,6 +76,8 @@ import BlogReviewsModal from "./components/modals/BlogReviewsModal";
 import TrainingModal from "./components/modals/TrainingModal";
 import GalleryThemeModal from "./components/modals/GalleryThemeModal";
 import FaithTestModal from "./components/modals/FaithTestModal";
+import DiscipleModal from "./components/modals/DiscipleModal";
+import DiscipleProgressModal from "./components/modals/DiscipleProgressModal";
 
 export default function AdminPage() {
   //State management
@@ -119,6 +123,10 @@ export default function AdminPage() {
   const [eventRegistrations, setEventRegistrations] = useState<EventRegistration[]>([]);
   const [prayerSubmissions, setPrayerSubmissions] = useState<PrayerSubmission[]>([]);
   const [discipleshipContent, setDiscipleshipContent] = useState<DiscipleshipContent | null>(null);
+  const [disciples, setDisciples] = useState<Disciple[]>([]);
+  const [showDisciple, setShowDisciple] = useState(false);
+  const [editDisciple, setEditDisciple] = useState<Disciple | null>(null);
+  const [viewProgressDisciple, setViewProgressDisciple] = useState<Disciple | null>(null);
   const [faithTests, setFaithTests] = useState<FaithTest[]>([]);
   const [showFaithTest, setShowFaithTest] = useState(false);
   const [editFaithTest, setEditFaithTest] = useState<FaithTest | null>(null);
@@ -142,7 +150,7 @@ export default function AdminPage() {
     }
     setLoading(true);
     
-    const [pR, serR, tagR, sR, mR, lR, iR, tR, aR, tsR, libR, upR, fbR, msR, trnR, galR, evRegR, prayR, discR, ftR] = await Promise.all([
+    const [pR, serR, tagR, sR, mR, lR, iR, tR, aR, tsR, libR, upR, fbR, msR, trnR, galR, evRegR, prayR, discR, ftR, discipR] = await Promise.all([
       db.from("blog_posts").select("*").order("created_at", { ascending: false }),
       db.from("blog_series").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: false }),
       db.from("blog_tags").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: false }),
@@ -164,6 +172,7 @@ export default function AdminPage() {
       db.from("prayer_submissions").select("*").order("created_at", { ascending: false }),
       db.from("discipleship_content").select("*").single(),
       db.from("faith_tests").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: false }),
+      db.from("disciples").select("*").order("started_at", { ascending: false }),
     ]);
 
     setPosts(pR.data ?? []);
@@ -185,6 +194,7 @@ export default function AdminPage() {
     setPrayerSubmissions((prayR.data as PrayerSubmission[]) ?? []);
     setDiscipleshipContent(discR.data ?? null);
     setFaithTests((ftR.data as FaithTest[]) ?? []);
+    setDisciples((discipR.data as Disciple[]) ?? []);
 
     // Calculate analytics
     const views: PageViewRow[] = aR.data ?? [];
@@ -548,9 +558,25 @@ export default function AdminPage() {
             
             {tab === "discipleship" && (
               <DiscipleshipTab
-                content={discipleshipContent}
-                onSave={async () => { await load(); }}
-                db={db}
+                disciples={disciples}
+                onNew={() => { setEditDisciple(null); setShowDisciple(true); }}
+                onEdit={(d) => { setEditDisciple(d); setShowDisciple(true); }}
+                onDelete={async (id, name) => {
+                  setConfirm({
+                    msg: `Delete disciple "${name}"? This will also remove all progress entries.`,
+                    fn: async () => {
+                      const { error } = await db.from("disciples").delete().eq("id", id);
+                      if (error) { 
+                        toast.error("Failed to delete disciple");
+                        console.error(error);
+                        return;
+                      }
+                      toast.success("Disciple deleted successfully");
+                      await load();
+                    }
+                  });
+                }}
+                onViewProgress={(d) => setViewProgressDisciple(d)}
               />
             )}
 
@@ -749,6 +775,26 @@ export default function AdminPage() {
           test={editFaithTest}
           onClose={() => setShowFaithTest(false)}
           onSave={async () => { setShowFaithTest(false); await load(); }}
+          db={db}
+        />
+      )}
+
+      {showDisciple && (
+        <DiscipleModal
+          disciple={editDisciple}
+          onClose={() => setShowDisciple(false)}
+          onSave={async () => {
+            setShowDisciple(false);
+            await load();
+          }}
+          db={db}
+        />
+      )}
+
+      {viewProgressDisciple && (
+        <DiscipleProgressModal
+          disciple={viewProgressDisciple}
+          onClose={() => setViewProgressDisciple(null)}
           db={db}
         />
       )}

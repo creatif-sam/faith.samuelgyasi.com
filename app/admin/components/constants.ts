@@ -33,7 +33,15 @@ export const NAV: { id: Tab; label: string; Icon: React.ComponentType<{ size?: n
   { id: "testimonials",         label: "Testimonials",         Icon: Star              },
   { id: "trainings",            label: "Trainings",            Icon: GraduationCap     },
   { id: "upcoming",             label: "Upcoming",             Icon: Calendar          },
-];
+].sort((a, b) => {
+  // Keep Overview and Analytics at top
+  if (a.id === "overview") return -1;
+  if (b.id === "overview") return 1;
+  if (a.id === "analytics") return -1;
+  if (b.id === "analytics") return 1;
+  // Sort rest alphabetically by label
+  return a.label.localeCompare(b.label);
+});
 
 // TAILWIND CLASS CONSTANTS
 export const TW = {
