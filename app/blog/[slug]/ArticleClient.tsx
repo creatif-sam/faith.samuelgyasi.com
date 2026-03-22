@@ -80,7 +80,7 @@ export function ArticleClient({
     rateRequired: lang === "fr" ? "Veuillez sélectionner une note" : "Please select a rating",
   };
 
-  // Scroll tracking to show modal when scrolled to middle of blog
+  // Scroll tracking to show modal when scrolled to 80% of blog
   useEffect(() => {
     const handleScroll = () => {
       if (hasShownModal) return;
@@ -92,9 +92,9 @@ export function ArticleClient({
       const articleTop = articleRect.top + window.scrollY;
       const articleHeight = articleRect.height;
       const scrollPosition = window.scrollY + window.innerHeight;
-      const middleOfArticle = articleTop + articleHeight / 2;
+      const eightyPercentOfArticle = articleTop + (articleHeight * 0.8);
 
-      if (scrollPosition >= middleOfArticle) {
+      if (scrollPosition >= eightyPercentOfArticle) {
         setShowEvalModal(true);
         setHasShownModal(true);
       }

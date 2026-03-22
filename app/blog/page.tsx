@@ -9,6 +9,8 @@ import Breadcrumbs from "@/components/atoms/Breadcrumbs";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
 import { SeriesSidebar } from "@/components/blog/SeriesSidebar";
 import { Suspense } from "react";
+import { BlogRequestModal } from "@/components/organisms/BlogRequestModal";
+import { Sparkles } from "lucide-react";
 
 type DbPost = {
   id: string;
@@ -77,6 +79,7 @@ function BlogContent() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const [currentSeries, setCurrentSeries] = useState<BlogSeries | null>(null);
+  const [showBlogRequestModal, setShowBlogRequestModal] = useState(false);
 
   useEffect(() => {
     document.body.classList.add("on-fdp");
@@ -296,6 +299,52 @@ function BlogContent() {
         })}
       </div>
 
+      {/* BLOG REQUEST BUTTON */}
+      <div style={{
+        maxWidth: "1400px",
+        margin: "0 auto",
+        padding: "0 56px 32px",
+        display: "flex",
+        justifyContent: "center"
+      }}>
+        <button
+          onClick={() => setShowBlogRequestModal(true)}
+          className="fb-request-btn"
+          style={{
+            fontFamily: "'Space Mono', monospace",
+            fontSize: "11px",
+            letterSpacing: "0.15em",
+            textTransform: "uppercase",
+            background: "rgba(255, 222, 89, 0.08)",
+            color: "var(--gold)",
+            border: "1px solid rgba(255, 222, 89, 0.2)",
+            borderRadius: "8px",
+            padding: "12px 24px",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "10px",
+            cursor: "pointer",
+            transition: "all 0.3s ease",
+            boxShadow: "0 4px 12px rgba(0,0,0,0.15)"
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = "rgba(255, 222, 89, 0.15)";
+            e.currentTarget.style.borderColor = "rgba(255, 222, 89, 0.4)";
+            e.currentTarget.style.transform = "translateY(-2px)";
+            e.currentTarget.style.boxShadow = "0 6px 20px rgba(255, 222, 89, 0.2)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = "rgba(255, 222, 89, 0.08)";
+            e.currentTarget.style.borderColor = "rgba(255, 222, 89, 0.2)";
+            e.currentTarget.style.transform = "translateY(0)";
+            e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.15)";
+          }}
+        >
+          <Sparkles size={16} />
+          {lang === "fr" ? "Demander un sujet de blog" : "Request a Blog Topic"}
+        </button>
+      </div>
+
       {/* MAIN CONTENT WITH SIDEBAR LAYOUT */}
       <div className="fb-layout-with-sidebar">
         {/* POSTS SECTION */}
@@ -400,6 +449,11 @@ function BlogContent() {
 
       {/* FOOTER */}
       <Suspense fallback={null}><SiteFooter /></Suspense>
+
+      {/* BLOG REQUEST MODAL */}
+      {showBlogRequestModal && (
+        <BlogRequestModal onClose={() => setShowBlogRequestModal(false)} lang={lang} />
+      )}
     </div>
   );
 }
