@@ -24,9 +24,11 @@ import type {
   UpcomingEvent,
   Feedback,
   MyStoryContent,
-  CredoContent,
   Training,
   GalleryTheme,
+  EventRegistration,
+  PrayerSubmission,
+  DiscipleshipContent,
   Tab,
   MailSubTab,
   PageViewRow,
@@ -42,13 +44,14 @@ import PostsTab from "./components/tabs/PostsTab";
 import SubsTab from "./components/tabs/SubsTab";
 import MsgsTab from "./components/tabs/MsgsTab";
 import MailTab from "./components/tabs/MailTab";
-import WhatsApp from "./components/tabs/WhatsApp";
 import TestimonialsTab from "./components/tabs/TestimonialsTab";
 import LibraryTab from "./components/tabs/LibraryTab";
 import UpcomingTab from "./components/tabs/UpcomingTab";
+import EventRegistrationsTab from "./components/tabs/EventRegistrationsTab";
 import FeedbackTab from "./components/tabs/FeedbackTab";
 import MyStoryEditorTab from "./components/tabs/MyStoryEditorTab";
-import CredoEditorTab from "./components/tabs/CredoEditorTab";
+import DiscipleshipTab from "./components/tabs/DiscipleshipTab";
+import PrayerSubmissionsTab from "./components/tabs/PrayerSubmissionsTab";
 import TrainingsTab from "./components/tabs/TrainingsTab";
 import GalleryTab from "./components/tabs/GalleryTab";
 
@@ -91,13 +94,15 @@ export default function AdminPage() {
   const [editUpcoming, setEditUpcoming] = useState<UpcomingEvent | null>(null);
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
   const [myStory, setMyStory] = useState<MyStoryContent | null>(null);
-  const [credoContent, setCredoContent] = useState<CredoContent | null>(null);
   const [trainings, setTrainings] = useState<Training[]>([]);
   const [showTraining, setShowTraining] = useState(false);
   const [editTraining, setEditTraining] = useState<Training | null>(null);
   const [galleryThemes, setGalleryThemes] = useState<GalleryTheme[]>([]);
   const [showGallery, setShowGallery] = useState(false);
   const [editGallery, setEditGallery] = useState<GalleryTheme | null>(null);
+  const [eventRegistrations, setEventRegistrations] = useState<EventRegistration[]>([]);
+  const [prayerSubmissions, setPrayerSubmissions] = useState<PrayerSubmission[]>([]);
+  const [discipleshipContent, setDiscipleshipContent] = useState<DiscipleshipContent | null>(null);
   const [confirm, setConfirm] = useState<{ msg: string; fn: () => Promise<void> } | null>(null);
   const [navOpen, setNavOpen] = useState(false);
   
@@ -118,7 +123,7 @@ export default function AdminPage() {
     }
     setLoading(true);
     
-    const [pR, sR, mR, lR, iR, tR, aR, tsR, libR, upR, fbR, msR, crR, trnR, galR] = await Promise.all([
+    const [pR, sR, mR, lR, iR, tR, aR, tsR, libR, upR, fbR, msR, trnR, galR, evRegR, prayR, discR] = await Promise.all([
       db.from("blog_posts").select("*").order("created_at", { ascending: false }),
       db.from("newsletter_subscribers").select("*").order("created_at", { ascending: false }),
       db.from("contact_messages").select("*").order("created_at", { ascending: false }),
@@ -132,9 +137,11 @@ export default function AdminPage() {
       db.from("upcoming_events").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: false }),
       db.from("feedback").select("*").order("created_at", { ascending: false }),
       db.from("my_story").select("*").single(),
-      db.from("credo_content").select("*").single(),
       db.from("trainings").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: false }),
       db.from("gallery_themes").select("*, photos:gallery_photos(*)").order("sort_order", { ascending: true }),
+      db.from("event_registrations").select("*").order("registered_at", { ascending: false }),
+      db.from("prayer_submissions").select("*").order("created_at", { ascending: false }),
+      db.from("discipleship_content").select("*").single(),
     ]);
 
     setPosts(pR.data ?? []);
@@ -148,9 +155,11 @@ export default function AdminPage() {
     setUpcomingEvents(upR.data ?? []);
     setFeedbacks(fbR.data ?? []);
     setMyStory(msR.data ?? null);
-    setCredoContent(crR.data ?? null);
     setTrainings((trnR.data as Training[]) ?? []);
     setGalleryThemes((galR.data as GalleryTheme[]) ?? []);
+    setEventRegistrations((evRegR.data as EventRegistration[]) ?? []);
+    setPrayerSubmissions((prayR.data as PrayerSubmission[]) ?? []);
+    setDiscipleshipContent(discR.data ?? null);
 
     // Calculate analytics
     const views: PageViewRow[] = aR.data ?? [];
@@ -184,6 +193,7 @@ export default function AdminPage() {
   const unreadMsgs = msgs.filter((m) => !m.read).length;
   const unreadInbox = inbox.filter((e) => !e.read).length;
   const unreadFeedback = feedbacks.filter((f) => !f.resolved).length;
+  const unprayedSubmissions = prayerSubmissions.filter((p) => !p.prayed_for).length;
 
   function ask(msg: string, fn: () => Promise<void>) { 
     setConfirm({ msg, fn }); 
@@ -241,6 +251,7 @@ export default function AdminPage() {
             const badge = id === "messages" && unreadMsgs > 0 ? unreadMsgs
               : id === "mail" && unreadInbox > 0 ? unreadInbox
               : id === "feedback" && unreadFeedback > 0 ? unreadFeedback
+              : id === "prayer-submissions" && unprayedSubmissions > 0 ? unprayedSubmissions
               : null;
             const isActive = tab === id;
             
@@ -385,8 +396,6 @@ export default function AdminPage() {
               />
             )}
             
-            {tab === "whatsapp" && <WhatsApp />}
-            
             {tab === "testimonials" && (
               <TestimonialsTab
                 testimonials={testimonials}
@@ -472,11 +481,35 @@ export default function AdminPage() {
               />
             )}
             
-            {tab === "credo" && (
-              <CredoEditorTab
-                content={credoContent}
+            {tab === "discipleship" && (
+              <DiscipleshipTab
+                content={discipleshipContent}
                 onSave={async () => { await load(); }}
                 db={db}
+              />
+            )}
+
+            {tab === "event-registrations" && (
+              <EventRegistrationsTab
+                events={upcomingEvents}
+                db={db}
+              />
+            )}
+
+            {tab === "prayer-submissions" && (
+              <PrayerSubmissionsTab
+                prayers={prayerSubmissions}
+                onTogglePrayed={async (id, val) => {
+                  const { error } = await db.from("prayer_submissions").update({ prayed_for: val }).eq("id", id);
+                  if (error) { toast.error("Update failed"); return; }
+                  await load();
+                }}
+                onDelete={(id) => ask("Delete this prayer submission?", async () => {
+                  const { error } = await db.from("prayer_submissions").delete().eq("id", id);
+                  if (error) { toast.error("Delete failed"); return; }
+                  toast.success("Deleted"); 
+                  await load();
+                })}
               />
             )}
 

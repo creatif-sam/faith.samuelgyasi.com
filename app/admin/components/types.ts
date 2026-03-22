@@ -223,6 +223,40 @@ export interface GalleryPhoto {
   created_at: string;
 }
 
+export interface EventRegistration {
+  id: string;
+  event_id: string;
+  name: string;
+  email: string;
+  phone: string | null;
+  message: string | null;
+  registered_at: string;
+}
+
+export interface PrayerSubmission {
+  id: string;
+  name: string;
+  email: string | null;
+  phone: string | null;
+  prayer_topic: string;
+  details: string | null;
+  is_urgent: boolean;
+  prayed_for: boolean;
+  created_at: string;
+}
+
+export interface DiscipleshipContent {
+  id: string;
+  title_en: string;
+  title_fr: string;
+  content_en: string;
+  content_fr: string;
+  published: boolean;
+  sort_order: number;
+  updated_at: string;
+  created_at: string;
+}
+
 export type Tab = 
   | "overview" 
   | "analytics" 
@@ -230,14 +264,15 @@ export type Tab =
   | "subscribers" 
   | "messages" 
   | "mail" 
-  | "whatsapp" 
   | "testimonials" 
   | "library" 
   | "upcoming" 
+  | "event-registrations"
   | "feedback" 
   | "my-story" 
-  | "credo"
   | "trainings"
-  | "gallery";
+  | "gallery"
+  | "discipleship"
+  | "prayer-submissions";
 
 export type MailSubTab = "compose" | "inbox" | "sent" | "templates";

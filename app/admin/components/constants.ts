@@ -1,7 +1,7 @@
 import {
   LayoutDashboard, BarChart3, FileText, Users, MessageSquare,
-  Mail, Phone, BookOpen, Star, Calendar, MessageSquarePlus,
-  GraduationCap, Images
+  Mail, BookOpen, Star, Calendar, MessageSquarePlus,
+  GraduationCap, Images, UserCheck, Heart
 } from "lucide-react";
 import { Tab } from "./types";
 
@@ -14,21 +14,22 @@ export function slugify(t: string) {
 }
 
 export const NAV: { id: Tab; label: string; Icon: React.ComponentType<{ size?: number }> }[] = [
-  { id: "overview",     label: "Overview",      Icon: LayoutDashboard },
-  { id: "analytics",    label: "Analytics",     Icon: BarChart3       },
-  { id: "posts",        label: "Blog Posts",    Icon: FileText        },
-  { id: "my-story",     label: "My Story",      Icon: BookOpen        },
-  { id: "credo",        label: "Credo",         Icon: FileText        },
-  { id: "subscribers",  label: "Subscribers",   Icon: Users           },
-  { id: "messages",     label: "Messages",      Icon: MessageSquare   },
-  { id: "mail",         label: "Mail",          Icon: Mail            },
-  { id: "whatsapp",     label: "WhatsApp",      Icon: Phone           },
-  { id: "testimonials", label: "Testimonials",  Icon: Star            },
-  { id: "library",      label: "Library",       Icon: BookOpen        },
-  { id: "upcoming",     label: "Upcoming",      Icon: Calendar        },
-  { id: "feedback",     label: "Feedback",      Icon: MessageSquarePlus },
-  { id: "trainings",    label: "Trainings",     Icon: GraduationCap     },
-  { id: "gallery",      label: "Gallery",       Icon: Images            },
+  { id: "overview",             label: "Overview",             Icon: LayoutDashboard   },
+  { id: "analytics",            label: "Analytics",            Icon: BarChart3         },
+  { id: "posts",                label: "Blog Posts",           Icon: FileText          },
+  { id: "discipleship",         label: "Discipleship",         Icon: BookOpen          },
+  { id: "event-registrations",  label: "Event Registrations",  Icon: UserCheck         },
+  { id: "feedback",             label: "Feedback",             Icon: MessageSquarePlus },
+  { id: "gallery",              label: "Gallery",              Icon: Images            },
+  { id: "library",              label: "Library",              Icon: BookOpen          },
+  { id: "mail",                 label: "Mail",                 Icon: Mail              },
+  { id: "messages",             label: "Messages",             Icon: MessageSquare     },
+  { id: "my-story",             label: "My Story",             Icon: BookOpen          },
+  { id: "prayer-submissions",   label: "Prayer Submissions",   Icon: Heart             },
+  { id: "subscribers",          label: "Subscribers",          Icon: Users             },
+  { id: "testimonials",         label: "Testimonials",         Icon: Star              },
+  { id: "trainings",            label: "Trainings",            Icon: GraduationCap     },
+  { id: "upcoming",             label: "Upcoming",             Icon: Calendar          },
 ];
 
 // TAILWIND CLASS CONSTANTS

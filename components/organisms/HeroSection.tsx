@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useLang } from "@/lib/i18n";
 import { heroTranslations as t } from "@/lib/i18n/hero";
+import { PrayerModal } from "./PrayerModal";
 
 export function HeroSection() {
   const { lang } = useLang();
+  const [showPrayerModal, setShowPrayerModal] = useState(false);
 
   useEffect(() => {
     const heroContent = document.querySelector('.hero-content-wrapper');
@@ -63,6 +65,12 @@ export function HeroSection() {
               <Link href="/blog" className="hero-btn hero-btn-secondary">
                 {t.ctaJournal[lang]}
               </Link>
+              <button 
+                onClick={() => setShowPrayerModal(true)}
+                className="hero-btn hero-btn-tertiary"
+              >
+                {lang === "en" ? "Submit a Prayer" : "Soumettre une Prière"}
+              </button>
             </div>
           </div>
           
@@ -83,6 +91,14 @@ export function HeroSection() {
           </nav>
         </div>
       </div>
+
+      {/* Prayer Modal */}
+      {showPrayerModal && (
+        <PrayerModal 
+          onClose={() => setShowPrayerModal(false)}
+          lang={lang}
+        />
+      )}
     </section>
   );
 }
