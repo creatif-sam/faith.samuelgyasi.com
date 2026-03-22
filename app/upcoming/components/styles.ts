@@ -165,7 +165,7 @@ export const upcomingStyles = `
 .up-card-flyer {
   position: relative;
   width: 100%;
-  padding-bottom: 56.25%;
+  padding-bottom: 100%;
   background: rgba(245,243,239,.02);
   overflow: hidden;
 }

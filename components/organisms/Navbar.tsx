@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 import { LogIn } from "lucide-react";
 import { useLang } from "@/lib/i18n";
 import { navTranslations as t } from "@/lib/i18n/nav";
-import { ThemeSwitcher } from "@/components/theme-switcher";
 
 export function Navbar() {
   const [open, setOpen]         = useState(false);
@@ -57,9 +56,8 @@ export function Navbar() {
           ))}
         </ul>
 
-        {/* Theme & Language toggle — desktop */}
+        {/* Language toggle — desktop */}
         <div className="nav-controls">
-          <ThemeSwitcher />
           <button
             className="nav-lang-btn nav-lang-modern"
             onClick={toggleLang}
@@ -113,7 +111,6 @@ export function Navbar() {
 
           <div className="nd-bottom">
             <div className="nd-controls">
-              <ThemeSwitcher />
               <button
                 className="nd-lang-btn"
                 onClick={toggleLang}

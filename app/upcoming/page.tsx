@@ -7,6 +7,7 @@ import { upcomingStyles } from "./components/styles";
 import { EventCard } from "./components/EventCard";
 import { EmptySlot } from "./components/EmptySlot";
 import { NotifySection } from "./components/NotifySection";
+import { SiteFooter } from "@/components/organisms/SiteFooter";
 
 export default function UpcomingPage() {
   const [events, setEvents] = useState<UpcomingEvent[]>([]);
@@ -128,6 +129,9 @@ export default function UpcomingPage() {
         {/* NOTIFY CTA */}
         <NotifySection />
       </div>
+
+      {/* FOOTER */}
+      <SiteFooter />
     </>
   );
 }
