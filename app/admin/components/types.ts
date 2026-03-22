@@ -28,7 +28,22 @@ export interface BlogSeries {
   slug: string;
   description_en: string | null;
   description_fr: string | null;
+  image_url: string | null;
   show_dates: boolean;
+  published: boolean;
+  sort_order: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface BlogTag {
+  id: string;
+  name_en: string;
+  name_fr: string;
+  slug: string;
+  description_en: string | null;
+  description_fr: string | null;
+  color: string;
   published: boolean;
   sort_order: number;
   created_at: string;
@@ -333,6 +348,7 @@ export type Tab =
   | "gallery"
   | "discipleship"
   | "prayer-submissions"
-  | "faith-tests";
+  | "faith-tests"
+  | "tags";
 
 export type MailSubTab = "compose" | "inbox" | "sent" | "templates";

@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { TW, CATEGORIES, slugify } from "../constants";
 import type { DefaultCategory } from "../constants";
-import { BlogPost, BlogSeries } from "../types";
+import { BlogPost, BlogSeries, BlogTag } from "../types";
 import { createClient } from "@/lib/supabase/client";
 
 interface PostModalProps {
@@ -36,17 +36,38 @@ export default function PostModal({ post, onClose, onSave, db }: PostModalProps)
   const [busy, setBusy] = useState(false);
   const [uploading, setUploading] = useState({ cover: false, infographieEn: false, infographieFr: false });
   const [series, setSeries] = useState<BlogSeries[]>([]);
+  const [tags, setTags] = useState<BlogTag[]>([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   useEffect(() => {
-    // Load blog series
-    db.from("blog_series")
-      .select("*")
-      .order("sort_order", { ascending: true })
-      .order("name_en", { ascending: true })
-      .then(({ data }) => {
-        setSeries((data as BlogSeries[]) ?? []);
-      });
-  }, [db]);
+    // Load blog series and tags
+    Promise.all([
+      db.from("blog_series")
+        .select("*")
+        .order("sort_order", { ascending: true })
+        .order("name_en", { ascending: true }),
+      db.from("blog_tags")
+        .select("*")
+        .eq("published", true)
+        .order("sort_order", { ascending: true })
+        .order("name_en", { ascending: true }),
+    ]).then(([seriesRes, tagsRes]) => {
+      setSeries((seriesRes.data as BlogSeries[]) ?? []);
+      setTags((tagsRes.data as BlogTag[]) ?? []);
+    });
+    
+    // Load existing tags for this post if editing
+    if (post?.id) {
+      db.from("blog_post_tags")
+        .select("blog_tag_id")
+        .eq("blog_post_id", post.id)
+        .then(({ data }) => {
+          if (data) {
+            setSelectedTags(data.map((t: any) => t.blog_tag_id));
+          }
+        });
+    }
+  }, [db, post?.id]);
 
   function setF<K extends keyof typeof form>(k: K, v: (typeof form)[K]) {
     setForm((p) => ({ ...p, [k]: v }));
@@ -93,11 +114,39 @@ export default function PostModal({ post, onClose, onSave, db }: PostModalProps)
     if (!form.title.trim()) { toast.error("Title required"); return; }
     if (!form.slug.trim())  { toast.error("Slug required"); return; }
     setBusy(true);
-    const { error } = post
-      ? await db.from("blog_posts").update({ ...form, updated_at: new Date().toISOString() }).eq("id", post.id)
-      : await db.from("blog_posts").insert({ ...form, author: "Samuel Kobina Gyasi" });
+    
+    let postId: string;
+    
+    if (post) {
+      // Update existing post
+      const { error } = await db.from("blog_posts").update({ ...form, updated_at: new Date().toISOString() }).eq("id", post.id);
+      if (error) { toast.error(error.message); setBusy(false); return; }
+      postId = post.id;
+    } else {
+      // Create new post
+      const { data, error } = await db.from("blog_posts").insert({ ...form, author: "Samuel Kobina Gyasi" }).select("id").single();
+      if (error) { toast.error(error.message); setBusy(false); return; }
+      postId = data.id;
+    }
+    
+    // Update tags
+    // First, delete existing tags
+    await db.from("blog_post_tags").delete().eq("blog_post_id", postId);
+    
+    // Then, insert new tags
+    if (selectedTags.length > 0) {
+      const tagInserts = selectedTags.map(tagId => ({
+        blog_post_id: postId,
+        blog_tag_id: tagId,
+      }));
+      const { error: tagError } = await db.from("blog_post_tags").insert(tagInserts);
+      if (tagError) { 
+        toast.error("Failed to save tags"); 
+        console.error(tagError);
+      }
+    }
+    
     setBusy(false);
-    if (error) { toast.error(error.message); return; }
     toast.success(post ? "Post updated" : "Post created");
     await onSave();
   }
@@ -167,6 +216,42 @@ export default function PostModal({ post, onClose, onSave, db }: PostModalProps)
               </div>
             )}
           </div>
+          
+          <div className={TW.field}>
+            <label className={TW.label}>Tags (select all that apply)</label>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-2">
+              {tags.map((tag) => (
+                <label 
+                  key={tag.id} 
+                  className="flex items-center gap-2 p-2 rounded border border-white/10 hover:bg-white/5 cursor-pointer transition-colors"
+                >
+                  <input
+                    type="checkbox"
+                    checked={selectedTags.includes(tag.id)}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setSelectedTags([...selectedTags, tag.id]);
+                      } else {
+                        setSelectedTags(selectedTags.filter(id => id !== tag.id));
+                      }
+                    }}
+                    className="w-4 h-4 cursor-pointer accent-[#c9a84c]"
+                  />
+                  <div className="flex items-center gap-2 flex-1">
+                    <div 
+                      className="w-3 h-3 rounded-full flex-shrink-0" 
+                      style={{ backgroundColor: tag.color }}
+                    />
+                    <span className="text-sm text-white/80">{tag.name_en}</span>
+                  </div>
+                </label>
+              ))}
+            </div>
+            {tags.length === 0 && (
+              <p className="text-xs text-white/30 mt-2">No tags available. Create tags in the Tags tab first.</p>
+            )}
+          </div>
+          
           <div className={TW.field}><label className={TW.label}>Excerpt</label><textarea className={cn(TW.tarea, "min-h-[80px]")} value={form.excerpt} onChange={(e) => setF("excerpt", e.target.value)} placeholder="Short summary…" /></div>
           <div className={TW.field}><label className={TW.label}>Excerpt (French)</label><textarea className={cn(TW.tarea, "min-h-[80px]")} value={form.excerpt_fr} onChange={(e) => setF("excerpt_fr", e.target.value)} placeholder="Résumé court…" /></div>
           <div className={TW.field}><label className={TW.label}>Content (HTML)</label><textarea className={TW.tarea} value={form.content} onChange={(e) => setF("content", e.target.value)} placeholder="<p>Full article…</p>" /></div>

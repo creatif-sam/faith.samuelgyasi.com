@@ -14,6 +14,7 @@ import { Globe, LogOut, Menu } from "lucide-react";
 import type {
   BlogPost,
   BlogSeries,
+  BlogTag,
   Subscriber,
   Message,
   EmailLog,
@@ -45,6 +46,7 @@ import OverviewTab from "./components/tabs/OverviewTab";
 import AnalyticsTab from "./components/tabs/AnalyticsTab";
 import PostsTab from "./components/tabs/PostsTab";
 import BlogSeriesTab from "./components/tabs/BlogSeriesTab";
+import BlogTagsTab from "./components/tabs/BlogTagsTab";
 import SubsTab from "./components/tabs/SubsTab";
 import MsgsTab from "./components/tabs/MsgsTab";
 import MailTab from "./components/tabs/MailTab";
@@ -63,6 +65,7 @@ import FaithTestsTab from "./components/tabs/FaithTestsTab";
 // Import modal components
 import PostModal from "./components/modals/PostModal";
 import BlogSeriesModal from "./components/modals/BlogSeriesModal";
+import BlogTagModal from "./components/modals/BlogTagModal";
 import TplModal from "./components/modals/TplModal";
 import TestimonialModal from "./components/modals/TestimonialModal";
 import LibraryItemModal from "./components/modals/LibraryItemModal";
@@ -78,6 +81,7 @@ export default function AdminPage() {
   const [mailSub, setMailSub] = useState<MailSubTab>("compose");
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [blogSeries, setBlogSeries] = useState<BlogSeries[]>([]);
+  const [blogTags, setBlogTags] = useState<BlogTag[]>([]);
   const [subs, setSubs] = useState<Subscriber[]>([]);
   const [msgs, setMsgs] = useState<Message[]>([]);
   const [logs, setLogs] = useState<EmailLog[]>([]);
@@ -89,6 +93,8 @@ export default function AdminPage() {
   const [editPost, setEditPost] = useState<BlogPost | null>(null);
   const [showSeries, setShowSeries] = useState(false);
   const [editSeries, setEditSeries] = useState<BlogSeries | null>(null);
+  const [showTag, setShowTag] = useState(false);
+  const [editTag, setEditTag] = useState<BlogTag | null>(null);
   const [showReviews, setShowReviews] = useState(false);
   const [reviewPost, setReviewPost] = useState<BlogPost | null>(null);
   const [showTpl, setShowTpl] = useState(false);
@@ -136,9 +142,10 @@ export default function AdminPage() {
     }
     setLoading(true);
     
-    const [pR, serR, sR, mR, lR, iR, tR, aR, tsR, libR, upR, fbR, msR, trnR, galR, evRegR, prayR, discR, ftR] = await Promise.all([
+    const [pR, serR, tagR, sR, mR, lR, iR, tR, aR, tsR, libR, upR, fbR, msR, trnR, galR, evRegR, prayR, discR, ftR] = await Promise.all([
       db.from("blog_posts").select("*").order("created_at", { ascending: false }),
       db.from("blog_series").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: false }),
+      db.from("blog_tags").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: false }),
       db.from("newsletter_subscribers").select("*").order("created_at", { ascending: false }),
       db.from("contact_messages").select("*").order("created_at", { ascending: false }),
       db.from("email_logs").select("*").order("sent_at", { ascending: false }),
@@ -161,6 +168,7 @@ export default function AdminPage() {
 
     setPosts(pR.data ?? []);
     setBlogSeries((serR.data as BlogSeries[]) ?? []);
+    setBlogTags((tagR.data as BlogTag[]) ?? []);
     setSubs(sR.data ?? []);
     setMsgs(mR.data ?? []);
     setLogs(lR.data ?? []);
@@ -385,6 +393,26 @@ export default function AdminPage() {
                   const { error } = await db.from("blog_series").update({ published: val }).eq("id", id);
                   if (error) { toast.error("Update failed"); return; }
                   toast.success(val ? "Published" : "Unpublished"); 
+                  await load();
+                }}
+              />
+            )}
+            
+            {tab === "tags" && (
+              <BlogTagsTab
+                tags={blogTags}
+                onNew={() => { setEditTag(null); setShowTag(true); }}
+                onEdit={(t) => { setEditTag(t); setShowTag(true); }}
+                onDelete={async (id) => {
+                  const { error } = await db.from("blog_tags").delete().eq("id", id);
+                  if (error) { toast.error("Delete failed"); return; }
+                  toast.success("Tag deleted"); 
+                  await load();
+                }}
+                onToggle={async (id, field, val) => {
+                  const { error } = await db.from("blog_tags").update({ [field]: !val }).eq("id", id);
+                  if (error) { toast.error("Update failed"); return; }
+                  toast.success("Tag updated"); 
                   await load();
                 }}
               />
@@ -660,6 +688,18 @@ export default function AdminPage() {
           onClose={() => setShowSeries(false)}
           onSave={async () => { 
             setShowSeries(false); 
+            await load(); 
+          }}
+          db={db}
+        />
+      )}
+      
+      {showTag && (
+        <BlogTagModal
+          tag={editTag}
+          onClose={() => setShowTag(false)}
+          onSave={async () => { 
+            setShowTag(false); 
             await load(); 
           }}
           db={db}

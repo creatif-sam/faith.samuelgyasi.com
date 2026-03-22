@@ -32,6 +32,7 @@ type BlogSeries = {
   slug: string;
   description_en: string | null;
   description_fr: string | null;
+  image_url: string | null;
   show_dates: boolean;
 };
 
@@ -65,7 +66,7 @@ function formatCategorySlug(slug: string): string {
   return slug.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
 }
 
-export default function FaithBlogPage() {
+function BlogContent() {
   const { lang } = useLang();
   const searchParams = useSearchParams();
   const seriesSlug = searchParams?.get("series");
@@ -174,6 +175,27 @@ export default function FaithBlogPage() {
       <header className="fb-header">
         {currentSeries ? (
           <>
+            {currentSeries.image_url && (
+              <div style={{
+                width: "100%",
+                maxWidth: "800px",
+                margin: "0 auto 40px",
+                borderRadius: "12px",
+                overflow: "hidden",
+                boxShadow: "0 8px 32px rgba(0,0,0,0.3)"
+              }}>
+                <img 
+                  src={currentSeries.image_url} 
+                  alt={getSeriesName()} 
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    display: "block",
+                    objectFit: "cover"
+                  }}
+                />
+              </div>
+            )}
             <div className="fb-eyebrow">{lang === "fr" ? "Série" : "Series"}</div>
             <h1 className="fb-title">
               <span>{getSeriesName()}</span>
@@ -370,6 +392,18 @@ export default function FaithBlogPage() {
       {/* FOOTER */}
       <Suspense fallback={null}><SiteFooter /></Suspense>
     </div>
+  );
+}
+
+export default function FaithBlogPage() {
+  return (
+    <Suspense fallback={
+      <div className="fdp" style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <p style={{ color: "#f0ece4", fontFamily: "'Space Mono', monospace" }}>Loading...</p>
+      </div>
+    }>
+      <BlogContent />
+    </Suspense>
   );
 }
 

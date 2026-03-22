@@ -3,26 +3,25 @@ import { X } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { TW, slugify } from "../constants";
-import { BlogSeries } from "../types";
+import { BlogTag } from "../types";
 import { createClient } from "@/lib/supabase/client";
 
-interface BlogSeriesModalProps {
-  series: BlogSeries | null;
+interface BlogTagModalProps {
+  tag: BlogTag | null;
   onClose: () => void;
   onSave: () => Promise<void>;
   db: ReturnType<typeof createClient>;
 }
 
-export default function BlogSeriesModal({ series, onClose, onSave, db }: BlogSeriesModalProps) {
-  const [nameEn,         setNameEn]         = useState(series?.name_en          ?? "");
-  const [nameFr,         setNameFr]         = useState(series?.name_fr          ?? "");
-  const [slug,           setSlug]           = useState(series?.slug             ?? "");
-  const [descriptionEn,  setDescriptionEn]  = useState(series?.description_en   ?? "");
-  const [descriptionFr,  setDescriptionFr]  = useState(series?.description_fr   ?? "");
-  const [imageUrl,       setImageUrl]       = useState(series?.image_url        ?? "");
-  const [showDates,      setShowDates]      = useState(series?.show_dates       ?? true);
-  const [published,      setPub]            = useState(series?.published        ?? false);
-  const [sortOrder,      setSort]           = useState(series?.sort_order       ?? 0);
+export default function BlogTagModal({ tag, onClose, onSave, db }: BlogTagModalProps) {
+  const [nameEn,         setNameEn]         = useState(tag?.name_en          ?? "");
+  const [nameFr,         setNameFr]         = useState(tag?.name_fr          ?? "");
+  const [slug,           setSlug]           = useState(tag?.slug             ?? "");
+  const [descriptionEn,  setDescriptionEn]  = useState(tag?.description_en   ?? "");
+  const [descriptionFr,  setDescriptionFr]  = useState(tag?.description_fr   ?? "");
+  const [color,          setColor]          = useState(tag?.color            ?? "#c9a84c");
+  const [published,      setPub]            = useState(tag?.published        ?? true);
+  const [sortOrder,      setSort]           = useState(tag?.sort_order       ?? 0);
   const [saving,         setSaving]         = useState(false);
 
   async function handleSave() {
@@ -42,15 +41,14 @@ export default function BlogSeriesModal({ series, onClose, onSave, db }: BlogSer
       slug: slug.trim(),
       description_en: descriptionEn.trim() || null,
       description_fr: descriptionFr.trim() || null,
-      image_url: imageUrl.trim() || null,
-      show_dates: showDates,
+      color: color.trim() || "#c9a84c",
       published,
       sort_order: sortOrder,
     };
     
-    const { error } = series
-      ? await db.from("blog_series").update(payload).eq("id", series.id)
-      : await db.from("blog_series").insert(payload);
+    const { error } = tag
+      ? await db.from("blog_tags").update(payload).eq("id", tag.id)
+      : await db.from("blog_tags").insert(payload);
     
     setSaving(false);
     if (error) { 
@@ -58,13 +56,13 @@ export default function BlogSeriesModal({ series, onClose, onSave, db }: BlogSer
       return; 
     }
     
-    toast.success(series ? "Series updated" : "Series created");
+    toast.success(tag ? "Tag updated" : "Tag created");
     await onSave();
   }
 
   function handleNameEnChange(val: string) {
     setNameEn(val);
-    if (!series && !slug) {
+    if (!tag && !slug) {
       setSlug(slugify(val));
     }
   }
@@ -73,7 +71,7 @@ export default function BlogSeriesModal({ series, onClose, onSave, db }: BlogSer
     <div className={TW.overlay} onClick={onClose}>
       <div className={TW.panel} onClick={(e) => e.stopPropagation()}>
         <div className={TW.pHead}>
-          <div className={TW.fTitle}>{series ? "Edit Series" : "New Series"}</div>
+          <div className={TW.fTitle}>{tag ? "Edit Tag" : "New Tag"}</div>
           <button className={TW.iconBtn} onClick={onClose}><X size={16} /></button>
         </div>
         <div className={TW.pBody}>
@@ -83,7 +81,7 @@ export default function BlogSeriesModal({ series, onClose, onSave, db }: BlogSer
               className={TW.input} 
               value={nameEn} 
               onChange={(e) => handleNameEnChange(e.target.value)} 
-              placeholder="e.g. Holiness Series" 
+              placeholder="e.g. Prayer" 
             />
           </div>
           
@@ -93,7 +91,7 @@ export default function BlogSeriesModal({ series, onClose, onSave, db }: BlogSer
               className={TW.input} 
               value={nameFr} 
               onChange={(e) => setNameFr(e.target.value)} 
-              placeholder="e.g. Série sur la Sainteté" 
+              placeholder="e.g. Prière" 
             />
           </div>
           
@@ -103,43 +101,48 @@ export default function BlogSeriesModal({ series, onClose, onSave, db }: BlogSer
               className={TW.input} 
               value={slug} 
               onChange={(e) => setSlug(slugify(e.target.value))} 
-              placeholder="holiness-series" 
+              placeholder="prayer" 
             />
-            <div className="text-[10px] text-white/30 mt-1.5">
-              URL: /blog?series={slug || "..."}
-            </div>
           </div>
           
           <div className={TW.field}>
             <label className={TW.label}>Description (English)</label>
             <textarea 
-              className={cn(TW.tarea, "min-h-[80px]")} 
+              className={cn(TW.tarea, "min-h-[60px]")} 
               value={descriptionEn} 
               onChange={(e) => setDescriptionEn(e.target.value)} 
-              placeholder="Brief description of this series..." 
+              placeholder="Brief description of this tag..." 
             />
           </div>
           
           <div className={TW.field}>
             <label className={TW.label}>Description (French)</label>
             <textarea 
-              className={cn(TW.tarea, "min-h-[80px]")} 
+              className={cn(TW.tarea, "min-h-[60px]")} 
               value={descriptionFr} 
               onChange={(e) => setDescriptionFr(e.target.value)} 
-              placeholder="Brève description de cette série..." 
+              placeholder="Brève description de ce tag..." 
             />
           </div>
           
           <div className={TW.field}>
-            <label className={TW.label}>Series Image URL</label>
-            <input 
-              className={TW.input} 
-              value={imageUrl} 
-              onChange={(e) => setImageUrl(e.target.value)} 
-              placeholder="https://example.com/series-image.jpg" 
-            />
+            <label className={TW.label}>Color (Hex) *</label>
+            <div className="flex items-center gap-3">
+              <input 
+                type="color" 
+                value={color} 
+                onChange={(e) => setColor(e.target.value)}
+                className="w-12 h-12 rounded border border-white/10 cursor-pointer" 
+              />
+              <input 
+                className={cn(TW.input, "flex-1")} 
+                value={color} 
+                onChange={(e) => setColor(e.target.value)} 
+                placeholder="#c9a84c" 
+              />
+            </div>
             <div className="text-[10px] text-white/30 mt-1.5">
-              This image will be displayed on the blog page when viewing this series
+              This color will be used for tag badges on the site
             </div>
           </div>
           
@@ -157,25 +160,12 @@ export default function BlogSeriesModal({ series, onClose, onSave, db }: BlogSer
           <div className={cn(TW.field, "flex items-center gap-2.5")}>
             <input 
               type="checkbox" 
-              id="series-show-dates" 
-              checked={showDates} 
-              onChange={(e) => setShowDates(e.target.checked)}
-              className="w-4 h-4 cursor-pointer accent-[#c9a84c]" 
-            />
-            <label htmlFor="series-show-dates" className={cn(TW.label, "!mb-0 cursor-pointer")}>
-              Show dates for posts in this series
-            </label>
-          </div>
-          
-          <div className={cn(TW.field, "flex items-center gap-2.5")}>
-            <input 
-              type="checkbox" 
-              id="series-pub" 
+              id="tag-pub" 
               checked={published} 
               onChange={(e) => setPub(e.target.checked)}
               className="w-4 h-4 cursor-pointer accent-[#c9a84c]" 
             />
-            <label htmlFor="series-pub" className={cn(TW.label, "!mb-0 cursor-pointer")}>
+            <label htmlFor="tag-pub" className={cn(TW.label, "!mb-0 cursor-pointer")}>
               Publish immediately (visible on site)
             </label>
           </div>
@@ -183,7 +173,7 @@ export default function BlogSeriesModal({ series, onClose, onSave, db }: BlogSer
         <div className={TW.pFoot}>
           <button className={cn(TW.btn, TW.ghost)} onClick={onClose}>Cancel</button>
           <button className={cn(TW.btn, TW.gold)} onClick={handleSave} disabled={saving}>
-            {saving ? "Saving..." : series ? "Update" : "Create Series"}
+            {saving ? "Saving..." : tag ? "Update" : "Create Tag"}
           </button>
         </div>
       </div>

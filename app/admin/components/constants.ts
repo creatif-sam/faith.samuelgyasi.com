@@ -1,7 +1,7 @@
 import {
   LayoutDashboard, BarChart3, FileText, Users, MessageSquare,
   Mail, BookOpen, Star, Calendar, MessageSquarePlus,
-  GraduationCap, Images, UserCheck, Heart, List, ClipboardCheck
+  GraduationCap, Images, UserCheck, Heart, List, ClipboardCheck, Tag
 } from "lucide-react";
 import { Tab } from "./types";
 
@@ -18,6 +18,7 @@ export const NAV: { id: Tab; label: string; Icon: React.ComponentType<{ size?: n
   { id: "analytics",            label: "Analytics",            Icon: BarChart3         },
   { id: "posts",                label: "Blog Posts",           Icon: FileText          },
   { id: "series",               label: "Blog Series",          Icon: List              },
+  { id: "tags",                 label: "Blog Tags",            Icon: Tag               },
   { id: "discipleship",         label: "Discipleship",         Icon: BookOpen          },
   { id: "event-registrations",  label: "Event Registrations",  Icon: UserCheck         },
   { id: "faith-tests",          label: "Faith Analyzer",       Icon: ClipboardCheck    },
