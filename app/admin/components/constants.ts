@@ -13,7 +13,7 @@ export function slugify(t: string) {
   return t.toLowerCase().replace(/[^a-z0-9\s-]/g, "").replace(/\s+/g, "-").slice(0, 80);
 }
 
-export const NAV: { id: Tab; label: string; Icon: React.ComponentType<{ size?: number }> }[] = [
+export const NAV = [
   { id: "overview",             label: "Overview",             Icon: LayoutDashboard   },
   { id: "analytics",            label: "Analytics",            Icon: BarChart3         },
   { id: "posts",                label: "Blog Posts",           Icon: FileText          },
@@ -33,7 +33,9 @@ export const NAV: { id: Tab; label: string; Icon: React.ComponentType<{ size?: n
   { id: "testimonials",         label: "Testimonials",         Icon: Star              },
   { id: "trainings",            label: "Trainings",            Icon: GraduationCap     },
   { id: "upcoming",             label: "Upcoming",             Icon: Calendar          },
-].sort((a, b) => {
+] as const satisfies readonly { id: Tab; label: string; Icon: React.ComponentType<{ size?: number }> }[];
+
+export const NAV_SORTED = [...NAV].sort((a, b) => {
   // Keep Overview and Analytics at top
   if (a.id === "overview") return -1;
   if (b.id === "overview") return 1;

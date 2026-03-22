@@ -41,7 +41,7 @@ import type {
 } from "./components/types";
 
 // Import constants
-import { NAV, TW } from "./components/constants";
+import { NAV_SORTED, TW } from "./components/constants";
 
 // Import tab components
 import OverviewTab from "./components/tabs/OverviewTab";
@@ -282,7 +282,7 @@ export default function AdminPage() {
 
         {/* Navigation */}
         <nav className="px-3 pt-3 flex-1 overflow-y-auto">
-          {NAV.map(({ id, label, Icon }) => {
+          {NAV_SORTED.map(({ id, label, Icon }) => {
             const badge = id === "messages" && unreadMsgs > 0 ? unreadMsgs
               : id === "mail" && unreadInbox > 0 ? unreadInbox
               : id === "feedback" && unreadFeedback > 0 ? unreadFeedback
