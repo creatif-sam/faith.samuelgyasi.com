@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { TW, CATEGORIES, slugify } from "../constants";
 import type { DefaultCategory } from "../constants";
-import { BlogPost } from "../types";
+import { BlogPost, BlogSeries } from "../types";
 import { createClient } from "@/lib/supabase/client";
 
 interface PostModalProps {
@@ -30,9 +30,23 @@ export default function PostModal({ post, onClose, onSave, db }: PostModalProps)
     infographie_url_en: post?.infographie_url_en ?? "",
     infographie_url_fr: post?.infographie_url_fr ?? "",
     published:          post?.published          ?? false,
+    series_id:          post?.series_id          ?? null as string | null,
+    series_order:       post?.series_order       ?? 0,
   });
   const [busy, setBusy] = useState(false);
   const [uploading, setUploading] = useState({ cover: false, infographieEn: false, infographieFr: false });
+  const [series, setSeries] = useState<BlogSeries[]>([]);
+
+  useEffect(() => {
+    // Load blog series
+    db.from("blog_series")
+      .select("*")
+      .order("sort_order", { ascending: true })
+      .order("name_en", { ascending: true })
+      .then(({ data }) => {
+        setSeries((data as BlogSeries[]) ?? []);
+      });
+  }, [db]);
 
   function setF<K extends keyof typeof form>(k: K, v: (typeof form)[K]) {
     setForm((p) => ({ ...p, [k]: v }));
@@ -125,6 +139,33 @@ export default function PostModal({ post, onClose, onSave, db }: PostModalProps)
                 />
               )}
             </div>
+          </div>
+          <div className={TW.fRow}>
+            <div className={TW.field}>
+              <label className={TW.label}>Blog Series (optional)</label>
+              <select 
+                className={TW.select} 
+                value={form.series_id || ""} 
+                onChange={(e) => setF("series_id", e.target.value || null)}
+              >
+                <option value="">No Series</option>
+                {series.map((s) => (
+                  <option key={s.id} value={s.id}>{s.name_en} / {s.name_fr}</option>
+                ))}
+              </select>
+            </div>
+            {form.series_id && (
+              <div className={TW.field}>
+                <label className={TW.label}>Order in Series</label>
+                <input 
+                  className={TW.input} 
+                  type="number" 
+                  min={0} 
+                  value={form.series_order} 
+                  onChange={(e) => setF("series_order", parseInt(e.target.value, 10) || 0)} 
+                />
+              </div>
+            )}
           </div>
           <div className={TW.field}><label className={TW.label}>Excerpt</label><textarea className={cn(TW.tarea, "min-h-[80px]")} value={form.excerpt} onChange={(e) => setF("excerpt", e.target.value)} placeholder="Short summary…" /></div>
           <div className={TW.field}><label className={TW.label}>Excerpt (French)</label><textarea className={cn(TW.tarea, "min-h-[80px]")} value={form.excerpt_fr} onChange={(e) => setF("excerpt_fr", e.target.value)} placeholder="Résumé court…" /></div>

@@ -47,6 +47,10 @@ export const heroModernTranslations = {
       en: "My Faith Journal",
       fr: "Mon Journal de Foi",
     },
+    prayer: {
+      en: "Submit a Prayer",
+      fr: "Soumettre une Prière",
+    },
     explore: {
       en: "Explore Faith",
       fr: "Explorer la Foi",

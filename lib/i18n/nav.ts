@@ -3,6 +3,7 @@ import type { Lang } from "./types";
 
 export const navTranslations = {
   blog:      { en: "Blog",      fr: "Blog"       },
+  analyzer:  { en: "Analyzer",  fr: "Analyseur"  },
   story:     { en: "My Story",     fr: "Mon Histoire"   },
   resources: { en: "Resources", fr: "Ressources" },
   credo:     { en: "Credo",     fr: "Credo"      },

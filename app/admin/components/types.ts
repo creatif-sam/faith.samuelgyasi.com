@@ -16,7 +16,23 @@ export interface BlogPost {
   youtube_url?: string | null;
   infographie_url_en: string | null;
   infographie_url_fr: string | null;
+  series_id?: string | null;
+  series_order?: number;
   created_at: string;
+}
+
+export interface BlogSeries {
+  id: string;
+  name_en: string;
+  name_fr: string;
+  slug: string;
+  description_en: string | null;
+  description_fr: string | null;
+  show_dates: boolean;
+  published: boolean;
+  sort_order: number;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface BlogReview {
@@ -257,10 +273,53 @@ export interface DiscipleshipContent {
   created_at: string;
 }
 
+export interface FaithTest {
+  id: string;
+  name_en: string;
+  name_fr: string;
+  slug: string;
+  description_en: string | null;
+  description_fr: string | null;
+  disclaimer_en: string | null;
+  disclaimer_fr: string | null;
+  total_takes: number;
+  published: boolean;
+  sort_order: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface FaithTestQuestion {
+  id: string;
+  test_id: string;
+  question_en: string;
+  question_fr: string;
+  option_a_en: string;
+  option_a_fr: string;
+  option_b_en: string;
+  option_b_fr: string;
+  option_c_en: string;
+  option_c_fr: string;
+  correct_option: 'A' | 'B' | 'C';
+  explanation_en: string | null;
+  explanation_fr: string | null;
+  sort_order: number;
+  created_at: string;
+}
+
+export interface FaithTestAttempt {
+  id: string;
+  test_id: string;
+  score: number;
+  total_questions: number;
+  attempted_at: string;
+}
+
 export type Tab = 
   | "overview" 
   | "analytics" 
   | "posts" 
+  | "series"
   | "subscribers" 
   | "messages" 
   | "mail" 
@@ -273,6 +332,7 @@ export type Tab =
   | "trainings"
   | "gallery"
   | "discipleship"
-  | "prayer-submissions";
+  | "prayer-submissions"
+  | "faith-tests";
 
 export type MailSubTab = "compose" | "inbox" | "sent" | "templates";

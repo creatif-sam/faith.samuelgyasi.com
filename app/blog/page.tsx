@@ -2,9 +2,12 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { useLang } from "@/lib/i18n";
 import Breadcrumbs from "@/components/atoms/Breadcrumbs";
+import { SiteFooter } from "@/components/organisms/SiteFooter";
+import { Suspense } from "react";
 
 type DbPost = {
   id: string;
@@ -18,6 +21,18 @@ type DbPost = {
   featured_image_url: string | null;
   youtube_url: string | null;
   created_at: string;
+  series_id: string | null;
+  series_order: number | null;
+};
+
+type BlogSeries = {
+  id: string;
+  name_en: string;
+  name_fr: string;
+  slug: string;
+  description_en: string | null;
+  description_fr: string | null;
+  show_dates: boolean;
 };
 
 function getYouTubeId(url: string): string | null {
@@ -52,10 +67,14 @@ function formatCategorySlug(slug: string): string {
 
 export default function FaithBlogPage() {
   const { lang } = useLang();
+  const searchParams = useSearchParams();
+  const seriesSlug = searchParams?.get("series");
+  
   const [posts, setPosts] = useState<DbPost[]>([]);
   const [activeCat, setActiveCat] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [loading, setLoading] = useState(true);
+  const [currentSeries, setCurrentSeries] = useState<BlogSeries | null>(null);
 
   useEffect(() => {
     document.body.classList.add("on-fdp");
@@ -64,19 +83,47 @@ export default function FaithBlogPage() {
 
   useEffect(() => {
     const supabase = createClient();
+    
+    // If series slug is provided, load series data
+    if (seriesSlug) {
+      supabase
+        .from("blog_series")
+        .select("*")
+        .eq("slug", seriesSlug)
+        .eq("published", true)
+        .single()
+        .then(({ data, error }) => {
+          if (!error && data) {
+            setCurrentSeries(data as BlogSeries);
+          }
+        });
+    } else {
+      setCurrentSeries(null);
+    }
+
+    // Load posts
     supabase
       .from("blog_posts")
-      .select("id,title,title_fr,slug,category,excerpt,excerpt_fr,read_time_minutes,featured_image_url,youtube_url,created_at")
+      .select("id,title,title_fr,slug,category,excerpt,excerpt_fr,read_time_minutes,featured_image_url,youtube_url,created_at,series_id,series_order")
       .eq("published", true)
       .order("created_at", { ascending: false })
       .then(({ data }) => {
         setPosts(data ?? []);
         setLoading(false);
       });
-  }, []);
+  }, [seriesSlug]);
 
+  // Filter by series if series is selected
+  let baseFiltered = posts;
+  if (currentSeries) {
+    baseFiltered = posts.filter((p) => p.series_id === currentSeries.id);
+    // Sort by series_order if in a series
+    baseFiltered.sort((a, b) => (a.series_order ?? 0) - (b.series_order ?? 0));
+  }
+
+  // Then filter by category
   const filtered =
-    activeCat === "all" ? posts : posts.filter((p) => p.category === activeCat);
+    activeCat === "all" ? baseFiltered : baseFiltered.filter((p) => p.category === activeCat);
   
   // Apply search filter
   const searchFiltered = searchQuery.trim()
@@ -98,6 +145,9 @@ export default function FaithBlogPage() {
   // Helper to get translated content
   const getTitle = (post: DbPost) => lang === "fr" && post.title_fr ? post.title_fr : post.title;
   const getExcerpt = (post: DbPost) => lang === "fr" && post.excerpt_fr ? post.excerpt_fr : post.excerpt;
+  const getSeriesName = () => lang === "fr" ? currentSeries?.name_fr : currentSeries?.name_en;
+  const getSeriesDescription = () => lang === "fr" ? currentSeries?.description_fr : currentSeries?.description_en;
+  const showDates = !currentSeries || currentSeries.show_dates;
 
   return (
     <div className="fdp" style={{ minHeight: "100vh" }}>
@@ -122,17 +172,51 @@ export default function FaithBlogPage() {
 
       {/* HEADER */}
       <header className="fb-header">
-        <div className="fb-eyebrow">{lang === "fr" ? "Journal de Foi" : "Faith Journal"}</div>
-        <h1 className="fb-title">
-          <span>{lang === "fr" ? "Mots Qui" : "Words That"}</span>
-          <br />
-          <em>{lang === "fr" ? "Ancrent" : "Anchor"}</em>
-        </h1>
-        <p className="fb-subtitle">
-          {lang === "fr" 
-            ? "Réflexions sur les Écritures, la conviction sacrée et la pratique quotidienne de faire confiance à Dieu à chaque pas."
-            : "Reflections on scripture, sacred conviction, and the daily practice of trusting God with every step."}
-        </p>
+        {currentSeries ? (
+          <>
+            <div className="fb-eyebrow">{lang === "fr" ? "Série" : "Series"}</div>
+            <h1 className="fb-title">
+              <span>{getSeriesName()}</span>
+            </h1>
+            {getSeriesDescription() && (
+              <p className="fb-subtitle">{getSeriesDescription()}</p>
+            )}
+            <div style={{ marginTop: "20px" }}>
+              <Link 
+                href="/blog" 
+                className="fb-series-back"
+                style={{
+                  fontFamily: "'Space Mono', monospace",
+                  fontSize: "11px",
+                  letterSpacing: "0.15em",
+                  textTransform: "uppercase",
+                  color: "var(--gold)",
+                  textDecoration: "none",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  transition: "all 0.3s ease"
+                }}
+              >
+                ← {lang === "fr" ? "Tous les articles" : "All Posts"}
+              </Link>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="fb-eyebrow">{lang === "fr" ? "Journal de Foi" : "Faith Journal"}</div>
+            <h1 className="fb-title">
+              <span>{lang === "fr" ? "Mots Qui" : "Words That"}</span>
+              <br />
+              <em>{lang === "fr" ? "Ancrent" : "Anchor"}</em>
+            </h1>
+            <p className="fb-subtitle">
+              {lang === "fr" 
+                ? "Réflexions sur les Écritures, la conviction sacrée et la pratique quotidienne de faire confiance à Dieu à chaque pas."
+                : "Reflections on scripture, sacred conviction, and the daily practice of trusting God with every step."}
+            </p>
+          </>
+        )}
       </header>
 
       {/* SEARCH BAR */}
@@ -218,17 +302,24 @@ export default function FaithBlogPage() {
               {getExcerpt(featured) && (
                 <p className="fb-featured-excerpt">{getExcerpt(featured)}</p>
               )}
-              <div className="fb-meta">
-                <span>
-                  {new Date(featured.created_at).toLocaleDateString(lang === "fr" ? "fr-FR" : "en-GB", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                  })}
-                </span>
-                <span>.</span>
-                <span>{featured.read_time_minutes} min {lang === "fr" ? "de lecture" : "read"}</span>
-              </div>
+              {showDates && (
+                <div className="fb-meta">
+                  <span>
+                    {new Date(featured.created_at).toLocaleDateString(lang === "fr" ? "fr-FR" : "en-GB", {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                    })}
+                  </span>
+                  <span>.</span>
+                  <span>{featured.read_time_minutes} min {lang === "fr" ? "de lecture" : "read"}</span>
+                </div>
+              )}
+              {!showDates && (
+                <div className="fb-meta">
+                  <span>{featured.read_time_minutes} min {lang === "fr" ? "de lecture" : "read"}</span>
+                </div>
+              )}
             </Link>
           )}
 
@@ -252,17 +343,23 @@ export default function FaithBlogPage() {
                   {getExcerpt(post) && (
                     <p className="fb-card-excerpt">{getExcerpt(post)}</p>
                   )}
-                  <div className="fb-meta">
-                    <span>
-                      {new Date(post.created_at).toLocaleDateString(lang === "fr" ? "fr-FR" : "en-GB", {
-                        day: "numeric",
-                        month: "long",
-                        year: "numeric",
-                      })}
-                    </span>
-                    <span>.</span>
-                    <span>{post.read_time_minutes} min</span>
-                  </div>
+                  {showDates ? (
+                    <div className="fb-meta">
+                      <span>
+                        {new Date(post.created_at).toLocaleDateString(lang === "fr" ? "fr-FR" : "en-GB", {
+                          day: "numeric",
+                          month: "long",
+                          year: "numeric",
+                        })}
+                      </span>
+                      <span>.</span>
+                      <span>{post.read_time_minutes} min</span>
+                    </div>
+                  ) : (
+                    <div className="fb-meta">
+                      <span>{post.read_time_minutes} min</span>
+                    </div>
+                  )}
                 </Link>
               ))}
             </div>
@@ -271,12 +368,7 @@ export default function FaithBlogPage() {
       )}
 
       {/* FOOTER */}
-      <footer className="fb-pg-footer">
-        <Link href="/my-story" className="fb-footer-link">My Story {"->"}</Link>
-        <p className="fb-footer-copy">
-          {`\u00a9 ${new Date().getFullYear()} Samuel Kobina Gyasi`}
-        </p>
-      </footer>
+      <Suspense fallback={null}><SiteFooter /></Suspense>
     </div>
   );
 }

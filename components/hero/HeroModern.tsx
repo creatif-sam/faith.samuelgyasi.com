@@ -1,12 +1,15 @@
 "use client";
 
+import { useState } from "react";
 import { useLang } from "@/lib/i18n";
 import { heroModernTranslations as t } from "./translations";
 import styles from "./hero.module.css";
 import Link from "next/link";
+import { PrayerModal } from "@/components/organisms/PrayerModal";
 
 export function HeroModern() {
   const { lang } = useLang();
+  const [showPrayerModal, setShowPrayerModal] = useState(false);
 
   return (
     <section className={styles.heroModern} id="hero">
@@ -42,9 +45,17 @@ export function HeroModern() {
           </div>
 
           {/* Follow Button */}
-          <Link href="/blog" className={styles.followButton}>
-            {t.cta.follow[lang]}
-          </Link>
+          <div className={styles.actionButtons}>
+            <Link href="/blog" className={styles.followButton}>
+              {t.cta.follow[lang]}
+            </Link>
+            <button 
+              onClick={() => setShowPrayerModal(true)}
+              className={styles.prayerButton}
+            >
+              {t.cta.prayer[lang]}
+            </button>
+          </div>
         </div>
 
         {/* Right Image Section */}
@@ -125,6 +136,14 @@ export function HeroModern() {
           </div>
         </div>
       </div>
+
+      {/* Prayer Modal */}
+      {showPrayerModal && (
+        <PrayerModal 
+          onClose={() => setShowPrayerModal(false)}
+          lang={lang}
+        />
+      )}
     </section>
   );
 }

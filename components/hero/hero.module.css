@@ -381,6 +381,14 @@
   background-clip: text;
 }
 
+/* Action Buttons */
+.actionButtons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
 /* Follow Button */
 .followButton {
   background: white;
@@ -395,7 +403,6 @@
   align-items: center;
   gap: 0.5rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  margin-top: 1rem;
   text-decoration: none;
   width: fit-content;
 }
@@ -412,6 +419,35 @@
   border-color: transparent;
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(212, 168, 67, 0.3);
+}
+
+/* Prayer Button */
+.prayerButton {
+  background: linear-gradient(90deg, #d4a843, #c49838);
+  color: #0a0a0a;
+  padding: 0.875rem 2rem;
+  border-radius: 50px;
+  border: 2px solid transparent;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 12px rgba(212, 168, 67, 0.25);
+  text-decoration: none;
+  width: fit-content;
+}
+
+.darkTheme .prayerButton {
+  background: linear-gradient(90deg, #d4a843, #c49838);
+  color: #0a0a0a;
+}
+
+.prayerButton:hover {
+  background: linear-gradient(90deg, #e0b84e, #d4a843);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(212, 168, 67, 0.4);
 }
 
 /* Social Links */

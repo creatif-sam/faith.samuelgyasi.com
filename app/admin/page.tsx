@@ -13,6 +13,7 @@ import { Globe, LogOut, Menu } from "lucide-react";
 // Import types
 import type {
   BlogPost,
+  BlogSeries,
   Subscriber,
   Message,
   EmailLog,
@@ -29,6 +30,8 @@ import type {
   EventRegistration,
   PrayerSubmission,
   DiscipleshipContent,
+  FaithTest,
+  FaithTestQuestion,
   Tab,
   MailSubTab,
   PageViewRow,
@@ -41,6 +44,7 @@ import { NAV, TW } from "./components/constants";
 import OverviewTab from "./components/tabs/OverviewTab";
 import AnalyticsTab from "./components/tabs/AnalyticsTab";
 import PostsTab from "./components/tabs/PostsTab";
+import BlogSeriesTab from "./components/tabs/BlogSeriesTab";
 import SubsTab from "./components/tabs/SubsTab";
 import MsgsTab from "./components/tabs/MsgsTab";
 import MailTab from "./components/tabs/MailTab";
@@ -54,9 +58,11 @@ import DiscipleshipTab from "./components/tabs/DiscipleshipTab";
 import PrayerSubmissionsTab from "./components/tabs/PrayerSubmissionsTab";
 import TrainingsTab from "./components/tabs/TrainingsTab";
 import GalleryTab from "./components/tabs/GalleryTab";
+import FaithTestsTab from "./components/tabs/FaithTestsTab";
 
 // Import modal components
 import PostModal from "./components/modals/PostModal";
+import BlogSeriesModal from "./components/modals/BlogSeriesModal";
 import TplModal from "./components/modals/TplModal";
 import TestimonialModal from "./components/modals/TestimonialModal";
 import LibraryItemModal from "./components/modals/LibraryItemModal";
@@ -64,12 +70,14 @@ import UpcomingEventModal from "./components/modals/UpcomingEventModal";
 import BlogReviewsModal from "./components/modals/BlogReviewsModal";
 import TrainingModal from "./components/modals/TrainingModal";
 import GalleryThemeModal from "./components/modals/GalleryThemeModal";
+import FaithTestModal from "./components/modals/FaithTestModal";
 
 export default function AdminPage() {
   //State management
   const [tab, setTab] = useState<Tab>("overview");
   const [mailSub, setMailSub] = useState<MailSubTab>("compose");
   const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [blogSeries, setBlogSeries] = useState<BlogSeries[]>([]);
   const [subs, setSubs] = useState<Subscriber[]>([]);
   const [msgs, setMsgs] = useState<Message[]>([]);
   const [logs, setLogs] = useState<EmailLog[]>([]);
@@ -79,6 +87,8 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(true);
   const [showPost, setShowPost] = useState(false);
   const [editPost, setEditPost] = useState<BlogPost | null>(null);
+  const [showSeries, setShowSeries] = useState(false);
+  const [editSeries, setEditSeries] = useState<BlogSeries | null>(null);
   const [showReviews, setShowReviews] = useState(false);
   const [reviewPost, setReviewPost] = useState<BlogPost | null>(null);
   const [showTpl, setShowTpl] = useState(false);
@@ -103,6 +113,9 @@ export default function AdminPage() {
   const [eventRegistrations, setEventRegistrations] = useState<EventRegistration[]>([]);
   const [prayerSubmissions, setPrayerSubmissions] = useState<PrayerSubmission[]>([]);
   const [discipleshipContent, setDiscipleshipContent] = useState<DiscipleshipContent | null>(null);
+  const [faithTests, setFaithTests] = useState<FaithTest[]>([]);
+  const [showFaithTest, setShowFaithTest] = useState(false);
+  const [editFaithTest, setEditFaithTest] = useState<FaithTest | null>(null);
   const [confirm, setConfirm] = useState<{ msg: string; fn: () => Promise<void> } | null>(null);
   const [navOpen, setNavOpen] = useState(false);
   
@@ -123,8 +136,9 @@ export default function AdminPage() {
     }
     setLoading(true);
     
-    const [pR, sR, mR, lR, iR, tR, aR, tsR, libR, upR, fbR, msR, trnR, galR, evRegR, prayR, discR] = await Promise.all([
+    const [pR, serR, sR, mR, lR, iR, tR, aR, tsR, libR, upR, fbR, msR, trnR, galR, evRegR, prayR, discR, ftR] = await Promise.all([
       db.from("blog_posts").select("*").order("created_at", { ascending: false }),
+      db.from("blog_series").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: false }),
       db.from("newsletter_subscribers").select("*").order("created_at", { ascending: false }),
       db.from("contact_messages").select("*").order("created_at", { ascending: false }),
       db.from("email_logs").select("*").order("sent_at", { ascending: false }),
@@ -142,9 +156,11 @@ export default function AdminPage() {
       db.from("event_registrations").select("*").order("registered_at", { ascending: false }),
       db.from("prayer_submissions").select("*").order("created_at", { ascending: false }),
       db.from("discipleship_content").select("*").single(),
+      db.from("faith_tests").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: false }),
     ]);
 
     setPosts(pR.data ?? []);
+    setBlogSeries((serR.data as BlogSeries[]) ?? []);
     setSubs(sR.data ?? []);
     setMsgs(mR.data ?? []);
     setLogs(lR.data ?? []);
@@ -160,6 +176,7 @@ export default function AdminPage() {
     setEventRegistrations((evRegR.data as EventRegistration[]) ?? []);
     setPrayerSubmissions((prayR.data as PrayerSubmission[]) ?? []);
     setDiscipleshipContent(discR.data ?? null);
+    setFaithTests((ftR.data as FaithTest[]) ?? []);
 
     // Calculate analytics
     const views: PageViewRow[] = aR.data ?? [];
@@ -350,6 +367,26 @@ export default function AdminPage() {
                   await load();
                 }}
                 onViewReviews={(p) => { setReviewPost(p); setShowReviews(true); }}
+              />
+            )}
+            
+            {tab === "series" && (
+              <BlogSeriesTab
+                series={blogSeries}
+                onNew={() => { setEditSeries(null); setShowSeries(true); }}
+                onEdit={(s) => { setEditSeries(s); setShowSeries(true); }}
+                onDelete={(id, name) => ask(`Delete series "${name}"?`, async () => {
+                  const { error } = await db.from("blog_series").delete().eq("id", id);
+                  if (error) { toast.error("Delete failed"); return; }
+                  toast.success("Series deleted"); 
+                  await load();
+                })}
+                onToggle={async (id, val) => {
+                  const { error } = await db.from("blog_series").update({ published: val }).eq("id", id);
+                  if (error) { toast.error("Update failed"); return; }
+                  toast.success(val ? "Published" : "Unpublished"); 
+                  await load();
+                }}
               />
             )}
             
@@ -546,6 +583,24 @@ export default function AdminPage() {
                 }}
               />
             )}
+
+            {tab === "faith-tests" && (
+              <FaithTestsTab
+                tests={faithTests}
+                onNew={() => { setEditFaithTest(null); setShowFaithTest(true); }}
+                onEdit={(t) => { setEditFaithTest(t); setShowFaithTest(true); }}
+                onDelete={(id, name) => ask(`Delete test "${name}"?`, async () => {
+                  const { error } = await db.from("faith_tests").delete().eq("id", id);
+                  if (error) { toast.error("Delete failed"); return; }
+                  toast.success("Deleted"); await load();
+                })}
+                onToggle={async (id, val) => {
+                  await db.from("faith_tests").update({ published: val }).eq("id", id);
+                  toast.success(val ? "Published" : "Unpublished"); await load();
+                }}
+                db={db}
+              />
+            )}
           </>
         )}
       </main>
@@ -599,6 +654,18 @@ export default function AdminPage() {
         />
       )}
       
+      {showSeries && (
+        <BlogSeriesModal
+          series={editSeries}
+          onClose={() => setShowSeries(false)}
+          onSave={async () => { 
+            setShowSeries(false); 
+            await load(); 
+          }}
+          db={db}
+        />
+      )}
+      
       {showReviews && reviewPost && (
         <BlogReviewsModal
           postId={reviewPost.id}
@@ -633,6 +700,15 @@ export default function AdminPage() {
           theme={editGallery}
           onClose={() => setShowGallery(false)}
           onSave={async () => { setShowGallery(false); await load(); }}
+          db={db}
+        />
+      )}
+
+      {showFaithTest && (
+        <FaithTestModal
+          test={editFaithTest}
+          onClose={() => setShowFaithTest(false)}
+          onSave={async () => { setShowFaithTest(false); await load(); }}
           db={db}
         />
       )}
