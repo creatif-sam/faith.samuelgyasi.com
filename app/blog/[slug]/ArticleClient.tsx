@@ -6,6 +6,7 @@ import { useLang } from "@/lib/i18n";
 import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
 import Breadcrumbs from "@/components/atoms/Breadcrumbs";
+import { BibleEnhancedContent } from "@/components/BibleEnhancedContent";
 
 type DbPost = {
   id: string;
@@ -185,12 +186,7 @@ export function ArticleClient({
           )}
         </header>
 
-        {content && (
-          <div
-            className="fa-body"
-            dangerouslySetInnerHTML={{ __html: content }}
-          />
-        )}
+        {content && <BibleEnhancedContent content={content} />}
 
         {post.infographie_url && (
           <div className="fa-infographie">
@@ -411,6 +407,67 @@ body.on-fdp { background:#080807; color:#f0ece4; font-family:'Cormorant Garamond
 .eval-btn-submit:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(255,222,89,0.3); }
 .eval-btn-submit:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
 
+/* BIBLE VERSE STYLES */
+.bible-ref { 
+  text-decoration:underline; 
+  text-decoration-color:var(--gold); 
+  text-decoration-thickness:1px; 
+  text-underline-offset:3px; 
+  cursor:help; 
+  color:var(--cream); 
+  transition:all 0.2s ease;
+  position:relative;
+}
+.bible-ref:hover { 
+  color:var(--gold); 
+  text-decoration-thickness:2px;
+}
+.bible-tooltip { 
+  position:fixed; 
+  z-index:10000; 
+  background:linear-gradient(135deg, rgba(15,15,13,0.98), rgba(25,25,23,0.98)); 
+  border:1px solid var(--gold); 
+  border-radius:8px; 
+  padding:16px 20px; 
+  max-width:420px; 
+  width:max-content;
+  box-shadow:0 12px 40px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,222,89,0.1); 
+  transform:translateX(-50%) translateY(-100%) translateY(-12px); 
+  pointer-events:none;
+  animation:tooltipFadeIn 0.2s ease;
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+@keyframes tooltipFadeIn { from { opacity:0; transform:translateX(-50%) translateY(-100%) translateY(-8px); } to { opacity:1; transform:translateX(-50%) translateY(-100%) translateY(-12px); } }
+.bible-tooltip::after { 
+  content:''; 
+  position:absolute; 
+  bottom:-8px; 
+  left:50%; 
+  transform:translateX(-50%); 
+  width:0; 
+  height:0; 
+  border-left:8px solid transparent; 
+  border-right:8px solid transparent; 
+  border-top:8px solid var(--gold);
+}
+.bible-tooltip-text { 
+  font-family:var(--font-cormorant),'Cormorant Garamond',serif; 
+  font-size:16px; 
+  line-height:1.7; 
+  color:var(--cream); 
+  font-weight:300;
+  margin-bottom:8px;
+}
+.bible-tooltip-ref { 
+  font-family:'Space Mono',monospace; 
+  font-size:10px; 
+  letter-spacing:0.1em; 
+  text-transform:uppercase; 
+  color:var(--gold); 
+  font-weight:400;
+}
+
 @media(max-width:768px) {
   .fdp-article-nav { padding:18px 24px; }
   .fa-article { padding:130px 24px 60px; }
@@ -422,5 +479,12 @@ body.on-fdp { background:#080807; color:#f0ece4; font-family:'Cormorant Garamond
   .star-rating button { font-size:28px; }
   .eval-actions { flex-direction:column; }
   .eval-btn { width:100%; }
+  .bible-tooltip { 
+    max-width:calc(100vw - 40px); 
+    font-size:14px; 
+    padding:12px 16px;
+    left:50% !important;
+  }
+  .bible-tooltip-text { font-size:14px; line-height:1.6; }
 }
 `;
