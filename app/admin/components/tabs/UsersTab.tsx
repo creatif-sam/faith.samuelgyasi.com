@@ -1,42 +1,15 @@
 import { TW } from "../constants";
-import { TrainingEnrollment } from "../types";
+import { AuthUserRow } from "../types";
 
 interface UsersTabProps {
-  enrollments: TrainingEnrollment[];
+  users: AuthUserRow[];
 }
 
-type UserSummary = {
-  userId: string;
-  enrollmentsCount: number;
-  lastActiveAt: string;
-};
-
-export default function UsersTab({ enrollments }: UsersTabProps) {
-  const map = new Map<string, UserSummary>();
-
-  for (const item of enrollments) {
-    if (!item.user_id) continue;
-    const prev = map.get(item.user_id);
-    if (!prev) {
-      map.set(item.user_id, {
-        userId: item.user_id,
-        enrollmentsCount: 1,
-        lastActiveAt: item.enrolled_at,
-      });
-      continue;
-    }
-    map.set(item.user_id, {
-      userId: item.user_id,
-      enrollmentsCount: prev.enrollmentsCount + 1,
-      lastActiveAt:
-        new Date(item.enrolled_at).getTime() > new Date(prev.lastActiveAt).getTime()
-          ? item.enrolled_at
-          : prev.lastActiveAt,
-    });
-  }
-
-  const users = [...map.values()].sort(
-    (a, b) => new Date(b.lastActiveAt).getTime() - new Date(a.lastActiveAt).getTime()
+export default function UsersTab({ users }: UsersTabProps) {
+  const sorted = [...users].sort(
+    (a, b) =>
+      new Date(b.last_sign_in_at ?? b.created_at).getTime() -
+      new Date(a.last_sign_in_at ?? a.created_at).getTime()
   );
 
   return (
@@ -45,12 +18,12 @@ export default function UsersTab({ enrollments }: UsersTabProps) {
         <div>
           <div className={TW.pgTitle}>Users</div>
           <p className={TW.pgSub}>
-            {users.length} active dashboard user{users.length !== 1 ? "s" : ""} from enrollments
+            {sorted.length} user{sorted.length !== 1 ? "s" : ""} from auth
           </p>
         </div>
       </div>
 
-      {users.length === 0 ? (
+      {sorted.length === 0 ? (
         <p className={TW.empty}>No users yet.</p>
       ) : (
         <div className={TW.tWrap}>
@@ -58,18 +31,22 @@ export default function UsersTab({ enrollments }: UsersTabProps) {
             <thead>
               <tr>
                 <th className={TW.th}>User ID</th>
-                <th className={TW.th}>Enrollments</th>
-                <th className={TW.th}>Last Active</th>
+                <th className={TW.th}>Email</th>
+                <th className={TW.th}>Joined</th>
+                <th className={TW.th}>Last Sign In</th>
+                <th className={TW.th}>Confirmed</th>
               </tr>
             </thead>
             <tbody>
-              {users.map((u) => (
-                <tr key={u.userId} className="hover:[&>td]:bg-[rgba(212,168,67,.04)]">
+              {sorted.map((u) => (
+                <tr key={u.id} className="hover:[&>td]:bg-[rgba(212,168,67,.04)]">
                   <td className={TW.td} style={{ color: "#f0ece4", fontFamily: "monospace", fontSize: 12 }}>
-                    {u.userId}
+                    {u.id}
                   </td>
-                  <td className={TW.td}>{u.enrollmentsCount}</td>
-                  <td className={TW.td}>{new Date(u.lastActiveAt).toLocaleString("en-GB")}</td>
+                  <td className={TW.td}>{u.email ?? "-"}</td>
+                  <td className={TW.td}>{new Date(u.created_at).toLocaleString("en-GB")}</td>
+                  <td className={TW.td}>{u.last_sign_in_at ? new Date(u.last_sign_in_at).toLocaleString("en-GB") : "-"}</td>
+                  <td className={TW.td}>{u.email_confirmed_at ? "Yes" : "No"}</td>
                 </tr>
               ))}
             </tbody>

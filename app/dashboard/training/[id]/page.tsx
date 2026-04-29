@@ -52,20 +52,22 @@ const css = `
 }
 .tn-back:hover { color: #d4a843; }
 .tn-theme-toggle {
-  margin-left: auto;
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  z-index: 320;
   width: 34px;
   height: 34px;
-  border-radius: 8px;
-  border: 1px solid rgba(255,255,255,.1);
-  background: rgba(255,255,255,.04);
-  color: rgba(255,255,255,.62);
+  border-radius: 10px;
+  border: 1px solid rgba(212,168,67,.62);
+  background: linear-gradient(135deg,#d4a843,#c49838);
+  color: #09090d;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all .2s;
+  box-shadow: 0 8px 24px rgba(0,0,0,.25);
 }
-.tn-theme-toggle:hover { color: #d4a843; border-color: rgba(201,168,76,.35); }
 .tn-body { max-width: 1100px; margin: 0 auto; padding: 88px 5% 80px; }
 
 /* HERO */
@@ -183,7 +185,7 @@ const css = `
 .tn-theme-light .tn-desc,
 .tn-theme-light .tn-video-desc,
 .tn-theme-light .tn-lesson-dur {
-  color: rgba(15,23,42,.72);
+  color: #111827;
 }
 .tn-theme-light .tn-section-title::after { background: rgba(15,23,42,.14); }
 .tn-theme-light .tn-lesson {
@@ -193,11 +195,6 @@ const css = `
 .tn-theme-light .tn-video-wrap {
   border-top: 1px solid rgba(15,23,42,.08);
   background: rgba(15,23,42,.03);
-}
-.tn-theme-light .tn-theme-toggle {
-  background: rgba(15,23,42,.04);
-  border-color: rgba(15,23,42,.16);
-  color: rgba(15,23,42,.72);
 }
 `;
 
@@ -296,20 +293,20 @@ export default function TrainingDetailPage({ params }: Props) {
   return (
     <div className={`tn-pg ${theme === "light" ? "tn-theme-light" : "tn-theme-dark"}`}>
       <style>{css}</style>
+      <button
+        type="button"
+        className="tn-theme-toggle"
+        onClick={() => setTheme((prev) => (prev === "dark" ? "light" : "dark"))}
+        aria-label="Toggle theme"
+        title={theme === "dark" ? "Switch to light" : "Switch to dark"}
+      >
+        {theme === "dark" ? <Sun size={14} /> : <Moon size={14} />}
+      </button>
 
       <nav className="tn-nav">
         <Link href="/dashboard" className="tn-back">
           <ArrowLeft size={13} /> Dashboard
         </Link>
-        <button
-          type="button"
-          className="tn-theme-toggle"
-          onClick={() => setTheme((prev) => (prev === "dark" ? "light" : "dark"))}
-          aria-label="Toggle theme"
-          title={theme === "dark" ? "Switch to light" : "Switch to dark"}
-        >
-          {theme === "dark" ? <Sun size={14} /> : <Moon size={14} />}
-        </button>
       </nav>
 
       <div className="tn-body">

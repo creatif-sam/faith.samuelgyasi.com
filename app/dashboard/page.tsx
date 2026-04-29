@@ -125,20 +125,23 @@ const css = `
 }
 .db-lang-toggle:hover { color: #d4a843; border-color: rgba(201,168,76,.3); }
 .db-lang-active { color: #d4a843; }
-.db-theme-toggle {
-  background: rgba(255,255,255,.04);
-  border: 1px solid rgba(255,255,255,.07);
-  border-radius: 8px;
-  color: rgba(255,255,255,.55);
+.db-theme-fab {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  z-index: 320;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  border: 1px solid rgba(212,168,67,.62);
+  background: linear-gradient(135deg,#d4a843,#c49838);
+  color: #09090d;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
   cursor: pointer;
-  transition: all .2s;
+  box-shadow: 0 8px 24px rgba(0,0,0,.25);
 }
-.db-theme-toggle:hover { color: #d4a843; border-color: rgba(201,168,76,.35); }
 
 /* BODY */
 .db-body { padding: 100px 5% 60px; max-width: 1200px; margin: 0 auto; }
@@ -289,7 +292,13 @@ const css = `
 .db-theme-light .db-nav-user,
 .db-theme-light .db-card-meta,
 .db-theme-light .db-empty {
-  color: rgba(15,23,42,.72);
+  color: #111827;
+}
+.db-theme-light .db-progress-label,
+.db-theme-light .db-card-meta,
+.db-theme-light .db-section-title,
+.db-theme-light .db-hero-sub {
+  color: #111827;
 }
 .db-theme-light .db-section-title::after { background: rgba(15,23,42,.14); }
 .db-theme-light .db-card {
@@ -301,15 +310,13 @@ const css = `
   box-shadow: 0 12px 28px rgba(15,23,42,.14);
 }
 .db-theme-light .db-nav-logout,
-.db-theme-light .db-lang-toggle,
-.db-theme-light .db-theme-toggle {
+.db-theme-light .db-lang-toggle {
   background: rgba(15,23,42,.04);
   border-color: rgba(15,23,42,.16);
   color: rgba(15,23,42,.72);
 }
 .db-theme-light .db-nav-logout:hover,
-.db-theme-light .db-lang-toggle:hover,
-.db-theme-light .db-theme-toggle:hover {
+.db-theme-light .db-lang-toggle:hover {
   color: #0f172a;
   border-color: rgba(201,168,76,.6);
 }
@@ -403,6 +410,15 @@ export default function DashboardPage() {
   return (
     <div className={`db-pg ${theme === "light" ? "db-theme-light" : "db-theme-dark"}`}>
       <style>{css}</style>
+      <button
+        type="button"
+        className="db-theme-fab"
+        onClick={() => setTheme((prev) => (prev === "dark" ? "light" : "dark"))}
+        aria-label="Toggle theme"
+        title={theme === "dark" ? "Switch to light" : "Switch to dark"}
+      >
+        {theme === "dark" ? <Sun size={17} /> : <Moon size={17} />}
+      </button>
 
       {/* NAV */}
       <nav className="db-nav">
@@ -411,15 +427,6 @@ export default function DashboardPage() {
           <span>{t.brand}</span>
         </Link>
         <div className="db-nav-right">
-          <button
-            type="button"
-            className="db-theme-toggle"
-            onClick={() => setTheme((prev) => (prev === "dark" ? "light" : "dark"))}
-            aria-label="Toggle theme"
-            title={theme === "dark" ? "Switch to light" : "Switch to dark"}
-          >
-            {theme === "dark" ? <Sun size={14} /> : <Moon size={14} />}
-          </button>
           <button className="db-lang-toggle" onClick={toggleLang} aria-label="Toggle language">
             <span className={lang === "en" ? "db-lang-active" : ""}>EN</span>
             <span style={{ opacity: .3 }}>|</span>

@@ -38,7 +38,7 @@ import type {
   Tab,
   MailSubTab,
   PageViewRow,
-  TrainingEnrollment,
+  AuthUserRow,
 } from "./components/types";
 
 // Import constants
@@ -84,14 +84,40 @@ import DiscipleModal from "./components/modals/DiscipleModal";
 import DiscipleProgressModal from "./components/modals/DiscipleProgressModal";
 
 const adminThemeCss = `
-.adm-root { transition: filter .24s ease, background-color .24s ease; }
-.adm-root.adm-light {
-  filter: invert(1) hue-rotate(180deg);
-  background: #f8fafc;
+.adm-root { transition: background-color .24s ease, color .24s ease; }
+.adm-theme-fab {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  z-index: 1100;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  border: 1px solid rgba(212,168,67,.62);
+  background: linear-gradient(135deg,#d4a843,#c49838);
+  color: #09090d;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0,0,0,.25);
 }
-.adm-root.adm-light img,
-.adm-root.adm-light video {
-  filter: invert(1) hue-rotate(180deg);
+.adm-root.adm-light {
+  background: #f8fafc;
+  color: #0f172a;
+}
+.adm-root.adm-light main,
+.adm-root.adm-light aside,
+.adm-root.adm-light .bg-\[\#07080c\],
+.adm-root.adm-light .bg-\[\#0b0c12\] {
+  background: #ffffff !important;
+}
+.adm-root.adm-light [class*="text-white"],
+.adm-root.adm-light [class*="text-\[\#eef0f5\]"] {
+  color: #111827 !important;
+}
+.adm-root.adm-light [class*="border-white"] {
+  border-color: rgba(15,23,42,.14) !important;
 }
 `;
 
@@ -145,7 +171,7 @@ export default function AdminPage() {
   const [editDisciple, setEditDisciple] = useState<Disciple | null>(null);
   const [viewProgressDisciple, setViewProgressDisciple] = useState<Disciple | null>(null);
   const [faithTests, setFaithTests] = useState<FaithTest[]>([]);
-  const [users, setUsers] = useState<TrainingEnrollment[]>([]);
+  const [users, setUsers] = useState<AuthUserRow[]>([]);
   const [showFaithTest, setShowFaithTest] = useState(false);
   const [editFaithTest, setEditFaithTest] = useState<FaithTest | null>(null);
   const [confirm, setConfirm] = useState<{ msg: string; fn: () => Promise<void> } | null>(null);
@@ -180,7 +206,7 @@ export default function AdminPage() {
     }
     setLoading(true);
     
-    const [pR, serR, tagR, sR, mR, lR, iR, tR, aR, tsR, libR, upR, fbR, msR, trnR, galR, evRegR, prayR, discR, ftR, discipR, usersR] = await Promise.all([
+    const [pR, serR, tagR, sR, mR, lR, iR, tR, aR, tsR, libR, upR, fbR, msR, trnR, galR, evRegR, prayR, discR, ftR, discipR, usersRes] = await Promise.all([
       db.from("blog_posts").select("*").order("created_at", { ascending: false }),
       db.from("blog_series").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: false }),
       db.from("blog_tags").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: false }),
@@ -203,7 +229,7 @@ export default function AdminPage() {
       db.from("discipleship_content").select("*").single(),
       db.from("faith_tests").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: false }),
       db.from("disciples").select("*").order("started_at", { ascending: false }),
-      db.from("training_enrollments").select("id,user_id,training_id,enrolled_at").order("enrolled_at", { ascending: false }),
+      fetch("/api/admin/users", { cache: "no-store" }),
     ]);
 
     setPosts(pR.data ?? []);
@@ -226,7 +252,12 @@ export default function AdminPage() {
     setDiscipleshipContent(discR.data ?? null);
     setFaithTests((ftR.data as FaithTest[]) ?? []);
     setDisciples((discipR.data as Disciple[]) ?? []);
-    setUsers((usersR.data as TrainingEnrollment[]) ?? []);
+    if (usersRes.ok) {
+      const usersBody = await usersRes.json() as { users?: AuthUserRow[] };
+      setUsers(usersBody.users ?? []);
+    } else {
+      setUsers([]);
+    }
 
     // Calculate analytics
     const views: PageViewRow[] = aR.data ?? [];
@@ -274,6 +305,15 @@ export default function AdminPage() {
   return (
     <div className={cn("adm-root min-h-screen flex bg-[#07080c] text-[#eef0f5] font-poppins", theme === "light" ? "adm-light" : "adm-dark")}>
       <style>{adminThemeCss}</style>
+      <button
+        type="button"
+        className="adm-theme-fab"
+        onClick={() => setTheme((prev) => (prev === "dark" ? "light" : "dark"))}
+        aria-label="Toggle theme"
+        title={theme === "dark" ? "Switch to light" : "Switch to dark"}
+      >
+        {theme === "dark" ? <Sun size={17} /> : <Moon size={17} />}
+      </button>
       {/* Mobile header */}
       <div className="flex md:hidden fixed top-0 left-0 right-0 z-[600] bg-[#0b0c12] border-b border-white/[.06] px-5 py-3.5 items-center justify-between shadow-[0_2px_20px_rgba(0,0,0,.4)]">
         <button
@@ -288,15 +328,6 @@ export default function AdminPage() {
           Samuel Gyasi
         </span>
         <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={() => setTheme((prev) => (prev === "dark" ? "light" : "dark"))}
-            className="bg-white/[.06] border border-white/[.09] rounded-lg text-white/70 cursor-pointer flex items-center justify-center p-1.5 transition-all hover:bg-white/10"
-            aria-label="Toggle theme"
-            title={theme === "dark" ? "Switch to light" : "Switch to dark"}
-          >
-            {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
-          </button>
           <Link href="/" className="text-white/30 hover:text-white/60 transition-colors leading-none">
             <Globe size={16} />
           </Link>
@@ -361,13 +392,6 @@ export default function AdminPage() {
 
         {/* Footer */}
         <div className="px-4 pb-5 pt-3 mt-auto border-t border-white/[.06] flex flex-col gap-2">
-          <button
-            onClick={() => setTheme((prev) => (prev === "dark" ? "light" : "dark"))}
-            className="font-poppins text-[11px] font-medium text-white/40 bg-transparent border border-white/[.1] px-3 py-2.5 cursor-pointer flex items-center gap-2 w-full rounded-lg transition-all hover:border-[rgba(201,168,76,.4)] hover:text-[#c9a84c]"
-          >
-            {theme === "dark" ? <Sun size={13} /> : <Moon size={13} />}
-            {theme === "dark" ? "Light Theme" : "Dark Theme"}
-          </button>
           <Link 
             href="/" 
             className="font-poppins text-[11px] font-medium text-white/30 no-underline flex items-center gap-2 hover:text-white/60 transition-colors py-1.5"
@@ -418,7 +442,7 @@ export default function AdminPage() {
             
             {tab === "analytics" && <AnalyticsTab analytics={analytics} />}
 
-            {tab === "users" && <UsersTab enrollments={users} />}
+            {tab === "users" && <UsersTab users={users} />}
 
             {tab === "logs" && <LogsTab logs={logs} />}
             

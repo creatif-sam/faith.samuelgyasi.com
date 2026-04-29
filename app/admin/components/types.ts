@@ -102,6 +102,14 @@ export interface TrainingEnrollment {
   enrolled_at: string;
 }
 
+export interface AuthUserRow {
+  id: string;
+  email: string | null;
+  created_at: string;
+  last_sign_in_at: string | null;
+  email_confirmed_at: string | null;
+}
+
 export interface EmailTemplate {
   id: string;
   name: string;
