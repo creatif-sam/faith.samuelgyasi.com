@@ -1,7 +1,7 @@
 import {
   LayoutDashboard, BarChart3, FileText, Users, MessageSquare,
   Mail, BookOpen, Star, Calendar, MessageSquarePlus,
-  GraduationCap, Images, UserCheck, Heart, List, ClipboardCheck, Tag
+  GraduationCap, Images, UserCheck, Heart, List, ClipboardCheck, Tag, ScrollText
 } from "lucide-react";
 import { Tab } from "./types";
 
@@ -16,6 +16,8 @@ export function slugify(t: string) {
 export const NAV = [
   { id: "overview",             label: "Overview",             Icon: LayoutDashboard   },
   { id: "analytics",            label: "Analytics",            Icon: BarChart3         },
+  { id: "users",                label: "Users",                Icon: Users             },
+  { id: "logs",                 label: "Logs",                 Icon: ScrollText        },
   { id: "posts",                label: "Blog Posts",           Icon: FileText          },
   { id: "series",               label: "Blog Series",          Icon: List              },
   { id: "tags",                 label: "Blog Tags",            Icon: Tag               },

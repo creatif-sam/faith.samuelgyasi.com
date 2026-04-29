@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
-import { BookOpen, GraduationCap, LogOut, User } from "lucide-react";
+import { BookOpen, GraduationCap, LogOut, Moon, Sun, User } from "lucide-react";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 import { useLang } from "@/lib/i18n";
 
@@ -125,6 +125,20 @@ const css = `
 }
 .db-lang-toggle:hover { color: #d4a843; border-color: rgba(201,168,76,.3); }
 .db-lang-active { color: #d4a843; }
+.db-theme-toggle {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 8px;
+  color: rgba(255,255,255,.55);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  cursor: pointer;
+  transition: all .2s;
+}
+.db-theme-toggle:hover { color: #d4a843; border-color: rgba(201,168,76,.35); }
 
 /* BODY */
 .db-body { padding: 100px 5% 60px; max-width: 1200px; margin: 0 auto; }
@@ -254,6 +268,51 @@ const css = `
   .db-body { padding: 88px 5% 40px; }
   .db-grid { grid-template-columns: 1fr; }
 }
+
+/* LIGHT THEME */
+.db-theme-light {
+  background: #f7f8fb;
+  color: #0f172a;
+}
+.db-theme-light .db-nav {
+  background: rgba(255,255,255,.96);
+  border-bottom: 1px solid rgba(15,23,42,.12);
+}
+.db-theme-light .db-nav-brand,
+.db-theme-light .db-hero-title,
+.db-theme-light .db-card-title,
+.db-theme-light .db-section-title {
+  color: #0f172a;
+}
+.db-theme-light .db-hero-sub,
+.db-theme-light .db-card-desc,
+.db-theme-light .db-nav-user,
+.db-theme-light .db-card-meta,
+.db-theme-light .db-empty {
+  color: rgba(15,23,42,.72);
+}
+.db-theme-light .db-section-title::after { background: rgba(15,23,42,.14); }
+.db-theme-light .db-card {
+  background: #ffffff;
+  border: 1px solid rgba(15,23,42,.12);
+}
+.db-theme-light .db-card:hover {
+  border-color: rgba(201,168,76,.5);
+  box-shadow: 0 12px 28px rgba(15,23,42,.14);
+}
+.db-theme-light .db-nav-logout,
+.db-theme-light .db-lang-toggle,
+.db-theme-light .db-theme-toggle {
+  background: rgba(15,23,42,.04);
+  border-color: rgba(15,23,42,.16);
+  color: rgba(15,23,42,.72);
+}
+.db-theme-light .db-nav-logout:hover,
+.db-theme-light .db-lang-toggle:hover,
+.db-theme-light .db-theme-toggle:hover {
+  color: #0f172a;
+  border-color: rgba(201,168,76,.6);
+}
 `;
 
 export default function DashboardPage() {
@@ -265,7 +324,19 @@ export default function DashboardPage() {
   const [enrollments, setEnrollments] = useState<EnrollmentWithProgress[]>([]);
   const [loading, setLoading] = useState(true);
   const [enrollingId, setEnrollingId] = useState<string | null>(null);
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
   const db = createClient();
+
+  useEffect(() => {
+    const saved = window.localStorage.getItem("sg-dashboard-theme");
+    if (saved === "light" || saved === "dark") {
+      setTheme(saved);
+    }
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem("sg-dashboard-theme", theme);
+  }, [theme]);
 
   const load = useCallback(async () => {
     const { data: { session } } = await db.auth.getSession();
@@ -330,7 +401,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="db-pg">
+    <div className={`db-pg ${theme === "light" ? "db-theme-light" : "db-theme-dark"}`}>
       <style>{css}</style>
 
       {/* NAV */}
@@ -340,6 +411,15 @@ export default function DashboardPage() {
           <span>{t.brand}</span>
         </Link>
         <div className="db-nav-right">
+          <button
+            type="button"
+            className="db-theme-toggle"
+            onClick={() => setTheme((prev) => (prev === "dark" ? "light" : "dark"))}
+            aria-label="Toggle theme"
+            title={theme === "dark" ? "Switch to light" : "Switch to dark"}
+          >
+            {theme === "dark" ? <Sun size={14} /> : <Moon size={14} />}
+          </button>
           <button className="db-lang-toggle" onClick={toggleLang} aria-label="Toggle language">
             <span className={lang === "en" ? "db-lang-active" : ""}>EN</span>
             <span style={{ opacity: .3 }}>|</span>

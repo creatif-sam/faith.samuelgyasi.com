@@ -8,7 +8,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
-import { Globe, LogOut, Menu } from "lucide-react";
+import { Globe, LogOut, Menu, Moon, Sun } from "lucide-react";
 
 // Import types
 import type {
@@ -38,6 +38,7 @@ import type {
   Tab,
   MailSubTab,
   PageViewRow,
+  TrainingEnrollment,
 } from "./components/types";
 
 // Import constants
@@ -63,6 +64,8 @@ import PrayerSubmissionsTab from "./components/tabs/PrayerSubmissionsTab";
 import TrainingsTab from "./components/tabs/TrainingsTab";
 import GalleryTab from "./components/tabs/GalleryTab";
 import FaithTestsTab from "./components/tabs/FaithTestsTab";
+import UsersTab from "./components/tabs/UsersTab";
+import LogsTab from "./components/tabs/LogsTab";
 
 // Import modal components
 import PostModal from "./components/modals/PostModal";
@@ -79,6 +82,18 @@ import GalleryThemeModal from "./components/modals/GalleryThemeModal";
 import FaithTestModal from "./components/modals/FaithTestModal";
 import DiscipleModal from "./components/modals/DiscipleModal";
 import DiscipleProgressModal from "./components/modals/DiscipleProgressModal";
+
+const adminThemeCss = `
+.adm-root { transition: filter .24s ease, background-color .24s ease; }
+.adm-root.adm-light {
+  filter: invert(1) hue-rotate(180deg);
+  background: #f8fafc;
+}
+.adm-root.adm-light img,
+.adm-root.adm-light video {
+  filter: invert(1) hue-rotate(180deg);
+}
+`;
 
 export default function AdminPage() {
   //State management
@@ -130,13 +145,26 @@ export default function AdminPage() {
   const [editDisciple, setEditDisciple] = useState<Disciple | null>(null);
   const [viewProgressDisciple, setViewProgressDisciple] = useState<Disciple | null>(null);
   const [faithTests, setFaithTests] = useState<FaithTest[]>([]);
+  const [users, setUsers] = useState<TrainingEnrollment[]>([]);
   const [showFaithTest, setShowFaithTest] = useState(false);
   const [editFaithTest, setEditFaithTest] = useState<FaithTest | null>(null);
   const [confirm, setConfirm] = useState<{ msg: string; fn: () => Promise<void> } | null>(null);
   const [navOpen, setNavOpen] = useState(false);
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
   
   const router = useRouter();
   const db = createClient();
+
+  useEffect(() => {
+    const saved = window.localStorage.getItem("sg-admin-theme");
+    if (saved === "light" || saved === "dark") {
+      setTheme(saved);
+    }
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem("sg-admin-theme", theme);
+  }, [theme]);
 
   // Handlers
   const handleLogout = async () => {
@@ -152,7 +180,7 @@ export default function AdminPage() {
     }
     setLoading(true);
     
-    const [pR, serR, tagR, sR, mR, lR, iR, tR, aR, tsR, libR, upR, fbR, msR, trnR, galR, evRegR, prayR, discR, ftR, discipR] = await Promise.all([
+    const [pR, serR, tagR, sR, mR, lR, iR, tR, aR, tsR, libR, upR, fbR, msR, trnR, galR, evRegR, prayR, discR, ftR, discipR, usersR] = await Promise.all([
       db.from("blog_posts").select("*").order("created_at", { ascending: false }),
       db.from("blog_series").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: false }),
       db.from("blog_tags").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: false }),
@@ -175,6 +203,7 @@ export default function AdminPage() {
       db.from("discipleship_content").select("*").single(),
       db.from("faith_tests").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: false }),
       db.from("disciples").select("*").order("started_at", { ascending: false }),
+      db.from("training_enrollments").select("id,user_id,training_id,enrolled_at").order("enrolled_at", { ascending: false }),
     ]);
 
     setPosts(pR.data ?? []);
@@ -197,6 +226,7 @@ export default function AdminPage() {
     setDiscipleshipContent(discR.data ?? null);
     setFaithTests((ftR.data as FaithTest[]) ?? []);
     setDisciples((discipR.data as Disciple[]) ?? []);
+    setUsers((usersR.data as TrainingEnrollment[]) ?? []);
 
     // Calculate analytics
     const views: PageViewRow[] = aR.data ?? [];
@@ -242,7 +272,8 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen flex bg-[#07080c] text-[#eef0f5] font-poppins">
+    <div className={cn("adm-root min-h-screen flex bg-[#07080c] text-[#eef0f5] font-poppins", theme === "light" ? "adm-light" : "adm-dark")}>
+      <style>{adminThemeCss}</style>
       {/* Mobile header */}
       <div className="flex md:hidden fixed top-0 left-0 right-0 z-[600] bg-[#0b0c12] border-b border-white/[.06] px-5 py-3.5 items-center justify-between shadow-[0_2px_20px_rgba(0,0,0,.4)]">
         <button
@@ -256,9 +287,20 @@ export default function AdminPage() {
           <span className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#d4a843] to-[#c49838] flex items-center justify-center text-[9px] font-bold text-[#09090d]">SG</span>
           Samuel Gyasi
         </span>
-        <Link href="/" className="text-white/30 hover:text-white/60 transition-colors leading-none">
-          <Globe size={16} />
-        </Link>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setTheme((prev) => (prev === "dark" ? "light" : "dark"))}
+            className="bg-white/[.06] border border-white/[.09] rounded-lg text-white/70 cursor-pointer flex items-center justify-center p-1.5 transition-all hover:bg-white/10"
+            aria-label="Toggle theme"
+            title={theme === "dark" ? "Switch to light" : "Switch to dark"}
+          >
+            {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+          </button>
+          <Link href="/" className="text-white/30 hover:text-white/60 transition-colors leading-none">
+            <Globe size={16} />
+          </Link>
+        </div>
       </div>
 
       {/* Sidebar */}
@@ -319,6 +361,13 @@ export default function AdminPage() {
 
         {/* Footer */}
         <div className="px-4 pb-5 pt-3 mt-auto border-t border-white/[.06] flex flex-col gap-2">
+          <button
+            onClick={() => setTheme((prev) => (prev === "dark" ? "light" : "dark"))}
+            className="font-poppins text-[11px] font-medium text-white/40 bg-transparent border border-white/[.1] px-3 py-2.5 cursor-pointer flex items-center gap-2 w-full rounded-lg transition-all hover:border-[rgba(201,168,76,.4)] hover:text-[#c9a84c]"
+          >
+            {theme === "dark" ? <Sun size={13} /> : <Moon size={13} />}
+            {theme === "dark" ? "Light Theme" : "Dark Theme"}
+          </button>
           <Link 
             href="/" 
             className="font-poppins text-[11px] font-medium text-white/30 no-underline flex items-center gap-2 hover:text-white/60 transition-colors py-1.5"
@@ -368,6 +417,10 @@ export default function AdminPage() {
             )}
             
             {tab === "analytics" && <AnalyticsTab analytics={analytics} />}
+
+            {tab === "users" && <UsersTab enrollments={users} />}
+
+            {tab === "logs" && <LogsTab logs={logs} />}
             
             {tab === "posts" && (
               <PostsTab

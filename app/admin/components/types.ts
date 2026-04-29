@@ -95,6 +95,13 @@ export interface EmailLog {
   template_id: string | null;
 }
 
+export interface TrainingEnrollment {
+  id: string;
+  user_id: string;
+  training_id: string;
+  enrolled_at: string;
+}
+
 export interface EmailTemplate {
   id: string;
   name: string;
@@ -359,6 +366,8 @@ export interface FaithTestAttempt {
 export type Tab = 
   | "overview" 
   | "analytics" 
+  | "users"
+  | "logs"
   | "posts" 
   | "series"
   | "subscribers" 

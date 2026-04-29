@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
-import { CheckCircle2, Circle, Play, ArrowLeft, BookOpen } from "lucide-react";
+import { CheckCircle2, Circle, Play, ArrowLeft, BookOpen, Moon, Sun } from "lucide-react";
 
 interface Training {
   id: string;
@@ -51,6 +51,21 @@ const css = `
   color: rgba(255,255,255,.4); text-decoration: none; transition: color .2s;
 }
 .tn-back:hover { color: #d4a843; }
+.tn-theme-toggle {
+  margin-left: auto;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,.1);
+  background: rgba(255,255,255,.04);
+  color: rgba(255,255,255,.62);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all .2s;
+}
+.tn-theme-toggle:hover { color: #d4a843; border-color: rgba(201,168,76,.35); }
 .tn-body { max-width: 1100px; margin: 0 auto; padding: 88px 5% 80px; }
 
 /* HERO */
@@ -149,6 +164,41 @@ const css = `
   .tn-body { padding: 80px 5% 60px; }
   .tn-hero { grid-template-columns: 1fr; }
 }
+
+/* LIGHT THEME */
+.tn-theme-light {
+  background: #f7f8fb;
+  color: #0f172a;
+}
+.tn-theme-light .tn-nav {
+  background: rgba(255,255,255,.96);
+  border-bottom: 1px solid rgba(15,23,42,.12);
+}
+.tn-theme-light .tn-back,
+.tn-theme-light .tn-title,
+.tn-theme-light .tn-lesson-title,
+.tn-theme-light .tn-section-title {
+  color: #0f172a;
+}
+.tn-theme-light .tn-desc,
+.tn-theme-light .tn-video-desc,
+.tn-theme-light .tn-lesson-dur {
+  color: rgba(15,23,42,.72);
+}
+.tn-theme-light .tn-section-title::after { background: rgba(15,23,42,.14); }
+.tn-theme-light .tn-lesson {
+  background: #ffffff;
+  border: 1px solid rgba(15,23,42,.12);
+}
+.tn-theme-light .tn-video-wrap {
+  border-top: 1px solid rgba(15,23,42,.08);
+  background: rgba(15,23,42,.03);
+}
+.tn-theme-light .tn-theme-toggle {
+  background: rgba(15,23,42,.04);
+  border-color: rgba(15,23,42,.16);
+  color: rgba(15,23,42,.72);
+}
 `;
 
 export default function TrainingDetailPage({ params }: Props) {
@@ -160,7 +210,19 @@ export default function TrainingDetailPage({ params }: Props) {
   const [completedIds, setCompletedIds] = useState<Set<string>>(new Set());
   const [openLesson, setOpenLesson] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
   const db = createClient();
+
+  useEffect(() => {
+    const saved = window.localStorage.getItem("sg-dashboard-theme");
+    if (saved === "light" || saved === "dark") {
+      setTheme(saved);
+    }
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem("sg-dashboard-theme", theme);
+  }, [theme]);
 
   const load = useCallback(async () => {
     const { data: { session } } = await db.auth.getSession();
@@ -232,13 +294,22 @@ export default function TrainingDetailPage({ params }: Props) {
   }
 
   return (
-    <div className="tn-pg">
+    <div className={`tn-pg ${theme === "light" ? "tn-theme-light" : "tn-theme-dark"}`}>
       <style>{css}</style>
 
       <nav className="tn-nav">
         <Link href="/dashboard" className="tn-back">
           <ArrowLeft size={13} /> Dashboard
         </Link>
+        <button
+          type="button"
+          className="tn-theme-toggle"
+          onClick={() => setTheme((prev) => (prev === "dark" ? "light" : "dark"))}
+          aria-label="Toggle theme"
+          title={theme === "dark" ? "Switch to light" : "Switch to dark"}
+        >
+          {theme === "dark" ? <Sun size={14} /> : <Moon size={14} />}
+        </button>
       </nav>
 
       <div className="tn-body">
