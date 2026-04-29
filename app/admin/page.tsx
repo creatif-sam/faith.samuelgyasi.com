@@ -199,21 +199,83 @@ const adminThemeCss = `
 }
 .adm-pname { color: var(--adm-text); font-size: 12px; font-weight: 600; line-height: 1.1; }
 .adm-pmail { color: var(--adm-text-muted); font-size: 11px; line-height: 1.1; }
+/* ── Light mode: page / surface backgrounds ── */
 .adm-root.adm-light main,
-.adm-root.adm-light aside,
+.adm-root.adm-light aside {
+  background: var(--adm-page-bg) !important;
+}
 .adm-root.adm-light .bg-\[\#07080c\],
 .adm-root.adm-light .bg-\[\#0b0c12\] {
-  background: #ffffff !important;
+  background: var(--adm-surface) !important;
 }
+/* semi-transparent white cards → visible soft surface */
+.adm-root.adm-light [class*="bg-white/"] {
+  background: var(--adm-surface-soft) !important;
+}
+/* ── Light mode: text ── */
 .adm-root.adm-light [class*="text-white"],
-.adm-root.adm-light [class*="text-\[\#eef0f5\]"] {
-  color: #111827 !important;
+.adm-root.adm-light [class*="text-[#eef0f5]"],
+.adm-root.adm-light [class*="text-\[#eef0f5\]"] {
+  color: var(--adm-text) !important;
 }
+/* Keep gold / status / badge text as-is (narrow overrides above already won't touch them) */
+/* ── Light mode: borders ── */
 .adm-root.adm-light [class*="border-white"] {
-  border-color: rgba(15,23,42,.14) !important;
+  border-color: var(--adm-border) !important;
+}
+/* ── Light mode: sidebar nav inactive items ── */
+.adm-root.adm-light aside nav button:not([class*="text-[#d4a843]"]) {
+  color: var(--adm-text-muted) !important;
+}
+.adm-root.adm-light aside nav button:not([class*="text-[#d4a843]"]):hover {
+  color: var(--adm-text) !important;
+  background: var(--adm-surface-soft) !important;
+}
+/* ── Light mode: sidebar footer ── */
+.adm-root.adm-light aside a,
+.adm-root.adm-light aside footer button {
+  color: var(--adm-text-muted) !important;
+  border-color: var(--adm-border) !important;
 }
 .adm-root.adm-light [class*="shadow-"] {
   box-shadow: 0 8px 24px rgba(15,23,42,.08) !important;
+}
+/* ── Search results dropdown ── */
+.adm-topbar-left { position: relative; }
+.adm-search-results {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  width: 100%;
+  min-width: 260px;
+  background: var(--adm-surface);
+  border: 1px solid var(--adm-border);
+  border-radius: 12px;
+  box-shadow: 0 16px 40px rgba(0,0,0,.22);
+  z-index: 350;
+  overflow: hidden;
+}
+.adm-search-result-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-family: var(--font-poppins, sans-serif);
+  font-size: 13px;
+  color: var(--adm-text);
+  border-bottom: 1px solid var(--adm-border);
+  transition: background .14s;
+}
+.adm-search-result-item:last-child { border-bottom: 0; }
+.adm-search-result-item:hover { background: var(--adm-surface-soft); }
+.adm-search-result-item svg { color: var(--adm-text-muted); flex-shrink: 0; }
+.adm-search-no-results {
+  padding: 14px;
+  font-size: 12px;
+  color: var(--adm-text-muted);
+  font-family: var(--font-poppins, sans-serif);
+  text-align: center;
 }
 .adm-notif-wrap { position: relative; }
 .adm-notif-badge {
@@ -275,6 +337,8 @@ export default function AdminPage() {
 
   //State management
   const [tab, setTab] = useState<Tab>("overview");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchOpen, setSearchOpen] = useState(false);
   const [mailSub, setMailSub] = useState<MailSubTab>("compose");
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [blogSeries, setBlogSeries] = useState<BlogSeries[]>([]);
@@ -477,7 +541,7 @@ export default function AdminPage() {
   }
 
   return (
-    <div className={cn("adm-root min-h-screen flex font-poppins", theme === "light" ? "adm-light" : "adm-dark")}>
+    <div className={cn("adm-root h-screen overflow-hidden flex font-poppins", theme === "light" ? "adm-light" : "adm-dark")}>
       <style>{adminThemeCss}</style>
       {/* Mobile header */}
       <div className="adm-mobile-header flex md:hidden fixed top-0 left-0 right-0 z-[600] border-b px-5 py-3.5 items-center justify-between shadow-[0_2px_20px_rgba(0,0,0,.4)]">
@@ -581,13 +645,41 @@ export default function AdminPage() {
       )}
 
       {/* Main content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 flex flex-col h-full overflow-hidden">
         <div className="adm-topbar mx-4 md:mx-12 mt-[62px] md:mt-6">
           <div className="adm-topbar-left">
             <div className="adm-search-wrap">
               <Search size={15} />
-              <input className="adm-search" placeholder="Search tab, post, user..." />
+              <input
+                className="adm-search"
+                placeholder="Search tab, post, user..."
+                value={searchQuery}
+                onChange={(e) => { setSearchQuery(e.target.value); setSearchOpen(true); }}
+                onFocus={() => setSearchOpen(true)}
+                onBlur={() => setTimeout(() => setSearchOpen(false), 160)}
+              />
             </div>
+            {searchOpen && searchQuery.trim().length > 0 && (() => {
+              const results = NAV_SORTED.filter(n =>
+                n.label.toLowerCase().includes(searchQuery.toLowerCase())
+              );
+              return (
+                <div className="adm-search-results">
+                  {results.length === 0 ? (
+                    <p className="adm-search-no-results">No matching tabs found</p>
+                  ) : results.map(({ id, label, Icon }) => (
+                    <div
+                      key={id}
+                      className="adm-search-result-item"
+                      onMouseDown={() => { go(id as Tab); setSearchQuery(""); setSearchOpen(false); }}
+                    >
+                      <Icon size={14} />
+                      <span>{label}</span>
+                    </div>
+                  ))}
+                </div>
+              );
+            })()}
           </div>
           <div className="adm-topbar-right">
             <span className="adm-icon-btn"><Mail size={14} /></span>
