@@ -33,6 +33,13 @@ type RelatedPost = {
   created_at: string;
 };
 
+type BlogComment = {
+  id: string;
+  commenter_name: string;
+  comment_text: string;
+  created_at: string;
+};
+
 export function ArticleClient({
   post,
   related,
@@ -52,6 +59,11 @@ export function ArticleClient({
   const [relatedToMe, setRelatedToMe] = useState(false);
   const [feedbackText, setFeedbackText] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [comments, setComments] = useState<BlogComment[]>([]);
+  const [commentName, setCommentName] = useState("");
+  const [commentEmail, setCommentEmail] = useState("");
+  const [commentText, setCommentText] = useState("");
+  const [commentBusy, setCommentBusy] = useState(false);
 
   // Get language-aware content
   const title = lang === "fr" && post.title_fr ? post.title_fr : post.title;
@@ -78,7 +90,51 @@ export function ArticleClient({
     thankYou: lang === "fr" ? "Merci pour votre feedback!" : "Thank you for your feedback!",
     errorMsg: lang === "fr" ? "Erreur lors de la soumission" : "Error submitting feedback",
     rateRequired: lang === "fr" ? "Veuillez sélectionner une note" : "Please select a rating",
+    commentsTitle: lang === "fr" ? "Commentaires" : "Comments",
+    commentsSub: lang === "fr" ? "Partagez votre réflexion sur cet article." : "Share your thoughts about this article.",
+    noComments: lang === "fr" ? "Pas encore de commentaires." : "No comments yet.",
+    nameLabel: lang === "fr" ? "Nom" : "Name",
+    emailLabel: lang === "fr" ? "Email" : "Email",
+    commentLabel2: lang === "fr" ? "Votre commentaire" : "Your comment",
+    postComment: lang === "fr" ? "Publier" : "Post Comment",
+    commentPending: lang === "fr" ? "Merci, votre commentaire est en attente de validation." : "Thanks, your comment is awaiting approval.",
   };
+
+  useEffect(() => {
+    const run = async () => {
+      const supabase = createClient();
+      const { data } = await supabase
+        .from("blog_comments")
+        .select("id,commenter_name,comment_text,created_at")
+        .eq("blog_post_id", post.id)
+        .eq("approved", true)
+        .order("created_at", { ascending: false });
+      setComments((data as BlogComment[]) ?? []);
+    };
+    run();
+  }, [post.id]);
+
+  async function submitComment(e: React.FormEvent) {
+    e.preventDefault();
+    if (!commentName.trim() || !commentText.trim()) return;
+    setCommentBusy(true);
+    const supabase = createClient();
+    const { error } = await supabase.from("blog_comments").insert({
+      blog_post_id: post.id,
+      commenter_name: commentName.trim(),
+      commenter_email: commentEmail.trim() || null,
+      comment_text: commentText.trim(),
+    });
+    setCommentBusy(false);
+    if (error) {
+      toast.error(translations.errorMsg);
+      return;
+    }
+    setCommentName("");
+    setCommentEmail("");
+    setCommentText("");
+    toast.success(translations.commentPending);
+  }
 
   // Scroll tracking to show modal when scrolled to 80% of blog
   useEffect(() => {
@@ -214,6 +270,56 @@ export function ArticleClient({
             </div>
           </aside>
         )}
+
+        <section className="fa-comments">
+          <h3 className="fa-comments-title">{translations.commentsTitle}</h3>
+          <p className="fa-comments-sub">{translations.commentsSub}</p>
+
+          {comments.length === 0 ? (
+            <p className="fa-comments-empty">{translations.noComments}</p>
+          ) : (
+            <div className="fa-comments-list">
+              {comments.map((c) => (
+                <div key={c.id} className="fa-comment-item">
+                  <p className="fa-comment-head">
+                    <strong>{c.commenter_name}</strong> · {new Date(c.created_at).toLocaleDateString(lang === "fr" ? "fr-FR" : "en-GB")}
+                  </p>
+                  <p className="fa-comment-text">{c.comment_text}</p>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <form className="fa-comment-form" onSubmit={submitComment}>
+            <div className="fa-comment-row">
+              <input
+                className="fa-comment-input"
+                value={commentName}
+                onChange={(e) => setCommentName(e.target.value)}
+                placeholder={translations.nameLabel}
+                required
+              />
+              <input
+                className="fa-comment-input"
+                value={commentEmail}
+                onChange={(e) => setCommentEmail(e.target.value)}
+                placeholder={translations.emailLabel}
+                type="email"
+              />
+            </div>
+            <textarea
+              className="fa-comment-textarea"
+              value={commentText}
+              onChange={(e) => setCommentText(e.target.value)}
+              placeholder={translations.commentLabel2}
+              rows={4}
+              required
+            />
+            <button className="fa-comment-btn" type="submit" disabled={commentBusy}>
+              {commentBusy ? "..." : translations.postComment}
+            </button>
+          </form>
+        </section>
 
         <footer className="fa-footer">
           <Link href="/blog" className="fa-back-link">{translations.allReflections}</Link>
@@ -362,6 +468,19 @@ body.on-fdp { background:#080807; color:#f0ece4; font-family:'Cormorant Garamond
 .fa-rc-title { font-family:var(--font-playfair),'Playfair Display',serif; font-size:18px; color:var(--white); line-height:1.25; flex:1; }
 .fa-rc-meta { font-family:'Space Mono',monospace; font-size:9px; letter-spacing:.15em; text-transform:uppercase; color:var(--dimmer); }
 .fa-footer { margin-top:64px; padding-top:40px; border-top:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
+.fa-comments { margin-top:70px; padding-top:42px; border-top:1px solid var(--line); }
+.fa-comments-title { font-family:var(--font-playfair),'Playfair Display',serif; font-size:30px; color:var(--white); margin-bottom:8px; }
+.fa-comments-sub { font-size:14px; color:var(--dim); margin-bottom:20px; }
+.fa-comments-empty { color:var(--dim); margin-bottom:18px; }
+.fa-comments-list { display:flex; flex-direction:column; gap:12px; margin-bottom:22px; }
+.fa-comment-item { border:1px solid var(--line); background:rgba(255,255,255,.02); padding:14px 16px; }
+.fa-comment-head { font-size:12px; color:var(--gold); margin-bottom:8px; }
+.fa-comment-text { font-size:16px; color:var(--cream); line-height:1.6; }
+.fa-comment-form { border:1px solid var(--line); background:rgba(255,255,255,.02); padding:16px; }
+.fa-comment-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px; }
+.fa-comment-input,.fa-comment-textarea { width:100%; border:1px solid var(--line); background:#12110d; color:var(--white); padding:10px 12px; font-family:var(--font-poppins),'Poppins',sans-serif; font-size:13px; }
+.fa-comment-textarea { resize:vertical; }
+.fa-comment-btn { margin-top:10px; background:linear-gradient(135deg,#ffde59,#ff914d); color:#080807; border:0; padding:10px 16px; font-size:11px; letter-spacing:.08em; text-transform:uppercase; cursor:pointer; }
 .fa-back-link { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--dim); text-decoration:none; transition:color .3s; }
 .fa-back-link:hover { color:var(--gold); }
 .fa-credo-link { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); text-decoration:none; transition:opacity .3s; }

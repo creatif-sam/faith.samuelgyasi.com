@@ -117,6 +117,9 @@ const adminThemeCss = `
   box-shadow: 0 8px 24px rgba(0,0,0,.25);
 }
 .adm-topbar {
+  position: sticky;
+  top: 10px;
+  z-index: 120;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -170,6 +173,7 @@ const adminThemeCss = `
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 .adm-profile {
   border: 1px solid var(--adm-border);
@@ -211,6 +215,50 @@ const adminThemeCss = `
 .adm-root.adm-light [class*="border-white"] {
   border-color: rgba(15,23,42,.14) !important;
 }
+.adm-root.adm-light [class*="shadow-"] {
+  box-shadow: 0 8px 24px rgba(15,23,42,.08) !important;
+}
+.adm-notif-wrap { position: relative; }
+.adm-notif-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  min-width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: #d4a843;
+  color: #09090d;
+  font-size: 9px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+}
+.adm-notif-panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: min(420px, 82vw);
+  max-height: 420px;
+  overflow-y: auto;
+  border: 1px solid var(--adm-border);
+  background: var(--adm-surface);
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0,0,0,.22);
+  padding: 10px;
+  z-index: 240;
+}
+.adm-notif-item {
+  border: 1px solid var(--adm-border);
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 8px;
+  background: var(--adm-surface-soft);
+}
+.adm-notif-title { font-size: 12px; color: var(--adm-text); font-weight: 600; margin-bottom: 4px; }
+.adm-notif-body { font-size: 12px; color: var(--adm-text-muted); line-height: 1.4; margin-bottom: 4px; }
+.adm-notif-time { font-size: 10px; color: var(--adm-text-muted); }
 @media (max-width: 768px) {
   .adm-topbar { margin-top: 52px; }
   .adm-search-wrap { width: 44vw; min-width: 140px; }
@@ -219,6 +267,15 @@ const adminThemeCss = `
 `;
 
 export default function AdminPage() {
+  type AdminNotification = {
+    id: string;
+    kind: string;
+    title: string;
+    body: string | null;
+    read: boolean;
+    created_at: string;
+  };
+
   //State management
   const [tab, setTab] = useState<Tab>("overview");
   const [mailSub, setMailSub] = useState<MailSubTab>("compose");
@@ -275,6 +332,8 @@ export default function AdminPage() {
   const [navOpen, setNavOpen] = useState(false);
   const [theme, setTheme] = useState<"dark" | "light">("dark");
   const [adminEmail, setAdminEmail] = useState("admin@samuelgyasi.com");
+  const [notifications, setNotifications] = useState<AdminNotification[]>([]);
+  const [notifOpen, setNotifOpen] = useState(false);
   
   const router = useRouter();
   const db = createClient();
@@ -358,6 +417,13 @@ export default function AdminPage() {
       setUsers([]);
     }
 
+    const { data: notifData } = await db
+      .from("admin_notifications")
+      .select("id,kind,title,body,read,created_at")
+      .order("created_at", { ascending: false })
+      .limit(30);
+    setNotifications((notifData as AdminNotification[]) ?? []);
+
     // Calculate analytics
     const views: PageViewRow[] = aR.data ?? [];
     const totalViews = views.length;
@@ -391,6 +457,18 @@ export default function AdminPage() {
   const unreadInbox = inbox.filter((e) => !e.read).length;
   const unreadFeedback = feedbacks.filter((f) => !f.resolved).length;
   const unprayedSubmissions = prayerSubmissions.filter((p) => !p.prayed_for).length;
+  const unreadNotifCount = notifications.filter((n) => !n.read).length;
+
+  async function markAllNotificationsRead() {
+    const unreadIds = notifications.filter((n) => !n.read).map((n) => n.id);
+    if (unreadIds.length === 0) return;
+    const { error } = await db.from("admin_notifications").update({ read: true }).in("id", unreadIds);
+    if (error) {
+      toast.error("Failed to mark notifications as read");
+      return;
+    }
+    setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
+  }
 
   function ask(msg: string, fn: () => Promise<void>) { 
     setConfirm({ msg, fn }); 
@@ -525,7 +603,31 @@ export default function AdminPage() {
           </div>
           <div className="adm-topbar-right">
             <span className="adm-icon-btn"><Mail size={14} /></span>
-            <span className="adm-icon-btn"><Bell size={14} /></span>
+            <div className="adm-notif-wrap">
+              <button className="adm-icon-btn" onClick={() => setNotifOpen((v) => !v)} aria-label="Notifications">
+                <Bell size={14} />
+                {unreadNotifCount > 0 && <span className="adm-notif-badge">{unreadNotifCount > 9 ? "9+" : unreadNotifCount}</span>}
+              </button>
+              {notifOpen && (
+                <div className="adm-notif-panel">
+                  <div className="flex items-center justify-between mb-2 px-1">
+                    <p className="text-[12px] font-semibold" style={{ color: "var(--adm-text)" }}>Notifications</p>
+                    <button className="text-[11px]" style={{ color: "#d4a843" }} onClick={markAllNotificationsRead}>Mark all read</button>
+                  </div>
+                  {notifications.length === 0 ? (
+                    <p className="text-[12px] px-1" style={{ color: "var(--adm-text-muted)" }}>No notifications yet.</p>
+                  ) : (
+                    notifications.map((n) => (
+                      <div key={n.id} className="adm-notif-item" style={{ opacity: n.read ? 0.7 : 1 }}>
+                        <p className="adm-notif-title">{n.title}</p>
+                        {n.body && <p className="adm-notif-body">{n.body}</p>}
+                        <p className="adm-notif-time">{new Date(n.created_at).toLocaleString("en-GB")}</p>
+                      </div>
+                    ))
+                  )}
+                </div>
+              )}
+            </div>
             <div className="adm-profile">
               <span className="adm-avatar">{(adminEmail[0] || "A").toUpperCase()}</span>
               <div>

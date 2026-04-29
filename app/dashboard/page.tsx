@@ -414,6 +414,7 @@ const css = `
   .db-body { padding: 190px 5% 40px; }
   .db-grid { grid-template-columns: 1fr; }
 }
+.db-theme-light .db-nav-brand-dot { color: #09090d; }
 `;
 
 export default function DashboardPage() {
@@ -568,7 +569,10 @@ export default function DashboardPage() {
               <div
                 key={d}
                 style={{
-                  width: 8, height: 8, background: "#d4a843", borderRadius: "50%",
+                  width: 8,
+                  height: 8,
+                  background: "#d4a843",
+                  borderRadius: "50%",
                   animation: "pulse 1.2s ease-in-out infinite",
                   animationDelay: `${d}ms`,
                 }}

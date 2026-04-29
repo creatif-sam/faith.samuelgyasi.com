@@ -35,20 +35,38 @@ function getYouTubeId(url: string): string | null {
 
 const css = `
 .tn-pg {
-  background: #07080c; color: #eef0f5; min-height: 100vh;
+  min-height: 100vh;
   font-family: var(--font-poppins), 'Poppins', sans-serif;
+}
+.tn-theme-dark {
+  --tn-bg: #07080c;
+  --tn-surface: #0b0c12;
+  --tn-border: rgba(255,255,255,.06);
+  --tn-text: #eef0f5;
+  --tn-muted: rgba(255,255,255,.45);
+}
+.tn-theme-light {
+  --tn-bg: #f7f8fb;
+  --tn-surface: #ffffff;
+  --tn-border: rgba(15,23,42,.12);
+  --tn-text: #0f172a;
+  --tn-muted: #334155;
+}
+.tn-pg {
+  background: var(--tn-bg);
+  color: var(--tn-text);
 }
 .tn-nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-  height: 64px; background: rgba(11,12,18,.97);
-  border-bottom: 1px solid rgba(255,255,255,.06);
+  height: 64px; background: color-mix(in srgb, var(--tn-surface) 94%, transparent);
+  border-bottom: 1px solid var(--tn-border);
   display: flex; align-items: center; padding: 0 40px; gap: 16px;
   backdrop-filter: blur(20px);
 }
 .tn-back {
   display: flex; align-items: center; gap: 6px;
   font-size: 11px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase;
-  color: rgba(255,255,255,.4); text-decoration: none; transition: color .2s;
+  color: var(--tn-muted); text-decoration: none; transition: color .2s;
 }
 .tn-back:hover { color: #d4a843; }
 .tn-theme-toggle {
@@ -90,16 +108,16 @@ const css = `
 }
 .tn-title {
   font-family: var(--font-playfair), serif;
-  font-size: clamp(24px,3.5vw,40px); font-weight: 800; line-height: 1.15; color: #eef0f5;
+  font-size: clamp(24px,3.5vw,40px); font-weight: 800; line-height: 1.15; color: var(--tn-text);
 }
-.tn-desc { font-size: 14px; color: rgba(255,255,255,.45); line-height: 1.7; font-weight: 300; }
+.tn-desc { font-size: 14px; color: var(--tn-muted); line-height: 1.7; font-weight: 300; }
 
 /* PROGRESS */
 .tn-progress-row {
   display: flex; align-items: center; gap: 12px; margin-top: 8px;
 }
 .tn-progress-bar {
-  flex: 1; height: 6px; background: rgba(255,255,255,.07); border-radius: 3px; overflow: hidden;
+  flex: 1; height: 6px; background: color-mix(in srgb, var(--tn-text) 10%, transparent); border-radius: 3px; overflow: hidden;
 }
 .tn-progress-fill {
   height: 100%; background: linear-gradient(90deg,#ffde59,#ff914d);
@@ -112,15 +130,15 @@ const css = `
 /* LESSONS */
 .tn-section-title {
   font-size: 11px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase;
-  color: rgba(255,255,255,.3); margin-bottom: 16px;
+  color: var(--tn-muted); margin-bottom: 16px;
   display: flex; align-items: center; gap: 10px;
 }
-.tn-section-title::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,.06); }
+.tn-section-title::after { content: ''; flex: 1; height: 1px; background: color-mix(in srgb, var(--tn-text) 12%, transparent); }
 
 .tn-lessons { display: flex; flex-direction: column; gap: 10px; }
 
 .tn-lesson {
-  background: #0b0c12; border: 1px solid rgba(255,255,255,.06); border-radius: 6px;
+  background: var(--tn-surface); border: 1px solid var(--tn-border); border-radius: 6px;
   overflow: hidden; transition: border-color .3s;
 }
 .tn-lesson.completed { border-color: rgba(201,168,76,.2); }
@@ -133,14 +151,14 @@ const css = `
 }
 .tn-lesson.completed .tn-lesson-check { color: #d4a843; }
 .tn-lesson-title {
-  flex: 1; font-size: 14px; font-weight: 500; color: #eef0f5; line-height: 1.3;
+  flex: 1; font-size: 14px; font-weight: 500; color: var(--tn-text); line-height: 1.3;
   transition: color .2s;
 }
 .tn-lesson.completed .tn-lesson-title { color: rgba(255,255,255,.55); text-decoration: line-through; text-decoration-color: rgba(201,168,76,.4); }
 .tn-lesson-dur {
   font-family: var(--font-space-mono), monospace;
   font-size: 9px; letter-spacing: .12em; text-transform: uppercase;
-  color: rgba(255,255,255,.2);
+  color: var(--tn-muted);
 }
 .tn-lesson-play {
   display: flex; align-items: center; gap: 5px;
@@ -152,14 +170,14 @@ const css = `
 
 /* VIDEO EMBED */
 .tn-video-wrap {
-  border-top: 1px solid rgba(255,255,255,.05);
+  border-top: 1px solid color-mix(in srgb, var(--tn-text) 10%, transparent);
   padding: 0 20px 20px; background: rgba(0,0,0,.3);
 }
 .tn-video-frame {
   width: 100%; aspect-ratio: 16/9; border-radius: 4px; overflow: hidden; margin-top: 16px;
 }
 .tn-video-frame iframe { width: 100%; height: 100%; border: none; }
-.tn-video-desc { font-size: 13px; color: rgba(255,255,255,.4); line-height: 1.65; margin-top: 12px; }
+.tn-video-desc { font-size: 13px; color: var(--tn-muted); line-height: 1.65; margin-top: 12px; }
 
 @media (max-width: 768px) {
   .tn-nav { padding: 0 20px; }
@@ -167,35 +185,7 @@ const css = `
   .tn-hero { grid-template-columns: 1fr; }
 }
 
-/* LIGHT THEME */
-.tn-theme-light {
-  background: #f7f8fb;
-  color: #0f172a;
-}
-.tn-theme-light .tn-nav {
-  background: rgba(255,255,255,.96);
-  border-bottom: 1px solid rgba(15,23,42,.12);
-}
-.tn-theme-light .tn-back,
-.tn-theme-light .tn-title,
-.tn-theme-light .tn-lesson-title,
-.tn-theme-light .tn-section-title {
-  color: #0f172a;
-}
-.tn-theme-light .tn-desc,
-.tn-theme-light .tn-video-desc,
-.tn-theme-light .tn-lesson-dur {
-  color: #111827;
-}
-.tn-theme-light .tn-section-title::after { background: rgba(15,23,42,.14); }
-.tn-theme-light .tn-lesson {
-  background: #ffffff;
-  border: 1px solid rgba(15,23,42,.12);
-}
-.tn-theme-light .tn-video-wrap {
-  border-top: 1px solid rgba(15,23,42,.08);
-  background: rgba(15,23,42,.03);
-}
+.tn-theme-light .tn-video-wrap { background: rgba(15,23,42,.03); }
 `;
 
 export default function TrainingDetailPage({ params }: Props) {
@@ -270,7 +260,7 @@ export default function TrainingDetailPage({ params }: Props) {
 
   if (loading) {
     return (
-      <div style={{ minHeight: "100vh", background: "#07080c", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+      <div style={{ minHeight: "100vh", background: theme === "light" ? "#f7f8fb" : "#07080c", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
         {[0, 200, 400].map((d) => (
           <div key={d} style={{ width: 8, height: 8, background: "#d4a843", borderRadius: "50%", animation: "pulse 1.2s ease-in-out infinite", animationDelay: `${d}ms` }} />
         ))}
@@ -281,8 +271,8 @@ export default function TrainingDetailPage({ params }: Props) {
 
   if (!training) {
     return (
-      <div style={{ minHeight: "100vh", background: "#07080c", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <div style={{ textAlign: "center", color: "rgba(255,255,255,.4)", fontFamily: "Poppins,sans-serif" }}>
+      <div style={{ minHeight: "100vh", background: theme === "light" ? "#f7f8fb" : "#07080c", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div style={{ textAlign: "center", color: theme === "light" ? "#334155" : "rgba(255,255,255,.4)", fontFamily: "Poppins,sans-serif" }}>
           <p>Training not found.</p>
           <Link href="/dashboard" style={{ color: "#d4a843", textDecoration: "none", fontSize: 13 }}>← Back to Dashboard</Link>
         </div>
