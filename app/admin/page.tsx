@@ -115,9 +115,7 @@ const adminThemeCss = `
   border-color: var(--adm-border);
 }
 .adm-topbar {
-  position: sticky;
-  top: 10px;
-  z-index: 220;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -128,49 +126,6 @@ const adminThemeCss = `
   padding: 10px 12px;
   margin-bottom: 18px;
   box-shadow: 0 10px 26px rgba(0,0,0,.16);
-}
-.adm-sidebar-shell {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  padding: 14px 12px;
-}
-.adm-nav-section-title {
-  font-size: 10px;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--adm-text-muted);
-  padding: 10px 8px 6px;
-}
-.adm-nav-btn {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-  border: 0;
-  border-radius: 12px;
-  background: transparent;
-  color: var(--adm-text-muted);
-  padding: 10px 12px;
-  margin-bottom: 4px;
-  cursor: pointer;
-  transition: all .2s ease;
-  font-size: 13px;
-  font-weight: 500;
-}
-.adm-nav-btn:hover {
-  background: color-mix(in srgb, var(--adm-surface-soft) 82%, transparent);
-  color: var(--adm-text);
-}
-.adm-nav-btn.is-active {
-  background: linear-gradient(135deg,#0e5a3f,#177a54);
-  color: #ecfff5;
-  box-shadow: 0 10px 20px rgba(14,90,63,.25);
-}
-.adm-nav-separator {
-  height: 1px;
-  margin: 8px 8px;
-  background: var(--adm-border);
 }
 .adm-topbar-left {
   display: flex;
@@ -302,7 +257,7 @@ const adminThemeCss = `
 .adm-notif-body { font-size: 12px; color: var(--adm-text-muted); line-height: 1.4; margin-bottom: 4px; }
 .adm-notif-time { font-size: 10px; color: var(--adm-text-muted); }
 @media (max-width: 768px) {
-  .adm-topbar { margin-top: 58px; }
+  .adm-topbar { margin-top: 0; }
   .adm-search-wrap { width: 44vw; min-width: 140px; }
   .adm-profile { display: none; }
 }
@@ -500,8 +455,6 @@ export default function AdminPage() {
   const unreadFeedback = feedbacks.filter((f) => !f.resolved).length;
   const unprayedSubmissions = prayerSubmissions.filter((p) => !p.prayed_for).length;
   const unreadNotifCount = notifications.filter((n) => !n.read).length;
-  const primaryNav = NAV_SORTED.slice(0, 10);
-  const secondaryNav = NAV_SORTED.slice(10);
 
   async function markAllNotificationsRead() {
     const unreadIds = notifications.filter((n) => !n.read).map((n) => n.id);
@@ -554,7 +507,6 @@ export default function AdminPage() {
         "transition-transform duration-300 -translate-x-full md:translate-x-0",
         navOpen && "translate-x-0"
       )}>
-        <div className="adm-sidebar-shell">
         {/* Brand */}
         <div className="px-5 py-5 border-b border-white/[.06]">
           <div className="flex items-center gap-3">
@@ -569,9 +521,8 @@ export default function AdminPage() {
         </div>
 
         {/* Navigation */}
-        <nav className="px-2 pt-2 flex-1 overflow-y-auto">
-          <p className="adm-nav-section-title">Menu</p>
-          {primaryNav.map(({ id, label, Icon }) => {
+        <nav className="px-3 pt-3 flex-1 overflow-y-auto">
+          {NAV_SORTED.map(({ id, label, Icon }) => {
             const badge = id === "messages" && unreadMsgs > 0 ? unreadMsgs
               : id === "mail" && unreadInbox > 0 ? unreadInbox
               : id === "feedback" && unreadFeedback > 0 ? unreadFeedback
@@ -583,7 +534,14 @@ export default function AdminPage() {
               <button
                 key={id}
                 onClick={() => go(id)}
-                className={cn("adm-nav-btn", isActive && "is-active")}
+                className={cn(
+                  "flex items-center gap-3 px-4 py-2.5",
+                  "font-poppins text-[13px] font-medium",
+                  "cursor-pointer border-0 w-full text-left transition-all duration-200 rounded-lg relative mb-1",
+                  isActive
+                    ? "text-[#d4a843] bg-[rgba(212,168,67,.12)]"
+                    : "text-white/[.42] bg-transparent hover:text-white/[.80] hover:bg-white/[.05]"
+                )}
               >
                 <Icon size={15} />
                 <span className="flex-1">{label}</span>
@@ -595,37 +553,6 @@ export default function AdminPage() {
               </button>
             );
           })}
-
-          {secondaryNav.length > 0 && (
-            <>
-              <div className="adm-nav-separator" />
-              <p className="adm-nav-section-title">General</p>
-              {secondaryNav.map(({ id, label, Icon }) => {
-                const badge = id === "messages" && unreadMsgs > 0 ? unreadMsgs
-                  : id === "mail" && unreadInbox > 0 ? unreadInbox
-                  : id === "feedback" && unreadFeedback > 0 ? unreadFeedback
-                  : id === "prayer-submissions" && unprayedSubmissions > 0 ? unprayedSubmissions
-                  : null;
-                const isActive = tab === id;
-
-                return (
-                  <button
-                    key={id}
-                    onClick={() => go(id)}
-                    className={cn("adm-nav-btn", isActive && "is-active")}
-                  >
-                    <Icon size={15} />
-                    <span className="flex-1">{label}</span>
-                    {badge !== null && (
-                      <span className="bg-gradient-to-br from-[#d4a843] to-[#f0cc7a] text-[#07080c] font-poppins text-[9px] font-bold px-2 py-0.5 rounded-full leading-tight ml-auto">
-                        {badge}
-                      </span>
-                    )}
-                  </button>
-                );
-              })}
-            </>
-          )}
         </nav>
 
         {/* Footer */}
@@ -643,7 +570,6 @@ export default function AdminPage() {
             <LogOut size={13} /> Log Out
           </button>
         </div>
-        </div>
       </aside>
 
       {/* Mobile overlay */}
@@ -655,8 +581,8 @@ export default function AdminPage() {
       )}
 
       {/* Main content */}
-      <main className="adm-main flex-1 overflow-y-auto px-4 pt-20 pb-8 md:px-12 md:py-10">
-        <div className="adm-topbar">
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <div className="adm-topbar mx-4 md:mx-12 mt-[62px] md:mt-6">
           <div className="adm-topbar-left">
             <div className="adm-search-wrap">
               <Search size={15} />
@@ -708,6 +634,7 @@ export default function AdminPage() {
             </div>
           </div>
         </div>
+        <main className="adm-main flex-1 overflow-y-auto px-4 pb-8 md:px-12 md:pb-10">
         {loading ? (
           <div className="flex gap-2.5 justify-center py-[140px]">
             {[0, 200, 400].map((delay) => (
@@ -1029,6 +956,7 @@ export default function AdminPage() {
           </>
         )}
       </main>
+      </div>
 
       {/* Modals */}
       {showTestimonial && (

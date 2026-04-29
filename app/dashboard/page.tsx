@@ -5,23 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
-import {
-  BarChart3,
-  Bell,
-  BookOpen,
-  CalendarDays,
-  CircleHelp,
-  GraduationCap,
-  LayoutDashboard,
-  ListTodo,
-  LogOut,
-  Mail,
-  Moon,
-  Search,
-  Settings,
-  Sun,
-  Users,
-} from "lucide-react";
+import { Bell, BookOpen, GraduationCap, LogOut, Mail, Moon, Search, Sun, User } from "lucide-react";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 import { useLang } from "@/lib/i18n";
 
@@ -89,96 +73,6 @@ const css = `
   font-family: var(--font-poppins), 'Poppins', sans-serif;
 }
 
-.db-shell {
-  display: flex;
-  min-height: 100vh;
-}
-
-.db-sidebar {
-  position: fixed;
-  top: 16px;
-  left: 16px;
-  bottom: 16px;
-  width: 236px;
-  border-radius: 20px;
-  border: 1px solid var(--db-border);
-  background: var(--db-surface);
-  padding: 16px 12px;
-  display: flex;
-  flex-direction: column;
-  z-index: 230;
-  box-shadow: 0 14px 34px rgba(0,0,0,.2);
-}
-
-.db-sidebar-brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 8px 14px;
-  border-bottom: 1px solid var(--db-border);
-  margin-bottom: 10px;
-}
-
-.db-sidebar-brand-dot {
-  width: 30px;
-  height: 30px;
-  border-radius: 999px;
-  border: 2px solid #188460;
-  color: #188460;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  font-weight: 700;
-}
-
-.db-sidebar-brand-text {
-  color: var(--db-text);
-  font-size: 24px;
-  line-height: 1;
-  font-weight: 700;
-}
-
-.db-sidebar-section-title {
-  font-size: 10px;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--db-text-muted);
-  padding: 12px 8px 8px;
-}
-
-.db-sidebar-item {
-  width: 100%;
-  border: 0;
-  border-radius: 12px;
-  background: transparent;
-  color: var(--db-text-muted);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 10px;
-  cursor: pointer;
-  transition: all .2s ease;
-  font-size: 13px;
-  margin-bottom: 4px;
-}
-
-.db-sidebar-item:hover {
-  background: var(--db-surface-soft);
-  color: var(--db-text);
-}
-
-.db-sidebar-item.active {
-  background: linear-gradient(135deg,#0e5a3f,#177a54);
-  color: #ecfff5;
-  box-shadow: 0 10px 20px rgba(14,90,63,.2);
-}
-
-.db-main {
-  flex: 1;
-  margin-left: 268px;
-}
-
 .db-theme-dark {
   --db-bg: #07080c;
   --db-surface: #0b0c12;
@@ -199,22 +93,16 @@ const css = `
 
 /* NAV */
 .db-nav {
-  position: fixed;
-  top: 16px;
-  left: 284px;
-  right: 16px;
-  z-index: 200;
-  min-height: 114px;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  min-height: 124px;
   background: color-mix(in srgb, var(--db-surface) 92%, transparent);
-  border: 1px solid var(--db-border);
-  border-radius: 20px;
+  border-bottom: 1px solid var(--db-border);
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 10px;
-  padding: 12px 22px;
+  padding: 12px 36px;
   backdrop-filter: blur(20px);
-  box-shadow: 0 10px 30px rgba(0,0,0,.16);
 }
 .db-nav-row {
   width: 100%;
@@ -375,7 +263,7 @@ const css = `
 .db-lang-toggle:hover { color: #d4a843; border-color: rgba(201,168,76,.3); }
 .db-lang-active { color: #d4a843; }
 /* BODY */
-.db-body { padding: 158px 28px 60px; max-width: 1260px; margin: 0 auto; }
+.db-body { padding: 160px 5% 60px; max-width: 1200px; margin: 0 auto; }
 
 /* HERO */
 .db-hero { margin-bottom: 56px; }
@@ -498,18 +386,14 @@ const css = `
 }
 
 @media (max-width: 768px) {
-  .db-shell { display: block; }
-  .db-sidebar { display: none; }
-  .db-main { margin-left: 0; }
   .db-nav { padding: 12px 14px; min-height: 154px; }
-  .db-nav { left: 10px; right: 10px; top: 10px; border-radius: 14px; }
   .db-nav-row { align-items: flex-start; }
   .db-nav-left { width: 100%; flex-wrap: wrap; }
   .db-search-wrap { width: 100%; max-width: none; min-width: 0; }
   .db-profile { display: none; }
   .db-nav-meta h1 { font-size: 30px; }
   .db-actions { width: 100%; justify-content: flex-start; }
-  .db-body { padding: 196px 5% 40px; }
+  .db-body { padding: 190px 5% 40px; }
   .db-grid { grid-template-columns: 1fr; }
 }
 .db-theme-light .db-nav-brand-dot { color: #09090d; }
@@ -603,29 +487,8 @@ export default function DashboardPage() {
   return (
     <div className={`db-pg ${theme === "light" ? "db-theme-light" : "db-theme-dark"}`}>
       <style>{css}</style>
-      <div className="db-shell">
-        <aside className="db-sidebar" aria-label="Dashboard sidebar">
-          <div className="db-sidebar-brand">
-            <span className="db-sidebar-brand-dot">SG</span>
-            <span className="db-sidebar-brand-text">Donezo</span>
-          </div>
-
-          <p className="db-sidebar-section-title">Menu</p>
-          <button className="db-sidebar-item active"><LayoutDashboard size={15} /> Dashboard</button>
-          <button className="db-sidebar-item"><ListTodo size={15} /> Tasks</button>
-          <button className="db-sidebar-item"><CalendarDays size={15} /> Calendar</button>
-          <button className="db-sidebar-item"><BarChart3 size={15} /> Analytics</button>
-          <button className="db-sidebar-item"><Users size={15} /> Team</button>
-
-          <p className="db-sidebar-section-title">General</p>
-          <button className="db-sidebar-item"><Settings size={15} /> Settings</button>
-          <button className="db-sidebar-item"><CircleHelp size={15} /> Help</button>
-          <button className="db-sidebar-item" onClick={handleLogout}><LogOut size={15} /> Logout</button>
-        </aside>
-
-        <div className="db-main">
-          {/* NAV */}
-          <nav className="db-nav">
+      {/* NAV */}
+      <nav className="db-nav">
         <div className="db-nav-row">
           <div className="db-nav-left">
             <Link href="/" className="db-nav-brand">
@@ -676,10 +539,10 @@ export default function DashboardPage() {
             <button className="db-action-secondary">{t.importAction}</button>
           </div>
         </div>
-          </nav>
+      </nav>
 
-          {/* BODY */}
-          <div className="db-body">
+      {/* BODY */}
+      <div className="db-body">
         {loading ? (
           <div style={{ display: "flex", gap: 8, justifyContent: "center", padding: "80px 0" }}>
             {[0, 200, 400].map((d) => (
@@ -781,8 +644,6 @@ export default function DashboardPage() {
             )}
           </>
         )}
-          </div>
-        </div>
       </div>
 
       <SiteFooter />
