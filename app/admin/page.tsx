@@ -86,6 +86,7 @@ import DiscipleProgressModal from "./components/modals/DiscipleProgressModal";
 const adminThemeCss = `
 .adm-root { transition: background-color .24s ease, color .24s ease; }
 .adm-root.adm-dark {
+  --adm-page-bg: #07080c;
   --adm-surface: #0b0c12;
   --adm-surface-soft: rgba(255,255,255,.04);
   --adm-border: rgba(255,255,255,.09);
@@ -93,33 +94,30 @@ const adminThemeCss = `
   --adm-text-muted: rgba(255,255,255,.45);
 }
 .adm-root.adm-light {
+  --adm-page-bg: #f3f6fb;
   --adm-surface: #ffffff;
-  --adm-surface-soft: #f6f8fa;
+  --adm-surface-soft: #eef2f7;
   --adm-border: rgba(15,23,42,.14);
   --adm-text: #111827;
   --adm-text-muted: #334155;
 }
-.adm-theme-fab {
-  position: fixed;
-  top: 14px;
-  right: 14px;
-  z-index: 1100;
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
-  border: 1px solid rgba(212,168,67,.62);
-  background: linear-gradient(135deg,#d4a843,#c49838);
-  color: #09090d;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 8px 24px rgba(0,0,0,.25);
+.adm-root,
+.adm-main,
+.adm-sidebar,
+.adm-mobile-header {
+  background: var(--adm-page-bg);
+  color: var(--adm-text);
+}
+.adm-sidebar,
+.adm-mobile-header,
+.adm-topbar {
+  background: var(--adm-surface);
+  border-color: var(--adm-border);
 }
 .adm-topbar {
   position: sticky;
-  top: 10px;
-  z-index: 120;
+  top: 0;
+  z-index: 220;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -129,6 +127,7 @@ const adminThemeCss = `
   border-radius: 16px;
   padding: 10px 12px;
   margin-bottom: 18px;
+  box-shadow: 0 10px 26px rgba(0,0,0,.16);
 }
 .adm-topbar-left {
   display: flex;
@@ -175,6 +174,10 @@ const adminThemeCss = `
   justify-content: center;
   cursor: pointer;
 }
+.adm-icon-btn:hover {
+  border-color: rgba(212,168,67,.42);
+  color: var(--adm-text);
+}
 .adm-profile {
   border: 1px solid var(--adm-border);
   background: var(--adm-surface-soft);
@@ -198,10 +201,6 @@ const adminThemeCss = `
 }
 .adm-pname { color: var(--adm-text); font-size: 12px; font-weight: 600; line-height: 1.1; }
 .adm-pmail { color: var(--adm-text-muted); font-size: 11px; line-height: 1.1; }
-.adm-root.adm-light {
-  background: #f8fafc;
-  color: #0f172a;
-}
 .adm-root.adm-light main,
 .adm-root.adm-light aside,
 .adm-root.adm-light .bg-\[\#07080c\],
@@ -260,7 +259,7 @@ const adminThemeCss = `
 .adm-notif-body { font-size: 12px; color: var(--adm-text-muted); line-height: 1.4; margin-bottom: 4px; }
 .adm-notif-time { font-size: 10px; color: var(--adm-text-muted); }
 @media (max-width: 768px) {
-  .adm-topbar { margin-top: 52px; }
+  .adm-topbar { margin-top: 58px; }
   .adm-search-wrap { width: 44vw; min-width: 140px; }
   .adm-profile { display: none; }
 }
@@ -480,19 +479,10 @@ export default function AdminPage() {
   }
 
   return (
-    <div className={cn("adm-root min-h-screen flex bg-[#07080c] text-[#eef0f5] font-poppins", theme === "light" ? "adm-light" : "adm-dark")}>
+    <div className={cn("adm-root min-h-screen flex font-poppins", theme === "light" ? "adm-light" : "adm-dark")}>
       <style>{adminThemeCss}</style>
-      <button
-        type="button"
-        className="adm-theme-fab"
-        onClick={() => setTheme((prev) => (prev === "dark" ? "light" : "dark"))}
-        aria-label="Toggle theme"
-        title={theme === "dark" ? "Switch to light" : "Switch to dark"}
-      >
-        {theme === "dark" ? <Sun size={17} /> : <Moon size={17} />}
-      </button>
       {/* Mobile header */}
-      <div className="flex md:hidden fixed top-0 left-0 right-0 z-[600] bg-[#0b0c12] border-b border-white/[.06] px-5 py-3.5 items-center justify-between shadow-[0_2px_20px_rgba(0,0,0,.4)]">
+      <div className="adm-mobile-header flex md:hidden fixed top-0 left-0 right-0 z-[600] border-b px-5 py-3.5 items-center justify-between shadow-[0_2px_20px_rgba(0,0,0,.4)]">
         <button
           className="bg-white/[.06] border border-white/[.09] rounded-lg text-white/60 cursor-pointer flex items-center justify-center p-1.5 transition-all hover:bg-white/10"
           onClick={() => setNavOpen(!navOpen)}
@@ -513,7 +503,7 @@ export default function AdminPage() {
 
       {/* Sidebar */}
       <aside className={cn(
-        "w-[260px] flex-shrink-0 bg-[#0b0c12] border-r border-white/[.055]",
+        "adm-sidebar w-[260px] flex-shrink-0 border-r border-white/[.055]",
         "fixed md:sticky top-0 h-screen flex flex-col z-[500]",
         "shadow-[1px_0_0_0_rgba(255,255,255,.04),10px_0_50px_rgba(0,0,0,.5)]",
         "transition-transform duration-300 -translate-x-full md:translate-x-0",
@@ -593,7 +583,7 @@ export default function AdminPage() {
       )}
 
       {/* Main content */}
-      <main className="flex-1 overflow-y-auto px-4 pt-20 pb-8 md:px-12 md:py-10 bg-[#07080c]">
+      <main className="adm-main flex-1 overflow-y-auto px-4 pt-20 pb-8 md:px-12 md:py-10">
         <div className="adm-topbar">
           <div className="adm-topbar-left">
             <div className="adm-search-wrap">
@@ -628,6 +618,15 @@ export default function AdminPage() {
                 </div>
               )}
             </div>
+            <button
+              type="button"
+              className="adm-icon-btn"
+              onClick={() => setTheme((prev) => (prev === "dark" ? "light" : "dark"))}
+              aria-label="Toggle theme"
+              title={theme === "dark" ? "Switch to light" : "Switch to dark"}
+            >
+              {theme === "dark" ? <Sun size={14} /> : <Moon size={14} />}
+            </button>
             <div className="adm-profile">
               <span className="adm-avatar">{(adminEmail[0] || "A").toUpperCase()}</span>
               <div>
