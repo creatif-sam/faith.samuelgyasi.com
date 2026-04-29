@@ -9,6 +9,7 @@ export function CustomCursor() {
   const ringRef   = useRef<HTMLDivElement>(null);
 
   const isDashboard = pathname?.startsWith("/dashboard");
+  const isAdmin = pathname?.startsWith("/admin");
 
   useEffect(() => {
     let mx = 0, my = 0, rx = 0, ry = 0;
@@ -40,7 +41,7 @@ export function CustomCursor() {
     };
   }, [isDashboard]);
 
-  if (isDashboard) return null;
+  if (isDashboard || isAdmin) return null;
 
   return (
     <>
