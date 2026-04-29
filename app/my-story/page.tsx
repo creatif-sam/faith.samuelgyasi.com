@@ -622,7 +622,7 @@ const translations = {
       },
       {
         num: "02",
-        title: "Teacher · Elder · Église Évangélique Au Maroc",
+        title: "Teacher ·Intercessor · Elder · Église Évangélique Au Maroc",
         body: "Samuel is a member of the elders' board and participates in decision-making alongside our pastors; he serves as a mentor for the intercession and library commissions. ",
       },
       {
@@ -729,7 +729,7 @@ const translations = {
       },
       {
         num: "02",
-        title: "Enseignant · In · Ancien · Église Évangélique Au Maroc",
+        title: "Enseignant · Intercesseur · Ancien · Église Évangélique Au Maroc",
         body: "Samuel fait partie du conseil presbytéral et participe à la prise de décision aux côtés de nos pasteurs. Il sert de mentor pour la commission d'intercession et la commission bibliothèque",
       },
       {

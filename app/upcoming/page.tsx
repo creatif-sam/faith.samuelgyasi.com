@@ -7,10 +7,12 @@ import { upcomingStyles } from "./components/styles";
 import { EventCard } from "./components/EventCard";
 import { EmptySlot } from "./components/EmptySlot";
 import { NotifySection } from "./components/NotifySection";
+import { ReserveModal } from "./components/ReserveModal";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
 
 export default function UpcomingPage() {
   const [events, setEvents] = useState<UpcomingEvent[]>([]);
+  const [showReserve, setShowReserve] = useState(false);
 
   useEffect(() => {
     const db = createClient();
@@ -52,6 +54,7 @@ export default function UpcomingPage() {
 
   return (
     <>
+      {showReserve && <ReserveModal onClose={() => setShowReserve(false)} />}
       <div className="up-pg">
         <style>{upcomingStyles}</style>
 
@@ -66,6 +69,14 @@ export default function UpcomingPage() {
             Interventions, masterclasses, and facilitated sessions — spaces where ideas become
             action and individuals become collectives.
           </p>
+          <div className="up-hero-actions">
+            <button className="up-btn up-btn--gold up-hero-reserve-btn" onClick={() => setShowReserve(true)}>
+              Reserve a Spot →
+            </button>
+            <p className="up-hero-reserve-hint">
+              Intervention · Masterclass · Session · Podcast
+            </p>
+          </div>
         </div>
 
         {/* SECTIONS */}

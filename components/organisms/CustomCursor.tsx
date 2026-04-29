@@ -1,10 +1,14 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 
 export function CustomCursor() {
+  const pathname = usePathname();
   const cursorRef = useRef<HTMLDivElement>(null);
   const ringRef   = useRef<HTMLDivElement>(null);
+
+  const isDashboard = pathname?.startsWith("/dashboard");
 
   useEffect(() => {
     let mx = 0, my = 0, rx = 0, ry = 0;
@@ -34,7 +38,9 @@ export function CustomCursor() {
       document.removeEventListener("mousemove", onMouseMove);
       cancelAnimationFrame(rafId);
     };
-  }, []);
+  }, [isDashboard]);
+
+  if (isDashboard) return null;
 
   return (
     <>

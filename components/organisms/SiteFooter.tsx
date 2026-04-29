@@ -151,53 +151,66 @@ export function SiteFooter() {
 
       {/* ── NEWSLETTER ── */}
       <div className="sf-newsletter">
-        <div className="sf-nl-left">
-          <p className="sf-nl-heading">{ft.nlHeading[lang]}</p>
-          <p className="sf-nl-sub">{ft.nlSub[lang]}</p>
-        </div>
-        <form className="sf-nl-form" onSubmit={handleSubscribe} noValidate>
-          <div className="sf-nl-interests">
-            <p className="sf-nl-interests-label">{ft.interestedIn[lang]}</p>
-            <div className="sf-nl-checks">
-              {INTERESTS.map((item) => (
-                <label key={item.value} className="sf-nl-check-item">
-                  <input
-                    type="checkbox"
-                    className="sf-nl-checkbox"
-                    value={item.value}
-                    checked={interests.includes(item.value)}
-                    onChange={() => toggleInterest(item.value)}
-                    disabled={status === "loading" || status === "success"}
-                  />
-                  <span>{item[lang]}</span>
-                </label>
-              ))}
-            </div>
+        <div className="sf-nl-card">
+          {/* Decorative glow */}
+          <div className="sf-nl-glow" aria-hidden="true" />
+
+          <div className="sf-nl-icon-wrap" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            </svg>
           </div>
 
-          <input
-            ref={inputRef}
-            type="email"
-            value={email}
-            onChange={(e) => { setEmail(e.target.value); setStatus("idle"); }}
-            placeholder={ft.emailPh[lang]}
-            className="sf-nl-input"
-            disabled={status === "loading" || status === "success"}
-            aria-label={ft.emailLabel[lang]}
-          />
-          <button
-            type="submit"
-            className="sf-nl-btn"
-            disabled={status === "loading" || status === "success"}
-          >
-            {status === "loading" ? ft.btnLoading[lang] : status === "success" ? ft.btnSuccess[lang] : ft.btnIdle[lang]}
-          </button>
-          {message && (
-            <p className={`sf-nl-msg ${status === "error" ? "sf-nl-msg--error" : ""}`}>
-              {message}
-            </p>
-          )}
-        </form>
+          <p className="sf-nl-heading">{ft.nlHeading[lang]}</p>
+          <p className="sf-nl-sub">{ft.nlSub[lang]}</p>
+
+          <form className="sf-nl-form" onSubmit={handleSubscribe} noValidate>
+            {/* Interest pills */}
+            <div className="sf-nl-interests">
+              <p className="sf-nl-interests-label">{ft.interestedIn[lang]}</p>
+              <div className="sf-nl-pills">
+                {INTERESTS.map((item) => (
+                  <button
+                    key={item.value}
+                    type="button"
+                    className={`sf-nl-pill${interests.includes(item.value) ? " sf-nl-pill--active" : ""}`}
+                    onClick={() => toggleInterest(item.value)}
+                    disabled={status === "loading" || status === "success"}
+                  >
+                    {item[lang]}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Email row */}
+            <div className="sf-nl-input-row">
+              <input
+                ref={inputRef}
+                type="email"
+                value={email}
+                onChange={(e) => { setEmail(e.target.value); setStatus("idle"); }}
+                placeholder={ft.emailPh[lang]}
+                className="sf-nl-input"
+                disabled={status === "loading" || status === "success"}
+                aria-label={ft.emailLabel[lang]}
+              />
+              <button
+                type="submit"
+                className="sf-nl-btn"
+                disabled={status === "loading" || status === "success"}
+              >
+                {status === "loading" ? ft.btnLoading[lang] : status === "success" ? ft.btnSuccess[lang] : ft.btnIdle[lang]}
+              </button>
+            </div>
+
+            {message && (
+              <p className={`sf-nl-msg ${status === "error" ? "sf-nl-msg--error" : ""}`}>
+                {message}
+              </p>
+            )}
+          </form>
+        </div>
       </div>
 
       {/* ── DIVIDER ── */}
