@@ -386,7 +386,6 @@ export type Tab =
   | "upcoming" 
   | "event-registrations"
   | "feedback" 
-  | "my-story" 
   | "trainings"
   | "gallery"
   | "discipleship"

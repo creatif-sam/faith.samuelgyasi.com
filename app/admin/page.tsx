@@ -25,7 +25,6 @@ import type {
   LibraryItem,
   UpcomingEvent,
   Feedback,
-  MyStoryContent,
   Training,
   GalleryTheme,
   EventRegistration,
@@ -58,7 +57,6 @@ import LibraryTab from "./components/tabs/LibraryTab";
 import UpcomingTab from "./components/tabs/UpcomingTab";
 import EventRegistrationsTab from "./components/tabs/EventRegistrationsTab";
 import FeedbackTab from "./components/tabs/FeedbackTab";
-import MyStoryEditorTab from "./components/tabs/MyStoryEditorTab";
 import DiscipleshipTab from "./components/tabs/DiscipleshipTab";
 import PrayerSubmissionsTab from "./components/tabs/PrayerSubmissionsTab";
 import TrainingsTab from "./components/tabs/TrainingsTab";
@@ -205,7 +203,8 @@ const adminThemeCss = `
   background: var(--adm-page-bg) !important;
 }
 .adm-root.adm-light .bg-\[\#07080c\],
-.adm-root.adm-light .bg-\[\#0b0c12\] {
+.adm-root.adm-light .bg-\[\#0b0c12\],
+.adm-root.adm-light .bg-\[\#0d0e15\] {
   background: var(--adm-surface) !important;
 }
 /* semi-transparent white cards → visible soft surface */
@@ -371,7 +370,6 @@ export default function AdminPage() {
   const [showUpcoming, setShowUpcoming] = useState(false);
   const [editUpcoming, setEditUpcoming] = useState<UpcomingEvent | null>(null);
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
-  const [myStory, setMyStory] = useState<MyStoryContent | null>(null);
   const [trainings, setTrainings] = useState<Training[]>([]);
   const [showTraining, setShowTraining] = useState(false);
   const [editTraining, setEditTraining] = useState<Training | null>(null);
@@ -425,7 +423,7 @@ export default function AdminPage() {
     setAdminEmail(session.user.email ?? "admin@samuelgyasi.com");
     setLoading(true);
     
-    const [pR, serR, tagR, sR, mR, lR, iR, tR, aR, tsR, libR, upR, fbR, msR, trnR, galR, evRegR, prayR, discR, ftR, discipR, usersRes] = await Promise.all([
+    const [pR, serR, tagR, sR, mR, lR, iR, tR, aR, tsR, libR, upR, fbR, trnR, galR, evRegR, prayR, discR, ftR, discipR, usersRes] = await Promise.all([
       db.from("blog_posts").select("*").order("created_at", { ascending: false }),
       db.from("blog_series").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: false }),
       db.from("blog_tags").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: false }),
@@ -440,7 +438,6 @@ export default function AdminPage() {
       db.from("library_items").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: false }),
       db.from("upcoming_events").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: false }),
       db.from("feedback").select("*").order("created_at", { ascending: false }),
-      db.from("my_story").select("*").single(),
       db.from("trainings").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: false }),
       db.from("gallery_themes").select("*, photos:gallery_photos(*)").order("sort_order", { ascending: true }),
       db.from("event_registrations").select("*").order("registered_at", { ascending: false }),
@@ -463,7 +460,6 @@ export default function AdminPage() {
     setLibraryItems(libR.data ?? []);
     setUpcomingEvents(upR.data ?? []);
     setFeedbacks(fbR.data ?? []);
-    setMyStory(msR.data ?? null);
     setTrainings((trnR.data as Training[]) ?? []);
     setGalleryThemes((galR.data as GalleryTheme[]) ?? []);
     setEventRegistrations((evRegR.data as EventRegistration[]) ?? []);
@@ -935,14 +931,6 @@ export default function AdminPage() {
                   toast.success("Deleted"); 
                   await load();
                 }}
-              />
-            )}
-            
-            {tab === "my-story" && (
-              <MyStoryEditorTab
-                story={myStory}
-                onSave={async () => { await load(); }}
-                db={db}
               />
             )}
             

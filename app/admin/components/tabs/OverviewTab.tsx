@@ -73,7 +73,7 @@ export default function OverviewTab({ posts, subs, msgs, logs, analytics, onNav 
           <tbody>
             {posts.slice(0, 5).map((p) => (
               <tr key={p.id} className="hover:[&>td]:bg-[rgba(212,168,67,.04)]">
-                <td className={TW.td} style={{ color: "#f0ece4" }}>{p.title}</td>
+                <td className={TW.td}>{p.title}</td>
                 <td className={TW.td} style={{ textTransform: "capitalize" }}>{p.category}</td>
                 <td className={TW.td}><span className={cn(TW.badge, p.published ? TW.bPub : TW.bDft)}>{p.published ? "Published" : "Draft"}</span></td>
                 <td className={TW.td}>{new Date(p.created_at).toLocaleDateString("en-GB")}</td>

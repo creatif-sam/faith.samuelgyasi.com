@@ -125,31 +125,8 @@ export function SiteFooter() {
   }
 
   return (
-    <footer className="sf-footer">
-      {/* ── TOP BRAND ROW ── */}
-      <div className="sf-brand-row">
-        <div className="sf-brand-name">Samuel Kobina Gyasi</div>
-        <p className="sf-brand-tagline">{ft.tagline[lang]}</p>
-        <div className="sf-social-row">
-          {socialLinks.map((s) => (
-            <a
-              key={s.label}
-              href={s.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={s.label}
-              className="sf-social-icon"
-            >
-              {s.icon}
-            </a>
-          ))}
-        </div>
-      </div>
-
-      {/* ── DIVIDER ── */}
-      <div className="sf-rule" />
-
-      {/* ── NEWSLETTER ── */}
+    <>
+      {/* ── NEWSLETTER (above footer) ── */}
       <div className="sf-newsletter">
         <div className="sf-nl-card">
           {/* Decorative glow */}
@@ -213,10 +190,30 @@ export function SiteFooter() {
         </div>
       </div>
 
+      <footer className="sf-footer">
+      <div className="sf-brand-row">
+        <div className="sf-brand-name">Samuel Kobina Gyasi</div>
+        <p className="sf-brand-tagline">{ft.tagline[lang]}</p>
+        <div className="sf-social-row">
+          {socialLinks.map((s) => (
+            <a
+              key={s.label}
+              href={s.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={s.label}
+              className="sf-social-icon"
+            >
+              {s.icon}
+            </a>
+          ))}
+        </div>
+      </div>
+
       {/* ── DIVIDER ── */}
       <div className="sf-rule" />
 
-      {/* ── LINKS COLUMNS ── */}
+      {/* ── LINKS COLUMNS ── */
       <div className="sf-columns">
         <div className="sf-col">
           <p className="sf-col-label">{ft.colPillars[lang]}</p>
@@ -267,5 +264,6 @@ export function SiteFooter() {
         <span className="sf-credit">{ft.builtWith[lang]} · samuelgyasi.com</span>
       </div>
     </footer>
+    </>
   );
 }

@@ -29,7 +29,6 @@ export const NAV = [
   { id: "library",              label: "Library",              Icon: BookOpen          },
   { id: "mail",                 label: "Mail",                 Icon: Mail              },
   { id: "messages",             label: "Messages",             Icon: MessageSquare     },
-  { id: "my-story",             label: "My Story",             Icon: BookOpen          },
   { id: "prayer-submissions",   label: "Prayer Submissions",   Icon: Heart             },
   { id: "subscribers",          label: "Subscribers",          Icon: Users             },
   { id: "testimonials",         label: "Testimonials",         Icon: Star              },
