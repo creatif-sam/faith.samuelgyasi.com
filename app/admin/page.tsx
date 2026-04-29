@@ -8,7 +8,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
-import { Globe, LogOut, Menu, Moon, Sun } from "lucide-react";
+import { Bell, Globe, LogOut, Mail, Menu, Moon, Search, Sun } from "lucide-react";
 
 // Import types
 import type {
@@ -85,6 +85,20 @@ import DiscipleProgressModal from "./components/modals/DiscipleProgressModal";
 
 const adminThemeCss = `
 .adm-root { transition: background-color .24s ease, color .24s ease; }
+.adm-root.adm-dark {
+  --adm-surface: #0b0c12;
+  --adm-surface-soft: rgba(255,255,255,.04);
+  --adm-border: rgba(255,255,255,.09);
+  --adm-text: #eef0f5;
+  --adm-text-muted: rgba(255,255,255,.45);
+}
+.adm-root.adm-light {
+  --adm-surface: #ffffff;
+  --adm-surface-soft: #f6f8fa;
+  --adm-border: rgba(15,23,42,.14);
+  --adm-text: #111827;
+  --adm-text-muted: #334155;
+}
 .adm-theme-fab {
   position: fixed;
   top: 14px;
@@ -102,6 +116,84 @@ const adminThemeCss = `
   cursor: pointer;
   box-shadow: 0 8px 24px rgba(0,0,0,.25);
 }
+.adm-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  border: 1px solid var(--adm-border);
+  background: var(--adm-surface);
+  border-radius: 16px;
+  padding: 10px 12px;
+  margin-bottom: 18px;
+}
+.adm-topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.adm-search-wrap {
+  min-width: 220px;
+  width: min(48vw, 520px);
+  height: 40px;
+  border: 1px solid var(--adm-border);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 10px;
+  background: var(--adm-surface-soft);
+}
+.adm-search-wrap svg { color: var(--adm-text-muted); }
+.adm-search {
+  flex: 1;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--adm-text);
+  font-size: 13px;
+}
+.adm-search::placeholder { color: var(--adm-text-muted); }
+.adm-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.adm-icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 1px solid var(--adm-border);
+  background: var(--adm-surface-soft);
+  color: var(--adm-text-muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.adm-profile {
+  border: 1px solid var(--adm-border);
+  background: var(--adm-surface-soft);
+  border-radius: 12px;
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.adm-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: linear-gradient(135deg,#d4a843,#c49838);
+  color: #09090d;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.adm-pname { color: var(--adm-text); font-size: 12px; font-weight: 600; line-height: 1.1; }
+.adm-pmail { color: var(--adm-text-muted); font-size: 11px; line-height: 1.1; }
 .adm-root.adm-light {
   background: #f8fafc;
   color: #0f172a;
@@ -118,6 +210,11 @@ const adminThemeCss = `
 }
 .adm-root.adm-light [class*="border-white"] {
   border-color: rgba(15,23,42,.14) !important;
+}
+@media (max-width: 768px) {
+  .adm-topbar { margin-top: 52px; }
+  .adm-search-wrap { width: 44vw; min-width: 140px; }
+  .adm-profile { display: none; }
 }
 `;
 
@@ -177,6 +274,7 @@ export default function AdminPage() {
   const [confirm, setConfirm] = useState<{ msg: string; fn: () => Promise<void> } | null>(null);
   const [navOpen, setNavOpen] = useState(false);
   const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [adminEmail, setAdminEmail] = useState("admin@samuelgyasi.com");
   
   const router = useRouter();
   const db = createClient();
@@ -204,6 +302,7 @@ export default function AdminPage() {
       router.push("/auth/login");
       return;
     }
+    setAdminEmail(session.user.email ?? "admin@samuelgyasi.com");
     setLoading(true);
     
     const [pR, serR, tagR, sR, mR, lR, iR, tR, aR, tsR, libR, upR, fbR, msR, trnR, galR, evRegR, prayR, discR, ftR, discipR, usersRes] = await Promise.all([
@@ -417,6 +516,25 @@ export default function AdminPage() {
 
       {/* Main content */}
       <main className="flex-1 overflow-y-auto px-4 pt-20 pb-8 md:px-12 md:py-10 bg-[#07080c]">
+        <div className="adm-topbar">
+          <div className="adm-topbar-left">
+            <div className="adm-search-wrap">
+              <Search size={15} />
+              <input className="adm-search" placeholder="Search tab, post, user..." />
+            </div>
+          </div>
+          <div className="adm-topbar-right">
+            <span className="adm-icon-btn"><Mail size={14} /></span>
+            <span className="adm-icon-btn"><Bell size={14} /></span>
+            <div className="adm-profile">
+              <span className="adm-avatar">{(adminEmail[0] || "A").toUpperCase()}</span>
+              <div>
+                <p className="adm-pname">Admin</p>
+                <p className="adm-pmail">{adminEmail}</p>
+              </div>
+            </div>
+          </div>
+        </div>
         {loading ? (
           <div className="flex gap-2.5 justify-center py-[140px]">
             {[0, 200, 400].map((delay) => (
@@ -619,12 +737,12 @@ export default function AdminPage() {
                   if (error) { toast.error("Update failed"); return; }
                   await load();
                 }}
-                onDelete={(id) => ask("Delete this feedback?", async () => {
+                onDelete={async (id) => {
                   const { error } = await db.from("feedback").delete().eq("id", id);
                   if (error) { toast.error("Delete failed"); return; }
                   toast.success("Deleted"); 
                   await load();
-                })}
+                }}
               />
             )}
             
@@ -675,12 +793,12 @@ export default function AdminPage() {
                   if (error) { toast.error("Update failed"); return; }
                   await load();
                 }}
-                onDelete={(id) => ask("Delete this prayer submission?", async () => {
+                onDelete={async (id) => {
                   const { error } = await db.from("prayer_submissions").delete().eq("id", id);
                   if (error) { toast.error("Delete failed"); return; }
                   toast.success("Deleted"); 
                   await load();
-                })}
+                }}
               />
             )}
 

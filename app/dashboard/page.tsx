@@ -5,17 +5,19 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
-import { BookOpen, GraduationCap, LogOut, Moon, Sun, User } from "lucide-react";
+import { Bell, BookOpen, GraduationCap, LogOut, Mail, Moon, Search, Sun, User } from "lucide-react";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 import { useLang } from "@/lib/i18n";
 
 const translations = {
   en: {
     brand: "Training Hub",
+    searchPlaceholder: "Search trainings or lessons",
     signOut: "Sign out",
-    eyebrow: "Samuel Kobina Gyasi · Training Hub",
-    heroTitle: "Your Learning Dashboard",
-    heroSub: "Track your progress across all enrolled trainings.",
+    dashboardTitle: "Dashboard",
+    dashboardSub: "Plan, prioritize, and grow through your learning journey.",
+    addAction: "Add Plan",
+    importAction: "Import Data",
     loadingMsg: "Loading your trainings…",
     myTrainings: "My Trainings",
     available: "Available Trainings",
@@ -28,10 +30,12 @@ const translations = {
   },
   fr: {
     brand: "Espace Formation",
+    searchPlaceholder: "Rechercher des formations ou leçons",
     signOut: "Se déconnecter",
-    eyebrow: "Samuel Kobina Gyasi · Espace Formation",
-    heroTitle: "Votre Tableau de Bord",
-    heroSub: "Suivez votre progression dans toutes vos formations.",
+    dashboardTitle: "Tableau de bord",
+    dashboardSub: "Planifiez, priorisez et progressez dans votre parcours.",
+    addAction: "Ajouter plan",
+    importAction: "Importer",
     loadingMsg: "Chargement de vos formations…",
     myTrainings: "Mes Formations",
     available: "Formations Disponibles",
@@ -63,27 +67,62 @@ interface EnrollmentWithProgress {
 
 const css = `
 .db-pg {
-  background: #07080c;
-  color: #eef0f5;
+  background: var(--db-bg);
+  color: var(--db-text);
   min-height: 100vh;
   font-family: var(--font-poppins), 'Poppins', sans-serif;
+}
+
+.db-theme-dark {
+  --db-bg: #07080c;
+  --db-surface: #0b0c12;
+  --db-surface-soft: rgba(255,255,255,.04);
+  --db-border: rgba(255,255,255,.08);
+  --db-text: #eef0f5;
+  --db-text-muted: rgba(255,255,255,.45);
+}
+
+.db-theme-light {
+  --db-bg: #f2f4f7;
+  --db-surface: #ffffff;
+  --db-surface-soft: #f6f8fa;
+  --db-border: rgba(15,23,42,.14);
+  --db-text: #111827;
+  --db-text-muted: #334155;
 }
 
 /* NAV */
 .db-nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-  height: 64px;
-  background: rgba(11,12,18,.97);
-  border-bottom: 1px solid rgba(255,255,255,.06);
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 40px;
+  min-height: 124px;
+  background: color-mix(in srgb, var(--db-surface) 92%, transparent);
+  border-bottom: 1px solid var(--db-border);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 36px;
   backdrop-filter: blur(20px);
+}
+.db-nav-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+.db-nav-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
 }
 .db-nav-brand {
   font-family: var(--font-playfair), serif;
   font-size: 18px; font-weight: 700;
-  color: #eef0f5; text-decoration: none;
+  color: var(--db-text); text-decoration: none;
   display: flex; align-items: center; gap: 10px;
+  flex-shrink: 0;
 }
 .db-nav-brand-dot {
   width: 32px; height: 32px; border-radius: 8px;
@@ -95,15 +134,113 @@ const css = `
 .db-nav-right {
   display: flex; align-items: center; gap: 16px;
 }
+.db-search-wrap {
+  height: 44px;
+  max-width: 520px;
+  width: min(52vw, 520px);
+  min-width: 220px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  border-radius: 14px;
+  background: var(--db-surface-soft);
+  border: 1px solid var(--db-border);
+}
+.db-search-wrap svg { color: var(--db-text-muted); }
+.db-search {
+  flex: 1;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--db-text);
+  font-size: 13px;
+}
+.db-search::placeholder { color: var(--db-text-muted); }
+.db-kbd {
+  font-family: var(--font-space-mono), monospace;
+  font-size: 10px;
+  color: var(--db-text-muted);
+  border: 1px solid var(--db-border);
+  border-radius: 8px;
+  padding: 3px 6px;
+}
+.db-icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 1px solid var(--db-border);
+  background: var(--db-surface-soft);
+  color: var(--db-text-muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.db-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px;
+  border-radius: 12px;
+  border: 1px solid var(--db-border);
+  background: var(--db-surface-soft);
+}
+.db-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg,#d4a843,#c49838);
+  color: #09090d;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+}
+.db-profile-name { font-size: 12px; color: var(--db-text); font-weight: 600; line-height: 1.1; }
+.db-profile-email { font-size: 11px; color: var(--db-text-muted); line-height: 1.1; }
+.db-nav-meta h1 {
+  font-size: 40px;
+  line-height: 1;
+  font-weight: 700;
+  color: var(--db-text);
+}
+.db-nav-meta p {
+  margin-top: 4px;
+  font-size: 14px;
+  color: var(--db-text-muted);
+}
+.db-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.db-action-primary {
+  border: 1px solid rgba(212,168,67,.7);
+  background: linear-gradient(135deg,#0e5a3f,#177a54);
+  color: #ecfff5;
+  padding: 11px 18px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.db-action-secondary {
+  border: 1px solid var(--db-border);
+  background: var(--db-surface);
+  color: var(--db-text);
+  padding: 11px 18px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
 .db-nav-user {
   display: flex; align-items: center; gap: 8px;
-  font-size: 12px; color: rgba(255,255,255,.45);
+  font-size: 12px; color: var(--db-text-muted);
 }
 .db-nav-logout {
-  background: rgba(255,255,255,.05);
-  border: 1px solid rgba(255,255,255,.09);
+  background: var(--db-surface-soft);
+  border: 1px solid var(--db-border);
   border-radius: 8px;
-  color: rgba(255,255,255,.45);
+  color: var(--db-text-muted);
   font-family: var(--font-poppins), sans-serif;
   font-size: 11px; font-weight: 500;
   padding: 8px 14px; cursor: pointer;
@@ -111,12 +248,12 @@ const css = `
   transition: all .2s;
   text-decoration: none;
 }
-.db-nav-logout:hover { color: #eef0f5; border-color: rgba(255,255,255,.2); }
+.db-nav-logout:hover { color: var(--db-text); border-color: rgba(212,168,67,.6); }
 .db-lang-toggle {
-  background: rgba(255,255,255,.04);
-  border: 1px solid rgba(255,255,255,.07);
+  background: var(--db-surface-soft);
+  border: 1px solid var(--db-border);
   border-radius: 8px;
-  color: rgba(255,255,255,.4);
+  color: var(--db-text-muted);
   font-family: var(--font-space-mono), monospace;
   font-size: 9px; font-weight: 500; letter-spacing: .15em;
   padding: 8px 12px; cursor: pointer;
@@ -144,7 +281,7 @@ const css = `
 }
 
 /* BODY */
-.db-body { padding: 100px 5% 60px; max-width: 1200px; margin: 0 auto; }
+.db-body { padding: 160px 5% 60px; max-width: 1200px; margin: 0 auto; }
 
 /* HERO */
 .db-hero { margin-bottom: 56px; }
@@ -182,8 +319,8 @@ const css = `
   margin-bottom: 56px;
 }
 .db-card {
-  background: #0b0c12;
-  border: 1px solid rgba(255,255,255,.06);
+  background: var(--db-surface);
+  border: 1px solid var(--db-border);
   border-radius: 6px;
   overflow: hidden;
   transition: border-color .3s, box-shadow .3s, transform .3s;
@@ -216,15 +353,15 @@ const css = `
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 .db-card-title {
-  font-size: 16px; font-weight: 600; color: #eef0f5; line-height: 1.3; flex: 1;
+  font-size: 16px; font-weight: 600; color: var(--db-text); line-height: 1.3; flex: 1;
 }
 .db-card-desc {
-  font-size: 12px; color: rgba(255,255,255,.4); line-height: 1.65; font-weight: 300;
+  font-size: 12px; color: var(--db-text-muted); line-height: 1.65; font-weight: 300;
 }
 .db-card-meta {
   font-family: var(--font-space-mono), monospace;
   font-size: 9px; letter-spacing: .1em; text-transform: uppercase;
-  color: rgba(255,255,255,.22);
+  color: var(--db-text-muted);
   display: flex; gap: 12px; margin-top: 6px;
   border-top: 1px solid rgba(255,255,255,.05); padding-top: 12px;
 }
@@ -232,11 +369,11 @@ const css = `
 /* PROGRESS BAR */
 .db-progress-wrap { margin-top: 6px; }
 .db-progress-label {
-  font-size: 10px; color: rgba(255,255,255,.35);
+  font-size: 10px; color: var(--db-text-muted);
   display: flex; justify-content: space-between; margin-bottom: 5px;
 }
 .db-progress-bar {
-  height: 4px; background: rgba(255,255,255,.07); border-radius: 2px; overflow: hidden;
+  height: 4px; background: color-mix(in srgb, var(--db-text) 12%, transparent); border-radius: 2px; overflow: hidden;
 }
 .db-progress-fill {
   height: 100%; background: linear-gradient(90deg,#ffde59,#ff914d);
@@ -262,63 +399,20 @@ const css = `
 
 /* EMPTY */
 .db-empty {
-  font-size: 15px; color: rgba(255,255,255,.25); padding: 60px; text-align: center;
+  font-size: 15px; color: var(--db-text-muted); padding: 60px; text-align: center;
   grid-column: 1 / -1;
 }
 
 @media (max-width: 768px) {
-  .db-nav { padding: 0 20px; }
-  .db-body { padding: 88px 5% 40px; }
+  .db-nav { padding: 12px 14px; min-height: 154px; }
+  .db-nav-row { align-items: flex-start; }
+  .db-nav-left { width: 100%; flex-wrap: wrap; }
+  .db-search-wrap { width: 100%; max-width: none; min-width: 0; }
+  .db-profile { display: none; }
+  .db-nav-meta h1 { font-size: 30px; }
+  .db-actions { width: 100%; justify-content: flex-start; }
+  .db-body { padding: 190px 5% 40px; }
   .db-grid { grid-template-columns: 1fr; }
-}
-
-/* LIGHT THEME */
-.db-theme-light {
-  background: #f7f8fb;
-  color: #0f172a;
-}
-.db-theme-light .db-nav {
-  background: rgba(255,255,255,.96);
-  border-bottom: 1px solid rgba(15,23,42,.12);
-}
-.db-theme-light .db-nav-brand,
-.db-theme-light .db-hero-title,
-.db-theme-light .db-card-title,
-.db-theme-light .db-section-title {
-  color: #0f172a;
-}
-.db-theme-light .db-hero-sub,
-.db-theme-light .db-card-desc,
-.db-theme-light .db-nav-user,
-.db-theme-light .db-card-meta,
-.db-theme-light .db-empty {
-  color: #111827;
-}
-.db-theme-light .db-progress-label,
-.db-theme-light .db-card-meta,
-.db-theme-light .db-section-title,
-.db-theme-light .db-hero-sub {
-  color: #111827;
-}
-.db-theme-light .db-section-title::after { background: rgba(15,23,42,.14); }
-.db-theme-light .db-card {
-  background: #ffffff;
-  border: 1px solid rgba(15,23,42,.12);
-}
-.db-theme-light .db-card:hover {
-  border-color: rgba(201,168,76,.5);
-  box-shadow: 0 12px 28px rgba(15,23,42,.14);
-}
-.db-theme-light .db-nav-logout,
-.db-theme-light .db-lang-toggle {
-  background: rgba(15,23,42,.04);
-  border-color: rgba(15,23,42,.16);
-  color: rgba(15,23,42,.72);
-}
-.db-theme-light .db-nav-logout:hover,
-.db-theme-light .db-lang-toggle:hover {
-  color: #0f172a;
-  border-color: rgba(201,168,76,.6);
 }
 `;
 
@@ -422,34 +516,52 @@ export default function DashboardPage() {
 
       {/* NAV */}
       <nav className="db-nav">
-        <Link href="/" className="db-nav-brand">
-          <div className="db-nav-brand-dot">SG</div>
-          <span>{t.brand}</span>
-        </Link>
-        <div className="db-nav-right">
-          <button className="db-lang-toggle" onClick={toggleLang} aria-label="Toggle language">
-            <span className={lang === "en" ? "db-lang-active" : ""}>EN</span>
-            <span style={{ opacity: .3 }}>|</span>
-            <span className={lang === "fr" ? "db-lang-active" : ""}>FR</span>
-          </button>
-          <div className="db-nav-user">
-            <User size={13} />
-            <span>{user?.email?.split("@")[0] ?? "Student"}</span>
+        <div className="db-nav-row">
+          <div className="db-nav-left">
+            <Link href="/" className="db-nav-brand">
+              <div className="db-nav-brand-dot">SG</div>
+              <span>{t.brand}</span>
+            </Link>
+            <div className="db-search-wrap">
+              <Search size={15} />
+              <input className="db-search" placeholder={t.searchPlaceholder} />
+              <span className="db-kbd">Ctrl K</span>
+            </div>
           </div>
-          <button className="db-nav-logout" onClick={handleLogout}>
-            <LogOut size={12} /> {t.signOut}
-          </button>
+          <div className="db-nav-right">
+            <button className="db-icon-btn" aria-label="Inbox"><Mail size={14} /></button>
+            <button className="db-icon-btn" aria-label="Notifications"><Bell size={14} /></button>
+            <div className="db-profile">
+              <span className="db-avatar">{(user?.email?.[0] || "S").toUpperCase()}</span>
+              <div>
+                <p className="db-profile-name">{user?.email?.split("@")[0] ?? "Student"}</p>
+                <p className="db-profile-email">{user?.email ?? ""}</p>
+              </div>
+            </div>
+            <button className="db-lang-toggle" onClick={toggleLang} aria-label="Toggle language">
+              <span className={lang === "en" ? "db-lang-active" : ""}>EN</span>
+              <span style={{ opacity: .3 }}>|</span>
+              <span className={lang === "fr" ? "db-lang-active" : ""}>FR</span>
+            </button>
+            <button className="db-nav-logout" onClick={handleLogout}>
+              <LogOut size={12} /> {t.signOut}
+            </button>
+          </div>
+        </div>
+        <div className="db-nav-row">
+          <div className="db-nav-meta">
+            <h1>{t.dashboardTitle}</h1>
+            <p>{t.dashboardSub}</p>
+          </div>
+          <div className="db-actions">
+            <button className="db-action-primary">+ {t.addAction}</button>
+            <button className="db-action-secondary">{t.importAction}</button>
+          </div>
         </div>
       </nav>
 
       {/* BODY */}
       <div className="db-body">
-        <div className="db-hero">
-          <p className="db-hero-eyebrow">{t.eyebrow}</p>
-          <h1 className="db-hero-title">{t.heroTitle}</h1>
-          <p className="db-hero-sub">{t.heroSub}</p>
-        </div>
-
         {loading ? (
           <div style={{ display: "flex", gap: 8, justifyContent: "center", padding: "80px 0" }}>
             {[0, 200, 400].map((d) => (
