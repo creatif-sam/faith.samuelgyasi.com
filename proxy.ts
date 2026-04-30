@@ -13,6 +13,8 @@ const ALLOWED_PREFIXES = [
   "/api",
   "/auth",
   "/admin",
+  "/dashboard",
+  "/faith-analyzer",
 ];
 
 export async function proxy(request: NextRequest) {

@@ -1,7 +1,7 @@
 import {
   LayoutDashboard, BarChart3, FileText, Users, MessageSquare,
   Mail, BookOpen, Star, Calendar, MessageSquarePlus,
-  GraduationCap, Images, UserCheck, Heart, List, ClipboardCheck, Tag, ScrollText
+  GraduationCap, Images, UserCheck, Heart, List, ClipboardCheck, Tag, ScrollText, MessageCircle
 } from "lucide-react";
 import { Tab } from "./types";
 
@@ -29,6 +29,7 @@ export const NAV = [
   { id: "library",              label: "Library",              Icon: BookOpen          },
   { id: "mail",                 label: "Mail",                 Icon: Mail              },
   { id: "messages",             label: "Messages",             Icon: MessageSquare     },
+  { id: "comments",             label: "Blog Comments",         Icon: MessageCircle     },
   { id: "prayer-submissions",   label: "Prayer Submissions",   Icon: Heart             },
   { id: "subscribers",          label: "Subscribers",          Icon: Users             },
   { id: "testimonials",         label: "Testimonials",         Icon: Star              },

@@ -62,6 +62,17 @@ export interface BlogReview {
   updated_at: string;
 }
 
+export interface BlogComment {
+  id: string;
+  blog_post_id: string;
+  commenter_name: string;
+  commenter_email: string | null;
+  comment_text: string;
+  approved: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface Subscriber {
   id: string;
   email: string;
@@ -387,6 +398,7 @@ export type Tab =
   | "event-registrations"
   | "feedback" 
   | "trainings"
+  | "comments"
   | "gallery"
   | "discipleship"
   | "prayer-submissions"

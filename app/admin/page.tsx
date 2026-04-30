@@ -26,6 +26,7 @@ import type {
   UpcomingEvent,
   Feedback,
   Training,
+  BlogComment,
   GalleryTheme,
   EventRegistration,
   PrayerSubmission,
@@ -64,6 +65,7 @@ import GalleryTab from "./components/tabs/GalleryTab";
 import FaithTestsTab from "./components/tabs/FaithTestsTab";
 import UsersTab from "./components/tabs/UsersTab";
 import LogsTab from "./components/tabs/LogsTab";
+import CommentsTab from "./components/tabs/CommentsTab";
 
 // Import modal components
 import PostModal from "./components/modals/PostModal";
@@ -202,9 +204,9 @@ const adminThemeCss = `
 .adm-root.adm-light aside {
   background: var(--adm-page-bg) !important;
 }
-.adm-root.adm-light .bg-\[\#07080c\],
-.adm-root.adm-light .bg-\[\#0b0c12\],
-.adm-root.adm-light .bg-\[\#0d0e15\] {
+.adm-root.adm-light [class*="bg-[#07080c]"],
+.adm-root.adm-light [class*="bg-[#0b0c12]"],
+.adm-root.adm-light [class*="bg-[#0d0e15]"] {
   background: var(--adm-surface) !important;
 }
 /* semi-transparent white cards → visible soft surface */
@@ -370,6 +372,7 @@ export default function AdminPage() {
   const [showUpcoming, setShowUpcoming] = useState(false);
   const [editUpcoming, setEditUpcoming] = useState<UpcomingEvent | null>(null);
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
+  const [blogComments, setBlogComments] = useState<BlogComment[]>([]);
   const [trainings, setTrainings] = useState<Training[]>([]);
   const [showTraining, setShowTraining] = useState(false);
   const [editTraining, setEditTraining] = useState<Training | null>(null);
@@ -423,7 +426,7 @@ export default function AdminPage() {
     setAdminEmail(session.user.email ?? "admin@samuelgyasi.com");
     setLoading(true);
     
-    const [pR, serR, tagR, sR, mR, lR, iR, tR, aR, tsR, libR, upR, fbR, trnR, galR, evRegR, prayR, discR, ftR, discipR, usersRes] = await Promise.all([
+    const [pR, serR, tagR, sR, mR, lR, iR, tR, aR, tsR, libR, upR, fbR, cmtR, trnR, galR, evRegR, prayR, discR, ftR, discipR, usersRes] = await Promise.all([
       db.from("blog_posts").select("*").order("created_at", { ascending: false }),
       db.from("blog_series").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: false }),
       db.from("blog_tags").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: false }),
@@ -438,6 +441,7 @@ export default function AdminPage() {
       db.from("library_items").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: false }),
       db.from("upcoming_events").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: false }),
       db.from("feedback").select("*").order("created_at", { ascending: false }),
+      db.from("blog_comments").select("*").order("created_at", { ascending: false }),
       db.from("trainings").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: false }),
       db.from("gallery_themes").select("*, photos:gallery_photos(*)").order("sort_order", { ascending: true }),
       db.from("event_registrations").select("*").order("registered_at", { ascending: false }),
@@ -460,6 +464,7 @@ export default function AdminPage() {
     setLibraryItems(libR.data ?? []);
     setUpcomingEvents(upR.data ?? []);
     setFeedbacks(fbR.data ?? []);
+    setBlogComments((cmtR.data as BlogComment[]) ?? []);
     setTrainings((trnR.data as Training[]) ?? []);
     setGalleryThemes((galR.data as GalleryTheme[]) ?? []);
     setEventRegistrations((evRegR.data as EventRegistration[]) ?? []);
@@ -514,6 +519,7 @@ export default function AdminPage() {
   const unreadInbox = inbox.filter((e) => !e.read).length;
   const unreadFeedback = feedbacks.filter((f) => !f.resolved).length;
   const unprayedSubmissions = prayerSubmissions.filter((p) => !p.prayed_for).length;
+  const unapprovedComments = blogComments.filter((c) => !c.approved).length;
   const unreadNotifCount = notifications.filter((n) => !n.read).length;
 
   async function markAllNotificationsRead() {
@@ -587,6 +593,7 @@ export default function AdminPage() {
               : id === "mail" && unreadInbox > 0 ? unreadInbox
               : id === "feedback" && unreadFeedback > 0 ? unreadFeedback
               : id === "prayer-submissions" && unprayedSubmissions > 0 ? unprayedSubmissions
+              : id === "comments" && unapprovedComments > 0 ? unapprovedComments
               : null;
             const isActive = tab === id;
             
@@ -929,6 +936,25 @@ export default function AdminPage() {
                   const { error } = await db.from("feedback").delete().eq("id", id);
                   if (error) { toast.error("Delete failed"); return; }
                   toast.success("Deleted"); 
+                  await load();
+                }}
+              />
+            )}
+
+            {tab === "comments" && (
+              <CommentsTab
+                comments={blogComments}
+                posts={posts}
+                onApprove={async (id) => {
+                  const { error } = await db.from("blog_comments").update({ approved: true }).eq("id", id);
+                  if (error) { toast.error("Approval failed"); return; }
+                  toast.success("Comment approved");
+                  await load();
+                }}
+                onDelete={async (id) => {
+                  const { error } = await db.from("blog_comments").delete().eq("id", id);
+                  if (error) { toast.error("Delete failed"); return; }
+                  toast.success("Comment deleted");
                   await load();
                 }}
               />
