@@ -7,6 +7,7 @@ import { Analytics } from "@/components/Analytics";
 import { Providers } from "./providers";
 import { NavWrapper } from "@/components/organisms/NavWrapper";
 import { FeedbackWidget } from "@/components/organisms/FeedbackWidget";
+import { ThemeSwitcher } from "@/components/theme-switcher";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -154,6 +155,7 @@ export default function RootLayout({
           <Analytics />
           <NavWrapper />
           {children}
+          <ThemeSwitcher />
           <FeedbackWidget />
           <CookieBanner />
         </Providers>
