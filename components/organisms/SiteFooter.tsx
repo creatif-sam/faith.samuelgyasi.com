@@ -213,7 +213,7 @@ export function SiteFooter() {
       {/* ── DIVIDER ── */}
       <div className="sf-rule" />
 
-      {/* ── LINKS COLUMNS ── */
+      {/* ── LINKS COLUMNS ── */}
       <div className="sf-columns">
         <div className="sf-col">
           <p className="sf-col-label">{ft.colPillars[lang]}</p>
