@@ -571,4 +571,63 @@ body.on-fdp { background:#080807; color:#f0ece4; font-family:'Cormorant Garamond
   .fb-card { padding: 32px 24px; }
   .fb-card-cover { margin: -32px -24px 16px; }
 }
+
+/* ── LIGHT MODE ── */
+:root:not(.dark) body.on-fdp { background: #ffffff; color: #1a1816; }
+:root:not(.dark) .fdp {
+  --bg: #ffffff; --bg2: #f5f3ef; --white: #1a1816; --cream: #2a2520;
+  --gold: #B8860B; --dim: #4a4640; --dimmer: #7a7060;
+  --line: rgba(10,10,10,.1); --card: #f5f3ef;
+}
+:root:not(.dark) .fdp-blog-nav {
+  background: rgba(255,255,255,.97);
+  border-bottom-color: rgba(184,134,11,.25);
+  box-shadow: 0 4px 20px rgba(0,0,0,.08);
+}
+:root:not(.dark) .nav-back { color: #6a6058; }
+:root:not(.dark) .nav-back:hover { color: #B8860B; }
+:root:not(.dark) .nav-logo { color: #1a1816; }
+:root:not(.dark) .fb-title { color: #0a0a0a; }
+:root:not(.dark) .fb-title em {
+  background: linear-gradient(90deg, #B8860B, #D4700A);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+:root:not(.dark) .fb-eyebrow {
+  background: linear-gradient(90deg, #B8860B, #D4700A);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+:root:not(.dark) .fb-eyebrow::before { background: linear-gradient(90deg, #B8860B, #D4700A); }
+:root:not(.dark) .fb-subtitle { color: #4a4640; }
+:root:not(.dark) .fb-search-container { background: #ffffff; border-bottom-color: rgba(10,10,10,.1); }
+:root:not(.dark) .fb-search-input {
+  background: rgba(10,10,10,.03); border-color: rgba(10,10,10,.18); color: #1a1816;
+}
+:root:not(.dark) .fb-search-input::placeholder { color: #9a9080; }
+:root:not(.dark) .fb-search-input:focus { border-color: rgba(184,134,11,.5); box-shadow: 0 0 0 3px rgba(184,134,11,.1); }
+:root:not(.dark) .fb-search-results { color: #B8860B; }
+:root:not(.dark) .fb-filters { background: #f5f3ef; border-bottom-color: rgba(10,10,10,.1); }
+:root:not(.dark) .fb-filter { border-color: rgba(10,10,10,.18); color: #4a4640; }
+:root:not(.dark) .fb-filter:hover { border-color: rgba(184,134,11,.5); color: #B8860B; box-shadow: 0 4px 12px rgba(184,134,11,.12); }
+:root:not(.dark) .fb-filter--active { background: linear-gradient(90deg, #B8860B, #D4700A); color: #ffffff; border-color: transparent; }
+:root:not(.dark) .fb-featured-tag {
+  background: linear-gradient(90deg, #B8860B, #D4700A);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+:root:not(.dark) .fb-featured-title { color: #0a0a0a; }
+:root:not(.dark) .fb-featured:hover .fb-featured-title { color: #B8860B; }
+:root:not(.dark) .fb-featured-excerpt { color: #4a4640; }
+:root:not(.dark) .fb-meta { color: #7a7060; }
+:root:not(.dark) .fb-card { background: #f5f3ef; border-color: rgba(10,10,10,.12); color: #1a1816; }
+:root:not(.dark) .fb-card:hover { border-color: rgba(184,134,11,.45); box-shadow: 0 20px 40px rgba(0,0,0,.1); }
+:root:not(.dark) .fb-card-tag { color: #B8860B; }
+:root:not(.dark) .fb-card:hover .fb-card-tag { color: #8A6200; }
+:root:not(.dark) .fb-card-title { color: #0a0a0a; }
+:root:not(.dark) .fb-card:hover .fb-card-title { color: #1a1816; }
+:root:not(.dark) .fb-card-excerpt { color: #4a4640; }
+:root:not(.dark) .fb-empty { color: #6a6058; }
+:root:not(.dark) .fb-pg-footer { background: #f5f3ef; border-top-color: rgba(10,10,10,.1); }
+:root:not(.dark) .fb-footer-link { color: #B8860B; }
+:root:not(.dark) .fb-footer-copy { color: #7a7060; }
+:root:not(.dark) .fb-series-back { color: #B8860B; border-color: rgba(184,134,11,.35); }
+:root:not(.dark) .fb-series-back:hover { background: rgba(184,134,11,.08); }
 `;
