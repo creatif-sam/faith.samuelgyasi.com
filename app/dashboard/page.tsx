@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import {
   Award, Bell, BookOpen, CheckCircle2, GraduationCap, Globe,
-  LogOut, Menu, Moon, Search, Sun, TrendingUp, User, X,
+  LogOut, Mail, Menu, Moon, Search, Sun, TrendingUp, User, X,
 } from "lucide-react";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 import { useLang } from "@/lib/i18n";
@@ -251,65 +251,92 @@ const dashCss = `
 }
 .dash-logout:hover { border-color: rgba(212,168,67,.4); color: var(--d-gold); }
 
-/* â”€â”€ TOPBAR â”€â”€ */
+/* -- MOBILE HEADER (fixed, md:hidden) -- */
+.dash-mobile-header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 600;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px;
+  background: var(--d-surf);
+  border-bottom: 1px solid var(--d-border);
+  box-shadow: 0 2px 20px rgba(0,0,0,.4);
+}
+@media (min-width: 769px) { .dash-mobile-header { display: none; } }
+.dash-mobile-ham {
+  background: var(--d-soft); border: 1px solid var(--d-border);
+  border-radius: 8px; color: var(--d-muted); cursor: pointer;
+  display: flex; align-items: center; justify-content: center; padding: 6px;
+  transition: all .18s;
+}
+.dash-mobile-ham:hover { background: var(--d-border); color: var(--d-text); }
+.dash-mobile-brand {
+  font-size: 14px; font-weight: 600; color: var(--d-text);
+  display: flex; align-items: center; gap: 8px;
+}
+.dash-mobile-brand-dot {
+  width: 28px; height: 28px; border-radius: 8px;
+  background: linear-gradient(135deg,#d4a843,#c49838);
+  color: #09090d; font-size: 9px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+/* -- TOPBAR (floating, exactly like admin) -- */
 .dash-topbar {
   flex-shrink: 0;
   display: flex; align-items: center; justify-content: space-between;
-  gap: 12px;
-  padding: 10px 14px;
-  margin: 14px 14px 0;
+  gap: 14px; padding: 10px 12px;
+  margin: 62px 16px 0;
   border-radius: 16px;
   border: 1px solid var(--d-border);
   background: var(--d-surf);
-  box-shadow: 0 8px 24px rgba(0,0,0,.14);
+  box-shadow: 0 10px 26px rgba(0,0,0,.16);
 }
-.dash-topbar-left { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
-.dash-topbar-right { display: flex; align-items: center; gap: 8px; }
+@media (min-width: 769px) { .dash-topbar { margin: 24px 48px 0; } }
+.dash-topbar-left { display: flex; align-items: center; gap: 10px; min-width: 0; position: relative; }
+.dash-topbar-right { display: flex; align-items: center; gap: 10px; }
 .dash-search-wrap {
-  flex: 1; max-width: 480px;
-  height: 38px;
-  display: flex; align-items: center; gap: 8px;
-  padding: 0 12px;
-  border-radius: 12px;
-  border: 1px solid var(--d-border);
+  min-width: 220px; width: min(48vw, 520px); height: 40px;
+  border: 1px solid var(--d-border); border-radius: 12px;
+  display: flex; align-items: center; gap: 8px; padding: 0 10px;
   background: var(--d-soft);
 }
-.dash-search-wrap svg { color: var(--d-muted); flex-shrink: 0; }
+.dash-search-wrap svg { color: var(--d-muted); }
 .dash-search {
-  flex: 1; border: 0; outline: 0;
-  background: transparent;
-  color: var(--d-text);
-  font-size: 13px;
+  flex: 1; border: 0; outline: 0; background: transparent;
+  color: var(--d-text); font-size: 13px;
   font-family: var(--font-poppins), sans-serif;
 }
 .dash-search::placeholder { color: var(--d-muted); }
 .dash-icon-btn {
   width: 36px; height: 36px; border-radius: 999px;
-  border: 1px solid var(--d-border);
-  background: var(--d-soft);
+  border: 1px solid var(--d-border); background: var(--d-soft);
   color: var(--d-muted);
   display: inline-flex; align-items: center; justify-content: center;
-  cursor: pointer; flex-shrink: 0;
-  transition: border-color .18s, color .18s;
+  cursor: pointer; flex-shrink: 0; transition: border-color .18s, color .18s;
 }
-.dash-icon-btn:hover { border-color: rgba(212,168,67,.45); color: var(--d-text); }
-.dash-menu-btn { display: none; }
-@media (max-width: 768px) { .dash-menu-btn { display: inline-flex; } }
-.dash-topbar-profile {
+.dash-icon-btn:hover { border-color: rgba(212,168,67,.42); color: var(--d-text); }
+.dash-profile {
+  border: 1px solid var(--d-border); background: var(--d-soft);
+  border-radius: 12px; padding: 6px 10px;
   display: flex; align-items: center; gap: 8px;
-  padding: 5px 10px;
-  border-radius: 12px;
-  border: 1px solid var(--d-border);
-  background: var(--d-soft);
 }
-.dash-topbar-avatar {
-  width: 28px; height: 28px; border-radius: 50%;
+.dash-avatar {
+  width: 30px; height: 30px; border-radius: 50%;
   background: linear-gradient(135deg,#d4a843,#c49838);
-  color: #09090d; font-size: 11px; font-weight: 700;
-  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  color: #09090d; font-size: 12px; font-weight: 700;
+  display: inline-flex; align-items: center; justify-content: center;
 }
-.dash-topbar-name { font-size: 12px; font-weight: 600; color: var(--d-text); line-height: 1.1; }
-.dash-topbar-email { font-size: 10px; color: var(--d-muted); line-height: 1.2; }
+.dash-pname { color: var(--d-text); font-size: 12px; font-weight: 600; line-height: 1.1; }
+.dash-pmail { color: var(--d-muted); font-size: 11px; line-height: 1.1; }
+.dash-notif-wrap { position: relative; }
+.dash-notif-badge {
+  position: absolute; top: -5px; right: -5px;
+  min-width: 16px; height: 16px; border-radius: 999px;
+  background: #d4a843; color: #09090d; font-size: 9px; font-weight: 700;
+  display: inline-flex; align-items: center; justify-content: center; padding: 0 4px;
+}
+@media (max-width: 768px) {
+  .dash-search-wrap { width: 44vw; min-width: 140px; }
+  .dash-profile { display: none; }
+}
 
 /* â”€â”€ MAIN CONTENT â”€â”€ */
 .dash-content {
@@ -530,11 +557,9 @@ const dashCss = `
 }
 
 @media (max-width: 640px) {
-  .dash-topbar-profile-meta { display: none; }
   .dash-stats { grid-template-columns: repeat(2, 1fr); }
   .dash-content { padding: 16px 14px 32px; }
   .dash-grid { grid-template-columns: 1fr; }
-  .dash-topbar { margin: 10px 10px 0; }
   .dash-profile-card { padding: 22px 18px; }
 }
 `;
@@ -655,6 +680,17 @@ export default function DashboardPage() {
     <div className={`dash-root h-screen overflow-hidden flex ${theme === "light" ? "dash-light" : "dash-dark"}`}>
       <style>{dashCss}</style>
 
+      {/* Mobile header */}
+      <div className="dash-mobile-header">
+        <button className="dash-mobile-ham" onClick={() => setNavOpen(!navOpen)} aria-label="Menu">
+          {navOpen ? <X size={18} /> : <Menu size={18} />}
+        </button>
+        <span className="dash-mobile-brand">
+          <span className="dash-mobile-brand-dot">SG</span>
+          {t.brand}
+        </span>
+        <Link href="/" style={{ color: "var(--d-muted)", display: "flex", lineHeight: 1 }}><Globe size={16} /></Link>
+      </div>
       {/* â”€â”€ SIDEBAR â”€â”€ */}
       <aside className={`dash-sidebar${navOpen ? " open" : ""}`}>
         <Link href="/" className="dash-brand" style={{ textDecoration: "none" }}>
@@ -720,43 +756,35 @@ export default function DashboardPage() {
         {/* Topbar */}
         <div className="dash-topbar">
           <div className="dash-topbar-left">
-            <button className="dash-icon-btn dash-menu-btn" onClick={() => setNavOpen((v) => !v)} aria-label="Menu">
-              {navOpen ? <X size={16} /> : <Menu size={16} />}
-            </button>
             <div className="dash-search-wrap">
-              <Search size={14} />
+              <Search size={15} />
               <input
                 className="dash-search"
                 placeholder={t.searchPlaceholder}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
-              {search && (
-                <button
-                  style={{ background: "none", border: "none", cursor: "pointer", color: "var(--d-muted)", display: "flex" }}
-                  onClick={() => setSearch("")}
-                >
-                  <X size={12} />
-                </button>
-              )}
             </div>
           </div>
           <div className="dash-topbar-right">
-            <button
-              className="dash-icon-btn"
-              onClick={() => setTheme((v) => v === "dark" ? "light" : "dark")}
-              aria-label="Toggle theme"
-            >
-              {theme === "dark" ? <Sun size={14} /> : <Moon size={14} />}
-            </button>
+            <span className="dash-icon-btn"><Mail size={14} /></span>
             <button className="dash-icon-btn" aria-label="Notifications">
               <Bell size={14} />
             </button>
-            <div className="dash-topbar-profile">
-              <div className="dash-topbar-avatar">{initials}</div>
-              <div className="dash-topbar-profile-meta">
-                <p className="dash-topbar-name">{displayName}</p>
-                <p className="dash-topbar-email">{user?.email ?? ""}</p>
+            <button
+              type="button"
+              className="dash-icon-btn"
+              onClick={() => setTheme((v) => v === "dark" ? "light" : "dark")}
+              aria-label="Toggle theme"
+              title={theme === "dark" ? "Switch to light" : "Switch to dark"}
+            >
+              {theme === "dark" ? <Sun size={14} /> : <Moon size={14} />}
+            </button>
+            <div className="dash-profile">
+              <span className="dash-avatar">{initials}</span>
+              <div>
+                <p className="dash-pname">{displayName}</p>
+                <p className="dash-pmail">{user?.email ?? ""}</p>
               </div>
             </div>
           </div>
