@@ -13,7 +13,7 @@ import { useLang } from "@/lib/i18n";
 
 const translations = {
   en: {
-    brand: "Training Hub",
+    brand: "Mastery Hub",
     searchPlaceholder: "Search trainingsâ€¦",
     signOut: "Sign out",
     myTrainings: "My Trainings",
@@ -41,7 +41,7 @@ const translations = {
     light: "Light",
   },
   fr: {
-    brand: "Espace Formation",
+    brand: "Mastery Hub",
     searchPlaceholder: "Rechercher des formationsâ€¦",
     signOut: "Se dÃ©connecter",
     myTrainings: "Mes Formations",
@@ -724,21 +724,6 @@ export default function DashboardPage() {
 
         <div className="dash-sidebar-spacer" />
 
-        <div className="dash-nav-section">Preferences</div>
-        <button
-          className="dash-nav-item"
-          onClick={() => setTheme((v) => v === "dark" ? "light" : "dark")}
-        >
-          {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
-          <span style={{ flex: 1, textAlign: "left" }}>{theme === "dark" ? t.light : t.dark} {t.theme}</span>
-        </button>
-        <button
-          className="dash-nav-item"
-          onClick={toggleLang}
-        >
-          <Globe size={16} />
-          <span style={{ flex: 1, textAlign: "left" }}>{lang === "en" ? "FranÃ§ais" : "English"}</span>
-        </button>
 
         <button className="dash-logout" onClick={handleLogout}>
           <LogOut size={14} />
@@ -779,6 +764,15 @@ export default function DashboardPage() {
               title={theme === "dark" ? "Switch to light" : "Switch to dark"}
             >
               {theme === "dark" ? <Sun size={14} /> : <Moon size={14} />}
+            </button>
+            <button
+              type="button"
+              className="dash-icon-btn"
+              onClick={toggleLang}
+              aria-label="Switch language"
+              title={lang === "en" ? "Passer en Français" : "Switch to English"}
+            >
+              <Globe size={14} />
             </button>
             <div className="dash-profile">
               <span className="dash-avatar">{initials}</span>
