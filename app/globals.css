@@ -290,6 +290,33 @@
 .light .section-title { color: #0a0a0a; }
 .light .section-body  { color: #4a4640; }
 
+/* Vision section in light mode */
+.light .vision-section { background: #f5f3ef; color: #1a1816; }
+.light .vision-bg-text { -webkit-text-stroke: 1px rgba(0,0,0,.06); }
+.light .vision-statement { color: #1a1816; }
+.light .vision-statement strong { color: #0a0a0a; }
+.light .transformation-title { color: #1a1816; }
+.light .stage-from { color: #6a6058; }
+.light .stage-to {
+  background: linear-gradient(90deg, #B8860B, #D4700A);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  animation: none;
+}
+.light .stage-arrow { color: #B8860B; }
+.light .transformation-stage:hover .stage-from { color: #1a1816; }
+
+/* What I Do section in light mode */
+.light .what-i-do-section { background: #ffffff; }
+.light .wid-title { color: #1a1816; }
+.light .wid-sub { color: #4a4640; }
+.light .wid-grid { background: rgba(0,0,0,.06); }
+.light .wid-card { background: #ffffff; border-top-color: rgba(0,0,0,.1); box-shadow: none; }
+.light .wid-card:hover { background: #f5f3ef; }
+.light .wid-card-num { color: #B8860B; }
+.light .wid-card-title { color: #1a1816; }
+.light .wid-card-org { color: #B8860B; }
+.light .wid-card-body { color: #4a4640; }
+
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
