@@ -47,14 +47,16 @@ export async function updateSession(request: NextRequest) {
   const { data } = await supabase.auth.getClaims();
   const user = data?.claims;
 
-  // Only protect admin and internal protected routes
+  // Protect admin, internal, and dashboard routes
   if (
     !user &&
     (request.nextUrl.pathname.startsWith("/protected") ||
-      request.nextUrl.pathname.startsWith("/admin"))
+      request.nextUrl.pathname.startsWith("/admin") ||
+      request.nextUrl.pathname.startsWith("/dashboard"))
   ) {
     const url = request.nextUrl.clone();
     url.pathname = "/auth/login";
+    url.searchParams.set("next", request.nextUrl.pathname);
     return NextResponse.redirect(url);
   }
 
