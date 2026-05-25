@@ -234,6 +234,26 @@ const css = `
   .credo-num { font-size: 42px; margin-bottom: 12px; }
   .credo-text { padding-left: 0; }
 }
+
+/* ── LIGHT THEME ── */
+.light .credo-hero-sub {
+  color: #4a4640;
+}
+.light .credo-item-title {
+  color: #1a1816;
+}
+.light .credo-item-body {
+  color: #4a4640;
+}
+.light .credo-close-quote {
+  color: #1a1816;
+}
+.light .credo-close-sign {
+  color: #7a7060;
+}
+.light .credo-num {
+  -webkit-text-stroke: 1px rgba(184,134,11,.45);
+}
 `;
 
 const beliefs = [

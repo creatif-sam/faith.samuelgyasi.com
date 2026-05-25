@@ -213,6 +213,20 @@ const css = `
   .lib-section-card--full { flex-direction: column; align-items: flex-start; gap: 20px; padding: 40px 28px; }
   .lib-section-card--full .lib-card-cta { margin-left: 0; }
 }
+
+/* ── LIGHT THEME ── */
+.light .lib-sub {
+  color: #4a4640;
+}
+.light .lib-card-title {
+  color: #c9a84c;
+}
+.light .lib-card-body {
+  color: rgba(245,243,239,.75);
+}
+.light .lib-quote-strip blockquote {
+  color: #1a1816;
+}
 `;
 
 export default function ResourcesPage() {
