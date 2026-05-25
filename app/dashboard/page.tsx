@@ -14,7 +14,7 @@ import { useLang } from "@/lib/i18n";
 const translations = {
   en: {
     brand: "Mastery Hub",
-    searchPlaceholder: "Search trainingsâ€¦",
+    searchPlaceholder: "Search trainings…",
     signOut: "Sign out",
     myTrainings: "My Trainings",
     browse: "Browse",
@@ -28,9 +28,9 @@ const translations = {
     noAvailable: "No new trainings to explore right now.",
     lessons: "lessons",
     complete: "complete",
-    continueBtn: "Continue â†’",
+    continueBtn: "Continue →",
     enrollBtn: "Enroll Now",
-    enrolling: "Enrollingâ€¦",
+    enrolling: "Enrolling…",
     profileTitle: "My Profile",
     profileSub: "Your account details",
     email: "Email",
@@ -42,29 +42,29 @@ const translations = {
   },
   fr: {
     brand: "Mastery Hub",
-    searchPlaceholder: "Rechercher des formationsâ€¦",
-    signOut: "Se dÃ©connecter",
+    searchPlaceholder: "Rechercher des formations…",
+    signOut: "Se déconnecter",
     myTrainings: "Mes Formations",
     browse: "Explorer",
     profile: "Profil",
     statsEnrolled: "Inscrit",
-    statsCompleted: "ComplÃ©tÃ©es",
+    statsCompleted: "Complétées",
     statsProgress: "Progression",
-    statsDone: "TerminÃ©es",
-    noEnrolled: "Vous n'Ãªtes inscrit Ã  aucune formation.",
+    statsDone: "Terminées",
+    noEnrolled: "Vous n'êtes inscrit à aucune formation.",
     available: "Formations Disponibles",
     noAvailable: "Aucune nouvelle formation disponible.",
-    lessons: "leÃ§ons",
-    complete: "complÃ©tÃ©",
-    continueBtn: "Continuer â†’",
+    lessons: "leçons",
+    complete: "complété",
+    continueBtn: "Continuer →",
     enrollBtn: "S'inscrire",
-    enrolling: "Inscriptionâ€¦",
+    enrolling: "Inscription…",
     profileTitle: "Mon Profil",
     profileSub: "Vos informations de compte",
     email: "E-mail",
     memberSince: "Membre depuis",
     language: "Langue",
-    theme: "ThÃ¨me",
+    theme: "Thème",
     dark: "Sombre",
     light: "Clair",
   },
@@ -858,7 +858,7 @@ export default function DashboardPage() {
                               <div className="dash-card-title">{tr.title}</div>
                               {tr.description && (
                                 <div className="dash-card-desc">
-                                  {tr.description.slice(0, 90)}{tr.description.length > 90 ? "â€¦" : ""}
+                                  {tr.description.slice(0, 90)}{tr.description.length > 90 ? "…" : ""}
                                 </div>
                               )}
                               <div className="dash-card-meta">
@@ -910,7 +910,7 @@ export default function DashboardPage() {
                             <div className="dash-card-title">{tr.title}</div>
                             {tr.description && (
                               <div className="dash-card-desc">
-                                {tr.description.slice(0, 90)}{tr.description.length > 90 ? "â€¦" : ""}
+                                {tr.description.slice(0, 90)}{tr.description.length > 90 ? "…" : ""}
                               </div>
                             )}
                             <div className="dash-card-meta">
@@ -948,14 +948,14 @@ export default function DashboardPage() {
                     </div>
                     <div className="dash-profile-row">
                       <span className="dash-profile-label">{t.email}</span>
-                      <span className="dash-profile-value">{user?.email ?? "â€”"}</span>
+                      <span className="dash-profile-value">{user?.email ?? "—"}</span>
                     </div>
                     <div className="dash-profile-row">
                       <span className="dash-profile-label">{t.memberSince}</span>
                       <span className="dash-profile-value">
                         {user?.created_at
                           ? new Date(user.created_at).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })
-                          : "â€”"}
+                          : "—"}
                       </span>
                     </div>
                     <div className="dash-profile-row">

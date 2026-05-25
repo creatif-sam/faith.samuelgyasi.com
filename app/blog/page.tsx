@@ -80,6 +80,7 @@ function BlogContent() {
   const [loading, setLoading] = useState(true);
   const [currentSeries, setCurrentSeries] = useState<BlogSeries | null>(null);
   const [showBlogRequestModal, setShowBlogRequestModal] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(7); // 1 featured + 6 grid
 
   useEffect(() => {
     document.body.classList.add("on-fdp");
@@ -142,7 +143,11 @@ function BlogContent() {
     : filtered;
 
   const featured = searchFiltered[0];
-  const rest = searchFiltered.slice(1);
+  const rest = searchFiltered.slice(1, visibleCount);
+  const hasMore = searchFiltered.length > visibleCount;
+
+  // Reset visible count when filters or search change
+  const resetVisible = () => setVisibleCount(7);
 
   // Dynamic categories derived from loaded posts
   const categoryValues = Array.from(new Set(posts.map((p) => p.category))).sort();
@@ -245,35 +250,6 @@ function BlogContent() {
               <button
                 onClick={() => setShowBlogRequestModal(true)}
                 className="fb-request-btn"
-                style={{
-                  fontFamily: "'Space Mono', monospace",
-                  fontSize: "11px",
-                  letterSpacing: "0.15em",
-                  textTransform: "uppercase",
-                  background: "rgba(255, 222, 89, 0.08)",
-                  color: "var(--gold)",
-                  border: "1px solid rgba(255, 222, 89, 0.2)",
-                  borderRadius: "8px",
-                  padding: "12px 24px",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "10px",
-                  cursor: "pointer",
-                  transition: "all 0.3s ease",
-                  boxShadow: "0 4px 12px rgba(0,0,0,0.15)"
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = "rgba(255, 222, 89, 0.15)";
-                  e.currentTarget.style.borderColor = "rgba(255, 222, 89, 0.4)";
-                  e.currentTarget.style.transform = "translateY(-2px)";
-                  e.currentTarget.style.boxShadow = "0 6px 20px rgba(255, 222, 89, 0.2)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "rgba(255, 222, 89, 0.08)";
-                  e.currentTarget.style.borderColor = "rgba(255, 222, 89, 0.2)";
-                  e.currentTarget.style.transform = "translateY(0)";
-                  e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.15)";
-                }}
               >
                 <Sparkles size={16} />
                 {lang === "fr" ? "Demander un sujet de blog" : "Request a Blog Topic"}
@@ -295,7 +271,7 @@ function BlogContent() {
             className="fb-search-input"
             placeholder={lang === "fr" ? "Rechercher des réflexions..." : "Search reflections..."}
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => { setSearchQuery(e.target.value); resetVisible(); }}
           />
           {searchQuery && (
             <button 
@@ -318,7 +294,7 @@ function BlogContent() {
       <div className="fb-filters">
         <button
           className={`fb-filter${activeCat === "all" ? " fb-filter--active" : ""}`}
-          onClick={() => setActiveCat("all")}
+          onClick={() => { setActiveCat("all"); resetVisible(); }}
         >
           {lang === "fr" ? "Tout" : "All"}
         </button>
@@ -329,7 +305,7 @@ function BlogContent() {
             <button
               key={cat}
               className={`fb-filter${activeCat === cat ? " fb-filter--active" : ""}`}
-              onClick={() => setActiveCat(cat)}
+              onClick={() => { setActiveCat(cat); resetVisible(); }}
             >
               {label}
             </button>
@@ -430,8 +406,16 @@ function BlogContent() {
                 </Link>
               ))}
             </div>
-          )}
-        </div>
+          )}          {hasMore && (
+            <div style={{ textAlign: "center", padding: "40px 0 20px" }}>
+              <button
+                className="fb-load-more"
+                onClick={() => setVisibleCount((v) => v + 6)}
+              >
+                {lang === "fr" ? "Charger plus" : "Load more"}
+              </button>
+            </div>
+          )}        </div>
       )}
         </div>
         
@@ -622,4 +606,66 @@ body.on-fdp { background:#080807; color:#f0ece4; font-family:'Cormorant Garamond
 :root:not(.dark) .fb-footer-copy { color: #7a7060; }
 :root:not(.dark) .fb-series-back { color: #B8860B; border-color: rgba(184,134,11,.35); }
 :root:not(.dark) .fb-series-back:hover { background: rgba(184,134,11,.08); }
+
+/* Request button */
+.fb-request-btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  background: rgba(255, 222, 89, 0.08);
+  color: var(--gold);
+  border: 1px solid rgba(255, 222, 89, 0.2);
+  border-radius: 8px;
+  padding: 12px 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.fb-request-btn:hover {
+  background: rgba(255, 222, 89, 0.15);
+  border-color: rgba(255, 222, 89, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 222, 89, 0.2);
+}
+:root:not(.dark) .fb-request-btn {
+  background: rgba(184,134,11,.08);
+  color: #B8860B;
+  border-color: rgba(184,134,11,.2);
+}
+:root:not(.dark) .fb-request-btn:hover {
+  background: rgba(184,134,11,.15);
+  border-color: rgba(184,134,11,.4);
+}
+
+/* Load more */
+.fb-load-more {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid rgba(255, 222, 89, 0.3);
+  border-radius: 8px;
+  padding: 14px 40px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.fb-load-more:hover {
+  background: rgba(255, 222, 89, 0.08);
+  border-color: rgba(255, 222, 89, 0.5);
+  transform: translateY(-2px);
+}
+:root:not(.dark) .fb-load-more {
+  color: #B8860B;
+  border-color: rgba(184,134,11,.3);
+}
+:root:not(.dark) .fb-load-more:hover {
+  background: rgba(184,134,11,.08);
+  border-color: rgba(184,134,11,.5);
+}
 `;

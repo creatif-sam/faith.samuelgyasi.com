@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useLang } from "@/lib/i18n";
@@ -23,9 +24,12 @@ export function HeroSection() {
         {/* Image Section */}
         <div className="hero-image-section">
           <div className="hero-image-frame">
-            <img 
+            <Image 
               src="/photo-hero.png" 
               alt="Samuel Kobina Gyasi" 
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 45vw"
               className="hero-image"
             />
           </div>

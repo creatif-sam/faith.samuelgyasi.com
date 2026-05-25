@@ -251,7 +251,7 @@ export function SiteFooter() {
         <div className="sf-col">
           <p className="sf-col-label">{ft.colLegal[lang]}</p>
           <ul className="sf-col-list">
-            <li><span className="sf-col-link" style={{opacity:0.5}}>{ft.linkPrivacy[lang]}</span></li>
+            <li><Link href="/privacy" className="sf-col-link">{ft.linkPrivacy[lang]}</Link></li>
           </ul>
         </div>
       </div>

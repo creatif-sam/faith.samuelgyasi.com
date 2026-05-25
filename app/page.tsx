@@ -1,4 +1,3 @@
-import { HeroSection } from "@/components/organisms/HeroSection";
 import { PillarsSection } from "@/components/organisms/PillarsSection";
 import { ValuesSection } from "@/components/organisms/ValuesSection";
 import { VisionSection } from "@/components/organisms/VisionSection";
