@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Cormorant_Garamond, Space_Mono, Poppins } from "next/font/google";
 import "./globals.css";
-import { CustomCursor } from "@/components/organisms/CustomCursor";
 import { CookieBanner } from "@/components/organisms/CookieBanner";
 import { Analytics } from "@/components/Analytics";
 import { Providers } from "./providers";
@@ -151,7 +150,6 @@ export default function RootLayout({
         className={`${playfair.variable} ${cormorant.variable} ${spaceMono.variable} ${poppins.variable}`}
       >
         <Providers>
-          <CustomCursor />
           <Analytics />
           <NavWrapper />
           {children}

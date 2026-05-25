@@ -269,7 +269,7 @@
 /* Footer text in light mode */
 .light .sf-col-label { color: #B8860B; }
 .light .sf-col-link { color: #4a4640; }
-.light .sf-col-link:hover { color: #0a0a0a; }
+.light .sf-col-link:hover { color: #b8860b; }
 .light .sf-copy, .light .sf-credit { color: rgba(10,10,10,.45); }
 .light .sf-rule { border-color: rgba(10,10,10,.1); }
 .light .sf-emblem { color: #B8860B; }
@@ -2282,7 +2282,7 @@ body {
   transition: color 0.3s;
   display: block;
 }
-.sf-col-link:hover { color: var(--white); }
+.sf-col-link:hover { color: #c9a84c; }
 
 /* Bottom bar */
 .sf-bottom {
