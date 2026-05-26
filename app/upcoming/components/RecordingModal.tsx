@@ -4,6 +4,8 @@ import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
 import { type UpcomingEvent } from "./types";
+import { useLang } from "@/lib/i18n";
+import { upcomingTranslations as ut } from "../translations";
 
 interface RecordingModalProps {
   event: UpcomingEvent;
@@ -11,6 +13,8 @@ interface RecordingModalProps {
 }
 
 export function RecordingModal({ event, onClose }: RecordingModalProps) {
+  const { lang } = useLang();
+  const t = ut.recording;
   const [email, setEmail] = useState("");
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
@@ -28,10 +32,10 @@ export function RecordingModal({ event, onClose }: RecordingModalProps) {
     });
     setBusy(false);
     if (error) {
-      toast.error("Sign-up failed. Please try again.");
+      toast.error(t.errFail[lang]);
       return;
     }
-    toast.success("You'll receive the recording when it's available.");
+    toast.success(t.successMsg[lang]);
     setDone(true);
   }
 
@@ -41,40 +45,38 @@ export function RecordingModal({ event, onClose }: RecordingModalProps) {
         {done ? (
           <div className="up-modal-done">
             <div className="up-modal-done-icon">✦</div>
-            <p className="up-modal-done-h">You're on the list!</p>
-            <p className="up-modal-done-sub">
-              We'll send the recording or transcription to your inbox.
-            </p>
+            <p className="up-modal-done-h">{t.doneTitle[lang]}</p>
+            <p className="up-modal-done-sub">{t.doneSub[lang]}</p>
             <button className="up-btn up-btn--gold" onClick={onClose}>
-              Close
+              {t.close[lang]}
             </button>
           </div>
         ) : (
           <>
             <div className="up-modal-head">
               <div>
-                <p className="up-modal-eyebrow">Can't make it?</p>
-                <h3 className="up-modal-title">Get the Recording</h3>
+                <p className="up-modal-eyebrow">{t.eyebrow[lang]}</p>
+                <h3 className="up-modal-title">{t.title[lang]}</h3>
               </div>
               <button className="up-modal-close" onClick={onClose} aria-label="Close">
                 ✕
               </button>
             </div>
             <p className="up-modal-sub">
-              {event.title} — sign up to receive the recording or transcription after the event.
+              {event.title} — {t.sub[lang]}
             </p>
             <form onSubmit={submit} className="up-modal-form">
-              <label className="up-form-label">Email *</label>
+              <label className="up-form-label">{t.emailLbl[lang]}</label>
               <input
                 className="up-form-input"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
+                placeholder={t.emailPh[lang]}
                 required
               />
               <button type="submit" className="up-btn up-btn--gold" disabled={busy}>
-                {busy ? "Signing up…" : "Sign Me Up"}
+                {busy ? t.submitBusy[lang] : t.submitIdle[lang]}
               </button>
             </form>
           </>

@@ -9,8 +9,11 @@ import { EmptySlot } from "./components/EmptySlot";
 import { NotifySection } from "./components/NotifySection";
 import { ReserveModal } from "./components/ReserveModal";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
+import { useLang } from "@/lib/i18n";
+import { upcomingTranslations as t } from "./translations";
 
 export default function UpcomingPage() {
+  const { lang, toggleLang } = useLang();
   const [events, setEvents] = useState<UpcomingEvent[]>([]);
   const [showReserve, setShowReserve] = useState(false);
 
@@ -60,22 +63,28 @@ export default function UpcomingPage() {
 
         {/* HERO */}
         <div className="up-hero">
-          <p className="up-eyebrow">Samuel Kobina Gyasi · What's Next</p>
+          {/* Language toggle */}
+          <button
+            className="up-lang-toggle"
+            onClick={() => toggleLang()}
+            aria-label="Toggle language"
+          >
+            <span className={lang === "en" ? "active" : ""}> EN</span>
+            <span className="sep"> / </span>
+            <span className={lang === "fr" ? "active" : ""}>FR</span>
+          </button>
+
+          <p className="up-eyebrow">{t.hero.eyebrow[lang]}</p>
           <h1 className="up-headline">
             Up<br /><em>coming</em>
           </h1>
           <div className="up-rule" />
-          <p className="up-sub">
-            Interventions, masterclasses, and facilitated sessions — spaces where ideas become
-            action and individuals become collectives.
-          </p>
+          <p className="up-sub">{t.hero.sub[lang]}</p>
           <div className="up-hero-actions">
             <button className="up-btn up-btn--gold up-hero-reserve-btn" onClick={() => setShowReserve(true)}>
-              Reserve a Spot →
+              {t.hero.reserveBtn[lang]}
             </button>
-            <p className="up-hero-reserve-hint">
-              Intervention · Masterclass · Session · Podcast
-            </p>
+            <p className="up-hero-reserve-hint">{t.hero.reserveHint[lang]}</p>
           </div>
         </div>
 
@@ -83,8 +92,8 @@ export default function UpcomingPage() {
         <div className="up-body">
           {upInterventions.length > 0 && (
             <div id="interventions" className="up-section">
-              <p className="up-section-label">01 · Engagements</p>
-              <h2 className="up-section-title">Interventions</h2>
+              <p className="up-section-label">{t.sections.label1[lang]}</p>
+              <h2 className="up-section-title">{t.sections.title1[lang]}</h2>
               <div className="up-cards">
                 {upInterventions.map((item, i) => (
                   <EventCard key={item.id} item={item} delay={i * 0.08} isPastEvent={false} />
@@ -95,8 +104,8 @@ export default function UpcomingPage() {
 
           {upMasterclasses.length > 0 && (
             <div id="masterclass" className="up-section">
-              <p className="up-section-label">02 · Deep Learning</p>
-              <h2 className="up-section-title">Masterclass</h2>
+              <p className="up-section-label">{t.sections.label2[lang]}</p>
+              <h2 className="up-section-title">{t.sections.title2[lang]}</h2>
               <div className="up-cards">
                 {upMasterclasses.map((item, i) => (
                   <EventCard key={item.id} item={item} delay={i * 0.08} isPastEvent={false} />
@@ -107,8 +116,8 @@ export default function UpcomingPage() {
 
           {upSessions.length > 0 && (
             <div id="sessions" className="up-section">
-              <p className="up-section-label">03 · Open Conversations</p>
-              <h2 className="up-section-title">Sessions</h2>
+              <p className="up-section-label">{t.sections.label3[lang]}</p>
+              <h2 className="up-section-title">{t.sections.title3[lang]}</h2>
               <div className="up-cards">
                 {upSessions.map((item, i) => (
                   <EventCard key={item.id} item={item} delay={i * 0.08} isPastEvent={false} />
@@ -119,15 +128,15 @@ export default function UpcomingPage() {
 
           {upcoming.length === 0 && (
             <div className="up-section">
-              <EmptySlot label="upcoming events" />
+              <EmptySlot label={t.empty.upcoming[lang]} />
             </div>
           )}
 
           {/* PAST EVENTS */}
           {past.length > 0 && (
             <div className="up-section up-section--past">
-              <p className="up-section-label">Past Events</p>
-              <h2 className="up-section-title up-section-title--past">Recent Gatherings</h2>
+              <p className="up-section-label">{t.sections.pastLabel[lang]}</p>
+              <h2 className="up-section-title up-section-title--past">{t.sections.pastTitle[lang]}</h2>
               <div className="up-cards up-cards--past">
                 {past.map((item, i) => (
                   <EventCard key={item.id} item={item} delay={i * 0.06} isPastEvent={true} />

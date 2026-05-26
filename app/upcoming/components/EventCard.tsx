@@ -5,6 +5,8 @@ import { type UpcomingEvent, displayDate, FORMAT_LABEL } from "./types";
 import { RegisterModal } from "./RegisterModal";
 import { RecordingModal } from "./RecordingModal";
 import { Countdown } from "./Countdown";
+import { useLang } from "@/lib/i18n";
+import { upcomingTranslations as t } from "../translations";
 
 interface EventCardProps {
   item: UpcomingEvent;
@@ -13,6 +15,7 @@ interface EventCardProps {
 }
 
 export function EventCard({ item, delay, isPastEvent }: EventCardProps) {
+  const { lang } = useLang();
   const [regOpen, setRegOpen] = useState(false);
   const [recOpen, setRecOpen] = useState(false);
 
@@ -26,11 +29,11 @@ export function EventCard({ item, delay, isPastEvent }: EventCardProps) {
         {item.flyer_url && (
           <div className="up-card-flyer">
             <img src={item.flyer_url} alt={item.title} className="up-card-flyer-img" />
-            {isPastEvent && <div className="up-card-past-badge">Past Event</div>}
+            {isPastEvent && <div className="up-card-past-badge">{t.card.pastBadge[lang]}</div>}
           </div>
         )}
         {!item.flyer_url && isPastEvent && (
-          <div className="up-card-past-badge up-card-past-badge--inline">Past Event</div>
+          <div className="up-card-past-badge up-card-past-badge--inline">{t.card.pastBadge[lang]}</div>
         )}
 
         <div className="up-card-body-wrap">
@@ -47,7 +50,7 @@ export function EventCard({ item, delay, isPastEvent }: EventCardProps) {
           {item.location && <div className="up-card-location">{item.location}</div>}
           {item.host_name && (
             <div className="up-card-host">
-              Hosted by{" "}
+              {t.card.hostedBy[lang]}{" "}
               {item.host_url ? (
                 <a
                   href={item.host_url}
@@ -71,7 +74,7 @@ export function EventCard({ item, delay, isPastEvent }: EventCardProps) {
             <div className="up-card-actions">
               {item.needs_registration && (
                 <button className="up-btn up-btn--gold" onClick={() => setRegOpen(true)}>
-                  Register Now
+                  {t.card.registerNow[lang]}
                 </button>
               )}
               {(item.format === "online" || item.format === "both") && item.join_url && (
@@ -81,7 +84,7 @@ export function EventCard({ item, delay, isPastEvent }: EventCardProps) {
                   rel="noopener noreferrer"
                   className="up-btn up-btn--outline"
                 >
-                  Join Us →
+                  {t.card.joinUs[lang]}
                 </a>
               )}
               {item.facebook_url && (
@@ -109,7 +112,7 @@ export function EventCard({ item, delay, isPastEvent }: EventCardProps) {
           {/* Recording signup — shown for both upcoming and past */}
           {item.recording_signup && (
             <button className="up-btn up-btn--rec" onClick={() => setRecOpen(true)}>
-              ✦ Get recording / transcription
+              ✦ {t.card.getRecording[lang]}
             </button>
           )}
         </div>

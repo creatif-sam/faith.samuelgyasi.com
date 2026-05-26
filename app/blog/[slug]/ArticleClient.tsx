@@ -192,8 +192,8 @@ export function ArticleClient({
   };
 
   useEffect(() => {
-    document.body.classList.add("on-fdp");
-    return () => document.body.classList.remove("on-fdp");
+    document.body.classList.add("on-article");
+    return () => document.body.classList.remove("on-article");
   }, []);
 
   return (
@@ -435,12 +435,38 @@ export function ArticleClient({
 }
 
 const articleCss = `
+/* ── DARK MODE (default) ── */
 .fdp {
   --bg:#080807; --bg2:#0e0d0b; --white:#f0ece4; --cream:#e8e0d0;
   --gold:#c9a84c; --dim:#7a7060; --dimmer:#3e3830;
   --line:rgba(240,236,228,.06); --card:#111009; min-height:100vh;
 }
-body.on-fdp { background:#080807; color:#f0ece4; font-family:'Cormorant Garamond',serif; }
+html.dark body.on-article { background:#080807; color:#f0ece4; font-family:'Cormorant Garamond',serif; }
+
+/* ── LIGHT MODE ── */
+html.light .fdp {
+  --bg:#faf9f7; --bg2:#f0ece4; --white:#1a1814; --cream:#2a2420;
+  --gold:#9a6d10; --dim:#5a5048; --dimmer:#9a9080;
+  --line:rgba(26,24,20,.1); --card:#ede8e0;
+}
+html.light body.on-article { background:#faf9f7; color:#1a1814; font-family:'Cormorant Garamond',serif; }
+html.light .fdp-article-nav { background:rgba(250,249,247,.96); border-bottom:1px solid rgba(0,0,0,.08); }
+html.light .nav-back { color:var(--dim); }
+html.light .nav-back:hover { color:#9a6d10; }
+html.light .nav-logo { color:var(--white); }
+html.light .fa-comment-input, html.light .fa-comment-textarea { background:#fff; border-color:rgba(0,0,0,.15); color:var(--white); }
+html.light .fa-comment-form { background:rgba(0,0,0,.02); border-color:rgba(0,0,0,.1); }
+html.light .fa-comment-item { background:rgba(0,0,0,.02); border-color:rgba(0,0,0,.08); }
+html.light .fa-comment-btn { color:#faf9f7; }
+html.light .eval-modal { background:var(--bg2); }
+html.light .eval-textarea { background:#fff; border-color:rgba(0,0,0,.12); color:var(--white); }
+html.light .eval-textarea::placeholder { color:var(--dimmer); }
+html.light .eval-btn-submit { color:#faf9f7; }
+html.light .bible-tooltip { background:linear-gradient(135deg,rgba(240,236,228,.99),rgba(250,249,247,.99)); border-color:#9a6d10; }
+html.light .bible-tooltip-text { color:var(--cream); }
+html.light .bible-tooltip::after { border-top-color:#9a6d10; }
+html.light .fa-lead { background:rgba(154,109,16,.04); }
+
 .fdp-article-nav { position:fixed; top:0; left:0; right:0; z-index:200; padding:22px 56px; display:flex; justify-content:space-between; align-items:center; background:rgba(6,6,5,.96); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); border-bottom:1px solid rgba(255,222,89,.08); }
 .nav-back { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:var(--dim); text-decoration:none; transition:color .3s; }
 .nav-back:hover { color:#ffde59; }

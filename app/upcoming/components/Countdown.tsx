@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useLang } from "@/lib/i18n";
+import { upcomingTranslations as t } from "../translations";
 
 interface CountdownProps {
   eventDate: string;
@@ -32,6 +34,7 @@ function calculateTimeRemaining(targetDate: string): TimeRemaining {
 }
 
 export function Countdown({ eventDate }: CountdownProps) {
+  const { lang } = useLang();
   const [timeRemaining, setTimeRemaining] = useState<TimeRemaining>(
     calculateTimeRemaining(eventDate)
   );
@@ -55,23 +58,23 @@ export function Countdown({ eventDate }: CountdownProps) {
 
   return (
     <div className="up-countdown">
-      <div className="up-countdown-label">Event Starts In</div>
+      <div className="up-countdown-label">{t.countdown.soonLabel[lang]}</div>
       <div className="up-countdown-grid">
         <div className="up-countdown-unit">
           <div className="up-countdown-value">{String(timeRemaining.days).padStart(2, "0")}</div>
-          <div className="up-countdown-name">Days</div>
+          <div className="up-countdown-name">{t.countdown.days[lang]}</div>
         </div>
         <div className="up-countdown-unit">
           <div className="up-countdown-value">{String(timeRemaining.hours).padStart(2, "0")}</div>
-          <div className="up-countdown-name">Hours</div>
+          <div className="up-countdown-name">{t.countdown.hours[lang]}</div>
         </div>
         <div className="up-countdown-unit">
           <div className="up-countdown-value">{String(timeRemaining.minutes).padStart(2, "0")}</div>
-          <div className="up-countdown-name">Minutes</div>
+          <div className="up-countdown-name">{t.countdown.mins[lang]}</div>
         </div>
         <div className="up-countdown-unit">
           <div className="up-countdown-value">{String(timeRemaining.seconds).padStart(2, "0")}</div>
-          <div className="up-countdown-name">Seconds</div>
+          <div className="up-countdown-name">{t.countdown.secs[lang]}</div>
         </div>
       </div>
     </div>

@@ -4,6 +4,8 @@ import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
 import { type UpcomingEvent } from "./types";
+import { useLang } from "@/lib/i18n";
+import { upcomingTranslations as ut } from "../translations";
 
 interface RegisterModalProps {
   event: UpcomingEvent;
@@ -11,6 +13,8 @@ interface RegisterModalProps {
 }
 
 export function RegisterModal({ event, onClose }: RegisterModalProps) {
+  const { lang } = useLang();
+  const t = ut.register;
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -33,10 +37,10 @@ export function RegisterModal({ event, onClose }: RegisterModalProps) {
     });
     setBusy(false);
     if (error) {
-      toast.error("Registration failed. Please try again.");
+      toast.error(t.errFail[lang]);
       return;
     }
-    toast.success("You're registered! See you there.");
+    toast.success(t.successMsg[lang]);
     setDone(true);
   }
 
@@ -46,19 +50,17 @@ export function RegisterModal({ event, onClose }: RegisterModalProps) {
         {done ? (
           <div className="up-modal-done">
             <div className="up-modal-done-icon">✦</div>
-            <p className="up-modal-done-h">You're registered!</p>
-            <p className="up-modal-done-sub">
-              We'll be in touch with details closer to the event.
-            </p>
+            <p className="up-modal-done-h">{t.doneTitle[lang]}</p>
+            <p className="up-modal-done-sub">{t.doneSub[lang]}</p>
             <button className="up-btn up-btn--gold" onClick={onClose}>
-              Close
+              {t.close[lang]}
             </button>
           </div>
         ) : (
           <>
             <div className="up-modal-head">
               <div>
-                <p className="up-modal-eyebrow">Register</p>
+                <p className="up-modal-eyebrow">{t.eyebrow[lang]}</p>
                 <h3 className="up-modal-title">{event.title}</h3>
               </div>
               <button className="up-modal-close" onClick={onClose} aria-label="Close">
@@ -66,43 +68,43 @@ export function RegisterModal({ event, onClose }: RegisterModalProps) {
               </button>
             </div>
             <form onSubmit={submit} className="up-modal-form">
-              <label className="up-form-label">Full Name</label>
+              <label className="up-form-label">{t.nameLbl[lang]}</label>
               <input
                 className="up-form-input"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="Your name"
+                placeholder={t.namePh[lang]}
               />
-              <label className="up-form-label">Email *</label>
+              <label className="up-form-label">{t.emailLbl[lang]}</label>
               <input
                 className="up-form-input"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
+                placeholder={t.emailPh[lang]}
                 required
               />
               <label className="up-form-label">
-                Phone <span className="up-form-optional">(optional)</span>
+                {t.phoneLbl[lang]} <span className="up-form-optional">{t.phoneOpt[lang]}</span>
               </label>
               <input
                 className="up-form-input"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                placeholder="+1 234 567 890"
+                placeholder={t.phonePh[lang]}
               />
               <label className="up-form-label">
-                Message <span className="up-form-optional">(optional)</span>
+                {t.msgLbl[lang]} <span className="up-form-optional">{t.msgOpt[lang]}</span>
               </label>
               <textarea
                 className="up-form-textarea"
                 value={msg}
                 onChange={(e) => setMsg(e.target.value)}
-                placeholder="Any questions or notes…"
+                placeholder={t.msgPh[lang]}
                 rows={3}
               />
               <button type="submit" className="up-btn up-btn--gold" disabled={busy}>
-                {busy ? "Registering…" : "Confirm Registration"}
+                {busy ? t.submitBusy[lang] : t.submitIdle[lang]}
               </button>
             </form>
           </>
