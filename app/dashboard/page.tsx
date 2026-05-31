@@ -7,6 +7,7 @@ import { createClient } from "@/lib/supabase/client";
 import {
   Award, Bell, BookOpen, CheckCircle2, GraduationCap, Globe,
   LogOut, Mail, Menu, Moon, Search, Sun, TrendingUp, User, X,
+  Flame, Plus, Trash2, Check, CalendarDays, BarChart2, Sparkles,
 } from "lucide-react";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 import { useLang } from "@/lib/i18n";
@@ -18,6 +19,7 @@ const translations = {
     signOut: "Sign out",
     myTrainings: "My Trainings",
     browse: "Browse",
+    habits: "Habits",
     profile: "Profile",
     statsEnrolled: "Enrolled",
     statsCompleted: "Completed",
@@ -39,6 +41,24 @@ const translations = {
     theme: "Theme",
     dark: "Dark",
     light: "Light",
+    habitsTitle: "Spiritual Habits",
+    habitsSub: "Build consistent spiritual disciplines.",
+    newHabit: "New Habit",
+    habitName: "Habit name",
+    habitDesc: "Short description (optional)",
+    habitIcon: "Icon",
+    habitSave: "Save",
+    habitCancel: "Cancel",
+    habitToday: "Today",
+    habitStreak: "Day streak",
+    habitTotal: "Total done",
+    habitRate: "This week",
+    habitLogHint: "Tap ✓ to mark today complete",
+    habitDelete: "Delete",
+    habitEmpty: "No habits yet. Create your first one!",
+    habitDone: "Done today!",
+    habitMark: "Mark done",
+    habitHistory: "Last 30 days",
   },
   fr: {
     brand: "Mastery Hub",
@@ -46,6 +66,7 @@ const translations = {
     signOut: "Se déconnecter",
     myTrainings: "Mes Formations",
     browse: "Explorer",
+    habits: "Habitudes",
     profile: "Profil",
     statsEnrolled: "Inscrit",
     statsCompleted: "Complétées",
@@ -67,10 +88,28 @@ const translations = {
     theme: "Thème",
     dark: "Sombre",
     light: "Clair",
+    habitsTitle: "Habitudes Spirituelles",
+    habitsSub: "Construisez des disciplines spirituelles constantes.",
+    newHabit: "Nouvelle Habitude",
+    habitName: "Nom de l'habitude",
+    habitDesc: "Courte description (optionnel)",
+    habitIcon: "Icône",
+    habitSave: "Enregistrer",
+    habitCancel: "Annuler",
+    habitToday: "Aujourd'hui",
+    habitStreak: "Jours consécutifs",
+    habitTotal: "Total accompli",
+    habitRate: "Cette semaine",
+    habitLogHint: "Appuyer ✓ pour marquer comme fait aujourd'hui",
+    habitDelete: "Supprimer",
+    habitEmpty: "Aucune habitude. Créez votre première!",
+    habitDone: "Fait aujourd'hui!",
+    habitMark: "Marquer fait",
+    habitHistory: "30 derniers jours",
   },
 };
 
-type DashTab = "my-trainings" | "browse" | "profile";
+type DashTab = "my-trainings" | "browse" | "habits" | "profile";
 
 interface Training {
   id: string;
@@ -87,6 +126,23 @@ interface EnrollmentWithProgress {
   training_id: string;
   enrolled_at: string;
   completedCount: number;
+}
+
+interface SpiritualHabit {
+  id: string;
+  user_id: string;
+  name: string;
+  description: string | null;
+  icon: string;
+  color: string;
+  frequency: string;
+  created_at: string;
+}
+
+interface HabitLog {
+  id: string;
+  habit_id: string;
+  logged_date: string;
 }
 
 const dashCss = `
@@ -560,6 +616,137 @@ const dashCss = `
   animation: db-pulse 1.2s ease-in-out infinite;
 }
 
+/* -- HABITS TAB -- */
+.hb-form {
+  background: var(--d-surf);
+  border: 1px solid var(--d-border);
+  border-radius: 14px;
+  padding: 22px 20px;
+  margin-bottom: 28px;
+}
+.hb-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+@media (max-width: 600px) { .hb-form-grid { grid-template-columns: 1fr; } }
+.hb-label {
+  font-size: 11px; font-weight: 600; color: var(--d-muted);
+  display: block; margin-bottom: 5px;
+}
+.hb-input {
+  width: 100%; background: var(--d-soft);
+  border: 1px solid var(--d-border); border-radius: 9px;
+  color: var(--d-text); font-family: var(--font-poppins), sans-serif;
+  font-size: 13px; padding: 9px 12px; outline: none;
+  transition: border-color .18s;
+  box-sizing: border-box;
+}
+.hb-input:focus { border-color: rgba(212,168,67,.5); }
+.hb-icon-row {
+  display: flex; flex-wrap: wrap; gap: 6px;
+}
+.hb-icon-pick {
+  width: 34px; height: 34px; border-radius: 8px;
+  border: 1px solid var(--d-border); background: var(--d-soft);
+  cursor: pointer; font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color .15s, background .15s;
+}
+.hb-icon-pick.sel {
+  border-color: rgba(212,168,67,.6);
+  background: rgba(212,168,67,.1);
+}
+.hb-form-actions {
+  display: flex; gap: 8px; justify-content: flex-end; margin-top: 16px;
+}
+.hb-btn-primary {
+  background: linear-gradient(135deg,#d4a843,#c49838);
+  color: #09090d; border: none;
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  padding: 9px 20px; border-radius: 8px; cursor: pointer;
+  transition: opacity .18s;
+}
+.hb-btn-primary:hover { opacity: .88; }
+.hb-btn-ghost {
+  background: var(--d-soft); border: 1px solid var(--d-border);
+  color: var(--d-muted);
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+  padding: 9px 20px; border-radius: 8px; cursor: pointer;
+  transition: border-color .18s, color .18s;
+}
+.hb-btn-ghost:hover { border-color: rgba(212,168,67,.4); color: var(--d-text); }
+
+/* Habit cards */
+.hb-list { display: flex; flex-direction: column; gap: 14px; margin-bottom: 32px; }
+.hb-card {
+  background: var(--d-surf); border: 1px solid var(--d-border);
+  border-radius: 14px; padding: 16px 18px;
+  display: flex; align-items: flex-start; gap: 14px;
+  transition: border-color .2s, box-shadow .2s;
+}
+.hb-card:hover { border-color: rgba(212,168,67,.25); box-shadow: 0 6px 20px rgba(0,0,0,.14); }
+.hb-card-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; flex-shrink: 0;
+}
+.hb-card-body { flex: 1; min-width: 0; }
+.hb-card-name { font-size: 14px; font-weight: 600; color: var(--d-text); }
+.hb-card-desc { font-size: 12px; color: var(--d-muted); margin-top: 2px; }
+.hb-card-actions { display: flex; align-items: center; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.hb-check-btn {
+  display: flex; align-items: center; gap: 5px;
+  border: none; border-radius: 8px; cursor: pointer;
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+  padding: 7px 14px;
+  transition: opacity .18s, transform .18s;
+}
+.hb-check-btn:hover { opacity: .85; transform: scale(1.03); }
+.hb-check-btn.done { background: rgba(34,197,94,.12); color: #22c55e; border: 1px solid rgba(34,197,94,.22); }
+.hb-check-btn.undone { background: rgba(212,168,67,.1); color: var(--d-gold); border: 1px solid rgba(212,168,67,.2); }
+.hb-del-btn {
+  display: flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border-radius: 7px;
+  border: 1px solid var(--d-border); background: transparent;
+  color: var(--d-muted); cursor: pointer; transition: border-color .18s, color .18s;
+}
+.hb-del-btn:hover { border-color: rgba(239,68,68,.4); color: #ef4444; }
+.hb-streak-badge {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 10px; font-weight: 700; color: #f97316;
+  background: rgba(249,115,22,.1); border: 1px solid rgba(249,115,22,.18);
+  border-radius: 999px; padding: 3px 9px;
+}
+
+/* Habit stats */
+.hb-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 28px; }
+@media (max-width: 480px) { .hb-stats { grid-template-columns: 1fr 1fr; } }
+.hb-stat {
+  background: var(--d-surf); border: 1px solid var(--d-border);
+  border-radius: 12px; padding: 14px 16px;
+  display: flex; align-items: center; gap: 12px;
+}
+.hb-stat-icon {
+  width: 36px; height: 36px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.hb-stat-num { font-size: 22px; font-weight: 700; color: var(--d-text); line-height: 1; }
+.hb-stat-lbl { font-size: 10px; color: var(--d-muted); font-weight: 500; margin-top: 3px; }
+
+/* 30-day heatmap row */
+.hb-heatmap { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 10px; }
+.hb-day {
+  width: 18px; height: 18px; border-radius: 4px;
+  background: var(--d-soft); border: 1px solid var(--d-border);
+  transition: background .15s;
+}
+.hb-day.done { background: rgba(212,168,67,.45); border-color: rgba(212,168,67,.6); }
+.hb-day.today { outline: 2px solid var(--d-gold); outline-offset: 1px; }
+
 @media (max-width: 640px) {
   .dash-stats { grid-template-columns: repeat(2, 1fr); }
   .dash-content { padding: 16px 14px 88px; }
@@ -623,6 +810,15 @@ export default function DashboardPage() {
   const [search, setSearch] = useState("");
   const db = createClient();
 
+  // --- Habits state ---
+  const [habits, setHabits] = useState<SpiritualHabit[]>([]);
+  const [habitLogs, setHabitLogs] = useState<HabitLog[]>([]);
+  const [showHabitForm, setShowHabitForm] = useState(false);
+  const [habitName, setHabitName] = useState("");
+  const [habitDesc, setHabitDesc] = useState("");
+  const [habitIcon, setHabitIcon] = useState("🙏");
+  const [habitSaving, setHabitSaving] = useState(false);
+
   useEffect(() => {
     const saved = window.localStorage.getItem("sg-dashboard-theme");
     if (saved === "light" || saved === "dark") setTheme(saved as "dark" | "light");
@@ -673,6 +869,83 @@ export default function DashboardPage() {
 
   useEffect(() => { load(); }, [load]);
 
+  // --- Habit helpers ---
+  const loadHabits = useCallback(async () => {
+    if (!user) return;
+    const [hRes, lRes] = await Promise.all([
+      db.from("spiritual_habits").select("*").eq("user_id", user.id).order("created_at", { ascending: true }),
+      db.from("habit_logs").select("id,habit_id,logged_date").eq("user_id", user.id)
+        .gte("logged_date", new Date(Date.now() - 30 * 86400000).toISOString().slice(0, 10)),
+    ]);
+    setHabits((hRes.data as SpiritualHabit[]) ?? []);
+    setHabitLogs((lRes.data as HabitLog[]) ?? []);
+  }, [db, user]);
+
+  useEffect(() => { if (user) loadHabits(); }, [user, loadHabits]);
+
+  async function createHabit() {
+    if (!habitName.trim() || !user) return;
+    setHabitSaving(true);
+    await db.from("spiritual_habits").insert({
+      user_id: user.id,
+      name: habitName.trim(),
+      description: habitDesc.trim() || null,
+      icon: habitIcon,
+    });
+    setHabitName(""); setHabitDesc(""); setHabitIcon("🙏");
+    setShowHabitForm(false);
+    setHabitSaving(false);
+    await loadHabits();
+  }
+
+  async function deleteHabit(id: string) {
+    await db.from("spiritual_habits").delete().eq("id", id);
+    await loadHabits();
+  }
+
+  async function toggleHabitLog(habitId: string) {
+    if (!user) return;
+    const today = new Date().toISOString().slice(0, 10);
+    const existing = habitLogs.find((l) => l.habit_id === habitId && l.logged_date === today);
+    if (existing) {
+      await db.from("habit_logs").delete().eq("id", existing.id);
+    } else {
+      await db.from("habit_logs").insert({ habit_id: habitId, user_id: user.id, logged_date: today });
+    }
+    await loadHabits();
+  }
+
+  function getHabitStreak(habitId: string): number {
+    const logs = habitLogs
+      .filter((l) => l.habit_id === habitId)
+      .map((l) => l.logged_date)
+      .sort((a, b) => b.localeCompare(a));
+    if (logs.length === 0) return 0;
+    let streak = 0;
+    const today = new Date();
+    for (let i = 0; i < 30; i++) {
+      const d = new Date(today); d.setDate(today.getDate() - i);
+      const ds = d.toISOString().slice(0, 10);
+      if (logs.includes(ds)) { streak++; } else { break; }
+    }
+    return streak;
+  }
+
+  function getLast30Days(): string[] {
+    return Array.from({ length: 30 }, (_, i) => {
+      const d = new Date(); d.setDate(d.getDate() - (29 - i));
+      return d.toISOString().slice(0, 10);
+    });
+  }
+
+  const today = new Date().toISOString().slice(0, 10);
+  const totalHabitsDoneToday = habits.filter((h) => habitLogs.some((l) => l.habit_id === h.id && l.logged_date === today)).length;
+  const maxStreak = habits.reduce((max, h) => Math.max(max, getHabitStreak(h.id)), 0);
+  const last7Days = Array.from({ length: 7 }, (_, i) => { const d = new Date(); d.setDate(d.getDate() - i); return d.toISOString().slice(0, 10); });
+  const weekDoneCount = habitLogs.filter((l) => last7Days.includes(l.logged_date)).length;
+
+  const HABIT_ICONS = ["🙏", "📖", "✝️", "🕊️", "💪", "🌅", "🧘", "❤️", "🌿", "🔥", "⭐", "🎯"];
+
   async function enroll(trainingId: string) {
     if (!user) return;
     setEnrollingId(trainingId);
@@ -714,6 +987,7 @@ export default function DashboardPage() {
   const NAV_ITEMS: { id: DashTab; label: string; Icon: React.ComponentType<{ size?: number }>; count?: number }[] = [
     { id: "my-trainings", label: t.myTrainings, Icon: GraduationCap, count: myTrainings.length },
     { id: "browse",       label: t.browse,      Icon: BookOpen,      count: available.length   },
+    { id: "habits",       label: t.habits,      Icon: Flame,         count: habits.length || undefined },
     { id: "profile",      label: t.profile,     Icon: User                                     },
   ];
 
@@ -1009,6 +1283,164 @@ export default function DashboardPage() {
                   </div>
                 </>
               )}
+
+              {/* -- HABITS -- */}
+              {activeTab === "habits" && (
+                <>
+                  <div className="dash-page-header">
+                    <h1 className="dash-page-title">{t.habitsTitle}</h1>
+                    <p className="dash-page-sub">{t.habitsSub}</p>
+                  </div>
+
+                  {/* Stats row */}
+                  <div className="hb-stats">
+                    <div className="hb-stat">
+                      <div className="hb-stat-icon" style={{ background: "rgba(249,115,22,.1)" }}>
+                        <Flame size={18} style={{ color: "#f97316" }} />
+                      </div>
+                      <div>
+                        <div className="hb-stat-num">{maxStreak}</div>
+                        <div className="hb-stat-lbl">{t.habitStreak}</div>
+                      </div>
+                    </div>
+                    <div className="hb-stat">
+                      <div className="hb-stat-icon" style={{ background: "rgba(34,197,94,.1)" }}>
+                        <Check size={18} style={{ color: "#22c55e" }} />
+                      </div>
+                      <div>
+                        <div className="hb-stat-num">{totalHabitsDoneToday}/{habits.length}</div>
+                        <div className="hb-stat-lbl">{t.habitToday}</div>
+                      </div>
+                    </div>
+                    <div className="hb-stat">
+                      <div className="hb-stat-icon" style={{ background: "rgba(96,165,250,.1)" }}>
+                        <BarChart2 size={18} style={{ color: "#60a5fa" }} />
+                      </div>
+                      <div>
+                        <div className="hb-stat-num">{weekDoneCount}</div>
+                        <div className="hb-stat-lbl">{t.habitRate}</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Add button / form */}
+                  {!showHabitForm ? (
+                    <button
+                      className="dash-btn dash-btn-gold"
+                      style={{ width: "auto", marginBottom: 24, padding: "10px 20px", gap: 6, display: "inline-flex", alignItems: "center" }}
+                      onClick={() => setShowHabitForm(true)}
+                    >
+                      <Plus size={14} /> {t.newHabit}
+                    </button>
+                  ) : (
+                    <div className="hb-form">
+                      <div className="hb-form-grid">
+                        <div>
+                          <label className="hb-label">{t.habitName} *</label>
+                          <input
+                            className="hb-input"
+                            placeholder="e.g. Morning Prayer"
+                            value={habitName}
+                            onChange={(e) => setHabitName(e.target.value)}
+                          />
+                        </div>
+                        <div>
+                          <label className="hb-label">{t.habitDesc}</label>
+                          <input
+                            className="hb-input"
+                            placeholder="e.g. 15 min quiet time"
+                            value={habitDesc}
+                            onChange={(e) => setHabitDesc(e.target.value)}
+                          />
+                        </div>
+                      </div>
+                      <div style={{ marginTop: 12 }}>
+                        <label className="hb-label">{t.habitIcon}</label>
+                        <div className="hb-icon-row">
+                          {HABIT_ICONS.map((ic) => (
+                            <button
+                              key={ic}
+                              type="button"
+                              className={`hb-icon-pick${habitIcon === ic ? " sel" : ""}`}
+                              onClick={() => setHabitIcon(ic)}
+                            >{ic}</button>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="hb-form-actions">
+                        <button className="hb-btn-ghost" onClick={() => { setShowHabitForm(false); setHabitName(""); setHabitDesc(""); setHabitIcon("\u{1F64F}"); }}>
+                          {t.habitCancel}
+                        </button>
+                        <button className="hb-btn-primary" disabled={habitSaving || !habitName.trim()} onClick={createHabit}>
+                          {habitSaving ? "\u2026" : t.habitSave}
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Habit list */}
+                  <div className="dash-section-head">
+                    <Flame size={13} /> {t.habitsTitle} ({habits.length})
+                  </div>
+
+                  {habits.length === 0 ? (
+                    <div className="dash-empty" style={{ marginBottom: 32 }}>
+                      <Sparkles size={32} style={{ margin: "0 auto 12px", color: "rgba(212,168,67,.3)", display: "block" }} />
+                      {t.habitEmpty}
+                    </div>
+                  ) : (
+                    <div className="hb-list">
+                      {habits.map((h) => {
+                        const doneToday = habitLogs.some((l) => l.habit_id === h.id && l.logged_date === today);
+                        const streak = getHabitStreak(h.id);
+                        const last30 = getLast30Days();
+                        const logDates = new Set(habitLogs.filter((l) => l.habit_id === h.id).map((l) => l.logged_date));
+                        return (
+                          <div key={h.id} className="hb-card">
+                            <div className="hb-card-icon" style={{ background: `${h.color}22` }}>
+                              <span>{h.icon}</span>
+                            </div>
+                            <div className="hb-card-body">
+                              <div className="hb-card-name">{h.name}</div>
+                              {h.description && <div className="hb-card-desc">{h.description}</div>}
+                              <div style={{ margin: "10px 0 4px" }}>
+                                <div style={{ fontSize: 10, color: "var(--d-muted)", marginBottom: 5 }}>{t.habitHistory}</div>
+                                <div className="hb-heatmap">
+                                  {last30.map((d) => (
+                                    <div
+                                      key={d}
+                                      className={`hb-day${logDates.has(d) ? " done" : ""}${d === today ? " today" : ""}`}
+                                      title={d}
+                                    />
+                                  ))}
+                                </div>
+                              </div>
+                              <div className="hb-card-actions">
+                                <button
+                                  className={`hb-check-btn ${doneToday ? "done" : "undone"}`}
+                                  onClick={() => toggleHabitLog(h.id)}
+                                >
+                                  <Check size={12} />
+                                  {doneToday ? t.habitDone : t.habitMark}
+                                </button>
+                                {streak > 0 && (
+                                  <span className="hb-streak-badge">
+                                    <Flame size={10} /> {streak}d
+                                  </span>
+                                )}
+                                <button className="hb-del-btn" title={t.habitDelete} onClick={() => deleteHabit(h.id)}>
+                                  <Trash2 size={12} />
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </>
+              )}
+
 
               {/* â”€â”€ PROFILE â”€â”€ */}
               {activeTab === "profile" && (

@@ -1,7 +1,7 @@
 import {
   LayoutDashboard, BarChart3, FileText, Users, MessageSquare,
   Mail, BookOpen, Star, Calendar, MessageSquarePlus,
-  GraduationCap, Images, UserCheck, Heart, List, ClipboardCheck, Tag, ScrollText, MessageCircle
+  GraduationCap, Images, UserCheck, Heart, List, ClipboardCheck, Tag, ScrollText, MessageCircle, Flame
 } from "lucide-react";
 import { Tab } from "./types";
 
@@ -35,6 +35,7 @@ export const NAV = [
   { id: "testimonials",         label: "Testimonials",         Icon: Star              },
   { id: "trainings",            label: "Trainings",            Icon: GraduationCap     },
   { id: "upcoming",             label: "Upcoming",             Icon: Calendar          },
+  { id: "participant-habits",   label: "Participant Habits",   Icon: Flame             },
 ] as const satisfies readonly { id: Tab; label: string; Icon: React.ComponentType<{ size?: number }> }[];
 
 export const NAV_SORTED = [...NAV].sort((a, b) => {

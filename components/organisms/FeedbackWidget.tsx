@@ -67,7 +67,7 @@ export function FeedbackWidget() {
   }
 
   return (
-    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[8000] flex flex-col items-end gap-3">
+    <div className="fixed bottom-20 right-4 sm:bottom-6 sm:right-6 z-[8000] flex flex-col items-end gap-3">
       {/* Card */}
       {stage !== "closed" && (
         <div

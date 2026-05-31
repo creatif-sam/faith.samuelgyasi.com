@@ -403,6 +403,7 @@ export type Tab =
   | "discipleship"
   | "prayer-submissions"
   | "faith-tests"
-  | "tags";
+  | "tags"
+  | "participant-habits";
 
 export type MailSubTab = "compose" | "inbox" | "sent" | "templates";

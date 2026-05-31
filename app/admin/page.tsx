@@ -66,6 +66,7 @@ import FaithTestsTab from "./components/tabs/FaithTestsTab";
 import UsersTab from "./components/tabs/UsersTab";
 import LogsTab from "./components/tabs/LogsTab";
 import CommentsTab from "./components/tabs/CommentsTab";
+import HabitsTab from "./components/tabs/HabitsTab";
 
 // Import modal components
 import PostModal from "./components/modals/PostModal";
@@ -1058,6 +1059,10 @@ export default function AdminPage() {
                 }}
                 db={db}
               />
+            )}
+
+            {tab === "participant-habits" && (
+              <HabitsTab />
             )}
           </>
         )}
