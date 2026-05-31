@@ -1,6 +1,7 @@
 "use client";
 import { useState, useCallback, useEffect } from "react";
 import { Flame, Check, BarChart2, Plus, Sparkles, Trash2 } from "lucide-react";
+import { toast } from "sonner";
 import { createClient } from "@/lib/supabase/client";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 import type { SpiritualHabit, HabitLog } from "../types";
@@ -40,29 +41,39 @@ export default function HabitsTab({ user, t }: HabitsTabProps) {
   async function createHabit() {
     if (!habitName.trim()) return;
     setHabitSaving(true);
-    await db.from("spiritual_habits").insert({
+    const { error } = await db.from("spiritual_habits").insert({
       user_id: user.id,
       name: habitName.trim(),
       description: habitDesc.trim() || null,
       icon: habitIcon,
     });
+    setHabitSaving(false);
+    if (error) {
+      toast.error("Could not create habit. Please try again.");
+      return;
+    }
+    toast.success(`Habit "${habitName.trim()}" created!`);
     setHabitName(""); setHabitDesc(""); setHabitIcon("🙏");
     setShowHabitForm(false);
-    setHabitSaving(false);
     await loadHabits();
   }
 
   async function deleteHabit(id: string) {
+    const habit = habits.find((h) => h.id === id);
     await db.from("spiritual_habits").delete().eq("id", id);
+    toast.success(`"${habit?.name ?? "Habit"}" deleted.`);
     await loadHabits();
   }
 
   async function toggleHabitLog(habitId: string) {
     const existing = habitLogs.find((l) => l.habit_id === habitId && l.logged_date === today);
+    const habit = habits.find((h) => h.id === habitId);
     if (existing) {
       await db.from("habit_logs").delete().eq("id", existing.id);
+      toast(`${habit?.icon ?? ""} ${habit?.name ?? "Habit"} unmarked for today.`);
     } else {
       await db.from("habit_logs").insert({ habit_id: habitId, user_id: user.id, logged_date: today });
+      toast.success(`${habit?.icon ?? ""} ${habit?.name ?? "Habit"} done today! 🎉`);
     }
     await loadHabits();
   }

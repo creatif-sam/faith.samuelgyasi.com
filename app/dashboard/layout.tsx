@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { Toaster } from "sonner";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -47,5 +48,15 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     );
   }
 
-  return <>{children}</>;
+  return (
+    <>
+      {children}
+      <Toaster
+        position="bottom-right"
+        toastOptions={{
+          style: { background: "#13141a", border: "1px solid #2a2b35", color: "#e8e8ec" },
+        }}
+      />
+    </>
+  );
 }

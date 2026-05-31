@@ -2,6 +2,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { GraduationCap, BookOpen, Flame, User, Search, Mail, Bell, Sun, Moon, Globe, LayoutDashboard } from "lucide-react";
+import { toast } from "sonner";
 import { createClient } from "@/lib/supabase/client";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 import { useLang } from "@/lib/i18n";
@@ -96,12 +97,19 @@ export default function DashboardPage() {
   async function enroll(trainingId: string) {
     if (!user) return;
     setEnrollingId(trainingId);
-    await db.from("training_enrollments").insert({ user_id: user.id, training_id: trainingId });
+    const { error } = await db.from("training_enrollments").insert({ user_id: user.id, training_id: trainingId });
+    if (error) {
+      toast.error("Could not enroll. Please try again.");
+    } else {
+      const tr = trainings.find((t) => t.id === trainingId);
+      toast.success(`Enrolled in ${tr?.title ?? "training"}!`);
+    }
     await load();
     setEnrollingId(null);
   }
 
   async function handleLogout() {
+    toast("Signing out…");
     await db.auth.signOut();
     router.push("/");
   }
