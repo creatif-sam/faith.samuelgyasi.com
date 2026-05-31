@@ -1,5 +1,5 @@
 // Dashboard types
-export type DashTab = "my-trainings" | "browse" | "habits" | "profile";
+export type DashTab = "overview" | "my-trainings" | "browse" | "habits" | "profile";
 
 export interface Training {
   id: string;

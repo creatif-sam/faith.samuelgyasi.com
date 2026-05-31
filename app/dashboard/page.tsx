@@ -1,15 +1,16 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { GraduationCap, BookOpen, Flame, User, Search, Mail, Bell, Sun, Moon, Globe } from "lucide-react";
+import { GraduationCap, BookOpen, Flame, User, Search, Mail, Bell, Sun, Moon, Globe, LayoutDashboard } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 import { useLang } from "@/lib/i18n";
 import { translations } from "./translations";
-import type { DashTab, Training, EnrollmentWithProgress } from "./types";
+import type { DashTab, Training, EnrollmentWithProgress, SpiritualHabit, HabitLog } from "./types";
 import { layoutStyles } from "./styles/layoutStyles";
 import { tabStyles } from "./styles/tabStyles";
 import DashSidebar from "./components/DashSidebar";
+import OverviewTab from "./components/OverviewTab";
 import MyTrainingsTab from "./components/MyTrainingsTab";
 import BrowseTab from "./components/BrowseTab";
 import HabitsTab from "./components/HabitsTab";
@@ -25,10 +26,13 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const [enrollingId, setEnrollingId] = useState<string | null>(null);
   const [theme, setTheme] = useState<"dark" | "light">("dark");
-  const [activeTab, setActiveTab] = useState<DashTab>("my-trainings");
+  const [activeTab, setActiveTab] = useState<DashTab>("overview");
   const [navOpen, setNavOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [profileName, setProfileName] = useState("");
+  const [profileAvatarUrl, setProfileAvatarUrl] = useState<string | null>(null);
+  const [overviewHabits, setOverviewHabits] = useState<SpiritualHabit[]>([]);
+  const [overviewHabitLogs, setOverviewHabitLogs] = useState<HabitLog[]>([]);
   const db = createClient();
 
   useEffect(() => {
@@ -70,10 +74,17 @@ export default function DashboardPage() {
       })
     );
 
-    // Pre-load profile name for topbar display
-    const { data: profileData } = await db
-      .from("user_profiles").select("full_name").eq("id", session.user.id).single();
-    if (profileData?.full_name) setProfileName(profileData.full_name);
+    // Pre-load profile name + avatar + habits for overview
+    const [profileData, habitsRes, logsRes] = await Promise.all([
+      db.from("user_profiles").select("full_name,avatar_url").eq("id", session.user.id).single(),
+      db.from("spiritual_habits").select("*").eq("user_id", session.user.id).order("created_at", { ascending: true }),
+      db.from("habit_logs").select("id,habit_id,logged_date").eq("user_id", session.user.id)
+        .gte("logged_date", new Date(Date.now() - 30 * 86400000).toISOString().slice(0, 10)),
+    ]);
+    if (profileData.data?.full_name) setProfileName(profileData.data.full_name);
+    if (profileData.data?.avatar_url) setProfileAvatarUrl(profileData.data.avatar_url);
+    setOverviewHabits((habitsRes.data as SpiritualHabit[]) ?? []);
+    setOverviewHabitLogs((logsRes.data as HabitLog[]) ?? []);
 
     setTrainings(ts);
     setEnrollments(withProgress);
@@ -119,7 +130,25 @@ export default function DashboardPage() {
   const displayName = profileName.trim() || user?.email?.split("@")[0] || "Student";
   const initials    = (displayName[0] ?? "S").toUpperCase();
 
+  const today = new Date().toISOString().slice(0, 10);
+  const habitsCheckedToday = overviewHabits.filter((h) =>
+    overviewHabitLogs.some((l) => l.habit_id === h.id && l.logged_date === today)
+  ).length;
+  // Best streak: max consecutive days any habit was logged in last 30 days
+  const longestStreak = (() => {
+    if (!overviewHabitLogs.length) return 0;
+    const days = [...new Set(overviewHabitLogs.map((l) => l.logged_date))].sort();
+    let max = 1, cur = 1;
+    for (let i = 1; i < days.length; i++) {
+      const diff = (new Date(days[i]).getTime() - new Date(days[i - 1]).getTime()) / 86400000;
+      cur = diff === 1 ? cur + 1 : 1;
+      if (cur > max) max = cur;
+    }
+    return max;
+  })();
+
   const NAV_ITEMS: { id: DashTab; label: string; Icon: React.ComponentType<{ size?: number }>; count?: number }[] = [
+    { id: "overview",     label: t.overview,    Icon: LayoutDashboard                          },
     { id: "my-trainings", label: t.myTrainings, Icon: GraduationCap, count: myTrainings.length },
     { id: "browse",       label: t.browse,      Icon: BookOpen,      count: available.length   },
     { id: "habits",       label: t.habits,      Icon: Flame,         count: undefined           },
@@ -234,6 +263,24 @@ export default function DashboardPage() {
             </div>
           ) : (
             <>
+              {activeTab === "overview" && (
+                <OverviewTab
+                  displayName={displayName}
+                  initials={initials}
+                  avatarUrl={profileAvatarUrl}
+                  myTrainings={myTrainings}
+                  enrollments={enrollments}
+                  totalCompleted={totalCompleted}
+                  overallPct={overallPct}
+                  finishedCount={finishedCount}
+                  habits={overviewHabits}
+                  habitsCheckedToday={habitsCheckedToday}
+                  longestStreak={longestStreak}
+                  available={available}
+                  t={t}
+                  onTabChange={(tab) => setActiveTab(tab)}
+                />
+              )}
               {activeTab === "my-trainings" && (
                 <MyTrainingsTab
                   myTrainings={myTrainings}
