@@ -1,160 +1,8 @@
-// Types for Admin Dashboard
+// Re-exports from split files
+export * from "./blogTypes";
+export * from "./mailTypes";
 
-export interface BlogPost {
-  id: string;
-  title: string;
-  title_fr?: string | null;
-  slug: string;
-  category: string;
-  published: boolean;
-  excerpt: string | null;
-  excerpt_fr?: string | null;
-  content: string | null;
-  content_fr?: string | null;
-  read_time_minutes: number;
-  featured_image_url: string | null;
-  youtube_url?: string | null;
-  infographie_url_en: string | null;
-  infographie_url_fr: string | null;
-  series_id?: string | null;
-  series_order?: number;
-  created_at: string;
-}
-
-export interface BlogSeries {
-  id: string;
-  name_en: string;
-  name_fr: string;
-  slug: string;
-  description_en: string | null;
-  description_fr: string | null;
-  image_url: string | null;
-  show_dates: boolean;
-  published: boolean;
-  sort_order: number;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface BlogTag {
-  id: string;
-  name_en: string;
-  name_fr: string;
-  slug: string;
-  description_en: string | null;
-  description_fr: string | null;
-  color: string;
-  published: boolean;
-  sort_order: number;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface BlogReview {
-  id: string;
-  blog_post_id: string;
-  reviewer_name: string;
-  reviewer_email: string | null;
-  rating: number;
-  comment: string | null;
-  published: boolean;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface BlogComment {
-  id: string;
-  blog_post_id: string;
-  commenter_name: string;
-  commenter_email: string | null;
-  comment_text: string;
-  approved: boolean;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface Subscriber {
-  id: string;
-  email: string;
-  name: string | null;
-  created_at: string;
-  confirmed: boolean;
-  interests?: string[] | null;
-}
-
-export interface Message {
-  id: string;
-  name: string;
-  email: string;
-  subject: string | null;
-  message: string;
-  read: boolean;
-  created_at: string;
-}
-
-export interface EmailLog {
-  id: string;
-  resend_id: string | null;
-  to_email: string;
-  from_email: string;
-  subject: string;
-  body_html: string | null;
-  body_text: string | null;
-  status: string;
-  opened_at: string | null;
-  sent_at: string;
-  template_id: string | null;
-}
-
-export interface TrainingEnrollment {
-  id: string;
-  user_id: string;
-  training_id: string;
-  enrolled_at: string;
-}
-
-export interface AuthUserRow {
-  id: string;
-  email: string | null;
-  created_at: string;
-  last_sign_in_at: string | null;
-  email_confirmed_at: string | null;
-}
-
-export interface EmailTemplate {
-  id: string;
-  name: string;
-  subject: string;
-  body_html: string;
-  body_text: string;
-  created_at: string;
-}
-
-export interface InboundEmail {
-  id: string;
-  from_email: string;
-  from_name: string | null;
-  to_email: string | null;
-  subject: string | null;
-  body_text: string | null;
-  body_html: string | null;
-  read: boolean;
-  received_at: string;
-}
-
-export interface PageViewRow {
-  page_path: string;
-  visitor_id: string;
-  created_at: string;
-}
-
-export interface AnalyticsData {
-  totalViews: number;
-  uniqueVisitors: number;
-  topPages: { path: string; count: number }[];
-  dailyViews: { date: string; count: number }[];
-}
-
+// Content, resource, and app-wide types
 export interface Testimonial {
   id: string;
   name: string;
@@ -382,21 +230,21 @@ export interface FaithTestAttempt {
   attempted_at: string;
 }
 
-export type Tab = 
-  | "overview" 
-  | "analytics" 
+export type Tab =
+  | "overview"
+  | "analytics"
   | "users"
   | "logs"
-  | "posts" 
+  | "posts"
   | "series"
-  | "subscribers" 
-  | "messages" 
-  | "mail" 
-  | "testimonials" 
-  | "library" 
-  | "upcoming" 
+  | "subscribers"
+  | "messages"
+  | "mail"
+  | "testimonials"
+  | "library"
+  | "upcoming"
   | "event-registrations"
-  | "feedback" 
+  | "feedback"
   | "trainings"
   | "comments"
   | "gallery"

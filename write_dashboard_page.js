@@ -1,4 +1,7 @@
-"use client";
+// Rewrite dashboard page.tsx via Node script
+const fs = require("fs");
+
+const newPage = `"use client";
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { GraduationCap, BookOpen, Flame, User, Search, Mail, Bell, Sun, Moon, Globe } from "lucide-react";
@@ -127,7 +130,7 @@ export default function DashboardPage() {
   ];
 
   return (
-    <div className={`dash-root${theme === "dark" ? " dash-dark" : " dash-light"}`}>
+    <div className={\`dash-root\${theme === "dark" ? " dash-dark" : " dash-light"}\`}>
       <style>{layoutStyles}{tabStyles}</style>
 
       {/* Mobile header */}
@@ -174,7 +177,7 @@ export default function DashboardPage() {
         {NAV_ITEMS.map(({ id, label, Icon, count }) => (
           <button
             key={id}
-            className={`dash-bottom-nav-item${activeTab === id ? " active" : ""}`}
+            className={\`dash-bottom-nav-item\${activeTab === id ? " active" : ""}\`}
             onClick={() => setActiveTab(id)}
           >
             <Icon size={20} />
@@ -229,7 +232,7 @@ export default function DashboardPage() {
           {loading ? (
             <div style={{ display: "flex", gap: 8, justifyContent: "center", padding: "100px 0" }}>
               {[0, 200, 400].map((d) => (
-                <div key={d} className="dash-dot" style={{ animationDelay: `${d}ms` }} />
+                <div key={d} className="dash-dot" style={{ animationDelay: \`\${d}ms\` }} />
               ))}
             </div>
           ) : (
@@ -281,3 +284,8 @@ export default function DashboardPage() {
     </div>
   );
 }
+`;
+
+fs.writeFileSync("app/dashboard/page.tsx", newPage.replace(/\r\n/g, "\n"));
+console.log("page.tsx lines:", newPage.split("\n").length);
+console.log("Done");

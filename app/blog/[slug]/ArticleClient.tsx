@@ -7,6 +7,8 @@ import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
 import Breadcrumbs from "@/components/atoms/Breadcrumbs";
 import { BibleEnhancedContent } from "@/components/BibleEnhancedContent";
+import { EvaluationModal } from "./EvaluationModal";
+import { articleCss } from "./articleStyles";
 
 type DbPost = {
   id: string;
@@ -327,309 +329,31 @@ export function ArticleClient({
         </footer>
       </article>
 
-      {/* EVALUATION MODAL */}
       {showEvalModal && (
-        <div className="eval-modal-overlay" onClick={() => setShowEvalModal(false)}>
-          <div className="eval-modal" onClick={(e) => e.stopPropagation()}>
-            <button className="eval-close" onClick={() => setShowEvalModal(false)}>×</button>
-            
-            <div className="eval-header">
-              <h3>{translations.evalTitle}</h3>
-              <p>{translations.evalSub}</p>
-            </div>
-
-            <div className="eval-body">
-              <label className="eval-label">{translations.rateLabel} <span className="eval-required">*</span></label>
-              <div className="star-rating">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <button
-                    key={star}
-                    type="button"
-                    className={star <= (hoveredRating || rating) ? 'star-active' : ''}
-                    onMouseEnter={() => setHoveredRating(star)}
-                    onMouseLeave={() => setHoveredRating(0)}
-                    onClick={() => setRating(star)}
-                    aria-label={`Rate ${star} stars`}
-                  >
-                    {star <= (hoveredRating || rating) ? '★' : '☆'}
-                  </button>
-                ))}
-              </div>
-
-              <label className="eval-label eval-label-categories">{translations.categoriesLabel || "What resonated with you?"}</label>
-              <div className="eval-checkboxes">
-                <label className="eval-checkbox-label">
-                  <input
-                    type="checkbox"
-                    checked={pragmatic}
-                    onChange={(e) => setPragmatic(e.target.checked)}
-                  />
-                  <span>{translations.pragmaticLabel}</span>
-                </label>
-                <label className="eval-checkbox-label">
-                  <input
-                    type="checkbox"
-                    checked={faithBuilding}
-                    onChange={(e) => setFaithBuilding(e.target.checked)}
-                  />
-                  <span>{translations.faithLabel}</span>
-                </label>
-                <label className="eval-checkbox-label">
-                  <input
-                    type="checkbox"
-                    checked={clear}
-                    onChange={(e) => setClear(e.target.checked)}
-                  />
-                  <span>{translations.clearLabel}</span>
-                </label>
-                <label className="eval-checkbox-label">
-                  <input
-                    type="checkbox"
-                    checked={confusing}
-                    onChange={(e) => setConfusing(e.target.checked)}
-                  />
-                  <span>{translations.confusingLabel}</span>
-                </label>
-                <label className="eval-checkbox-label">
-                  <input
-                    type="checkbox"
-                    checked={relatedToMe}
-                    onChange={(e) => setRelatedToMe(e.target.checked)}
-                  />
-                  <span>{translations.relatedLabel}</span>
-                </label>
-              </div>
-
-              <label className="eval-label eval-label-comment">{translations.commentLabel}</label>
-              <textarea
-                className="eval-textarea"
-                value={feedbackText}
-                onChange={(e) => setFeedbackText(e.target.value)}
-                placeholder={lang === "fr" ? "Partagez vos réflexions (optionnel)..." : "Share your thoughts (optional)..."}
-                rows={4}
-              />
-            </div>
-
-            <div className="eval-actions">
-              <button
-                type="button"
-                className="eval-btn eval-btn-skip"
-                onClick={() => setShowEvalModal(false)}
-              >
-                {translations.skipBtn}
-              </button>
-              <button
-                type="button"
-                className="eval-btn eval-btn-submit"
-                onClick={handleSubmitEvaluation}
-                disabled={submitting}
-              >
-                {submitting ? "..." : translations.submitBtn}
-              </button>
-            </div>
-          </div>
-        </div>
+        <EvaluationModal
+          lang={lang}
+          rating={rating}
+          setRating={setRating}
+          hoveredRating={hoveredRating}
+          setHoveredRating={setHoveredRating}
+          pragmatic={pragmatic}
+          setPragmatic={setPragmatic}
+          faithBuilding={faithBuilding}
+          setFaithBuilding={setFaithBuilding}
+          clear={clear}
+          setClear={setClear}
+          confusing={confusing}
+          setConfusing={setConfusing}
+          relatedToMe={relatedToMe}
+          setRelatedToMe={setRelatedToMe}
+          feedbackText={feedbackText}
+          setFeedbackText={setFeedbackText}
+          submitting={submitting}
+          onClose={() => setShowEvalModal(false)}
+          onSubmit={handleSubmitEvaluation}
+          translations={translations}
+        />
       )}
     </div>
   );
 }
-
-const articleCss = `
-/* ── DARK MODE (default) ── */
-.fdp {
-  --bg:#080807; --bg2:#0e0d0b; --white:#f0ece4; --cream:#e8e0d0;
-  --gold:#c9a84c; --dim:#7a7060; --dimmer:#3e3830;
-  --line:rgba(240,236,228,.06); --card:#111009; min-height:100vh;
-}
-html.dark body.on-article { background:#080807; color:#f0ece4; font-family:'Cormorant Garamond',serif; }
-
-/* ── LIGHT MODE ── */
-html.light .fdp {
-  --bg:#faf9f7; --bg2:#f0ece4; --white:#1a1814; --cream:#2a2420;
-  --gold:#9a6d10; --dim:#5a5048; --dimmer:#9a9080;
-  --line:rgba(26,24,20,.1); --card:#ede8e0;
-}
-html.light body.on-article { background:#faf9f7; color:#1a1814; font-family:'Cormorant Garamond',serif; }
-html.light .fdp-article-nav { background:rgba(250,249,247,.96); border-bottom:1px solid rgba(0,0,0,.08); }
-html.light .nav-back { color:var(--dim); }
-html.light .nav-back:hover { color:#9a6d10; }
-html.light .nav-logo { color:var(--white); }
-html.light .fa-comment-input, html.light .fa-comment-textarea { background:#fff; border-color:rgba(0,0,0,.15); color:var(--white); }
-html.light .fa-comment-form { background:rgba(0,0,0,.02); border-color:rgba(0,0,0,.1); }
-html.light .fa-comment-item { background:rgba(0,0,0,.02); border-color:rgba(0,0,0,.08); }
-html.light .fa-comment-btn { color:#faf9f7; }
-html.light .eval-modal { background:var(--bg2); }
-html.light .eval-textarea { background:#fff; border-color:rgba(0,0,0,.12); color:var(--white); }
-html.light .eval-textarea::placeholder { color:var(--dimmer); }
-html.light .eval-btn-submit { color:#faf9f7; }
-html.light .bible-tooltip { background:linear-gradient(135deg,rgba(240,236,228,.99),rgba(250,249,247,.99)); border-color:#9a6d10; }
-html.light .bible-tooltip-text { color:var(--cream); }
-html.light .bible-tooltip::after { border-top-color:#9a6d10; }
-html.light .fa-lead { background:rgba(154,109,16,.04); }
-
-.fdp-article-nav { position:fixed; top:0; left:0; right:0; z-index:200; padding:22px 56px; display:flex; justify-content:space-between; align-items:center; background:rgba(6,6,5,.96); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); border-bottom:1px solid rgba(255,222,89,.08); }
-.nav-back { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:var(--dim); text-decoration:none; transition:color .3s; }
-.nav-back:hover { color:#ffde59; }
-.nav-logo { font-family:var(--font-playfair),'Playfair Display',serif; font-size:17px; color:var(--white); letter-spacing:.06em; }
-.fa-article { max-width:760px; margin:0 auto; padding:140px 40px 80px; }
-.fa-header { margin-bottom:64px; }
-.fa-tag { font-family:'Space Mono',monospace; font-size:9px; letter-spacing:.3em; text-transform:uppercase; background:linear-gradient(90deg,#ffde59,#ff914d); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:24px; }
-.fa-title { font-family:var(--font-playfair),'Playfair Display',serif; font-size:clamp(32px,5vw,62px); color:var(--white); line-height:1.08; margin-bottom:24px; }
-.fa-meta { font-family:'Space Mono',monospace; font-size:9px; letter-spacing:.15em; text-transform:uppercase; color:var(--dim); display:flex; gap:12px; align-items:center; margin-bottom:40px; flex-wrap:wrap; }
-.fa-lead { font-family:var(--font-playfair),'Playfair Display',serif; font-size:clamp(18px,2.2vw,24px); font-style:italic; color:var(--cream); line-height:1.55; padding:28px 36px; border-left:3px solid transparent; border-image:linear-gradient(180deg,#ffde59,#ff914d) 1; background:rgba(255,222,89,.04); }
-.fa-body { font-family:var(--font-cormorant),'Cormorant Garamond',serif; font-size:clamp(17px,1.8vw,21px); line-height:1.9; color:var(--dim); font-weight:300; }
-.fa-body h2 { font-family:var(--font-playfair),'Playfair Display',serif; font-size:clamp(22px,3vw,32px); color:var(--white); margin:52px 0 20px; font-weight:700; }
-.fa-body h3 { font-family:var(--font-playfair),'Playfair Display',serif; font-size:22px; color:var(--white); margin:40px 0 16px; }
-.fa-body p { margin-bottom:28px; }
-.fa-body em { color:var(--cream); }
-.fa-body strong { color:var(--white); }
-.fa-body blockquote { border-left:3px solid transparent; border-image:linear-gradient(180deg,#ffde59,#ff914d) 1; padding:20px 32px; background:rgba(255,222,89,.04); font-style:italic; font-size:19px; color:var(--cream); margin:40px 0; }
-.fa-related { margin-top:80px; padding-top:56px; border-top:1px solid var(--line); }
-.fa-related-label { font-family:'Space Mono',monospace; font-size:9px; letter-spacing:.3em; text-transform:uppercase; background:linear-gradient(90deg,#ffde59,#ff914d); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:32px; display:flex; align-items:center; gap:16px; }
-.fa-related-label::before { content:''; width:36px; height:1px; background:linear-gradient(90deg,#ffde59,#ff914d); }
-.fa-related-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:2px; }
-.fa-related-card { background:var(--card); border:1px solid var(--line); padding:32px 28px; text-decoration:none; color:var(--white); display:flex; flex-direction:column; gap:10px; transition:border-color .3s,padding-left .3s; }
-.fa-related-card:hover { border-color:rgba(201,168,76,.25); padding-left:36px; }
-.fa-rc-tag { font-family:'Space Mono',monospace; font-size:9px; letter-spacing:.25em; text-transform:uppercase; color:var(--gold); }
-.fa-rc-title { font-family:var(--font-playfair),'Playfair Display',serif; font-size:18px; color:var(--white); line-height:1.25; flex:1; }
-.fa-rc-meta { font-family:'Space Mono',monospace; font-size:9px; letter-spacing:.15em; text-transform:uppercase; color:var(--dimmer); }
-.fa-footer { margin-top:64px; padding-top:40px; border-top:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
-.fa-comments { margin-top:70px; padding-top:42px; border-top:1px solid var(--line); }
-.fa-comments-title { font-family:var(--font-playfair),'Playfair Display',serif; font-size:30px; color:var(--white); margin-bottom:8px; }
-.fa-comments-sub { font-size:14px; color:var(--dim); margin-bottom:20px; }
-.fa-comments-empty { color:var(--dim); margin-bottom:18px; }
-.fa-comments-list { display:flex; flex-direction:column; gap:12px; margin-bottom:22px; }
-.fa-comment-item { border:1px solid var(--line); background:rgba(255,255,255,.02); padding:14px 16px; }
-.fa-comment-head { font-size:12px; color:var(--gold); margin-bottom:8px; }
-.fa-comment-text { font-size:16px; color:var(--cream); line-height:1.6; }
-.fa-comment-form { border:1px solid var(--line); background:rgba(255,255,255,.02); padding:16px; }
-.fa-comment-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px; }
-.fa-comment-input,.fa-comment-textarea { width:100%; border:1px solid var(--line); background:#12110d; color:var(--white); padding:10px 12px; font-family:var(--font-poppins),'Poppins',sans-serif; font-size:13px; }
-.fa-comment-textarea { resize:vertical; }
-.fa-comment-btn { margin-top:10px; background:linear-gradient(135deg,#ffde59,#ff914d); color:#080807; border:0; padding:10px 16px; font-size:11px; letter-spacing:.08em; text-transform:uppercase; cursor:pointer; }
-.fa-back-link { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--dim); text-decoration:none; transition:color .3s; }
-.fa-back-link:hover { color:var(--gold); }
-.fa-credo-link { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); text-decoration:none; transition:opacity .3s; }
-.fa-credo-link:hover { opacity:.7; }
-.fa-cover { margin:40px 0 56px; overflow:hidden; }
-.fa-cover-img { width:100%; max-height:520px; object-fit:cover; display:block; }
-.fa-infographie { margin:56px 0 0; padding-top:56px; border-top:1px solid var(--line); }
-.fa-infographie-label { font-family:'Space Mono',monospace; font-size:9px; letter-spacing:.3em; text-transform:uppercase; color:var(--gold); margin-bottom:28px; }
-.fa-infographie-img { width:100%; display:block; border:1px solid var(--line); }
-
-/* EVALUATION MODAL */
-.eval-modal-overlay { position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.88); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); display:flex; align-items:center; justify-content:center; padding:20px; animation:fadeIn 0.3s ease; }
-@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-.eval-modal { background:var(--bg2); border:1px solid var(--line); border-radius:12px; max-width:480px; width:100%; max-height:85vh; overflow-y:auto; padding:32px 28px; position:relative; animation:slideUp 0.3s ease; box-shadow:0 20px 60px rgba(0,0,0,0.6); }
-@keyframes slideUp { from { transform:translateY(30px); opacity:0; } to { transform:translateY(0); opacity:1; } }
-.eval-close { position:absolute; top:12px; right:12px; background:transparent; border:none; color:var(--dim); font-size:24px; line-height:1; cursor:pointer; transition:color 0.2s, transform 0.2s; width:28px; height:28px; display:flex; align-items:center; justify-content:center; }
-.eval-close:hover { color:var(--white); transform:rotate(90deg); }
-.eval-header { margin-bottom:24px; }
-.eval-header h3 { font-family:var(--font-poppins),'Poppins',sans-serif; font-size:22px; font-weight:600; color:var(--white); margin-bottom:8px; line-height:1.2; }
-.eval-header p { font-family:var(--font-poppins),'Poppins',sans-serif; font-size:14px; font-weight:300; color:var(--dim); line-height:1.5; }
-.eval-body { margin-bottom:24px; }
-.eval-label { font-family:var(--font-poppins),'Poppins',sans-serif; font-size:11px; font-weight:500; letter-spacing:0.05em; text-transform:uppercase; color:var(--gold); display:block; margin-bottom:10px; }
-.eval-label-categories { margin-top:20px; }
-.eval-label-comment { margin-top:18px; }
-.eval-required { color:#ff914d; }
-.star-rating { display:flex; gap:6px; margin-bottom:18px; }
-.star-rating button { background:transparent; border:none; cursor:pointer; font-size:32px; color:var(--dimmer); transition:all 0.2s ease; padding:0; line-height:1; }
-.star-rating button:hover, .star-rating button.star-active { color:var(--gold); transform:scale(1.1); }
-.eval-checkboxes { display:flex; flex-direction:column; gap:10px; }
-.eval-checkbox-label { display:flex; align-items:center; gap:10px; font-family:var(--font-poppins),'Poppins',sans-serif; font-size:14px; font-weight:300; color:var(--cream); cursor:pointer; transition:color 0.2s; }
-.eval-checkbox-label:hover { color:var(--white); }
-.eval-checkbox-label input[type="checkbox"] { width:18px; height:18px; border:1px solid var(--dim); background:transparent; cursor:pointer; appearance:none; -webkit-appearance:none; border-radius:3px; position:relative; transition:all 0.2s; }
-.eval-checkbox-label input[type="checkbox"]:checked { background:var(--gold); border-color:var(--gold); }
-.eval-checkbox-label input[type="checkbox"]:checked::after { content:'✓'; position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:var(--bg); font-size:14px; font-weight:bold; }
-.eval-textarea { width:100%; background:var(--card); border:1px solid var(--line); border-radius:6px; padding:12px 14px; font-family:var(--font-poppins),'Poppins',sans-serif; font-size:14px; font-weight:300; color:var(--white); resize:vertical; min-height:80px; transition:border-color 0.2s; }
-.eval-textarea:focus { outline:none; border-color:var(--gold); }
-.eval-textarea::placeholder { color:var(--dimmer); }
-.eval-actions { display:flex; gap:10px; justify-content:flex-end; }
-.eval-btn { font-family:var(--font-poppins),'Poppins',sans-serif; font-size:11px; font-weight:500; letter-spacing:0.05em; text-transform:uppercase; padding:12px 22px; border-radius:6px; cursor:pointer; transition:all 0.2s; border:none; }
-.eval-btn-skip { background:transparent; color:var(--dim); border:1px solid var(--line); }
-.eval-btn-skip:hover { color:var(--white); border-color:var(--dim); }
-.eval-btn-submit { background:linear-gradient(135deg,#ffde59,#ff914d); color:var(--bg); border:none; }
-.eval-btn-submit:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(255,222,89,0.3); }
-.eval-btn-submit:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
-
-/* BIBLE VERSE STYLES */
-.bible-ref { 
-  text-decoration:underline; 
-  text-decoration-color:var(--gold); 
-  text-decoration-thickness:1px; 
-  text-underline-offset:3px; 
-  cursor:help; 
-  color:var(--cream); 
-  transition:all 0.2s ease;
-  position:relative;
-}
-.bible-ref:hover { 
-  color:var(--gold); 
-  text-decoration-thickness:2px;
-}
-.bible-tooltip { 
-  position:fixed; 
-  z-index:10000; 
-  background:linear-gradient(135deg, rgba(15,15,13,0.98), rgba(25,25,23,0.98)); 
-  border:1px solid var(--gold); 
-  border-radius:8px; 
-  padding:16px 20px; 
-  max-width:420px; 
-  width:max-content;
-  box-shadow:0 12px 40px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,222,89,0.1); 
-  transform:translateX(-50%) translateY(-100%) translateY(-12px); 
-  pointer-events:none;
-  animation:tooltipFadeIn 0.2s ease;
-  backdrop-filter:blur(12px);
-  -webkit-backdrop-filter:blur(12px);
-}
-@keyframes tooltipFadeIn { from { opacity:0; transform:translateX(-50%) translateY(-100%) translateY(-8px); } to { opacity:1; transform:translateX(-50%) translateY(-100%) translateY(-12px); } }
-.bible-tooltip::after { 
-  content:''; 
-  position:absolute; 
-  bottom:-8px; 
-  left:50%; 
-  transform:translateX(-50%); 
-  width:0; 
-  height:0; 
-  border-left:8px solid transparent; 
-  border-right:8px solid transparent; 
-  border-top:8px solid var(--gold);
-}
-.bible-tooltip-text { 
-  font-family:var(--font-cormorant),'Cormorant Garamond',serif; 
-  font-size:16px; 
-  line-height:1.7; 
-  color:var(--cream); 
-  font-weight:300;
-  margin-bottom:8px;
-}
-.bible-tooltip-ref { 
-  font-family:'Space Mono',monospace; 
-  font-size:10px; 
-  letter-spacing:0.1em; 
-  text-transform:uppercase; 
-  color:var(--gold); 
-  font-weight:400;
-}
-
-@media(max-width:768px) {
-  .fdp-article-nav { padding:18px 24px; }
-  .fa-article { padding:130px 24px 60px; }
-  .fa-related-grid { grid-template-columns:1fr; }
-  .fa-footer { flex-direction:column; align-items:flex-start; }
-  .eval-modal { padding:24px 20px; max-width:calc(100vw - 32px); }
-  .eval-header h3 { font-size:20px; }
-  .star-rating { gap:4px; }
-  .star-rating button { font-size:28px; }
-  .eval-actions { flex-direction:column; }
-  .eval-btn { width:100%; }
-  .bible-tooltip { 
-    max-width:calc(100vw - 40px); 
-    font-size:14px; 
-    padding:12px 16px;
-    left:50% !important;
-  }
-  .bible-tooltip-text { font-size:14px; line-height:1.6; }
-}
-`;
