@@ -19,6 +19,7 @@ interface HabitRow {
 interface HabitLogRow {
   id: string;
   habit_id: string;
+  user_id: string;
   logged_date: string;
 }
 
