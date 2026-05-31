@@ -334,8 +334,12 @@ const dashCss = `
   display: inline-flex; align-items: center; justify-content: center; padding: 0 4px;
 }
 @media (max-width: 768px) {
-  .dash-search-wrap { width: 44vw; min-width: 140px; }
+  .dash-topbar { padding: 8px 10px; gap: 6px; margin: 62px 10px 0; }
+  .dash-topbar-left { flex: 1; }
+  .dash-search-wrap { width: 100%; min-width: unset; }
+  .dash-topbar-right { display: none; }
   .dash-profile { display: none; }
+  .dash-content { padding-bottom: 88px; }
 }
 
 /* â”€â”€ MAIN CONTENT â”€â”€ */
@@ -558,9 +562,49 @@ const dashCss = `
 
 @media (max-width: 640px) {
   .dash-stats { grid-template-columns: repeat(2, 1fr); }
-  .dash-content { padding: 16px 14px 32px; }
+  .dash-content { padding: 16px 14px 88px; }
   .dash-grid { grid-template-columns: 1fr; }
   .dash-profile-card { padding: 22px 18px; }
+}
+
+/* -- BOTTOM NAV (mobile only) -- */
+.dash-bottom-nav {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  display: flex; align-items: stretch; justify-content: space-around;
+  background: var(--d-surf);
+  border-top: 1px solid var(--d-border);
+  z-index: 600;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  box-shadow: 0 -4px 24px rgba(0,0,0,.22);
+  backdrop-filter: blur(10px);
+}
+@media (min-width: 769px) { .dash-bottom-nav { display: none; } }
+.dash-bottom-nav-item {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 3px; padding: 8px 4px 10px;
+  border: none; background: transparent;
+  color: var(--d-muted);
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 10px; font-weight: 500;
+  cursor: pointer; transition: color .18s;
+  position: relative;
+}
+.dash-bottom-nav-item.active { color: var(--d-gold); }
+.dash-bottom-nav-item.active::before {
+  content: '';
+  position: absolute; top: 0; left: 22%; right: 22%; height: 2px;
+  background: var(--d-gold);
+  border-radius: 0 0 3px 3px;
+}
+.dash-bottom-nav-badge {
+  position: absolute; top: 5px; right: calc(50% - 20px);
+  min-width: 14px; height: 14px; border-radius: 999px;
+  background: var(--d-gold); color: #09090d;
+  font-size: 8px; font-weight: 700;
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 0 3px;
 }
 `;
 
@@ -689,7 +733,25 @@ export default function DashboardPage() {
           <span className="dash-mobile-brand-dot">SG</span>
           {t.brand}
         </span>
-        <Link href="/" style={{ color: "var(--d-muted)", display: "flex", lineHeight: 1 }}><Globe size={16} /></Link>
+        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+          <button
+            type="button"
+            className="dash-mobile-ham"
+            onClick={() => setTheme((v) => v === "dark" ? "light" : "dark")}
+            aria-label="Toggle theme"
+          >
+            {theme === "dark" ? <Sun size={15} /> : <Moon size={15} />}
+          </button>
+          <button
+            type="button"
+            className="dash-mobile-ham"
+            onClick={toggleLang}
+            aria-label="Switch language"
+            style={{ fontSize: 10, fontWeight: 700, color: "var(--d-muted)", minWidth: 28, padding: "5px 4px" }}
+          >
+            {lang === "en" ? "FR" : "EN"}
+          </button>
+        </div>
       </div>
       {/* â”€â”€ SIDEBAR â”€â”€ */}
       <aside className={`dash-sidebar${navOpen ? " open" : ""}`}>
@@ -735,6 +797,23 @@ export default function DashboardPage() {
       {navOpen && (
         <div className="dash-overlay" onClick={() => setNavOpen(false)} />
       )}
+
+      {/* Bottom nav (mobile only) */}
+      <nav className="dash-bottom-nav">
+        {NAV_ITEMS.map(({ id, label, Icon, count }) => (
+          <button
+            key={id}
+            className={`dash-bottom-nav-item${activeTab === id ? " active" : ""}`}
+            onClick={() => setActiveTab(id)}
+          >
+            <Icon size={20} />
+            <span>{label}</span>
+            {count !== undefined && count > 0 && (
+              <span className="dash-bottom-nav-badge">{count}</span>
+            )}
+          </button>
+        ))}
+      </nav>
 
       {/* â”€â”€ MAIN AREA â”€â”€ */}
       <div className="dash-main-area">
