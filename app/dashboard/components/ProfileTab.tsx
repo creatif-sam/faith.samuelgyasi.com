@@ -60,13 +60,18 @@ export default function ProfileTab({
 
   async function saveProfile() {
     setProfileSaving(true);
-    await db.from("user_profiles").upsert({
+    const { error: saveErr } = await db.from("user_profiles").upsert({
       id: user.id,
       full_name: profileName.trim() || null,
       avatar_url: profileAvatarUrl,
       updated_at: new Date().toISOString(),
     });
     setProfileSaving(false);
+    if (saveErr) {
+      toast.error("Could not save profile. Check your connection and try again.");
+      console.error("saveProfile error:", saveErr);
+      return;
+    }
     onNameChange(profileName.trim());
     toast.success(t.profileSaved);
   }
@@ -75,17 +80,24 @@ export default function ProfileTab({
     setAvatarUploading(true);
     const ext = file.name.split(".").pop();
     const filePath = `${user.id}/avatar.${ext}`;
-    const { error } = await db.storage.from("avatars").upload(filePath, file, { upsert: true });
-    if (!error) {
+    const { error: uploadErr } = await db.storage.from("avatars").upload(filePath, file, { upsert: true });
+    if (!uploadErr) {
       const { data: urlData } = db.storage.from("avatars").getPublicUrl(filePath);
       const url = urlData.publicUrl + "?t=" + Date.now();
       setProfileAvatarUrl(url);
-      await db.from("user_profiles").upsert({
+      const { error: avatarSaveErr } = await db.from("user_profiles").upsert({
         id: user.id,
         avatar_url: url,
         updated_at: new Date().toISOString(),
       });
-      toast.success(t.profileSaved);
+      if (avatarSaveErr) {
+        toast.error("Avatar uploaded but could not be saved. Try again.");
+        console.error("uploadAvatar upsert error:", avatarSaveErr);
+      } else {
+        toast.success(t.profileSaved);
+      }
+    } else {
+      toast.error("Avatar upload failed. Please try a smaller image.");
     }
     setAvatarUploading(false);
   }
