@@ -99,7 +99,11 @@ export const tabStyles = `
 }
 .pf-hero-info { flex: 1; min-width: 0; }
 .pf-hero-name { font-size: 22px; font-weight: 700; color: var(--d-text); line-height: 1.2; }
-.pf-hero-email { font-size: 12px; color: var(--d-muted); margin-top: 4px; }
+.pf-hero-email {
+  font-size: 12px; color: var(--d-muted); margin-top: 4px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  max-width: 100%;
+}
 .pf-hero-role {
   font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
   color: var(--d-gold); margin-top: 6px;
@@ -181,7 +185,11 @@ export const tabStyles = `
 }
 .dash-profile-row:last-child { border-bottom: none; }
 .dash-profile-label { font-size: 12px; color: var(--d-muted); font-weight: 500; }
-.dash-profile-value { font-size: 13px; color: var(--d-text); font-weight: 600; text-align: right; }
+.dash-profile-value {
+  font-size: 13px; color: var(--d-text); font-weight: 600;
+  text-align: right; overflow: hidden; text-overflow: ellipsis;
+  white-space: nowrap; max-width: 220px;
+}
 .dash-toggle-row {
   display: flex; gap: 4px;
   background: var(--d-soft);
@@ -192,7 +200,13 @@ export const tabStyles = `
 .dash-toggle-btn {
   padding: 5px 14px;
   border-radius: 6px;
-  border: none; background: transparent;.dash-toggle-btn.active {
+  border: none; background: transparent;
+  color: var(--d-muted);
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 12px; font-weight: 500;
+  cursor: pointer; transition: color .18s, background .18s;
+}
+.dash-toggle-btn.active {
   background: var(--d-surf);
   color: var(--d-gold);
   box-shadow: 0 1px 6px rgba(0,0,0,.15);
@@ -343,44 +357,50 @@ export const tabStyles = `
   .dash-profile-card { padding: 22px 18px; }
 }
 
-/* -- BOTTOM NAV (mobile only) -- */
+/* -- BOTTOM NAV (mobile only, app-style) -- */
 .dash-bottom-nav {
   position: fixed;
   bottom: 0; left: 0; right: 0;
-  display: flex; align-items: stretch; justify-content: space-around;
+  display: flex; align-items: center; justify-content: space-around;
+  height: calc(62px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
   background: var(--d-surf);
   border-top: 1px solid var(--d-border);
   z-index: 600;
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-  box-shadow: 0 -4px 24px rgba(0,0,0,.22);
-  backdrop-filter: blur(10px);
+  box-shadow: 0 -6px 32px rgba(0,0,0,.28);
+  backdrop-filter: blur(14px) saturate(1.4);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
 }
 @media (min-width: 769px) { .dash-bottom-nav { display: none; } }
 .dash-bottom-nav-item {
   flex: 1; display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  gap: 3px; padding: 8px 4px 10px;
+  gap: 4px; padding: 6px 4px;
   border: none; background: transparent;
   color: var(--d-muted);
   font-family: var(--font-poppins), sans-serif;
-  font-size: 10px; font-weight: 500;
-  cursor: pointer; transition: color .18s;
+  font-size: 9px; font-weight: 600; letter-spacing: .02em;
+  cursor: pointer; transition: color .2s;
   position: relative;
+  min-height: 56px;
+}
+.dash-bottom-nav-item .bn-icon-wrap {
+  width: 40px; height: 28px; border-radius: 999px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s, transform .18s;
 }
 .dash-bottom-nav-item.active { color: var(--d-gold); }
-.dash-bottom-nav-item.active::before {
-  content: '';
-  position: absolute; top: 0; left: 22%; right: 22%; height: 2px;
-  background: var(--d-gold);
-  border-radius: 0 0 3px 3px;
+.dash-bottom-nav-item.active .bn-icon-wrap {
+  background: rgba(212,168,67,.15);
+  transform: translateY(-1px);
 }
 .dash-bottom-nav-badge {
-  position: absolute; top: 5px; right: calc(50% - 20px);
+  position: absolute; top: 4px; left: calc(50% + 6px);
   min-width: 14px; height: 14px; border-radius: 999px;
   background: var(--d-gold); color: #09090d;
   font-size: 8px; font-weight: 700;
   display: inline-flex; align-items: center; justify-content: center;
-  padding: 0 3px;
+  padding: 0 3px; border: 2px solid var(--d-page);
 }
 
 /* -- OVERVIEW TAB -- */

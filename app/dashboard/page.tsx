@@ -214,11 +214,11 @@ export default function DashboardPage() {
             className={`dash-bottom-nav-item${activeTab === id ? " active" : ""}`}
             onClick={() => setActiveTab(id)}
           >
-            <Icon size={20} />
-            <span>{label}</span>
             {count !== undefined && count > 0 && (
               <span className="dash-bottom-nav-badge">{count}</span>
             )}
+            <span className="bn-icon-wrap"><Icon size={22} /></span>
+            <span>{label}</span>
           </button>
         ))}
       </nav>
