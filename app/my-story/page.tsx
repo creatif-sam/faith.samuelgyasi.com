@@ -1,5 +1,5 @@
 ﻿"use client";
-import { translations } from "./myStoryTranslations";
+import { translations, PARTICLES } from "./myStoryTranslations";
 import { myStoryStyles1 } from "./myStoryStyles1";
 import { myStoryStyles2 } from "./myStoryStyles2";
 

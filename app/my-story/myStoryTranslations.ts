@@ -227,5 +227,5 @@ const PARTICLES = [
   { id: 7, size: 75,  left: 42, top: 10, dur: 9,  delay: 6 },
 ];
 
-export { translations };
+export { translations, PARTICLES };
 export type MyStoryTranslations = typeof translations["en"];

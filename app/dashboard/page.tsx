@@ -127,7 +127,7 @@ export default function DashboardPage() {
   ];
 
   return (
-    <div className={`dash-root${theme === "dark" ? " dash-dark" : " dash-light"}`}>
+    <div className={`dash-root h-screen overflow-hidden flex${theme === "dark" ? " dash-dark" : " dash-light"}`}>
       <style>{layoutStyles}{tabStyles}</style>
 
       {/* Mobile header */}

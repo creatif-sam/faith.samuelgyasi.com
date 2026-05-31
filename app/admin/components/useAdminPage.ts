@@ -222,7 +222,7 @@ export function useAdminPage() {
     showDisciple, editDisciple, setShowDisciple,
     viewProgressDisciple, setViewProgressDisciple,
     confirm, setConfirm,
-    db, unreadMsgs, unreadInbox, unreadFeedback,
+    db, load, unreadMsgs, unreadInbox, unreadFeedback,
     unprayedSubmissions, unapprovedComments, unreadNotifCount,
     markAllNotificationsRead, ask, go, handleLogout, modals,
   };
