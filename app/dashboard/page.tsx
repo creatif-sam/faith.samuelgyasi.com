@@ -8,9 +8,11 @@ import {
   Award, Bell, BookOpen, CheckCircle2, GraduationCap, Globe,
   LogOut, Mail, Menu, Moon, Search, Sun, TrendingUp, User, X,
   Flame, Plus, Trash2, Check, CalendarDays, BarChart2, Sparkles,
+  Camera, AlertTriangle, Save, Pencil,
 } from "lucide-react";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 import { useLang } from "@/lib/i18n";
+import { toast } from "sonner";
 
 const translations = {
   en: {
@@ -59,6 +61,20 @@ const translations = {
     habitDone: "Done today!",
     habitMark: "Mark done",
     habitHistory: "Last 30 days",
+    fullName: "Full Name",
+    fullNamePlaceholder: "Enter your full name",
+    saveProfile: "Save Changes",
+    saving: "Saving…",
+    profileSaved: "Profile updated!",
+    changePhoto: "Change Photo",
+    accountSettings: "Account Settings",
+    dangerZone: "Danger Zone",
+    deleteAccount: "Delete Account",
+    deleteConfirmMsg: "This will permanently delete your account and all your data. Type DELETE to confirm.",
+    deleteConfirmPlaceholder: "Type DELETE",
+    deleteConfirmBtn: "Permanently Delete",
+    deleteCancel: "Cancel",
+    deleting: "Deleting…",
   },
   fr: {
     brand: "Mastery Hub",
@@ -106,6 +122,20 @@ const translations = {
     habitDone: "Fait aujourd'hui!",
     habitMark: "Marquer fait",
     habitHistory: "30 derniers jours",
+    fullName: "Nom complet",
+    fullNamePlaceholder: "Entrez votre nom complet",
+    saveProfile: "Enregistrer",
+    saving: "Enregistrement…",
+    profileSaved: "Profil mis à jour!",
+    changePhoto: "Changer la photo",
+    accountSettings: "Paramètres du compte",
+    dangerZone: "Zone dangereuse",
+    deleteAccount: "Supprimer le compte",
+    deleteConfirmMsg: "Cela supprimera définitivement votre compte et toutes vos données. Tapez SUPPRIMER pour confirmer.",
+    deleteConfirmPlaceholder: "Tapez SUPPRIMER",
+    deleteConfirmBtn: "Supprimer définitivement",
+    deleteCancel: "Annuler",
+    deleting: "Suppression…",
   },
 };
 
@@ -551,33 +581,135 @@ const dashCss = `
   border-radius: 14px;
 }
 
-/* â”€â”€ PROFILE TAB â”€â”€ */
+/* -- PROFILE TAB (redesigned) -- */
 .dash-profile-card {
   background: var(--d-surf);
   border: 1px solid var(--d-border);
   border-radius: 16px;
   padding: 32px 36px;
-  max-width: 560px;
+  max-width: 580px;
 }
-.dash-profile-hero {
-  display: flex; align-items: center; gap: 20px;
-  margin-bottom: 32px;
-  padding-bottom: 28px;
-  border-bottom: 1px solid var(--d-border);
+.pf-avatar-wrap {
+  position: relative; display: inline-block; cursor: pointer;
 }
-.dash-profile-avatar-lg {
-  width: 64px; height: 64px; border-radius: 50%;
+.pf-avatar-img {
+  width: 90px; height: 90px; border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--d-border);
+  box-shadow: 0 4px 20px rgba(0,0,0,.25);
+  display: block;
+}
+.pf-avatar-fallback {
+  width: 90px; height: 90px; border-radius: 50%;
   background: linear-gradient(135deg,#d4a843,#c49838);
-  color: #09090d; font-size: 22px; font-weight: 700;
+  color: #09090d; font-size: 30px; font-weight: 700;
   display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 20px rgba(212,168,67,.3);
+  border: 3px solid rgba(212,168,67,.3);
   flex-shrink: 0;
-  box-shadow: 0 4px 16px rgba(212,168,67,.3);
 }
-.dash-profile-name-big { font-size: 20px; font-weight: 700; color: var(--d-text); }
-.dash-profile-role {
-  font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
-  color: var(--d-gold); margin-top: 4px;
+.pf-avatar-overlay {
+  position: absolute; inset: 0; border-radius: 50%;
+  background: rgba(0,0,0,.55);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity .18s;
+  color: #fff;
 }
+.pf-avatar-wrap:hover .pf-avatar-overlay { opacity: 1; }
+.pf-avatar-uploading {
+  position: absolute; inset: 0; border-radius: 50%;
+  background: rgba(0,0,0,.65);
+  display: flex; align-items: center; justify-content: center;
+}
+.pf-avatar-spinner {
+  width: 22px; height: 22px; border-radius: 50%;
+  border: 2px solid rgba(255,255,255,.2);
+  border-top-color: #d4a843;
+  animation: pf-spin .7s linear infinite;
+}
+@keyframes pf-spin { to { transform: rotate(360deg); } }
+.pf-hero {
+  display: flex; align-items: center; gap: 22px;
+  margin-bottom: 28px; padding-bottom: 28px;
+  border-bottom: 1px solid var(--d-border);
+  flex-wrap: wrap;
+}
+.pf-hero-info { flex: 1; min-width: 0; }
+.pf-hero-name { font-size: 22px; font-weight: 700; color: var(--d-text); line-height: 1.2; }
+.pf-hero-email { font-size: 12px; color: var(--d-muted); margin-top: 4px; }
+.pf-hero-role {
+  font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--d-gold); margin-top: 6px;
+}
+.pf-section { margin-bottom: 28px; }
+.pf-section-label {
+  font-family: var(--font-space-mono), monospace;
+  font-size: 9px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--d-muted); margin-bottom: 14px;
+}
+.pf-field { margin-bottom: 14px; }
+.pf-label { font-size: 11px; font-weight: 600; color: var(--d-muted); display: block; margin-bottom: 6px; }
+.pf-input {
+  width: 100%; background: var(--d-soft);
+  border: 1px solid var(--d-border); border-radius: 10px;
+  color: var(--d-text); font-family: var(--font-poppins), sans-serif;
+  font-size: 13px; padding: 10px 14px; outline: none;
+  transition: border-color .18s; box-sizing: border-box;
+}
+.pf-input:focus { border-color: rgba(212,168,67,.5); }
+.pf-input:disabled { opacity: .5; cursor: default; }
+.pf-input-static { font-size: 13px; color: var(--d-text); font-weight: 500; padding: 10px 0; }
+.pf-btn-save {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 10px 20px; border-radius: 10px; border: none; cursor: pointer;
+  background: var(--d-gold); color: #09090d;
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 13px; font-weight: 700;
+  transition: opacity .18s;
+  margin-top: 4px;
+}
+.pf-btn-save:disabled { opacity: .5; cursor: default; }
+.pf-btn-logout {
+  display: flex; align-items: center; gap: 9px;
+  width: 100%; padding: 13px 16px; border-radius: 12px;
+  border: 1px solid var(--d-border); background: var(--d-soft);
+  color: var(--d-text); font-family: var(--font-poppins), sans-serif;
+  font-size: 13px; font-weight: 600; cursor: pointer;
+  transition: background .18s, border-color .18s;
+  margin-bottom: 10px;
+}
+.pf-btn-logout:hover { background: var(--d-hover); border-color: rgba(212,168,67,.3); }
+.pf-danger-zone {
+  border: 1px solid rgba(220,60,60,.25);
+  border-radius: 14px;
+  padding: 20px;
+  margin-top: 8px;
+  background: rgba(220,60,60,.04);
+}
+.pf-danger-title {
+  font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: #f87171; margin-bottom: 10px;
+  display: flex; align-items: center; gap: 7px;
+}
+.pf-danger-desc { font-size: 12px; color: var(--d-muted); margin-bottom: 16px; line-height: 1.55; }
+.pf-btn-delete {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 10px 18px; border-radius: 10px;
+  border: 1px solid rgba(220,60,60,.4); background: rgba(220,60,60,.12);
+  color: #f87171; font-family: var(--font-poppins), sans-serif;
+  font-size: 13px; font-weight: 700; cursor: pointer;
+  transition: background .18s;
+}
+.pf-btn-delete:hover { background: rgba(220,60,60,.22); }
+.pf-btn-delete:disabled { opacity: .5; cursor: default; }
+.pf-confirm-input {
+  width: 100%; background: var(--d-soft);
+  border: 1px solid rgba(220,60,60,.4); border-radius: 10px;
+  color: var(--d-text); font-family: var(--font-poppins), sans-serif;
+  font-size: 13px; padding: 10px 14px; outline: none;
+  box-sizing: border-box; margin-bottom: 12px;
+}
+.pf-confirm-input:focus { border-color: rgba(220,60,60,.7); }
 .dash-profile-row {
   display: flex; align-items: center; justify-content: space-between;
   padding: 14px 0;
@@ -597,13 +729,7 @@ const dashCss = `
 .dash-toggle-btn {
   padding: 5px 14px;
   border-radius: 6px;
-  border: none; background: transparent;
-  font-size: 12px; font-weight: 600;
-  color: var(--d-muted); cursor: pointer;
-  font-family: var(--font-poppins), sans-serif;
-  transition: all .15s;
-}
-.dash-toggle-btn.active {
+  border: none; background: transparent;.dash-toggle-btn.active {
   background: var(--d-surf);
   color: var(--d-gold);
   box-shadow: 0 1px 6px rgba(0,0,0,.15);
@@ -819,6 +945,15 @@ export default function DashboardPage() {
   const [habitIcon, setHabitIcon] = useState("🙏");
   const [habitSaving, setHabitSaving] = useState(false);
 
+  // --- Profile state ---
+  const [profileName, setProfileName] = useState("");
+  const [profileAvatarUrl, setProfileAvatarUrl] = useState<string | null>(null);
+  const [profileSaving, setProfileSaving] = useState(false);
+  const [avatarUploading, setAvatarUploading] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [deleteConfirmText, setDeleteConfirmText] = useState("");
+  const [deleting, setDeleting] = useState(false);
+
   useEffect(() => {
     const saved = window.localStorage.getItem("sg-dashboard-theme");
     if (saved === "light" || saved === "dark") setTheme(saved as "dark" | "light");
@@ -938,6 +1073,66 @@ export default function DashboardPage() {
     });
   }
 
+  // --- Profile helpers ---
+  const loadProfile = useCallback(async () => {
+    if (!user) return;
+    const { data } = await db.from("user_profiles").select("full_name, avatar_url").eq("id", user.id).single();
+    if (data) {
+      if (data.full_name) setProfileName(data.full_name);
+      if (data.avatar_url) setProfileAvatarUrl(data.avatar_url);
+    }
+  }, [db, user]);
+
+  useEffect(() => { if (user) loadProfile(); }, [user, loadProfile]);
+
+  async function saveProfile() {
+    if (!user) return;
+    setProfileSaving(true);
+    await db.from("user_profiles").upsert({
+      id: user.id,
+      full_name: profileName.trim() || null,
+      avatar_url: profileAvatarUrl,
+      updated_at: new Date().toISOString(),
+    });
+    setProfileSaving(false);
+    toast.success(t.profileSaved);
+  }
+
+  async function uploadAvatar(file: File) {
+    if (!user) return;
+    setAvatarUploading(true);
+    const ext = file.name.split(".").pop();
+    const path = `${user.id}/avatar.${ext}`;
+    const { error } = await db.storage.from("avatars").upload(path, file, { upsert: true });
+    if (!error) {
+      const { data: urlData } = db.storage.from("avatars").getPublicUrl(path);
+      const url = urlData.publicUrl + "?t=" + Date.now();
+      setProfileAvatarUrl(url);
+      await db.from("user_profiles").upsert({
+        id: user.id,
+        avatar_url: url,
+        updated_at: new Date().toISOString(),
+      });
+      toast.success(t.profileSaved);
+    }
+    setAvatarUploading(false);
+  }
+
+  async function handleDeleteAccount() {
+    if (!user || deleteConfirmText !== "DELETE") return;
+    setDeleting(true);
+    // Delete profile data first, then call the delete_user RPC
+    await db.from("user_profiles").delete().eq("id", user.id);
+    const { error } = await db.rpc("delete_user");
+    if (error) {
+      toast.error("Could not delete account. Please contact support.");
+      setDeleting(false);
+      return;
+    }
+    await db.auth.signOut();
+    router.push("/");
+  }
+
   const today = new Date().toISOString().slice(0, 10);
   const totalHabitsDoneToday = habits.filter((h) => habitLogs.some((l) => l.habit_id === h.id && l.logged_date === today)).length;
   const maxStreak = habits.reduce((max, h) => Math.max(max, getHabitStreak(h.id)), 0);
@@ -991,8 +1186,8 @@ export default function DashboardPage() {
     { id: "profile",      label: t.profile,     Icon: User                                     },
   ];
 
-  const displayName = user?.email?.split("@")[0] ?? "Student";
-  const initials = (user?.email?.[0] ?? "S").toUpperCase();
+  const displayName = profileName.trim() || user?.email?.split("@")[0] || "Student";
+  const initials = (displayName[0] ?? "S").toUpperCase();
 
   return (
     <div className={`dash-root h-screen overflow-hidden flex ${theme === "light" ? "dash-light" : "dash-dark"}`}>
@@ -1450,51 +1645,166 @@ export default function DashboardPage() {
                     <p className="dash-page-sub">{t.profileSub}</p>
                   </div>
                   <div className="dash-profile-card">
-                    <div className="dash-profile-hero">
-                      <div className="dash-profile-avatar-lg">{initials}</div>
-                      <div>
-                        <div className="dash-profile-name-big">{displayName}</div>
-                        <div className="dash-profile-role">Student</div>
+
+                    {/* Hero: avatar + name */}
+                    <div className="pf-hero">
+                      <label className="pf-avatar-wrap" title={t.changePhoto}>
+                        <input
+                          type="file"
+                          accept="image/jpeg,image/png,image/webp,image/gif"
+                          style={{ display: "none" }}
+                          onChange={(e) => {
+                            const f = e.target.files?.[0];
+                            if (f) uploadAvatar(f);
+                            e.target.value = "";
+                          }}
+                        />
+                        {profileAvatarUrl ? (
+                          <img src={profileAvatarUrl} alt="avatar" className="pf-avatar-img" />
+                        ) : (
+                          <div className="pf-avatar-fallback">{initials}</div>
+                        )}
+                        {avatarUploading ? (
+                          <div className="pf-avatar-uploading">
+                            <div className="pf-avatar-spinner" />
+                          </div>
+                        ) : (
+                          <div className="pf-avatar-overlay">
+                            <Camera size={20} />
+                          </div>
+                        )}
+                      </label>
+                      <div className="pf-hero-info">
+                        <div className="pf-hero-name">{displayName}</div>
+                        <div className="pf-hero-email">{user?.email}</div>
+                        <div className="pf-hero-role">Student</div>
                       </div>
                     </div>
-                    <div className="dash-profile-row">
-                      <span className="dash-profile-label">{t.email}</span>
-                      <span className="dash-profile-value">{user?.email ?? "—"}</span>
+
+                    {/* Edit name */}
+                    <div className="pf-section">
+                      <div className="pf-section-label">{t.fullName}</div>
+                      <div className="pf-field">
+                        <label className="pf-label">{t.fullName}</label>
+                        <input
+                          className="pf-input"
+                          value={profileName}
+                          onChange={(e) => setProfileName(e.target.value)}
+                          placeholder={t.fullNamePlaceholder}
+                          maxLength={80}
+                        />
+                      </div>
+                      <button
+                        className="pf-btn-save"
+                        onClick={saveProfile}
+                        disabled={profileSaving}
+                      >
+                        <Save size={14} />
+                        {profileSaving ? t.saving : t.saveProfile}
+                      </button>
                     </div>
-                    <div className="dash-profile-row">
-                      <span className="dash-profile-label">{t.memberSince}</span>
-                      <span className="dash-profile-value">
-                        {user?.created_at
-                          ? new Date(user.created_at).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })
-                          : "—"}
-                      </span>
-                    </div>
-                    <div className="dash-profile-row">
-                      <span className="dash-profile-label">{t.statsEnrolled} Trainings</span>
-                      <span className="dash-profile-value">{myTrainings.length}</span>
-                    </div>
-                    <div className="dash-profile-row">
-                      <span className="dash-profile-label">{t.statsDone} Trainings</span>
-                      <span className="dash-profile-value">{finishedCount}</span>
-                    </div>
-                    <div className="dash-profile-row">
-                      <span className="dash-profile-label">{t.language}</span>
-                      <div className="dash-toggle-row">
-                        <button className={`dash-toggle-btn${lang === "en" ? " active" : ""}`} onClick={() => lang !== "en" && toggleLang()}>EN</button>
-                        <button className={`dash-toggle-btn${lang === "fr" ? " active" : ""}`} onClick={() => lang !== "fr" && toggleLang()}>FR</button>
+
+                    {/* Account info */}
+                    <div className="pf-section">
+                      <div className="pf-section-label">{t.accountSettings}</div>
+                      <div className="dash-profile-row">
+                        <span className="dash-profile-label">{t.email}</span>
+                        <span className="dash-profile-value" style={{ fontSize: 12 }}>{user?.email ?? "—"}</span>
+                      </div>
+                      <div className="dash-profile-row">
+                        <span className="dash-profile-label">{t.memberSince}</span>
+                        <span className="dash-profile-value">
+                          {user?.created_at
+                            ? new Date(user.created_at).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })
+                            : "—"}
+                        </span>
+                      </div>
+                      <div className="dash-profile-row">
+                        <span className="dash-profile-label">{t.statsEnrolled}</span>
+                        <span className="dash-profile-value">{myTrainings.length}</span>
+                      </div>
+                      <div className="dash-profile-row">
+                        <span className="dash-profile-label">{t.statsDone}</span>
+                        <span className="dash-profile-value">{finishedCount}</span>
                       </div>
                     </div>
-                    <div className="dash-profile-row">
-                      <span className="dash-profile-label">{t.theme}</span>
-                      <div className="dash-toggle-row">
-                        <button className={`dash-toggle-btn${theme === "dark" ? " active" : ""}`} onClick={() => setTheme("dark")}>{t.dark}</button>
-                        <button className={`dash-toggle-btn${theme === "light" ? " active" : ""}`} onClick={() => setTheme("light")}>{t.light}</button>
+
+                    {/* Settings */}
+                    <div className="pf-section">
+                      <div className="pf-section-label">{t.accountSettings}</div>
+                      <div className="dash-profile-row">
+                        <span className="dash-profile-label">{t.language}</span>
+                        <div className="dash-toggle-row">
+                          <button className={`dash-toggle-btn${lang === "en" ? " active" : ""}`} onClick={() => lang !== "en" && toggleLang()}>EN</button>
+                          <button className={`dash-toggle-btn${lang === "fr" ? " active" : ""}`} onClick={() => lang !== "fr" && toggleLang()}>FR</button>
+                        </div>
+                      </div>
+                      <div className="dash-profile-row" style={{ borderBottom: "none" }}>
+                        <span className="dash-profile-label">{t.theme}</span>
+                        <div className="dash-toggle-row">
+                          <button className={`dash-toggle-btn${theme === "dark" ? " active" : ""}`} onClick={() => setTheme("dark")}>{t.dark}</button>
+                          <button className={`dash-toggle-btn${theme === "light" ? " active" : ""}`} onClick={() => setTheme("light")}>{t.light}</button>
+                        </div>
                       </div>
                     </div>
+
+                    {/* Log out + Danger zone */}
+                    <div className="pf-section" style={{ marginBottom: 0 }}>
+                      <button className="pf-btn-logout" onClick={handleLogout}>
+                        <LogOut size={16} />
+                        {t.signOut}
+                      </button>
+
+                      <div className="pf-danger-zone">
+                        <div className="pf-danger-title">
+                          <AlertTriangle size={14} />
+                          {t.dangerZone}
+                        </div>
+                        {!showDeleteConfirm ? (
+                          <>
+                            <p className="pf-danger-desc">{t.deleteConfirmMsg}</p>
+                            <button
+                              className="pf-btn-delete"
+                              onClick={() => setShowDeleteConfirm(true)}
+                            >
+                              <Trash2 size={14} />
+                              {t.deleteAccount}
+                            </button>
+                          </>
+                        ) : (
+                          <>
+                            <p className="pf-danger-desc">{t.deleteConfirmMsg}</p>
+                            <input
+                              className="pf-confirm-input"
+                              value={deleteConfirmText}
+                              onChange={(e) => setDeleteConfirmText(e.target.value)}
+                              placeholder={t.deleteConfirmPlaceholder}
+                              autoFocus
+                            />
+                            <div style={{ display: "flex", gap: 8 }}>
+                              <button
+                                className="pf-btn-delete"
+                                disabled={deleteConfirmText !== "DELETE" || deleting}
+                                onClick={handleDeleteAccount}
+                              >
+                                {deleting ? t.deleting : t.deleteConfirmBtn}
+                              </button>
+                              <button
+                                className="pf-btn-save"
+                                style={{ background: "var(--d-soft)", color: "var(--d-text)", border: "1px solid var(--d-border)" }}
+                                onClick={() => { setShowDeleteConfirm(false); setDeleteConfirmText(""); }}
+                              >
+                                {t.deleteCancel}
+                              </button>
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    </div>
+
                   </div>
                 </>
-              )}
-            </>
+              )}            </>
           )}
         </main>
       </div>
