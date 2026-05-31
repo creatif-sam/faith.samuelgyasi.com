@@ -244,6 +244,8 @@ export const layoutStyles = `
   display: inline-flex; align-items: center; justify-content: center; padding: 0 4px;
 }
 @media (max-width: 768px) {
+  .dash-root { display: block; }
+  .dash-main-area { height: 100vh; }
   .dash-topbar { padding: 8px 10px; gap: 6px; margin: 62px 10px 0; }
   .dash-topbar-left { flex: 1; }
   .dash-search-wrap { width: 100%; min-width: unset; }
