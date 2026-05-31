@@ -60,6 +60,17 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
+  // Require email confirmation for dashboard access
+  if (
+    user &&
+    !user.email_confirmed_at &&
+    request.nextUrl.pathname.startsWith("/dashboard")
+  ) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/auth/sign-up-success";
+    return NextResponse.redirect(url);
+  }
+
   // IMPORTANT: You *must* return the supabaseResponse object as it is.
   // If you're creating a new response object with NextResponse.next() make sure to:
   // 1. Pass the request in it, like so:

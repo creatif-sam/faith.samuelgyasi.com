@@ -17,6 +17,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         router.push("/auth/login?next=/dashboard");
         return;
       }
+      if (!session.user.email_confirmed_at) {
+        router.push("/auth/sign-up-success");
+        return;
+      }
       setChecking(false);
     };
     check();

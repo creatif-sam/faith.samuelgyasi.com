@@ -49,3 +49,14 @@ create policy "user_profiles_delete_own"
 grant select, insert, update, delete
   on public.user_profiles
   to authenticated;
+
+-- ============================================================
+-- Email confirmation enforcement (Supabase Auth setting)
+-- ============================================================
+-- Go to: Supabase Dashboard → Authentication → Providers → Email
+-- Enable: "Confirm email" toggle ON
+-- This ensures no user can sign in until their email is confirmed.
+--
+-- The application also enforces this at the proxy (server) and
+-- layout (client) level: unconfirmed users are redirected to
+-- /auth/sign-up-success when they try to access /dashboard.
