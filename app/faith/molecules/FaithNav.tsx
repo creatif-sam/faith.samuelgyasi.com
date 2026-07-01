@@ -26,15 +26,18 @@ export function FaithNav({ lang, onToggleLang }: FaithNavProps) {
     <nav>
       <Link href={localizedHref(lang, "/faith")} className="nav-back">{t.nav.back[lang]}</Link>
       <div className="nav-links">
-        {NAV_LINKS.map(({ path, label }) => (
-          <Link
-            key={path}
-            href={path.startsWith("/#") ? `/${lang}${path.slice(1)}` : localizedHref(lang, path)}
-            className={`nav-link${pathname.startsWith(path) && path !== "/faith#connect" ? " nav-link--active" : ""}`}
-          >
-            {label[lang]}
-          </Link>
-        ))}
+        {NAV_LINKS.map(({ path, label }) => {
+          const href = path.startsWith("/#") ? `/${lang}${path.slice(1)}` : localizedHref(lang, path);
+          return (
+            <Link
+              key={path}
+              href={href}
+              className={`nav-link${pathname.startsWith(href) && path !== "/#connect" ? " nav-link--active" : ""}`}
+            >
+              {label[lang]}
+            </Link>
+          );
+        })}
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
         <LangToggle lang={lang} onToggle={onToggleLang} />

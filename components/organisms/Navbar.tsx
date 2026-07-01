@@ -14,9 +14,6 @@ export function Navbar() {
   const pathname                = usePathname();
   const { lang, toggleLang }    = useLang();
 
-  // `path` is the canonical (unprefixed) route, used to detect the active
-  // link — usePathname() reports the rewrite *destination* (e.g. "/blog"),
-  // not the browser's "/fr/blog", so comparisons must use the unprefixed form.
   const navLinks = [
     { path: "/blog",           label: t.blog[lang]      },
     { path: "/faith-analyzer", label: t.analyzer[lang]  },
@@ -53,7 +50,7 @@ export function Navbar() {
             <li key={l.path}>
               <Link
                 href={l.href}
-                className={pathname.startsWith(l.path) ? "nav-active" : ""}
+                className={pathname.startsWith(l.href) ? "nav-active" : ""}
               >
                 {l.label}
               </Link>

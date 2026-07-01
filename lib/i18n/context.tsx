@@ -1,9 +1,9 @@
 // lib/i18n/context.tsx — global bilingual language context
 "use client";
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import type { Lang } from "./types";
-import { LOCALE_COOKIE, SUPPORTED_LOCALES } from "./locale";
+import { LOCALE_COOKIE, stripLocalePrefix } from "./locale";
 
 const STORAGE_KEY = "fdp-lang";
 
@@ -19,42 +19,38 @@ const LangContext = createContext<LangContextValue>({
 
 interface LangProviderProps {
   children: React.ReactNode;
-  /** Server-resolved locale for URL-prefixed routes (/en, /fr). */
+  /** Server-resolved locale, used only to seed the very first paint. */
   initialLang?: Lang;
-  /**
-   * True on routes served under an /en or /fr prefix, where the URL is the
-   * source of truth and toggling must navigate. False on unprefixed areas
-   * (admin/dashboard) which keep the original localStorage-backed toggle.
-   */
-  urlControlled?: boolean;
 }
 
-export function LangProvider({ children, initialLang, urlControlled = false }: LangProviderProps) {
+export function LangProvider({ children, initialLang }: LangProviderProps) {
   const router = useRouter();
-  const [lang, setLang] = useState<Lang>(initialLang ?? "en");
+  const pathname = usePathname();
+  const { locale: urlLocale, rest } = stripLocalePrefix(pathname);
+
+  const [lang, setLang] = useState<Lang>(initialLang ?? urlLocale ?? "en");
+
+  // On /en or /fr routes the URL is the single source of truth. usePathname()
+  // updates on every navigation (Link clicks, back/forward, router.push), so
+  // re-deriving from it here keeps `lang` correct even though this provider
+  // lives in the root layout and never remounts between navigations.
+  useEffect(() => {
+    if (urlLocale && urlLocale !== lang) setLang(urlLocale);
+  }, [urlLocale]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Unprefixed areas (admin/dashboard): hydrate from localStorage once on mount.
   useEffect(() => {
-    if (urlControlled) return;
+    if (urlLocale) return;
     try {
       const stored = localStorage.getItem(STORAGE_KEY) as Lang | null;
       if (stored === "en" || stored === "fr") setLang(stored);
     } catch {}
-  }, [urlControlled]);
+  }, [urlLocale]);
 
   const toggleLang = useCallback(() => {
-    if (urlControlled) {
-      const current = lang;
-      const next: Lang = current === "en" ? "fr" : "en";
-      const pathname = window.location.pathname;
-      const segments = pathname.split("/");
-      const hasLocaleSegment = SUPPORTED_LOCALES.includes(segments[1] as Lang);
-      if (hasLocaleSegment) {
-        segments[1] = next;
-      } else {
-        segments.splice(1, 0, next);
-      }
-      const newPath = segments.join("/") || `/${next}`;
+    if (urlLocale) {
+      const next: Lang = urlLocale === "en" ? "fr" : "en";
+      const newPath = `/${next}${rest === "/" ? "" : rest}`;
       document.cookie = `${LOCALE_COOKIE}=${next}; path=/; max-age=${60 * 60 * 24 * 365}; samesite=lax`;
       router.push(`${newPath}${window.location.search}`);
       return;
@@ -67,7 +63,7 @@ export function LangProvider({ children, initialLang, urlControlled = false }: L
       } catch {}
       return next;
     });
-  }, [lang, router, urlControlled]);
+  }, [urlLocale, rest, router]);
 
   return (
     <LangContext.Provider value={{ lang, toggleLang }}>

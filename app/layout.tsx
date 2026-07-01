@@ -141,8 +141,7 @@ export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const localeHeader = (await headers()).get("x-locale");
-  const urlControlled = isSupportedLocale(localeHeader);
-  const lang = urlControlled ? localeHeader : "en";
+  const lang = isSupportedLocale(localeHeader) ? localeHeader : "en";
 
   return (
     <html lang={lang}>
@@ -155,7 +154,7 @@ export default async function RootLayout({
       <body
         className={`${playfair.variable} ${cormorant.variable} ${spaceMono.variable} ${poppins.variable}`}
       >
-        <Providers initialLang={lang} urlControlled={urlControlled}>
+        <Providers initialLang={lang}>
           <Analytics />
           <NavWrapper />
           {children}
