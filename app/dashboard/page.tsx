@@ -92,12 +92,23 @@ export default function DashboardPage() {
 
     // Pre-load profile name + avatar + habits for overview
     const [profileData, habitsRes, logsRes] = await Promise.all([
-      db.from("user_profiles").select("full_name,avatar_url").eq("id", session.user.id).single(),
+      db.from("profiles").select("full_name,avatar_url").eq("id", session.user.id).single(),
       db.from("spiritual_habits").select("*").eq("user_id", session.user.id).order("created_at", { ascending: true }),
       db.from("habit_logs").select("id,habit_id,logged_date").eq("user_id", session.user.id)
         .gte("logged_date", new Date(Date.now() - 30 * 86400000).toISOString().slice(0, 10)),
     ]);
-    if (profileData.data?.full_name) setProfileName(profileData.data.full_name);
+    if (profileData.data?.full_name) {
+      setProfileName(profileData.data.full_name);
+    } else {
+      // First login after sign-up: profiles has no full_name yet, but the name
+      // entered at sign-up lives in auth user_metadata. Hydrate it once so it
+      // shows up immediately instead of waiting for a manual profile edit.
+      const metaName = (session.user.user_metadata?.full_name as string | undefined)?.trim();
+      if (metaName) {
+        setProfileName(metaName);
+        void db.from("profiles").upsert({ id: session.user.id, full_name: metaName });
+      }
+    }
     if (profileData.data?.avatar_url) setProfileAvatarUrl(profileData.data.avatar_url);
     setOverviewHabits((habitsRes.data as SpiritualHabit[]) ?? []);
     setOverviewHabitLogs((logsRes.data as HabitLog[]) ?? []);

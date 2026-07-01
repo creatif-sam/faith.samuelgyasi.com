@@ -52,7 +52,7 @@ export default function ProfileTab({
   const loadProfile = useCallback(async () => {
     // Only fetch if initial values were not provided
     if (initialName && initialAvatarUrl !== undefined) return;
-    const { data } = await db.from("user_profiles")
+    const { data } = await db.from("profiles")
       .select("full_name, avatar_url")
       .eq("id", user.id)
       .single();
@@ -66,7 +66,7 @@ export default function ProfileTab({
 
   async function saveProfile() {
     setProfileSaving(true);
-    const { error: saveErr } = await db.from("user_profiles").upsert({
+    const { error: saveErr } = await db.from("profiles").upsert({
       id: user.id,
       full_name: profileName.trim() || null,
       avatar_url: profileAvatarUrl,
@@ -91,7 +91,7 @@ export default function ProfileTab({
       const { data: urlData } = db.storage.from("avatars").getPublicUrl(filePath);
       const url = urlData.publicUrl + "?t=" + Date.now();
       setProfileAvatarUrl(url);
-      const { error: avatarSaveErr } = await db.from("user_profiles").upsert({
+      const { error: avatarSaveErr } = await db.from("profiles").upsert({
         id: user.id,
         avatar_url: url,
         updated_at: new Date().toISOString(),
@@ -111,7 +111,7 @@ export default function ProfileTab({
   async function handleDeleteAccount() {
     if (deleteConfirmText !== "DELETE") return;
     setDeleting(true);
-    await db.from("user_profiles").delete().eq("id", user.id);
+    await db.from("profiles").delete().eq("id", user.id);
     const { error } = await db.rpc("delete_user");
     if (error) {
       toast.error("Could not delete account. Please contact support.");

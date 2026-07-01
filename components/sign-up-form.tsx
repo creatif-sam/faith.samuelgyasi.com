@@ -19,10 +19,51 @@ import { Eye, EyeOff } from "lucide-react";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://faith.samuelgyasi.com";
 
+type PasswordStrength = { score: number; label: string; color: string };
+
+function getPasswordStrength(password: string): PasswordStrength {
+  if (!password) return { score: 0, label: "", color: "" };
+
+  let score = 0;
+  if (password.length >= 8) score++;
+  if (password.length >= 12) score++;
+  if (/[a-z]/.test(password) && /[A-Z]/.test(password)) score++;
+  if (/\d/.test(password)) score++;
+  if (/[^A-Za-z0-9]/.test(password)) score++;
+
+  if (score <= 1) return { score, label: "Weak", color: "#e05252" };
+  if (score <= 3) return { score, label: "Okay", color: "#e0a920" };
+  return { score, label: "Strong", color: "#3fa864" };
+}
+
+function PasswordStrengthMeter({ password }: { password: string }) {
+  if (!password) return null;
+  const { score, label, color } = getPasswordStrength(password);
+  const filled = Math.min(3, Math.max(1, Math.ceil((score / 5) * 3)));
+
+  return (
+    <div className="flex items-center gap-2 mt-1.5" aria-live="polite">
+      <div className="flex flex-1 gap-1">
+        {[0, 1, 2].map((i) => (
+          <div
+            key={i}
+            className="h-1.5 flex-1 rounded-full transition-colors"
+            style={{ backgroundColor: i < filled ? color : "hsl(var(--border))" }}
+          />
+        ))}
+      </div>
+      <span className="text-xs font-medium" style={{ color }}>
+        {label}
+      </span>
+    </div>
+  );
+}
+
 export function SignUpForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
@@ -50,6 +91,9 @@ export function SignUpForm({
         password,
         options: {
           emailRedirectTo: `${siteUrl}/dashboard`,
+          data: {
+            full_name: fullName.trim(),
+          },
         },
       });
       if (error) throw error;
@@ -71,6 +115,17 @@ export function SignUpForm({
         <CardContent>
           <form onSubmit={handleSignUp}>
             <div className="flex flex-col gap-6">
+              <div className="grid gap-2">
+                <Label htmlFor="full-name">Full Name</Label>
+                <Input
+                  id="full-name"
+                  type="text"
+                  placeholder="Jane Doe"
+                  required
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                />
+              </div>
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
@@ -105,6 +160,7 @@ export function SignUpForm({
                     {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                   </button>
                 </div>
+                <PasswordStrengthMeter password={password} />
               </div>
               <div className="grid gap-2">
                 <div className="flex items-center">
