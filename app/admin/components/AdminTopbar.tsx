@@ -1,5 +1,5 @@
 "use client";
-import { Bell, Mail, Moon, Search, Sun } from "lucide-react";
+import { Bell, Moon, Search, Sun } from "lucide-react";
 import { NAV_SORTED } from "./constants";
 import type { AdminNotification } from "./useAdminPage";
 import type { Tab } from "./types";
@@ -51,7 +51,6 @@ export default function AdminTopbar({ searchQuery, setSearchQuery, searchOpen, s
         })()}
       </div>
       <div className="adm-topbar-right">
-        <span className="adm-icon-btn"><Mail size={14} /></span>
         <div className="adm-notif-wrap">
           <button className="adm-icon-btn" onClick={() => setNotifOpen(v => !v)} aria-label="Notifications">
             <Bell size={14} />

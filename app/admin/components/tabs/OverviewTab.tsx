@@ -1,5 +1,3 @@
-import Link from "next/link";
-import { Globe } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { TW } from "../constants";
 import { BlogPost, Subscriber, Message, EmailLog, AnalyticsData, Tab } from "../types";
@@ -38,9 +36,6 @@ export default function OverviewTab({ posts, subs, msgs, logs, analytics, onNav 
           <div className={TW.pgTitle}>Dashboard</div>
           <p className={TW.pgSub}>Welcome back, Samuel.</p>
         </div>
-        <a href="/" target="_blank" rel="noreferrer" className={cn(TW.btn, TW.ghost)} style={{ textDecoration: "none", padding: "10px 18px", fontSize: "8px" }}>
-          <Globe size={10} /> View Site
-        </a>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-12">

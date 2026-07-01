@@ -14,9 +14,9 @@ export function HeroModern() {
   return (
     <section className={styles.heroModern} id="hero">
       {/* Decorative Background Elements */}
-      <div className={styles.decorativeElement1}></div>
-      <div className={styles.decorativeElement2}></div>
-      <div className={styles.decorativeElement3}></div>
+      <div className={`${styles.decorativeElement} ${styles.decorativeElement1}`}></div>
+      <div className={`${styles.decorativeElement} ${styles.decorativeElement2}`}></div>
+      <div className={`${styles.decorativeElement} ${styles.decorativeElement3}`}></div>
 
       <div className={styles.heroContainer}>
         {/* Left Content Section */}
