@@ -163,7 +163,7 @@ export default function ProfileTab({
           <div className="pf-hero-info">
             <div className="pf-hero-name">{displayName}</div>
             <div className="pf-hero-email">{user.email}</div>
-            <div className="pf-hero-role">Student</div>
+            <div className="pf-hero-role">Disciple of Christ</div>
           </div>
         </div>
 

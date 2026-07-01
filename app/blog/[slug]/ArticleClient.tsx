@@ -58,6 +58,7 @@ export function ArticleClient({
   olderPost?: AdjacentPost;
 }) {
   const { lang } = useLang();
+  const [userId, setUserId] = useState<string | null>(null);
   const [showEvalModal, setShowEvalModal] = useState(false);
   const [linkCopied, setLinkCopied] = useState(false);
   const [hasShownModal, setHasShownModal] = useState(false);
@@ -134,6 +135,22 @@ export function ArticleClient({
     run();
   }, [post.id]);
 
+  // Logged-in disciples get this post counted toward "Blogs Read" on their
+  // dashboard once they've actually scrolled through it (see the 80%-scroll
+  // effect below), not just on page load.
+  useEffect(() => {
+    const supabase = createClient();
+    supabase.auth.getUser().then(({ data }) => setUserId(data.user?.id ?? null));
+  }, []);
+
+  async function markAsRead() {
+    if (!userId) return;
+    const supabase = createClient();
+    await supabase
+      .from("blog_reads")
+      .upsert({ user_id: userId, blog_post_id: post.id }, { onConflict: "user_id,blog_post_id", ignoreDuplicates: true });
+  }
+
   async function submitComment(e: React.FormEvent) {
     e.preventDefault();
     if (!commentName.trim() || !commentText.trim()) return;
@@ -173,12 +190,13 @@ export function ArticleClient({
       if (scrollPosition >= eightyPercentOfArticle) {
         setShowEvalModal(true);
         setHasShownModal(true);
+        markAsRead();
       }
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [hasShownModal]);
+  }, [hasShownModal, userId]);
 
   const handleSubmitEvaluation = async () => {
     if (rating === 0) {

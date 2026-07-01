@@ -2,7 +2,7 @@
 import Link from "next/link";
 import {
   GraduationCap, CheckCircle2, TrendingUp, Award,
-  Flame, BookOpen, ArrowRight, Sparkles,
+  Flame, BookOpen, ArrowRight, Sparkles, Newspaper,
 } from "lucide-react";
 import type { Training, EnrollmentWithProgress, SpiritualHabit } from "../types";
 import type { Translations } from "../translations";
@@ -19,6 +19,7 @@ interface OverviewTabProps {
   habits: SpiritualHabit[];
   habitsCheckedToday: number;
   longestStreak: number;
+  blogsReadCount: number;
   available: Training[];
   t: Translations;
   onTabChange: (tab: import("../types").DashTab) => void;
@@ -36,6 +37,7 @@ export default function OverviewTab({
   habits,
   habitsCheckedToday,
   longestStreak,
+  blogsReadCount,
   available,
   t,
   onTabChange,
@@ -107,6 +109,15 @@ export default function OverviewTab({
           <div>
             <div className="dash-stat-num">{longestStreak}</div>
             <div className="dash-stat-lbl">{t.overviewStreak}</div>
+          </div>
+        </div>
+        <div className="dash-stat">
+          <div className="dash-stat-icon" style={{ background: "rgba(56,189,248,.1)", color: "#38bdf8" }}>
+            <Newspaper size={20} />
+          </div>
+          <div>
+            <div className="dash-stat-num">{blogsReadCount}</div>
+            <div className="dash-stat-lbl">{t.statsBlogsRead}</div>
           </div>
         </div>
       </div>

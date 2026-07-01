@@ -1,5 +1,4 @@
 "use client";
-import { LogOut } from "lucide-react";
 import type { DashTab } from "../types";
 import type { Translations } from "../translations";
 
@@ -16,7 +15,6 @@ interface DashSidebarProps {
   t: Translations;
   navItems: NavItem[];
   onTabChange: (tab: DashTab) => void;
-  onLogout: () => void;
 }
 
 export default function DashSidebar({
@@ -25,7 +23,6 @@ export default function DashSidebar({
   t,
   navItems,
   onTabChange,
-  onLogout,
 }: DashSidebarProps) {
   return (
     <aside className={`dash-sidebar${navOpen ? " open" : ""}`}>
@@ -51,11 +48,6 @@ export default function DashSidebar({
       ))}
 
       <div className="dash-sidebar-spacer" />
-
-      <button className="dash-logout" onClick={onLogout}>
-        <LogOut size={14} />
-        <span>{t.signOut}</span>
-      </button>
     </aside>
   );
 }

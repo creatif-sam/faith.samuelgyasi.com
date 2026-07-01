@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { GraduationCap, BookOpen, Flame, User, Search, Bell, Sun, Moon, Globe, LayoutDashboard } from "lucide-react";
+import { GraduationCap, BookOpen, Flame, User, Search, Bell, Sun, Moon, Globe, LayoutDashboard, LogOut } from "lucide-react";
 import { toast } from "sonner";
 import { createClient } from "@/lib/supabase/client";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
@@ -125,8 +125,10 @@ export default function DashboardPage() {
   const [profileAvatarUrl, setProfileAvatarUrl] = useState<string | null>(null);
   const [overviewHabits, setOverviewHabits] = useState<SpiritualHabit[]>([]);
   const [overviewHabitLogs, setOverviewHabitLogs] = useState<HabitLog[]>([]);
+  const [blogsReadCount, setBlogsReadCount] = useState(0);
   const [notifications, setNotifications] = useState<DashNotification[]>([]);
   const [notifOpen, setNotifOpen] = useState(false);
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const db = createClient();
 
   useEffect(() => {
@@ -179,14 +181,16 @@ export default function DashboardPage() {
     });
 
     // Pre-load profile name + avatar + habits for overview
-    const [profileData, habitsRes, logsRes, notifRes] = await Promise.all([
+    const [profileData, habitsRes, logsRes, notifRes, blogReadsRes] = await Promise.all([
       db.from("profiles").select("full_name,avatar_url").eq("id", session.user.id).single(),
       db.from("spiritual_habits").select("*").eq("user_id", session.user.id).order("created_at", { ascending: true }),
       db.from("habit_logs").select("id,habit_id,logged_date").eq("user_id", session.user.id)
         .gte("logged_date", new Date(Date.now() - 30 * 86400000).toISOString().slice(0, 10)),
       db.from("user_notifications").select("id,title,body,read,created_at").eq("user_id", session.user.id)
         .order("created_at", { ascending: false }).limit(50),
+      db.from("blog_reads").select("id", { count: "exact", head: true }).eq("user_id", session.user.id),
     ]);
+    setBlogsReadCount(blogReadsRes.count ?? 0);
     if (profileData.data?.full_name) {
       setProfileName(profileData.data.full_name);
     } else {
@@ -334,6 +338,9 @@ export default function DashboardPage() {
           <button className="dash-icon-btn" onClick={toggleLang} aria-label="Switch language">
             <Globe size={14} />
           </button>
+          <button className="dash-icon-btn" onClick={handleLogout} aria-label="Log out" title="Log out">
+            <LogOut size={14} />
+          </button>
         </div>
       </div>
 
@@ -344,7 +351,6 @@ export default function DashboardPage() {
         t={t}
         navItems={NAV_ITEMS}
         onTabChange={handleTabChange}
-        onLogout={handleLogout}
       />
 
       {/* Mobile overlay */}
@@ -431,12 +437,32 @@ export default function DashboardPage() {
             <button className="dash-icon-btn" onClick={toggleLang} aria-label="Switch language" title="Switch language">
               <Globe size={14} />
             </button>
-            <div className="dash-profile">
-              <span className="dash-avatar">{initials}</span>
-              <div>
-                <p className="dash-pname">{displayName}</p>
-                <p className="dash-pmail">{user?.email ?? ""}</p>
-              </div>
+            <div className="dash-profile-wrap">
+              <button type="button" className="dash-profile" onClick={() => setProfileMenuOpen((v) => !v)} aria-label="Account menu">
+                <span className="dash-avatar">{initials}</span>
+                <div>
+                  <p className="dash-pname">{displayName}</p>
+                  <p className="dash-pmail">{user?.email ?? ""}</p>
+                </div>
+              </button>
+              {profileMenuOpen && (
+                <div className="dash-profile-menu">
+                  <button
+                    type="button"
+                    className="dash-profile-menu-item"
+                    onClick={() => { setProfileMenuOpen(false); handleTabChange("profile"); }}
+                  >
+                    <User size={14} /> Profile
+                  </button>
+                  <button
+                    type="button"
+                    className="dash-profile-menu-item"
+                    onClick={() => { setProfileMenuOpen(false); handleLogout(); }}
+                  >
+                    <LogOut size={14} /> Log Out
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -495,6 +521,7 @@ export default function DashboardPage() {
                   habits={overviewHabits}
                   habitsCheckedToday={habitsCheckedToday}
                   longestStreak={longestStreak}
+                  blogsReadCount={blogsReadCount}
                   available={available}
                   t={t}
                   onTabChange={handleTabChange}
