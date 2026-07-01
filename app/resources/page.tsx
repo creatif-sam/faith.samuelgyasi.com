@@ -4,6 +4,7 @@ import { Suspense, useEffect } from "react";
 import Link from "next/link";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
 import { useLang } from "@/lib/i18n";
+import { localizedHref } from "@/lib/i18n/locale";
 
 const css = `
 .lib-pg {
@@ -264,7 +265,7 @@ export default function ResourcesPage() {
 
         {/* ── SECTIONS ── */}
         <div className="lib-sections">
-          <Link href="/resources/ebooks" className="lib-section-card" style={{ transitionDelay: "0s" }}>
+          <Link href={localizedHref(lang, "/resources/ebooks")} className="lib-section-card" style={{ transitionDelay: "0s" }}>
             <div className="lib-card-num">01</div>
             <h2 className="lib-card-title">{lang === "en" ? "eBooks" : "Livres Numériques"}</h2>
             <p className="lib-card-body">
@@ -275,7 +276,7 @@ export default function ResourcesPage() {
             <span className="lib-card-cta">{lang === "en" ? "Browse eBooks →" : "Parcourir les Livres →"}</span>
           </Link>
 
-          <Link href="/resources/reviews" className="lib-section-card" style={{ transitionDelay: "0.08s" }}>
+          <Link href={localizedHref(lang, "/resources/reviews")} className="lib-section-card" style={{ transitionDelay: "0.08s" }}>
             <div className="lib-card-num">02</div>
             <h2 className="lib-card-title">{lang === "en" ? "Book Reviews" : "Critiques de Livres"}</h2>
             <p className="lib-card-body">
@@ -286,7 +287,7 @@ export default function ResourcesPage() {
             <span className="lib-card-cta">{lang === "en" ? "Browse Reviews →" : "Parcourir les Critiques →"}</span>
           </Link>
 
-          <Link href="/resources/audio" className="lib-section-card" style={{ transitionDelay: "0.16s" }}>
+          <Link href={localizedHref(lang, "/resources/audio")} className="lib-section-card" style={{ transitionDelay: "0.16s" }}>
             <div className="lib-card-num">03</div>
             <h2 className="lib-card-title">{lang === "en" ? "Audio Library" : "Bibliothèque Audio"}</h2>
             <p className="lib-card-body">
@@ -297,7 +298,7 @@ export default function ResourcesPage() {
             <span className="lib-card-cta">{lang === "en" ? "Listen Now →" : "Écouter Maintenant →"}</span>
           </Link>
 
-          <Link href="/resources/visual" className="lib-section-card" style={{ transitionDelay: "0.24s" }}>
+          <Link href={localizedHref(lang, "/resources/visual")} className="lib-section-card" style={{ transitionDelay: "0.24s" }}>
             <div className="lib-card-num">04</div>
             <h2 className="lib-card-title">{lang === "en" ? "Visual Library" : "Bibliothèque Visuelle"}</h2>
             <p className="lib-card-body">
@@ -308,7 +309,7 @@ export default function ResourcesPage() {
             <span className="lib-card-cta">{lang === "en" ? "Watch Now →" : "Regarder Maintenant →"}</span>
           </Link>
 
-          <Link href="/resources/trainings" className="lib-section-card lib-section-card--full" style={{ transitionDelay: "0.32s" }}>
+          <Link href={localizedHref(lang, "/resources/trainings")} className="lib-section-card lib-section-card--full" style={{ transitionDelay: "0.32s" }}>
             <div style={{ display: "flex", flexDirection: "column", gap: 12, flex: "0 0 auto" }}>
               <div className="lib-card-num">05</div>
               <div className="lib-card-icon">🎓</div>

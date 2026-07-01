@@ -36,7 +36,7 @@ export default function UpcomingTab({ events, onNew, onEdit, onDelete, onToggle 
       <div className="flex gap-0 border-b border-white/[.08] mb-6">
         {SUB_TABS.map((t) => (
           <button key={t.id} onClick={() => setSubTab(t.id)}
-            className={cn("font-mono text-[9px] tracking-[.2em] uppercase px-5 py-3 bg-transparent border-0 cursor-pointer transition-colors",
+            className={cn("font-poppins text-[9px] tracking-[.2em] uppercase px-5 py-3 bg-transparent border-0 cursor-pointer transition-colors",
               subTab === t.id ? "text-[#c9a84c] border-b-2 border-[#c9a84c]" : "text-white/35 border-b-2 border-transparent"
             )}>
             {t.label} ({events.filter((e) => e.category === t.id).length})

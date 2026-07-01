@@ -45,7 +45,7 @@ export default function FeedbackTab({ feedbacks, onToggleResolved, onDelete }: F
       <div className="flex gap-0 border-b border-white/[.08] mb-6 overflow-x-auto">
         {FILTERS.map((f) => (
           <button key={f.id} onClick={() => setFilter(f.id)}
-            className={cn("font-mono text-[9px] tracking-[.2em] uppercase px-5 py-3 bg-transparent border-0 cursor-pointer transition-colors whitespace-nowrap",
+            className={cn("font-poppins text-[9px] tracking-[.2em] uppercase px-5 py-3 bg-transparent border-0 cursor-pointer transition-colors whitespace-nowrap",
               filter === f.id ? "text-[#c9a84c] border-b-2 border-[#c9a84c]" : "text-white/35 border-b-2 border-transparent"
             )}>
             {f.label}
@@ -69,13 +69,13 @@ export default function FeedbackTab({ feedbacks, onToggleResolved, onDelete }: F
                     {fb.type === "bug" ? "Bug" : "Idea"}
                   </span>
                   {fb.email && (
-                    <span className="font-mono text-[9px] text-white/40">{fb.email}</span>
+                    <span className="font-poppins text-[9px] text-white/40">{fb.email}</span>
                   )}
                   {fb.page_url && (
-                    <span className="font-mono text-[9px] text-white/25 italic">{fb.page_url}</span>
+                    <span className="font-poppins text-[9px] text-white/25 italic">{fb.page_url}</span>
                   )}
                 </div>
-                <span className="font-mono text-[9px] text-white/25">
+                <span className="font-poppins text-[9px] text-white/25">
                   {new Date(fb.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
                 </span>
               </div>

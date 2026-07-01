@@ -64,7 +64,7 @@ export default function ComposeView({ templates, onReload }: ComposeViewProps) {
         <label className={TW.label}>{mode === "html" ? "Body (HTML)" : "Body (Plain text)"} <span className="text-white/20 ml-1.5">{body.length} chars</span></label>
         {prev && mode === "html"
           ? <div className="bg-white text-black rounded-lg p-4 overflow-auto max-h-[400px]" dangerouslySetInnerHTML={{ __html: body }} />
-          : <textarea className={cn(TW.tarea, "min-h-[300px]", mode === "html" && "font-mono text-[13px]")} value={body} onChange={(e) => setBody(e.target.value)} placeholder={mode === "html" ? "<h1>Hello,</h1>\n<p>Your message here.</p>" : "Hello,\n\nYour message here."} />
+          : <textarea className={cn(TW.tarea, "min-h-[300px]", mode === "html" && "font-poppins text-[13px]")} value={body} onChange={(e) => setBody(e.target.value)} placeholder={mode === "html" ? "<h1>Hello,</h1>\n<p>Your message here.</p>" : "Hello,\n\nYour message here."} />
         }
       </div>
       <div className="flex justify-end">

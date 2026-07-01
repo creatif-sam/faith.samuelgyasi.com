@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { useLang } from "@/lib/i18n";
+import { localizedHref } from "@/lib/i18n/locale";
 import Breadcrumbs from "@/components/atoms/Breadcrumbs";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
 import { SeriesSidebar } from "@/components/blog/SeriesSidebar";
@@ -90,14 +91,14 @@ function BlogContent() {
     <div className="fdp" style={{ minHeight: "100vh" }}>
       <style>{blogStyles}</style>
       <nav className="fdp-blog-nav">
-        <Link href="/faith" className="nav-back">{"<-"} Faith</Link>
+        <Link href={localizedHref(lang, "/faith")} className="nav-back">{"<-"} Faith</Link>
         <div className="nav-logo">Samuel Kobina Gyasi</div>
         <span />
       </nav>
       <div className="fb-container">
         <Breadcrumbs items={[
-          { label: lang === "fr" ? "Accueil" : "Home", href: "/" },
-          { label: lang === "fr" ? "Foi" : "Faith", href: "/faith" },
+          { label: lang === "fr" ? "Accueil" : "Home", href: localizedHref(lang, "/") },
+          { label: lang === "fr" ? "Foi" : "Faith", href: localizedHref(lang, "/faith") },
           { label: lang === "fr" ? "Journal" : "Journal" },
         ]} />
       </div>
@@ -113,7 +114,7 @@ function BlogContent() {
             <h1 className="fb-title"><span>{getSeriesName()}</span></h1>
             {getSeriesDescription() && <p className="fb-subtitle">{getSeriesDescription()}</p>}
             <div style={{ marginTop: "20px" }}>
-              <Link href="/blog" className="fb-series-back"
+              <Link href={localizedHref(lang, "/blog")} className="fb-series-back"
                 style={{ fontFamily: "'Space Mono', monospace", fontSize: "11px", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--gold)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "8px", transition: "all 0.3s ease" }}
               >
                 ← {lang === "fr" ? "Tous les articles" : "All Posts"}

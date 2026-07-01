@@ -309,7 +309,7 @@ export default function PostModal({ post, onClose, onSave, db }: PostModalProps)
               <input type="checkbox" checked={form.published} onChange={() => setF("published", !form.published)} className="sr-only peer" />
               <div className="w-10 h-5 bg-white/10 rounded-full peer-checked:bg-[rgba(212,168,67,.7)] after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-5" />
             </label>
-            <span className="font-mono text-[9px] tracking-[.1em] text-white/50">{form.published ? "Published — visible on site" : "Draft — not visible"}</span>
+            <span className="font-poppins text-[9px] tracking-[.1em] text-white/50">{form.published ? "Published — visible on site" : "Draft — not visible"}</span>
           </div>
           <div className="flex gap-2.5 justify-end mt-6">
             <button type="button" className={cn(TW.btn, TW.ghost)} onClick={onClose}>Cancel</button>

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useLang } from "@/lib/i18n";
+import { localizedHref } from "@/lib/i18n/locale";
 import { heroTranslations as t } from "@/lib/i18n/hero";
 import { PrayerModal } from "./PrayerModal";
 
@@ -63,10 +64,10 @@ export function HeroSection() {
             </div>
             
             <div className="hero-actions">
-              <Link href="/faith" className="hero-btn hero-btn-primary">
+              <Link href={localizedHref(lang, "/faith")} className="hero-btn hero-btn-primary">
                 {t.ctaFaith[lang]}
               </Link>
-              <Link href="/blog" className="hero-btn hero-btn-secondary">
+              <Link href={localizedHref(lang, "/blog")} className="hero-btn hero-btn-secondary">
                 {t.ctaJournal[lang]}
               </Link>
               <button 
@@ -80,15 +81,15 @@ export function HeroSection() {
           
           {/* Quick Links */}
           <nav className="hero-quick-nav">
-            <Link href="/faith" className="quick-nav-item">
+            <Link href={localizedHref(lang, "/faith")} className="quick-nav-item">
               <span className="qn-number">{t.quickNav.faith.number[lang]}</span>
               <span className="qn-label">{t.quickNav.faith.label[lang]}</span>
             </Link>
-            <Link href="/blog" className="quick-nav-item">
+            <Link href={localizedHref(lang, "/blog")} className="quick-nav-item">
               <span className="qn-number">{t.quickNav.journal.number[lang]}</span>
               <span className="qn-label">{t.quickNav.journal.label[lang]}</span>
             </Link>
-            <Link href="/my-story" className="quick-nav-item">
+            <Link href={localizedHref(lang, "/my-story")} className="quick-nav-item">
               <span className="qn-number">{t.quickNav.story.number[lang]}</span>
               <span className="qn-label">{t.quickNav.story.label[lang]}</span>
             </Link>

@@ -40,7 +40,7 @@ export default function QuickReply({ to, subject, templates, onClose }: QuickRep
   return (
     <div className={TW.qReply}>
       <div className="flex justify-between mb-2.5">
-        <span className="font-mono text-[9px] text-white/45 tracking-[.1em] uppercase">Reply to {to}</span>
+        <span className="font-poppins text-[9px] text-white/45 tracking-[.1em] uppercase">Reply to {to}</span>
         <button className="bg-transparent border-0 text-white/35 cursor-pointer p-0" onClick={onClose}><X size={13} /></button>
       </div>
       {templates.length > 0 && (

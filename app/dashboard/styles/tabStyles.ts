@@ -110,7 +110,7 @@ export const tabStyles = `
 }
 .pf-section { margin-bottom: 28px; }
 .pf-section-label {
-  font-family: var(--font-space-mono), monospace;
+  font-family: var(--font-poppins), sans-serif;
   font-size: 9px; letter-spacing: .2em; text-transform: uppercase;
   color: var(--d-muted); margin-bottom: 14px;
 }

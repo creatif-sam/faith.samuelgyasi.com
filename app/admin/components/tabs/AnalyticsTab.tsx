@@ -35,7 +35,7 @@ export default function AnalyticsTab({ analytics }: AnalyticsTabProps) {
       </div>
 
       <div className={cn(TW.sHead, "mb-3")}>
-        <div className={TW.sTitle}>Daily Views <span className="text-xs font-mono text-white/30">— 14d</span></div>
+        <div className={TW.sTitle}>Daily Views <span className="text-xs font-poppins text-white/30">— 14d</span></div>
       </div>
       <MiniBarChart data={dailyViews} />
 
@@ -58,7 +58,7 @@ export default function AnalyticsTab({ analytics }: AnalyticsTabProps) {
                     </td>
                     <td className={TW.td} style={{ color: "#c9a84c", fontFamily: "'Poppins',sans-serif", fontSize: "22px", fontWeight: 700 }}>{count}</td>
                     <td className={TW.td}>
-                      <div className="flex items-center gap-2.5 font-mono text-[9px] text-white/35 min-w-[120px]">
+                      <div className="flex items-center gap-2.5 font-poppins text-[9px] text-white/35 min-w-[120px]">
                         <div className="h-[3px] bg-gradient-to-r from-[#d4a843] to-[#f0cc7a] rounded-full flex-shrink-0 transition-all max-w-[100px]" style={{ width: `${(count / totalViews) * 100}%` }} />
                         <span>{((count / totalViews) * 100).toFixed(1)}%</span>
                       </div>

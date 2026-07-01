@@ -5,6 +5,7 @@ import Link from "next/link";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
 import { createAnonClient } from "@/lib/supabase/anon";
 import { useLang } from "@/lib/i18n";
+import { localizedHref } from "@/lib/i18n/locale";
 import { Download, Play } from "lucide-react";
 
 interface AudioItem {
@@ -224,7 +225,7 @@ export default function AudioPage() {
 
         {/* ── HEADER ── */}
         <div className="audio-header">
-          <Link href="/resources" className="audio-back">{translations.back}</Link>
+          <Link href={localizedHref(lang, "/resources")} className="audio-back">{translations.back}</Link>
           <p className="audio-eyebrow">{translations.eyebrow}</p>
           <h1 className="audio-headline">
             {translations.title}<br /><em>{translations.titleEm}</em>

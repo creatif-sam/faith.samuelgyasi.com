@@ -4,6 +4,8 @@ import { Suspense, useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
 import { createAnonClient } from "@/lib/supabase/anon";
+import { useLang } from "@/lib/i18n";
+import { localizedHref } from "@/lib/i18n/locale";
 
 interface BookReview {
   id: string;
@@ -255,6 +257,7 @@ function fmt(d: string) {
 }
 
 export default function BookReviewsPage() {
+  const { lang } = useLang();
   const [reviews, setReviews] = useState<BookReview[]>(SAMPLE_REVIEWS);
   const [activeCat, setActiveCat] = useState("All");
 
@@ -298,7 +301,7 @@ export default function BookReviewsPage() {
 
         {/* ── HEADER ── */}
         <div className="reviews-header">
-          <Link href="/resources" className="reviews-back">← Resources</Link>
+          <Link href={localizedHref(lang, "/resources")} className="reviews-back">← Resources</Link>
           <p className="reviews-eyebrow">Samuel Kobina Gyasi · Reading Journal</p>
           <h1 className="reviews-headline">
             Book<br /><em>Reviews</em>
@@ -329,7 +332,7 @@ export default function BookReviewsPage() {
             <p className="reviews-empty">No reviews in this category yet.</p>
           ) : (
             displayed.map((review, i) => (
-              <Link key={review.id} href={`/resources/${review.id}`} className="rv-card" style={{ transitionDelay: `${i * 0.05}s` }}>
+              <Link key={review.id} href={localizedHref(lang, `/resources/${review.id}`)} className="rv-card" style={{ transitionDelay: `${i * 0.05}s` }}>
                 <div className="rv-cover">
                   {review.cover_url ? (
                     <img src={review.cover_url} alt={review.title} />

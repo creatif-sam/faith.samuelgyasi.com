@@ -15,7 +15,7 @@ interface FeaturedPostProps {
 export default function FeaturedPost({ post, lang, showDates, getTitle, getExcerpt, seriesName }: FeaturedPostProps) {
   const img = getPostImage(post);
   return (
-    <Link href={`/blog/${post.slug}`} className="fb-featured">
+    <Link href={`/${lang}/blog/${post.slug}`} className="fb-featured">
       <div className="fb-featured-cover">
         {img ? (
           <img src={img.url} alt={getTitle(post)} className="fb-featured-cover-img" />

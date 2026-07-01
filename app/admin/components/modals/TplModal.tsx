@@ -65,7 +65,7 @@ export default function TplModal({ tpl, onClose, onSave }: TplModalProps) {
               <label className={TW.label}>HTML <span className="text-white/20">{html.length} chars</span></label>
               {prev
                 ? <div className="bg-white text-black rounded-lg p-4 overflow-auto max-h-[400px]" dangerouslySetInnerHTML={{ __html: html }} />
-                : <textarea className={cn(TW.tarea, "font-mono text-[13px]")} value={html} onChange={(e) => setHtml(e.target.value)} placeholder="<h1>Hello,</h1><p>Your content here.</p>" />
+                : <textarea className={cn(TW.tarea, "font-poppins text-[13px]")} value={html} onChange={(e) => setHtml(e.target.value)} placeholder="<h1>Hello,</h1><p>Your content here.</p>" />
               }
             </div>
           )}

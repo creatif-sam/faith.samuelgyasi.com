@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LogIn } from "lucide-react";
 import { useLang } from "@/lib/i18n";
+import { localizedHref } from "@/lib/i18n/locale";
 import { navTranslations as t } from "@/lib/i18n/nav";
 
 export function Navbar() {
@@ -13,14 +14,17 @@ export function Navbar() {
   const pathname                = usePathname();
   const { lang, toggleLang }    = useLang();
 
+  // `path` is the canonical (unprefixed) route, used to detect the active
+  // link — usePathname() reports the rewrite *destination* (e.g. "/blog"),
+  // not the browser's "/fr/blog", so comparisons must use the unprefixed form.
   const navLinks = [
-    { href: "/blog",      label: t.blog[lang]      },
-    { href: "/faith-analyzer",  label: t.analyzer[lang]  },
-    { href: "/my-story",  label: t.story[lang]     },
-    { href: "/resources", label: t.resources[lang] },
-    { href: "/credo",     label: t.credo[lang]     },
-    { href: "/upcoming",  label: t.upcoming[lang]  },
-  ];
+    { path: "/blog",           label: t.blog[lang]      },
+    { path: "/faith-analyzer", label: t.analyzer[lang]  },
+    { path: "/my-story",       label: t.story[lang]     },
+    { path: "/resources",      label: t.resources[lang] },
+    { path: "/credo",          label: t.credo[lang]     },
+    { path: "/upcoming",       label: t.upcoming[lang]  },
+  ].map((l) => ({ ...l, href: localizedHref(lang, l.path) }));
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -39,17 +43,17 @@ export function Navbar() {
     <>
       {/* ── NAV BAR ── */}
       <nav className={`portfolio-nav nav-modern ${scrolled ? "nav-scrolled" : ""}`}>
-        <Link href="/" className="nav-logo-modern" onClick={close}>
+        <Link href={localizedHref(lang, "/")} className="nav-logo-modern" onClick={close}>
           <span className="nav-logo-initials">SKG</span>
         </Link>
 
         {/* Desktop links */}
         <ul className="nav-links nav-desktop nav-modern-links">
           {navLinks.map((l) => (
-            <li key={l.href}>
+            <li key={l.path}>
               <Link
                 href={l.href}
-                className={pathname.startsWith(l.href) ? "nav-active" : ""}
+                className={pathname.startsWith(l.path) ? "nav-active" : ""}
               >
                 {l.label}
               </Link>

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
 import { createAnonClient } from "@/lib/supabase/anon";
 import { useLang } from "@/lib/i18n";
+import { localizedHref } from "@/lib/i18n/locale";
 import { Play, X, ChevronLeft, ChevronRight, Images } from "lucide-react";
 
 interface VideoItem {
@@ -131,7 +132,7 @@ export default function VisualPage() {
 
         {/* ── HEADER ── */}
         <div className="visual-header">
-          <Link href="/resources" className="visual-back">{translations.back}</Link>
+          <Link href={localizedHref(lang, "/resources")} className="visual-back">{translations.back}</Link>
           <p className="visual-eyebrow">{translations.eyebrow}</p>
           <h1 className="visual-headline">
             {translations.title}<br /><em>{translations.titleEm}</em>

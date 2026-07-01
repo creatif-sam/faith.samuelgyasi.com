@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { useLang } from "@/lib/i18n";
+import { localizedHref } from "@/lib/i18n/locale";
 import Breadcrumbs from "@/components/atoms/Breadcrumbs";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
 import { Suspense } from "react";
@@ -75,7 +76,7 @@ export default function TestPage() {
         .order("sort_order", { ascending: true })
     ]).then(async ([testRes, questionsPreRes]) => {
       if (testRes.error || !testRes.data) {
-        router.push("/faith-analyzer");
+        router.push(localizedHref(lang, "/faith-analyzer"));
         return;
       }
 
@@ -160,8 +161,8 @@ export default function TestPage() {
         <div className="max-w-[900px] mx-auto">
           <Breadcrumbs
             items={[
-              { label: lang === "fr" ? "Accueil" : "Home", href: "/" },
-              { label: lang === "fr" ? "Analyseur" : "Analyzer", href: "/faith-analyzer" },
+              { label: lang === "fr" ? "Accueil" : "Home", href: localizedHref(lang, "/") },
+              { label: lang === "fr" ? "Analyseur" : "Analyzer", href: localizedHref(lang, "/faith-analyzer") },
               { label: getName(test) },
             ]}
           />
@@ -257,7 +258,7 @@ export default function TestPage() {
                   {lang === "fr" ? "Réessayer" : "Retake Test"}
                 </button>
                 <Link
-                  href="/faith-analyzer"
+                  href={localizedHref(lang, "/faith-analyzer")}
                   className="px-6 py-2.5 bg-gradient-to-br from-[#d4a843] to-[#c49838] text-[#09090d] font-poppins text-[13px] font-medium rounded-lg hover:shadow-[0_4px_20px_rgba(212,168,67,.3)] transition-all no-underline"
                 >
                   {lang === "fr" ? "Plus de Tests" : "More Tests"}

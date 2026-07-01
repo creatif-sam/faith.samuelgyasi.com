@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useLang } from "@/lib/i18n";
+import { localizedHref } from "@/lib/i18n/locale";
 import Breadcrumbs from "@/components/atoms/Breadcrumbs";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
 import { Download, Star } from "lucide-react";
@@ -40,7 +41,7 @@ export default function BookViewClient({ item }: { item: LibraryItem }) {
         
         {/* Nav */}
         <nav className="bv-nav">
-          <Link href="/resources" className="bv-back-link">{translations.back}</Link>
+          <Link href={localizedHref(lang, "/resources")} className="bv-back-link">{translations.back}</Link>
           <div className="bv-logo">Samuel Kobina Gyasi</div>
           <span />
         </nav>
@@ -49,8 +50,8 @@ export default function BookViewClient({ item }: { item: LibraryItem }) {
         <article className="bv-article">
           <Breadcrumbs
             items={[
-              { label: translations.home, href: "/" },
-              { label: translations.resources, href: "/resources" },
+              { label: translations.home, href: localizedHref(lang, "/") },
+              { label: translations.resources, href: localizedHref(lang, "/resources") },
               { label: item.title },
             ]}
           />

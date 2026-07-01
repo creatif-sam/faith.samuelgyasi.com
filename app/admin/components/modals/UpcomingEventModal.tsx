@@ -94,7 +94,7 @@ export default function UpcomingEventModal({ event, onClose, onSave, db }: Upcom
             <div className="flex gap-0 border border-white/[.08]">
               {(["intervention", "masterclass", "session"] as const).map((t) => (
                 <button key={t} type="button" onClick={() => setCategory(t)}
-                  className={cn("flex-1 py-2 font-mono text-[9px] tracking-[.2em] uppercase border-0 cursor-pointer transition-colors",
+                  className={cn("flex-1 py-2 font-poppins text-[9px] tracking-[.2em] uppercase border-0 cursor-pointer transition-colors",
                     category === t ? "bg-[rgba(201,168,76,.12)] text-[#c9a84c]" : "bg-transparent text-white/35"
                   )}>
                   {CAT_LABELS[t]}
@@ -109,7 +109,7 @@ export default function UpcomingEventModal({ event, onClose, onSave, db }: Upcom
             <div className="flex gap-0 border border-white/[.08]">
               {(["in-person", "online", "both"] as const).map((f) => (
                 <button key={f} type="button" onClick={() => setFormat(f)}
-                  className={cn("flex-1 py-2 font-mono text-[9px] tracking-[.15em] uppercase border-0 cursor-pointer transition-colors",
+                  className={cn("flex-1 py-2 font-poppins text-[9px] tracking-[.15em] uppercase border-0 cursor-pointer transition-colors",
                     format === f ? "bg-[rgba(201,168,76,.12)] text-[#c9a84c]" : "bg-transparent text-white/35"
                   )}>
                   {FMT_LABELS[f]}
@@ -165,7 +165,7 @@ export default function UpcomingEventModal({ event, onClose, onSave, db }: Upcom
 
           {/* Options */}
           <div className="border border-white/[.07] rounded-lg p-4 flex flex-col gap-3 mb-5">
-            <p className="font-mono text-[9px] tracking-[.2em] uppercase text-white/30 mb-1">Options</p>
+            <p className="font-poppins text-[9px] tracking-[.2em] uppercase text-white/30 mb-1">Options</p>
             <label className="flex items-center gap-2.5 cursor-pointer">
               <input type="checkbox" checked={needsReg} onChange={(e) => setNeedsReg(e.target.checked)} className="w-4 h-4 cursor-pointer accent-[#c9a84c]" />
               <span className={cn(TW.label, "!mb-0")}>Enable registration form on site</span>

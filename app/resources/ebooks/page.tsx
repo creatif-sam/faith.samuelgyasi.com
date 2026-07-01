@@ -4,6 +4,8 @@ import { Suspense, useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
 import { createAnonClient } from "@/lib/supabase/anon";
+import { useLang } from "@/lib/i18n";
+import { localizedHref } from "@/lib/i18n/locale";
 
 interface Ebook {
   id: string;
@@ -230,6 +232,7 @@ function fmt(d: string) {
 }
 
 export default function EbooksPage() {
+  const { lang } = useLang();
   const [ebooks, setEbooks] = useState<Ebook[]>(SAMPLE_EBOOKS);
 
   const load = useCallback(async () => {
@@ -266,7 +269,7 @@ export default function EbooksPage() {
 
         {/* ── HEADER ── */}
         <div className="ebooks-header">
-          <Link href="/resources" className="ebooks-back">← Resources</Link>
+          <Link href={localizedHref(lang, "/resources")} className="ebooks-back">← Resources</Link>
           <p className="ebooks-eyebrow">Samuel Kobina Gyasi · Published Works</p>
           <h1 className="ebooks-headline">
             My<br /><em>eBooks</em>
@@ -286,7 +289,7 @@ export default function EbooksPage() {
             ebooks.map((book, i) => (
               <div key={book.id} className="ebook-card" style={{ transitionDelay: `${i * 0.06}s` }}>
                 <div className="ebook-cat">{book.category}</div>
-                <Link href={`/resources/${book.id}`} style={{ textDecoration: "none", color: "inherit" }}>
+                <Link href={localizedHref(lang, `/resources/${book.id}`)} style={{ textDecoration: "none", color: "inherit" }}>
                   <div className="ebook-cover">
                     {book.cover_url ? (
                       <img src={book.cover_url} alt={book.title} />

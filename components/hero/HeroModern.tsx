@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useLang } from "@/lib/i18n";
+import { localizedHref } from "@/lib/i18n/locale";
 import { heroModernTranslations as t } from "./translations";
 import styles from "./hero.module.css";
 import Link from "next/link";
@@ -46,7 +47,7 @@ export function HeroModern() {
 
           {/* Follow Button */}
           <div className={styles.actionButtons}>
-            <Link href="/blog" className={styles.followButton}>
+            <Link href={localizedHref(lang, "/blog")} className={styles.followButton}>
               {t.cta.follow[lang]}
             </Link>
             <button 

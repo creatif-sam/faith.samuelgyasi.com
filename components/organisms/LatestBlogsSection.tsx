@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { useLang } from "@/lib/i18n";
+import { localizedHref } from "@/lib/i18n/locale";
 import { SectionLabel } from "@/components/atoms/SectionLabel";
 import { ScrollReveal } from "@/components/molecules/ScrollReveal";
 
@@ -98,7 +99,7 @@ export function LatestBlogsSection() {
                       {" · "}
                       {post.read_time_minutes} {translations.minRead}
                     </div>
-                    <Link href={`/blog/${post.slug}`} className="pillar-cta">
+                    <Link href={localizedHref(lang, `/blog/${post.slug}`)} className="pillar-cta">
                       {translations.readReflection}
                     </Link>
                   </div>
@@ -111,7 +112,7 @@ export function LatestBlogsSection() {
         <ScrollReveal>
           <div style={{ textAlign: "center", marginTop: "56px" }}>
             <Link
-              href="/blog"
+              href={localizedHref(lang, "/blog")}
               style={{
                 fontFamily: "var(--font-space-mono,'Space Mono',monospace)",
                 fontSize: "10px",

@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { useLang } from "@/lib/i18n";
+import { localizedHref } from "@/lib/i18n/locale";
 
 const ft = {
   tagline:       { en: "Rooted in the Word.\u2003Walking by Faith.\u2003Living for His Glory.", fr: "Ancr\u00e9 dans la Parole.\u2003Marchant par la Foi.\u2003Vivant pour Sa Gloire." },
@@ -218,10 +219,10 @@ export function SiteFooter() {
         <div className="sf-col">
           <p className="sf-col-label">{ft.colPillars[lang]}</p>
           <ul className="sf-col-list">
-            <li><Link href="/faith"         className="sf-col-link">{lang === "en" ? "Faith & Beliefs"  : "Foi & Convictions"}</Link></li>
-            <li><Link href="/blog"          className="sf-col-link">{ft.linkJournal[lang]}</Link></li>
-            <li><Link href="/my-story"      className="sf-col-link">{ft.linkStory[lang]}</Link></li>
-            <li><Link href="/faith#connect" className="sf-col-link">{ft.linkConnect[lang]}</Link></li>
+            <li><Link href={localizedHref(lang, "/faith")}         className="sf-col-link">{lang === "en" ? "Faith & Beliefs"  : "Foi & Convictions"}</Link></li>
+            <li><Link href={localizedHref(lang, "/blog")}          className="sf-col-link">{ft.linkJournal[lang]}</Link></li>
+            <li><Link href={localizedHref(lang, "/my-story")}      className="sf-col-link">{ft.linkStory[lang]}</Link></li>
+            <li><Link href={localizedHref(lang, "/faith#connect")} className="sf-col-link">{ft.linkConnect[lang]}</Link></li>
           </ul>
         </div>
 
@@ -242,16 +243,16 @@ export function SiteFooter() {
         <div className="sf-col">
           <p className="sf-col-label">{ft.colSite[lang]}</p>
           <ul className="sf-col-list">
-            <li><Link href="/faith"     className="sf-col-link">{lang === "en" ? "Faith" : "Foi"}</Link></li>
-            <li><Link href="/blog"      className="sf-col-link">{ft.linkJournal[lang]}</Link></li>
-            <li><Link href="/my-story"  className="sf-col-link">{ft.linkStory[lang]}</Link></li>
+            <li><Link href={localizedHref(lang, "/faith")}     className="sf-col-link">{lang === "en" ? "Faith" : "Foi"}</Link></li>
+            <li><Link href={localizedHref(lang, "/blog")}      className="sf-col-link">{ft.linkJournal[lang]}</Link></li>
+            <li><Link href={localizedHref(lang, "/my-story")}  className="sf-col-link">{ft.linkStory[lang]}</Link></li>
           </ul>
         </div>
 
         <div className="sf-col">
           <p className="sf-col-label">{ft.colLegal[lang]}</p>
           <ul className="sf-col-list">
-            <li><Link href="/privacy" className="sf-col-link">{ft.linkPrivacy[lang]}</Link></li>
+            <li><Link href={localizedHref(lang, "/privacy")} className="sf-col-link">{ft.linkPrivacy[lang]}</Link></li>
           </ul>
         </div>
       </div>

@@ -48,7 +48,7 @@ export default function CommentsTab({ comments, posts, onApprove, onDelete }: Co
             key={f.id}
             onClick={() => setFilter(f.id)}
             className={cn(
-              "font-mono text-[9px] tracking-[.2em] uppercase px-5 py-3 bg-transparent border-0 cursor-pointer transition-colors whitespace-nowrap",
+              "font-poppins text-[9px] tracking-[.2em] uppercase px-5 py-3 bg-transparent border-0 cursor-pointer transition-colors whitespace-nowrap",
               filter === f.id
                 ? "text-[#c9a84c] border-b-2 border-[#c9a84c]"
                 : "text-white/35 border-b-2 border-transparent"
@@ -75,14 +75,14 @@ export default function CommentsTab({ comments, posts, onApprove, onDelete }: Co
                       {c.commenter_name}
                     </span>
                     {c.commenter_email && (
-                      <span className="font-mono text-[9px] text-white/40">{c.commenter_email}</span>
+                      <span className="font-poppins text-[9px] text-white/40">{c.commenter_email}</span>
                     )}
                   </div>
                   <span className="font-poppins text-[10px] text-white/35 italic">
                     on: {getPostTitle(c.blog_post_id)}
                   </span>
                 </div>
-                <span className="font-mono text-[9px] text-white/25 whitespace-nowrap">
+                <span className="font-poppins text-[9px] text-white/25 whitespace-nowrap">
                   {new Date(c.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
                 </span>
               </div>

@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
 import { ArticleClient } from "./ArticleClient";
 
@@ -11,20 +12,23 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
+  const locale = (await headers()).get("x-locale");
   const supabase = await createClient();
   const { data: post } = await supabase
     .from("blog_posts")
-    .select("title, excerpt")
+    .select("title, title_fr, excerpt, excerpt_fr")
     .eq("slug", slug)
     .eq("published", true)
     .single();
   if (!post) return { title: "Not Found" };
+  const title = locale === "fr" && post.title_fr ? post.title_fr : post.title;
+  const excerpt = locale === "fr" && post.excerpt_fr ? post.excerpt_fr : post.excerpt;
   return {
-    title: `${post.title} — Faith Journal`,
-    description: post.excerpt ?? undefined,
+    title: `${title} — Faith Journal`,
+    description: excerpt ?? undefined,
     openGraph: {
-      title: post.title,
-      description: post.excerpt ?? undefined,
+      title,
+      description: excerpt ?? undefined,
     },
   };
 }

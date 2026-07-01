@@ -140,7 +140,7 @@ export const layoutStyles = `
   min-width: 20px; text-align: center;
 }
 .dash-nav-section {
-  font-family: var(--font-space-mono), monospace;
+  font-family: var(--font-poppins), sans-serif;
   font-size: 9px; letter-spacing: .2em; text-transform: uppercase;
   color: var(--d-muted);
   padding: 14px 12px 6px;
@@ -348,7 +348,7 @@ export const layoutStyles = `
 .dash-card-placeholder { color: rgba(212,168,67,.2); }
 .dash-card-body { padding: 18px 20px; flex: 1; display: flex; flex-direction: column; gap: 7px; }
 .dash-card-cat {
-  font-family: var(--font-space-mono), monospace;
+  font-family: var(--font-poppins), sans-serif;
   font-size: 9px; letter-spacing: .25em; text-transform: uppercase;
   background: linear-gradient(90deg,#ffde59,#ff914d);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
@@ -356,7 +356,7 @@ export const layoutStyles = `
 .dash-card-title { font-size: 15px; font-weight: 600; color: var(--d-text); line-height: 1.35; flex: 1; }
 .dash-card-desc { font-size: 12px; color: var(--d-muted); line-height: 1.6; font-weight: 300; }
 .dash-card-meta {
-  font-family: var(--font-space-mono), monospace;
+  font-family: var(--font-poppins), sans-serif;
   font-size: 9px; letter-spacing: .1em; text-transform: uppercase;
   color: var(--d-muted);
   display: flex; gap: 12px;

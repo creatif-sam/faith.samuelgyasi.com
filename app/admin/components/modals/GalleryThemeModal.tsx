@@ -233,7 +233,7 @@ export default function GalleryThemeModal({ theme, onClose, onSave, db }: Galler
                       >
                         <Trash2 size={11} />
                       </button>
-                      <span className="absolute bottom-2 left-2 bg-black/60 text-white/40 font-mono text-[9px] px-1.5 py-0.5 rounded">
+                      <span className="absolute bottom-2 left-2 bg-black/60 text-white/40 font-poppins text-[9px] px-1.5 py-0.5 rounded">
                         {idx + 1}
                       </span>
                     </div>

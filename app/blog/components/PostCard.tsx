@@ -15,7 +15,7 @@ interface PostCardProps {
 export default function PostCard({ post, lang, showDates, getTitle, getExcerpt, seriesName }: PostCardProps) {
   const img = getPostImage(post);
   return (
-    <Link key={post.slug} href={`/blog/${post.slug}`} className="fb-card">
+    <Link key={post.slug} href={`/${lang}/blog/${post.slug}`} className="fb-card">
       <div className="fb-card-cover">
         {img ? (
           <img src={img.url} alt={getTitle(post)} className="fb-card-cover-img" />

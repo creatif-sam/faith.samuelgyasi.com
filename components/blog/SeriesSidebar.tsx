@@ -4,6 +4,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useLang } from "@/lib/i18n";
+import { localizedHref } from "@/lib/i18n/locale";
 import { createClient } from "@/lib/supabase/client";
 import { ChevronDown, ChevronRight, Folder } from "lucide-react";
 
@@ -123,7 +124,7 @@ export function SeriesSidebar() {
                 </div>
                 <div className="series-item-content">
                   <Link 
-                    href={`/blog?series=${s.slug}`}
+                    href={localizedHref(lang, `/blog?series=${s.slug}`)}
                     className="series-item-name"
                     onClick={(e) => e.stopPropagation()}
                   >
@@ -140,7 +141,7 @@ export function SeriesSidebar() {
                   {seriesPosts.map((post, index) => (
                     <Link
                       key={post.id}
-                      href={`/blog/${post.slug}`}
+                      href={localizedHref(lang, `/blog/${post.slug}`)}
                       className="series-post-item"
                     >
                       <span className="series-post-number">{index + 1}</span>

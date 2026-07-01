@@ -26,7 +26,7 @@ export default function InboxView({ emails, db, onReload, templates }: InboxView
   return emails.length === 0 ? (
     <div>
       <p className={TW.empty}>No inbound emails yet.</p>
-      <p className="font-mono text-[9px] text-white/20 text-center tracking-[.08em] leading-[2.2] max-w-[440px] mx-auto">
+      <p className="font-poppins text-[9px] text-white/20 text-center tracking-[.08em] leading-[2.2] max-w-[440px] mx-auto">
         To receive emails here, configure Resend inbound routing<br />
         with webhook → /api/mail/inbound
       </p>

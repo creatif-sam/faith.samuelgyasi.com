@@ -2,10 +2,13 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useLang } from "@/lib/i18n";
+import { localizedHref } from "@/lib/i18n/locale";
 
 const COOKIE_KEY = "sg_cookie_consent";
 
 export function CookieBanner() {
+  const { lang } = useLang();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -37,7 +40,7 @@ export function CookieBanner() {
           <p>
             This site uses cookies to improve your experience and to analyse
             visitor behaviour. Read our{" "}
-            <Link href="/faith" className="ck-link">
+            <Link href={localizedHref(lang, "/faith")} className="ck-link">
               Cookie Policy
             </Link>
             .

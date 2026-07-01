@@ -172,7 +172,7 @@ function TrainingRow({
                   key={lesson.id}
                   className="flex items-center gap-3 bg-white/[.025] border border-white/[.05] rounded-lg px-4 py-2.5"
                 >
-                  <span className="font-mono text-[10px] text-white/25 w-5 flex-shrink-0">{idx + 1}</span>
+                  <span className="font-poppins text-[10px] text-white/25 w-5 flex-shrink-0">{idx + 1}</span>
                   <div className="flex-1 min-w-0">
                     <div className="font-poppins text-[12px] text-[#eef0f5] truncate">{lesson.title}</div>
                     {lesson.duration && (

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { Playfair_Display, Cormorant_Garamond, Space_Mono, Poppins } from "next/font/google";
 import "./globals.css";
 import { CookieBanner } from "@/components/organisms/CookieBanner";
@@ -7,6 +8,7 @@ import { Providers } from "./providers";
 import { NavWrapper } from "@/components/organisms/NavWrapper";
 import { FeedbackWidget } from "@/components/organisms/FeedbackWidget";
 import { ThemeSwitcher } from "@/components/theme-switcher";
+import { isSupportedLocale } from "@/lib/i18n/locale";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -135,11 +137,15 @@ const jsonLd = {
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const localeHeader = (await headers()).get("x-locale");
+  const urlControlled = isSupportedLocale(localeHeader);
+  const lang = urlControlled ? localeHeader : "en";
+
   return (
-    <html lang="en">
+    <html lang={lang}>
       <head>
         <script
           type="application/ld+json"
@@ -149,7 +155,7 @@ export default function RootLayout({
       <body
         className={`${playfair.variable} ${cormorant.variable} ${spaceMono.variable} ${poppins.variable}`}
       >
-        <Providers>
+        <Providers initialLang={lang} urlControlled={urlControlled}>
           <Analytics />
           <NavWrapper />
           {children}

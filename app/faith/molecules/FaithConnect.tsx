@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { faithTranslations as t } from "../translations";
 import type { Lang } from "../translations";
+import { localizedHref } from "@/lib/i18n/locale";
 
 export function FaithConnect({ lang }: { lang: Lang }) {
   const c = t.connect;
@@ -21,10 +22,10 @@ export function FaithConnect({ lang }: { lang: Lang }) {
         <a href="mailto:samuel.gyasi@um6p.ma" className="c-link">
           {c.links.email[lang]} <span>→</span>
         </a>
-        <Link href="/my-story" className="c-link">
+        <Link href={localizedHref(lang, "/my-story")} className="c-link">
           {c.links.credo[lang]} <span>→</span>
         </Link>
-        <Link href="/blog" className="c-link">
+        <Link href={localizedHref(lang, "/blog")} className="c-link">
           {c.links.blog[lang]} <span>→</span>
         </Link>
       </div>

@@ -104,7 +104,7 @@ export default function BlogSeriesDetailModal({
                 
                 <div className="flex flex-wrap gap-4 mt-3 text-[11px] text-white/40">
                   <div className="flex items-center gap-1.5">
-                    <span className="font-mono text-[#c9a84c]">/{series.slug}</span>
+                    <span className="font-poppins text-[#c9a84c]">/{series.slug}</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <Calendar size={12} />
@@ -213,7 +213,7 @@ export default function BlogSeriesDetailModal({
                             </span>
                           </div>
                           <div className="flex items-center gap-1">
-                            <span className="font-mono text-[#c9a84c]/60">/{post.slug}</span>
+                            <span className="font-poppins text-[#c9a84c]/60">/{post.slug}</span>
                           </div>
                         </div>
                         

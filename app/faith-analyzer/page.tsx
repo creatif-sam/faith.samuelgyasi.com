@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { useLang } from "@/lib/i18n";
+import { localizedHref } from "@/lib/i18n/locale";
 import Breadcrumbs from "@/components/atoms/Breadcrumbs";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
 import { Suspense } from "react";
@@ -78,7 +79,7 @@ export default function AnalyzerPage() {
         <div className="relative z-10 max-w-[900px] mx-auto">
           <Breadcrumbs
             items={[
-              { label: lang === "fr" ? "Accueil" : "Home", href: "/" },
+              { label: lang === "fr" ? "Accueil" : "Home", href: localizedHref(lang, "/") },
               { label: lang === "fr" ? "Analyseur de Foi" : "Faith Analyzer" },
             ]}
           />
@@ -137,7 +138,7 @@ export default function AnalyzerPage() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {tests.map((test) => (
-              <Link href={`/faith-analyzer/${test.slug}`} key={test.id} className="no-underline">
+              <Link href={localizedHref(lang, `/faith-analyzer/${test.slug}`)} key={test.id} className="no-underline">
                 <div className={cardStyles}>
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[#d4a843]/20 to-[#c49838]/10 flex items-center justify-center flex-shrink-0 border border-[#d4a843]/20 group-hover:border-[#d4a843]/40 transition-all">

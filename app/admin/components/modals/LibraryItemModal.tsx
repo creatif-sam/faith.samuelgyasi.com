@@ -92,7 +92,7 @@ export default function LibraryItemModal({ item, onClose, onSave, db }: LibraryI
                 { id: "visual", label: "Visual" },
               ] as const).map((t) => (
                 <button key={t.id} type="button" onClick={() => setCategory(t.id)}
-                  className={cn("py-2.5 px-3 font-mono text-[9px] tracking-[.2em] uppercase border border-white/[.08] cursor-pointer transition-colors",
+                  className={cn("py-2.5 px-3 font-poppins text-[9px] tracking-[.2em] uppercase border border-white/[.08] cursor-pointer transition-colors",
                     category === t.id ? "bg-[rgba(201,168,76,.12)] text-[#c9a84c] border-[#c9a84c]/30" : "bg-transparent text-white/35"
                   )}>
                   {t.label}

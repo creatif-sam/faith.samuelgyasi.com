@@ -28,7 +28,7 @@ export default function PostsTab({ posts, onNew, onEdit, onDelete, onToggle, onV
                 <tr key={p.id} className="hover:[&>td]:bg-[rgba(212,168,67,.04)]">
                   <td className={TW.td} style={{ color: "#f0ece4", maxWidth: "240px" }}>
                     <div className="overflow-hidden text-ellipsis whitespace-nowrap">{p.title}</div>
-                    <div className="text-[10px] text-white/25 font-mono mt-0.5">/{p.category}/blog/{p.slug}</div>
+                    <div className="text-[10px] text-white/25 font-poppins mt-0.5">/{p.category}/blog/{p.slug}</div>
                   </td>
                   <td className={TW.td} style={{ textTransform: "capitalize" }}>{p.category}</td>
                   <td className={TW.td}><span className={cn(TW.badge, p.published ? TW.bPub : TW.bDft)}>{p.published ? "Published" : "Draft"}</span></td>

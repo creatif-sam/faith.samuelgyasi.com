@@ -73,7 +73,7 @@ export default function CampaignsView({ campaigns, onNew, onEdit, onDelete }: Ca
                     </td>
                     <td className={TW.td}>{statusBadge(c.status)}</td>
                     <td className={TW.td} style={{ minWidth: 110 }}>
-                      <span className="font-mono text-[12px]">{c.sent_count} / {c.total_recipients}</span>
+                      <span className="font-poppins text-[12px]">{c.sent_count} / {c.total_recipients}</span>
                       <div className={TW.progWrap}>
                         <div className={TW.progBar} style={{ width: `${c.total_recipients ? Math.round((c.sent_count / c.total_recipients) * 100) : 0}%` }} />
                       </div>

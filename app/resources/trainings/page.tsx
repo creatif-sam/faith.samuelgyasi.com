@@ -4,6 +4,7 @@ import { useEffect, useState, Suspense } from "react";
 import Link from "next/link";
 import { createAnonClient } from "@/lib/supabase/anon";
 import { useLang } from "@/lib/i18n";
+import { localizedHref } from "@/lib/i18n/locale";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
 import Breadcrumbs from "@/components/atoms/Breadcrumbs";
 
@@ -300,8 +301,8 @@ export default function TrainingsPreviewPage() {
           <div style={{ marginBottom: 24 }}>
             <Breadcrumbs
               items={[
-                { label: lang === "fr" ? "Accueil" : "Home", href: "/" },
-                { label: lang === "fr" ? "Ressources" : "Resources", href: "/resources" },
+                { label: lang === "fr" ? "Accueil" : "Home", href: localizedHref(lang, "/") },
+                { label: lang === "fr" ? "Ressources" : "Resources", href: localizedHref(lang, "/resources") },
                 { label: lang === "fr" ? "Formations" : "Trainings" },
               ]}
             />

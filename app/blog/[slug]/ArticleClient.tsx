@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useLang } from "@/lib/i18n";
+import { localizedHref } from "@/lib/i18n/locale";
 import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
 import { Link2, MessageCircle, ArrowLeft, ArrowRight, Check } from "lucide-react";
@@ -242,7 +243,7 @@ export function ArticleClient({
 
       {/* NAV */}
       <nav className="fdp-article-nav">
-        <Link href="/blog" className="nav-back">← Journal</Link>
+        <Link href={localizedHref(lang, "/blog")} className="nav-back">← Journal</Link>
         <div className="nav-logo">Samuel Kobina Gyasi</div>
         <span />
       </nav>
@@ -251,9 +252,9 @@ export function ArticleClient({
       <article className="fa-article">
         <Breadcrumbs
           items={[
-            { label: lang === "fr" ? "Accueil" : "Home", href: "/" },
-            { label: lang === "fr" ? "Foi" : "Faith", href: "/faith" },
-            { label: lang === "fr" ? "Journal" : "Journal", href: "/blog" },
+            { label: lang === "fr" ? "Accueil" : "Home", href: localizedHref(lang, "/") },
+            { label: lang === "fr" ? "Foi" : "Faith", href: localizedHref(lang, "/faith") },
+            { label: lang === "fr" ? "Journal" : "Journal", href: localizedHref(lang, "/blog") },
             { label: title },
           ]}
         />
@@ -307,7 +308,7 @@ export function ArticleClient({
             <div className="fa-author-name">Samuel Kobina Gyasi</div>
             <div className="fa-author-tagline">{translations.authorTagline}</div>
             <p className="fa-author-bio">{translations.authorBio}</p>
-            <Link href="/my-story" className="fa-author-link">{translations.visitStory}</Link>
+            <Link href={localizedHref(lang, "/my-story")} className="fa-author-link">{translations.visitStory}</Link>
           </div>
         </div>
 
@@ -326,7 +327,7 @@ export function ArticleClient({
               {related.map((p) => (
                 <Link
                   key={p.slug}
-                  href={`/blog/${p.slug}`}
+                  href={localizedHref(lang, `/blog/${p.slug}`)}
                   className="fa-related-card"
                 >
                   <div className="fa-rc-tag">{p.category}</div>
@@ -389,16 +390,16 @@ export function ArticleClient({
         </section>
 
         <footer className="fa-footer">
-          <Link href="/blog" className="fa-back-link">{translations.allReflections}</Link>
+          <Link href={localizedHref(lang, "/blog")} className="fa-back-link">{translations.allReflections}</Link>
           <div className="fa-adjacent-nav">
             {olderPost ? (
-              <Link href={`/blog/${olderPost.slug}`} className="fa-adjacent-card fa-adjacent-older">
+              <Link href={localizedHref(lang, `/blog/${olderPost.slug}`)} className="fa-adjacent-card fa-adjacent-older">
                 <span className="fa-adjacent-dir"><ArrowLeft size={11} />{translations.olderLabel}</span>
                 <span className="fa-adjacent-title">{olderTitle}</span>
               </Link>
             ) : <span />}
             {newerPost && (
-              <Link href={`/blog/${newerPost.slug}`} className="fa-adjacent-card fa-adjacent-newer">
+              <Link href={localizedHref(lang, `/blog/${newerPost.slug}`)} className="fa-adjacent-card fa-adjacent-newer">
                 <span className="fa-adjacent-dir">{translations.newerLabel}<ArrowRight size={11} /></span>
                 <span className="fa-adjacent-title">{newerTitle}</span>
               </Link>

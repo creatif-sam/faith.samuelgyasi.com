@@ -101,13 +101,13 @@ const css = `
 .tn-thumb img { width: 100%; height: 100%; object-fit: cover; }
 .tn-hero-content { display: flex; flex-direction: column; gap: 12px; }
 .tn-cat {
-  font-family: var(--font-space-mono), monospace;
+  font-family: var(--font-poppins), sans-serif;
   font-size: 9px; letter-spacing: .3em; text-transform: uppercase;
   background: linear-gradient(90deg,#ffde59,#ff914d);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 .tn-title {
-  font-family: var(--font-playfair), serif;
+  font-family: var(--font-poppins), sans-serif;
   font-size: clamp(24px,3.5vw,40px); font-weight: 800; line-height: 1.15; color: var(--tn-text);
 }
 .tn-desc { font-size: 14px; color: var(--tn-muted); line-height: 1.7; font-weight: 300; }
@@ -156,7 +156,7 @@ const css = `
 }
 .tn-lesson.completed .tn-lesson-title { color: rgba(255,255,255,.55); text-decoration: line-through; text-decoration-color: rgba(201,168,76,.4); }
 .tn-lesson-dur {
-  font-family: var(--font-space-mono), monospace;
+  font-family: var(--font-poppins), sans-serif;
   font-size: 9px; letter-spacing: .12em; text-transform: uppercase;
   color: var(--tn-muted);
 }

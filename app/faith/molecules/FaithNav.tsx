@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { LangToggle } from "../atoms/LangToggle";
 import type { Lang } from "../translations";
 import { faithTranslations as t } from "../translations";
+import { localizedHref } from "@/lib/i18n/locale";
 
 interface FaithNavProps {
   lang: Lang;
@@ -13,9 +14,9 @@ interface FaithNavProps {
 }
 
 const NAV_LINKS = [
-  { href: "/blog",      label: { en: "Journal",     fr: "Journal"      } },
-  { href: "/my-story", label: { en: "My Story",   fr: "Mon Histoire"  } },
-  { href: "/#connect", label: { en: "Connect",    fr: "Connexion"     } },
+  { path: "/blog",      label: { en: "Journal",     fr: "Journal"      } },
+  { path: "/my-story", label: { en: "My Story",   fr: "Mon Histoire"  } },
+  { path: "/#connect", label: { en: "Connect",    fr: "Connexion"     } },
 ];
 
 export function FaithNav({ lang, onToggleLang }: FaithNavProps) {
@@ -23,13 +24,13 @@ export function FaithNav({ lang, onToggleLang }: FaithNavProps) {
 
   return (
     <nav>
-      <Link href="/faith" className="nav-back">{t.nav.back[lang]}</Link>
+      <Link href={localizedHref(lang, "/faith")} className="nav-back">{t.nav.back[lang]}</Link>
       <div className="nav-links">
-        {NAV_LINKS.map(({ href, label }) => (
+        {NAV_LINKS.map(({ path, label }) => (
           <Link
-            key={href}
-            href={href}
-            className={`nav-link${pathname.startsWith(href) && href !== "/faith#connect" ? " nav-link--active" : ""}`}
+            key={path}
+            href={path.startsWith("/#") ? `/${lang}${path.slice(1)}` : localizedHref(lang, path)}
+            className={`nav-link${pathname.startsWith(path) && path !== "/faith#connect" ? " nav-link--active" : ""}`}
           >
             {label[lang]}
           </Link>
