@@ -2294,7 +2294,7 @@ body {
   font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
   color: rgba(245,243,239,0.25);
 }
-.sf-emblem { color: var(--gold); font-size: 16px; letter-spacing: 0.2em; }
+.sf-emblem { font-family: var(--font-poppins), 'Poppins', sans-serif; color: var(--gold); font-size: 16px; letter-spacing: 0.2em; }
 /* Footer responsive */
 @media (max-width: 768px) {
   .sf-footer { padding: 48px 24px 32px; }

@@ -32,7 +32,7 @@ export default function AdminPage() {
           notifications={state.notifications} unreadNotifCount={state.unreadNotifCount}
           markAllNotificationsRead={state.markAllNotificationsRead}
           theme={state.theme} setTheme={state.setTheme}
-          adminEmail={state.adminEmail} onGo={state.go}
+          adminEmail={state.adminEmail} onGo={state.go} onLogout={state.handleLogout}
         />
 
         <main className="adm-main flex-1 overflow-y-auto px-4 pb-8 md:px-12 md:pb-10">

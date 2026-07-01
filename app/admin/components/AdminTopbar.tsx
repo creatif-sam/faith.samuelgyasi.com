@@ -1,5 +1,7 @@
 "use client";
-import { Bell, Moon, Search, Sun } from "lucide-react";
+import { useState } from "react";
+import Link from "next/link";
+import { Bell, Globe, LogOut, Moon, Search, Sun } from "lucide-react";
 import { NAV_SORTED } from "./constants";
 import type { AdminNotification } from "./useAdminPage";
 import type { Tab } from "./types";
@@ -18,9 +20,11 @@ interface Props {
   setTheme: (v: "dark" | "light" | ((p: "dark" | "light") => "dark" | "light")) => void;
   adminEmail: string;
   onGo: (t: Tab) => void;
+  onLogout: () => void;
 }
 
-export default function AdminTopbar({ searchQuery, setSearchQuery, searchOpen, setSearchOpen, notifOpen, setNotifOpen, notifications, unreadNotifCount, markAllNotificationsRead, theme, setTheme, adminEmail, onGo }: Props) {
+export default function AdminTopbar({ searchQuery, setSearchQuery, searchOpen, setSearchOpen, notifOpen, setNotifOpen, notifications, unreadNotifCount, markAllNotificationsRead, theme, setTheme, adminEmail, onGo, onLogout }: Props) {
+  const [profileOpen, setProfileOpen] = useState(false);
   return (
     <div className="adm-topbar mx-4 md:mx-12 mt-[62px] md:mt-6">
       <div className="adm-topbar-left">
@@ -80,12 +84,28 @@ export default function AdminTopbar({ searchQuery, setSearchQuery, searchOpen, s
         >
           {theme === "dark" ? <Sun size={14} /> : <Moon size={14} />}
         </button>
-        <div className="adm-profile">
-          <span className="adm-avatar">{(adminEmail[0] || "A").toUpperCase()}</span>
-          <div>
-            <p className="adm-pname">Admin</p>
-            <p className="adm-pmail">{adminEmail}</p>
-          </div>
+        <div className="adm-profile-wrap">
+          <button type="button" className="adm-profile" onClick={() => setProfileOpen((v) => !v)} aria-label="Account menu">
+            <span className="adm-avatar">{(adminEmail[0] || "A").toUpperCase()}</span>
+            <div>
+              <p className="adm-pname">Admin</p>
+              <p className="adm-pmail">{adminEmail}</p>
+            </div>
+          </button>
+          {profileOpen && (
+            <div className="adm-profile-menu">
+              <Link href="/" className="adm-profile-menu-item" onClick={() => setProfileOpen(false)}>
+                <Globe size={14} /> Back to Site
+              </Link>
+              <button
+                type="button"
+                className="adm-profile-menu-item"
+                onClick={() => { setProfileOpen(false); onLogout(); }}
+              >
+                <LogOut size={14} /> Log Out
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

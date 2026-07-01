@@ -34,7 +34,10 @@ export default function AdminSidebar({ tab, navOpen, setNavOpen, unreadMsgs, unr
           Samuel Gyasi
         </span>
         <div className="flex items-center gap-2">
-          <Link href="/" className="text-white/30 hover:text-white/60 transition-colors leading-none"><Globe size={16} /></Link>
+          <Link href="/" className="text-white/30 hover:text-white/60 transition-colors leading-none" aria-label="Back to Site" title="Back to Site"><Globe size={16} /></Link>
+          <button onClick={onLogout} className="text-white/30 hover:text-white/60 transition-colors leading-none bg-transparent border-0 cursor-pointer p-0" aria-label="Log Out" title="Log Out">
+            <LogOut size={16} />
+          </button>
         </div>
       </div>
 
@@ -81,16 +84,6 @@ export default function AdminSidebar({ tab, navOpen, setNavOpen, unreadMsgs, unr
             );
           })}
         </nav>
-        <div className="px-4 pb-5 pt-3 mt-auto border-t border-white/[.06] flex flex-col gap-2">
-          <Link href="/" className="font-poppins text-[11px] font-medium text-white/30 no-underline flex items-center gap-2 hover:text-white/60 transition-colors py-1.5">
-            <Globe size={13} /> Back to Site
-          </Link>
-          <button onClick={onLogout}
-            className="font-poppins text-[11px] font-medium text-white/40 bg-transparent border border-white/[.1] px-3 py-2.5 cursor-pointer flex items-center gap-2 w-full rounded-lg transition-all hover:border-[rgba(201,168,76,.4)] hover:text-[#c9a84c]"
-          >
-            <LogOut size={13} /> Log Out
-          </button>
-        </div>
       </aside>
 
       {/* Mobile overlay */}

@@ -92,6 +92,7 @@ export const adminThemeCss = `
   border-color: rgba(212,168,67,.42);
   color: var(--adm-text);
 }
+.adm-profile-wrap { position: relative; }
 .adm-profile {
   border: 1px solid var(--adm-border);
   background: var(--adm-surface-soft);
@@ -100,7 +101,41 @@ export const adminThemeCss = `
   display: flex;
   align-items: center;
   gap: 8px;
+  cursor: pointer;
+  text-align: left;
 }
+.adm-profile:hover { border-color: rgba(212,168,67,.42); }
+.adm-profile-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 190px;
+  border: 1px solid var(--adm-border);
+  background: var(--adm-surface);
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0,0,0,.22);
+  padding: 6px;
+  z-index: 240;
+}
+.adm-profile-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 10px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: var(--adm-text-muted);
+  font-family: var(--font-poppins, sans-serif);
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .14s, color .14s;
+}
+.adm-profile-menu-item:hover { background: var(--adm-surface-soft); color: var(--adm-text); }
+.adm-profile-menu-item svg { flex-shrink: 0; color: inherit; }
 .adm-avatar {
   width: 30px;
   height: 30px;
