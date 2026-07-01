@@ -84,7 +84,7 @@ export default function EventRegistrationsTab({ events, db }: EventRegistrations
 
   return (
     <>
-      <div className="flex justify-between items-start mb-6 pb-7 border-b border-white/[.05]">
+      <div className="flex flex-wrap justify-between items-start gap-3 mb-6 pb-7 border-b border-white/[.05]">
         <div>
           <div className={TW.pgTitle}>Event Registrations & Recordings</div>
           <p className={TW.pgSub}>

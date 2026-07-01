@@ -25,7 +25,7 @@ export default function UpcomingTab({ events, onNew, onEdit, onDelete, onToggle 
 
   return (
     <>
-      <div className="flex justify-between items-start mb-10 pb-7 border-b border-white/[.05]">
+      <div className="flex flex-wrap justify-between items-start gap-3 mb-10 pb-7 border-b border-white/[.05]">
         <div>
           <div className={TW.pgTitle}>Upcoming</div>
           <p className={TW.pgSub}>{published} published · {filtered.length} {SUB_TABS.find((t) => t.id === subTab)?.label}</p>

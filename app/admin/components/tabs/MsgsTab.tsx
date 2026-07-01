@@ -17,7 +17,7 @@ export default function MsgsTab({ msgs, templates, onRead }: MsgsTabProps) {
 
   return (
     <>
-      <div className="flex justify-between items-start mb-10 pb-7 border-b border-white/[.05]">
+      <div className="flex flex-wrap justify-between items-start gap-3 mb-10 pb-7 border-b border-white/[.05]">
         <div><div className={TW.pgTitle}>Messages</div><p className={TW.pgSub}>{msgs.filter((m) => !m.read).length} unread</p></div>
       </div>
       {msgs.length === 0 ? <p className={TW.empty}>No messages yet.</p> : (

@@ -47,7 +47,7 @@ export default function MailTab({ sub, setSub, logs, inbox, templates, campaigns
 
   return (
     <>
-      <div className="flex justify-between items-start mb-10 pb-7 border-b border-white/[.05]">
+      <div className="flex flex-wrap justify-between items-start gap-3 mb-10 pb-7 border-b border-white/[.05]">
         <div><div className={TW.pgTitle}>Mail</div><p className={TW.pgSub}>impact@samuelgyasi.com · via Resend</p></div>
       </div>
 

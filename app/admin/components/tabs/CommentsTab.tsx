@@ -35,7 +35,7 @@ export default function CommentsTab({ comments, posts, onApprove, onDelete }: Co
 
   return (
     <>
-      <div className="flex justify-between items-start mb-10 pb-7 border-b border-white/[.05]">
+      <div className="flex flex-wrap justify-between items-start gap-3 mb-10 pb-7 border-b border-white/[.05]">
         <div>
           <div className={TW.pgTitle}>Blog Comments</div>
           <p className={TW.pgSub}>{pending} pending · {comments.length} total</p>

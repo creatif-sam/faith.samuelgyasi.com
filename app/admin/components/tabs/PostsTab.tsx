@@ -15,7 +15,7 @@ interface PostsTabProps {
 export default function PostsTab({ posts, onNew, onEdit, onDelete, onToggle, onViewReviews }: PostsTabProps) {
   return (
     <>
-      <div className="flex justify-between items-start mb-10 pb-7 border-b border-white/[.05]">
+      <div className="flex flex-wrap justify-between items-start gap-3 mb-10 pb-7 border-b border-white/[.05]">
         <div><div className={TW.pgTitle}>Blog Posts</div><p className={TW.pgSub}>{posts.length} post{posts.length !== 1 ? "s" : ""}</p></div>
         <button className={cn(TW.btn, TW.gold)} onClick={onNew}><Plus size={10} />New Post</button>
       </div>

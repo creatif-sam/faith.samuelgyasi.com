@@ -18,7 +18,7 @@ export default function TrainingsTab({ trainings, onNew, onEdit, onDelete, onTog
 
   return (
     <>
-      <div className="flex justify-between items-start mb-10 pb-7 border-b border-white/[.05]">
+      <div className="flex flex-wrap justify-between items-start gap-3 mb-10 pb-7 border-b border-white/[.05]">
         <div>
           <div className={TW.pgTitle}>Trainings</div>
           <p className={TW.pgSub}>{published} published · {trainings.length} total</p>

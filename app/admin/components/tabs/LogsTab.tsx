@@ -9,7 +9,7 @@ interface LogsTabProps {
 export default function LogsTab({ logs }: LogsTabProps) {
   return (
     <>
-      <div className="flex justify-between items-start mb-10 pb-7 border-b border-white/[.05]">
+      <div className="flex flex-wrap justify-between items-start gap-3 mb-10 pb-7 border-b border-white/[.05]">
         <div>
           <div className={TW.pgTitle}>Logs</div>
           <p className={TW.pgSub}>{logs.length} delivery log entr{logs.length === 1 ? "y" : "ies"}</p>

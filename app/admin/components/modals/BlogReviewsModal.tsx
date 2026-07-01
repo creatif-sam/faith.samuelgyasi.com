@@ -160,7 +160,7 @@ export default function BlogReviewsModal({ postId, postTitle, onClose, db }: Blo
               </button>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 mb-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
               <div className={TW.field}>
                 <label className={TW.label}>Reviewer Name *</label>
                 <input

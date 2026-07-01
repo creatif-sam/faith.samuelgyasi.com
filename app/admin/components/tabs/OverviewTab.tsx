@@ -31,7 +31,7 @@ export default function OverviewTab({ posts, subs, msgs, logs, analytics, onNav 
 
   return (
     <>
-      <div className="flex justify-between items-start mb-10 pb-7 border-b border-white/[.05]">
+      <div className="flex flex-wrap justify-between items-start gap-3 mb-10 pb-7 border-b border-white/[.05]">
         <div>
           <div className={TW.pgTitle}>Dashboard</div>
           <p className={TW.pgSub}>Welcome back, Samuel.</p>

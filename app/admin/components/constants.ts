@@ -72,26 +72,26 @@ export const TW = {
   select:  "w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-poppins text-sm px-4 py-3 outline-none transition-all focus:border-[rgba(212,168,67,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(212,168,67,.08)]",
   tarea:   "w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-poppins text-sm px-4 py-3 outline-none transition-all focus:border-[rgba(212,168,67,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(212,168,67,.08)] resize-y min-h-[200px]",
   // Typography
-  pgTitle: "font-poppins text-[30px] font-bold text-[#eef0f5] leading-tight tracking-tight",
-  pgSub:   "font-poppins text-[13px] text-white/40 mt-1.5",
-  sTitle:  "font-poppins text-[18px] font-semibold text-[#eef0f5]",
-  sHead:   "flex justify-between items-center mb-6",
+  pgTitle: "font-poppins text-[22px] sm:text-[30px] font-bold text-[#eef0f5] leading-tight tracking-tight",
+  pgSub:   "font-poppins text-[12px] sm:text-[13px] text-white/40 mt-1.5",
+  sTitle:  "font-poppins text-[16px] sm:text-[18px] font-semibold text-[#eef0f5]",
+  sHead:   "flex flex-wrap justify-between items-center gap-3 mb-6",
   // Table
-  tWrap:   "overflow-x-auto rounded-lg border border-white/[.06] overflow-hidden",
-  th:      "font-poppins text-[11px] font-semibold text-white/[.35] px-5 py-3.5 text-left border-b border-white/[.06] bg-white/[.025] whitespace-nowrap",
-  td:      "px-5 py-4 text-sm text-white/60 border-b border-white/[.04] align-middle font-poppins",
+  tWrap:   "overflow-x-auto rounded-lg border border-white/[.06] overflow-hidden -mx-4 px-4 sm:mx-0 sm:px-0",
+  th:      "font-poppins text-[11px] font-semibold text-white/[.35] px-3 sm:px-5 py-3.5 text-left border-b border-white/[.06] bg-white/[.025] whitespace-nowrap",
+  td:      "px-3 sm:px-5 py-4 text-sm text-white/60 border-b border-white/[.04] align-middle font-poppins",
   // Actions
   actRow:  "flex gap-1.5 items-center flex-wrap",
   // Empty
   empty:   "font-poppins text-base text-white/25 py-16 text-center",
   // Overlay / modal
-  overlay: "fixed inset-0 bg-black/[.82] backdrop-blur-xl z-[9000] flex items-center justify-center p-5",
-  modal:   "bg-[#0b0c12] border border-white/[.08] rounded-lg w-full max-w-[720px] max-h-[90vh] overflow-y-auto p-10 shadow-[0_32px_80px_rgba(0,0,0,.7),0_0_0_1px_rgba(255,255,255,.04)]",
-  panel:   "bg-[#0b0c12] border border-white/[.08] rounded-lg w-full max-w-[640px] max-h-[90vh] overflow-y-auto flex flex-col shadow-[0_32px_80px_rgba(0,0,0,.7),0_0_0_1px_rgba(255,255,255,.04)]",
-  pHead:   "flex justify-between items-center px-7 py-6 border-b border-white/[.06] flex-shrink-0",
-  pBody:   "p-7 flex-1 overflow-y-auto",
-  pFoot:   "flex gap-2.5 justify-end px-7 py-5 border-t border-white/[.055] bg-black/[.12] flex-shrink-0 rounded-b-2xl",
-  fTitle:  "font-poppins text-[20px] font-bold text-[#eef0f5]",
+  overlay: "fixed inset-0 bg-black/[.82] backdrop-blur-xl z-[9000] flex items-center justify-center p-0 sm:p-5",
+  modal:   "bg-[#0b0c12] border-0 sm:border sm:border-white/[.08] rounded-none sm:rounded-lg w-full h-full sm:h-auto max-w-none sm:max-w-[720px] max-h-none sm:max-h-[90vh] overflow-y-auto p-5 sm:p-10 shadow-[0_32px_80px_rgba(0,0,0,.7),0_0_0_1px_rgba(255,255,255,.04)]",
+  panel:   "bg-[#0b0c12] border-0 sm:border sm:border-white/[.08] rounded-none sm:rounded-lg w-full h-full sm:h-auto max-w-none sm:max-w-[640px] max-h-none sm:max-h-[90vh] overflow-y-auto flex flex-col shadow-[0_32px_80px_rgba(0,0,0,.7),0_0_0_1px_rgba(255,255,255,.04)]",
+  pHead:   "flex justify-between items-center px-4 sm:px-7 py-5 sm:py-6 border-b border-white/[.06] flex-shrink-0",
+  pBody:   "p-4 sm:p-7 flex-1 overflow-y-auto",
+  pFoot:   "flex flex-wrap gap-2.5 justify-end px-4 sm:px-7 py-4 sm:py-5 border-t border-white/[.055] bg-black/[.12] flex-shrink-0 rounded-b-2xl",
+  fTitle:  "font-poppins text-[17px] sm:text-[20px] font-bold text-[#eef0f5]",
   // Message cards
   msgCard: "bg-[#0b0c12] border border-white/[.06] border-l-[3px] border-l-transparent rounded-lg p-5 transition-all duration-200 mb-2 hover:border-l-[rgba(212,168,67,.35)] hover:shadow-[0_4px_20px_rgba(0,0,0,.25)]",
   msgNew:  "!bg-[rgba(212,168,67,.03)] !border-[rgba(212,168,67,.15)] !border-l-[rgba(212,168,67,.6)]",
@@ -106,7 +106,7 @@ export const TW = {
   mAct:    "!text-[#d4a843] !bg-[rgba(212,168,67,.1)]",
   // Mail section switcher (big segmented toggle: Email Campaigns | Email Templates)
   mSeg:    "flex gap-1 mb-7 bg-white/[.03] border border-white/[.06] rounded-lg p-1.5",
-  mSegTab: "flex-1 flex items-center justify-center gap-2.5 px-6 py-3.5 font-poppins text-[13px] font-semibold text-white/45 bg-transparent border-0 cursor-pointer rounded-lg transition-all whitespace-nowrap hover:text-white/75 hover:bg-white/5",
+  mSegTab: "flex-1 flex items-center justify-center gap-1.5 sm:gap-2.5 px-2 sm:px-6 py-3 sm:py-3.5 font-poppins text-[11px] sm:text-[13px] font-semibold text-white/45 bg-transparent border-0 cursor-pointer rounded-lg transition-all whitespace-nowrap hover:text-white/75 hover:bg-white/5",
   mSegAct: "!text-[#09090d] !bg-gradient-to-r !from-[#d4a843] !to-[#c49838] !shadow-[0_2px_16px_rgba(212,168,67,.3)] hover:!text-[#09090d]",
   // Filter chips (All / Drafts / Sent)
   chipRow: "flex gap-2 items-center",
@@ -116,9 +116,9 @@ export const TW = {
   progWrap:"w-full h-1.5 bg-white/[.06] rounded-full overflow-hidden mt-1.5 min-w-[80px]",
   progBar: "h-full bg-gradient-to-r from-[#d4a843] to-[#f0cc7a] rounded-full transition-all duration-500",
   // Stats
-  stat:    "bg-[#0b0c12] p-6 border border-white/[.06] rounded-lg relative overflow-hidden cursor-default transition-all duration-[250ms] group hover:border-[rgba(212,168,67,.22)] hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(0,0,0,.4),0_0_0_1px_rgba(212,168,67,.1)]",
-  statNum: "font-poppins text-[36px] font-bold leading-none mb-2 bg-gradient-to-br from-[#d4a843] to-[#f0cc7a] bg-clip-text text-transparent",
-  statLbl: "font-poppins text-[12px] font-medium text-white/[.40]",
+  stat:    "bg-[#0b0c12] p-4 sm:p-6 border border-white/[.06] rounded-lg relative overflow-hidden cursor-default transition-all duration-[250ms] group hover:border-[rgba(212,168,67,.22)] hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(0,0,0,.4),0_0_0_1px_rgba(212,168,67,.1)]",
+  statNum: "font-poppins text-[24px] sm:text-[36px] font-bold leading-none mb-2 bg-gradient-to-br from-[#d4a843] to-[#f0cc7a] bg-clip-text text-transparent",
+  statLbl: "font-poppins text-[11px] sm:text-[12px] font-medium text-white/[.40]",
   // Icon button
   iconBtn: "bg-white/5 border border-white/[.08] text-white/40 cursor-pointer p-2 rounded-lg flex items-center transition-all hover:bg-white/10 hover:text-white/80",
   // Quick reply
@@ -128,5 +128,5 @@ export const TW = {
   // Compose
   compose: "max-w-[780px]",
   // Form row
-  fRow:    "grid grid-cols-2 gap-4",
+  fRow:    "grid grid-cols-1 sm:grid-cols-2 gap-4",
 };

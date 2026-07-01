@@ -35,7 +35,7 @@ export default function PrayerSubmissionsTab({ prayers, onTogglePrayed, onDelete
 
   return (
     <>
-      <div className="flex justify-between items-start mb-10 pb-7 border-b border-white/[.05]">
+      <div className="flex flex-wrap justify-between items-start gap-3 mb-10 pb-7 border-b border-white/[.05]">
         <div>
           <div className={TW.pgTitle}>Prayer Submissions</div>
           <p className={TW.pgSub}>{pendingCount} pending · {prayers.length} total</p>

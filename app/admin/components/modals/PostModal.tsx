@@ -276,7 +276,7 @@ export default function PostModal({ post, onClose, onSave, db }: PostModalProps)
             <label className={TW.label}>YouTube Video URL (optional – auto-shows thumbnail on card)</label>
             <input className={TW.input} value={form.youtube_url} onChange={(e) => setF("youtube_url", e.target.value)} placeholder="https://www.youtube.com/watch?v=..." />
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className={TW.field}>
               <label className={TW.label}>Summary Infographic (English)</label>
               <label className={cn(TW.input, "flex items-center gap-3 cursor-pointer py-2.5 px-4 border-dashed")}>
