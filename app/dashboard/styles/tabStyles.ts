@@ -219,6 +219,37 @@ export const tabStyles = `
   animation: db-pulse 1.2s ease-in-out infinite;
 }
 
+/* Skeleton shimmer */
+@keyframes sk-shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position:  400px 0; }
+}
+.sk-block {
+  border-radius: 8px;
+  background: linear-gradient(90deg, var(--d-soft) 25%, color-mix(in srgb, var(--d-text) 6%, transparent) 50%, var(--d-soft) 75%);
+  background-size: 800px 100%;
+  animation: sk-shimmer 1.4s ease-in-out infinite;
+}
+.sk-card {
+  border-radius: 14px;
+  border: 1px solid var(--d-border);
+  overflow: hidden;
+}
+.sk-thumb { height: 140px; }
+.sk-body { padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+.sk-title { height: 14px; width: 70%; }
+.sk-sub   { height: 11px; width: 45%; }
+.sk-bar   { height: 6px;  width: 100%; }
+.sk-stat  {
+  border: 1px solid var(--d-border);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex; align-items: center; gap: 12px;
+}
+.sk-stat-icon { width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0; }
+.sk-stat-num  { height: 22px; width: 48px; margin-bottom: 6px; }
+.sk-stat-lbl  { height: 11px; width: 72px; }
+
 /* -- HABITS TAB -- */
 .hb-form {
   background: var(--d-surf);

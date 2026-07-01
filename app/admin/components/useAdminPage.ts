@@ -5,7 +5,7 @@ import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
 import type {
   BlogPost, BlogSeries, BlogTag, Subscriber, Message, EmailLog,
-  InboundEmail, EmailTemplate, AnalyticsData, Testimonial, LibraryItem,
+  InboundEmail, EmailTemplate, EmailCampaign, AnalyticsData, Testimonial, LibraryItem,
   UpcomingEvent, Feedback, Training, BlogComment, GalleryTheme,
   EventRegistration, PrayerSubmission, DiscipleshipContent, Disciple,
   FaithTest, Tab, MailSubTab, PageViewRow, AuthUserRow,
@@ -31,13 +31,14 @@ export interface ModalOpeners {
   openFaithTest: (t: FaithTest | null) => void;
   openDisciple: (d: Disciple | null) => void;
   openProgress: (d: Disciple) => void;
+  openCampaign: (c: EmailCampaign | null) => void;
 }
 
 export function useAdminPage() {
   const [tab, setTab] = useState<Tab>("overview");
   const [searchQuery, setSearchQuery] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
-  const [mailSub, setMailSub] = useState<MailSubTab>("compose");
+  const [mailSub, setMailSub] = useState<MailSubTab>("campaigns");
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [blogSeries, setBlogSeries] = useState<BlogSeries[]>([]);
   const [blogTags, setBlogTags] = useState<BlogTag[]>([]);
@@ -46,6 +47,9 @@ export function useAdminPage() {
   const [logs, setLogs] = useState<EmailLog[]>([]);
   const [inbox, setInbox] = useState<InboundEmail[]>([]);
   const [templates, setTemplates] = useState<EmailTemplate[]>([]);
+  const [campaigns, setCampaigns] = useState<EmailCampaign[]>([]);
+  const [showCampaign, setShowCampaign] = useState(false);
+  const [editCampaign, setEditCampaign] = useState<EmailCampaign | null>(null);
   const [analytics, setAnalytics] = useState<AnalyticsData | null>(null);
   const [loading, setLoading] = useState(true);
   const [showPost, setShowPost] = useState(false);
@@ -113,7 +117,7 @@ export function useAdminPage() {
     if (!session) { router.push("/auth/login"); return; }
     setAdminEmail(session.user.email ?? "admin@samuelgyasi.com");
     setLoading(true);
-    const [pR,serR,tagR,sR,mR,lR,iR,tR,aR,tsR,libR,upR,fbR,cmtR,trnR,galR,evRegR,prayR,discR,ftR,discipR,usersRes] = await Promise.all([
+    const [pR,serR,tagR,sR,mR,lR,iR,tR,cR,aR,tsR,libR,upR,fbR,cmtR,trnR,galR,evRegR,prayR,discR,ftR,discipR,usersRes] = await Promise.all([
       db.from("blog_posts").select("*").order("created_at",{ascending:false}),
       db.from("blog_series").select("*").order("sort_order",{ascending:true}).order("created_at",{ascending:false}),
       db.from("blog_tags").select("*").order("sort_order",{ascending:true}).order("created_at",{ascending:false}),
@@ -122,6 +126,7 @@ export function useAdminPage() {
       db.from("email_logs").select("*").order("sent_at",{ascending:false}),
       db.from("inbound_emails").select("*").order("received_at",{ascending:false}),
       db.from("email_templates").select("*").order("created_at",{ascending:false}),
+      db.from("email_campaigns").select("*").order("created_at",{ascending:false}),
       db.from("page_views").select("page_path,visitor_id,created_at").gte("created_at",new Date(Date.now()-30*86400000).toISOString()),
       db.from("testimonials").select("*").order("sort_order",{ascending:true}).order("created_at",{ascending:false}),
       db.from("library_items").select("*").order("sort_order",{ascending:true}).order("created_at",{ascending:false}),
@@ -140,7 +145,7 @@ export function useAdminPage() {
     setPosts(pR.data??[]); setBlogSeries((serR.data as BlogSeries[])??[]);
     setBlogTags((tagR.data as BlogTag[])??[]); setSubs(sR.data??[]);
     setMsgs(mR.data??[]); setLogs(lR.data??[]); setInbox(iR.data??[]);
-    setTemplates(tR.data??[]); setTestimonials(tsR.data??[]);
+    setTemplates(tR.data??[]); setCampaigns((cR.data as EmailCampaign[])??[]); setTestimonials(tsR.data??[]);
     setLibraryItems(libR.data??[]); setUpcomingEvents(upR.data??[]);
     setFeedbacks(fbR.data??[]); setBlogComments((cmtR.data as BlogComment[])??[]);
     setTrainings((trnR.data as Training[])??[]); setGalleryThemes((galR.data as GalleryTheme[])??[]);
@@ -197,13 +202,15 @@ export function useAdminPage() {
     openFaithTest: (t) => { setEditFaithTest(t); setShowFaithTest(true); },
     openDisciple: (d) => { setEditDisciple(d); setShowDisciple(true); },
     openProgress: (d) => setViewProgressDisciple(d),
+    openCampaign: (c) => { setEditCampaign(c); setShowCampaign(true); },
   };
 
   return {
     tab, setTab, searchQuery, setSearchQuery, searchOpen, setSearchOpen,
     mailSub, setMailSub, navOpen, setNavOpen, theme, setTheme,
     adminEmail, loading, notifications, notifOpen, setNotifOpen,
-    posts, blogSeries, blogTags, subs, msgs, logs, inbox, templates,
+    posts, blogSeries, blogTags, subs, msgs, logs, inbox, templates, campaigns,
+    showCampaign, editCampaign, setShowCampaign,
     analytics, testimonials, libraryItems, upcomingEvents, feedbacks,
     blogComments, trainings, galleryThemes, eventRegistrations,
     prayerSubmissions, discipleshipContent, disciples, faithTests, users,

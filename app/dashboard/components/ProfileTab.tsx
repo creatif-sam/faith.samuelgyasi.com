@@ -19,6 +19,8 @@ interface ProfileTabProps {
   handleLogout: () => void;
   onNameChange: (name: string) => void;
   initials: string;
+  initialName: string;
+  initialAvatarUrl: string | null;
 }
 
 export default function ProfileTab({
@@ -33,12 +35,14 @@ export default function ProfileTab({
   handleLogout,
   onNameChange,
   initials,
+  initialName,
+  initialAvatarUrl,
 }: ProfileTabProps) {
   const router = useRouter();
   const db = createClient();
 
-  const [profileName, setProfileName] = useState("");
-  const [profileAvatarUrl, setProfileAvatarUrl] = useState<string | null>(null);
+  const [profileName, setProfileName] = useState(initialName);
+  const [profileAvatarUrl, setProfileAvatarUrl] = useState<string | null>(initialAvatarUrl);
   const [profileSaving, setProfileSaving] = useState(false);
   const [avatarUploading, setAvatarUploading] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
@@ -46,6 +50,8 @@ export default function ProfileTab({
   const [deleting, setDeleting] = useState(false);
 
   const loadProfile = useCallback(async () => {
+    // Only fetch if initial values were not provided
+    if (initialName && initialAvatarUrl !== undefined) return;
     const { data } = await db.from("user_profiles")
       .select("full_name, avatar_url")
       .eq("id", user.id)
@@ -54,7 +60,7 @@ export default function ProfileTab({
       if (data.full_name) { setProfileName(data.full_name); onNameChange(data.full_name); }
       if (data.avatar_url) setProfileAvatarUrl(data.avatar_url);
     }
-  }, [db, user.id, onNameChange]);
+  }, [db, user.id, onNameChange, initialName, initialAvatarUrl]);
 
   useEffect(() => { loadProfile(); }, [loadProfile]);
 
@@ -246,7 +252,14 @@ export default function ProfileTab({
               </>
             ) : (
               <>
-                <p className="pf-danger-desc">{t.deleteConfirmMsg}</p>
+                <p className="pf-danger-desc" style={{ marginBottom: 8 }}>{t.deleteConfirmMsg}</p>
+                <ul style={{ fontSize: 11, color: "var(--d-muted)", margin: "0 0 12px 16px", lineHeight: 1.8 }}>
+                  <li>All lesson progress &amp; completions</li>
+                  <li>Training enrollments</li>
+                  <li>Spiritual habits &amp; all logs</li>
+                  <li>Profile data and avatar</li>
+                  <li>Your account — this cannot be undone</li>
+                </ul>
                 <input
                   className="pf-confirm-input"
                   value={deleteConfirmText}

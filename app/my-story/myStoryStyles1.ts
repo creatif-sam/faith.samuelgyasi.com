@@ -9,7 +9,7 @@ export const myStoryStyles1 = `
 }
 .msp::before {
   content: '';
-  position: fixed;
+  position: absolute;
   inset: 0;
   background-image: url('/mystorybackground.jpg');
   background-size: cover;

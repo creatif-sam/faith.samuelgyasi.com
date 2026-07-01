@@ -53,7 +53,29 @@ export interface EmailTemplate {
   subject: string;
   body_html: string;
   body_text: string;
+  category?: string | null;
   created_at: string;
+}
+
+export type CampaignRecipientType = "custom" | "subscribers";
+export type CampaignStatus = "draft" | "sending" | "sent" | "failed";
+
+export interface EmailCampaign {
+  id: string;
+  subject: string;
+  body_html: string;
+  body_text: string | null;
+  template_id: string | null;
+  recipient_type: CampaignRecipientType;
+  recipient_filter: string | null;
+  recipient_emails: string[] | null;
+  total_recipients: number;
+  sent_count: number;
+  failed_count: number;
+  status: CampaignStatus;
+  created_at: string;
+  updated_at: string;
+  sent_at: string | null;
 }
 
 export interface InboundEmail {

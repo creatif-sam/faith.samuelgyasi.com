@@ -11,8 +11,11 @@ interface TplModalProps {
   onSave: () => Promise<void>;
 }
 
+const CATEGORIES = ["Announcement", "Reminder", "Newsletter", "Welcome", "General"];
+
 export default function TplModal({ tpl, onClose, onSave }: TplModalProps) {
   const [name, setName] = useState(tpl?.name     ?? "");
+  const [category, setCategory] = useState(tpl?.category ?? "");
   const [subj, setSubj] = useState(tpl?.subject  ?? "");
   const [html, setHtml] = useState(tpl?.body_html ?? "");
   const [text, setText] = useState(tpl?.body_text ?? "");
@@ -27,7 +30,7 @@ export default function TplModal({ tpl, onClose, onSave }: TplModalProps) {
     setBusy(true);
     const r = await fetch("/api/mail/templates", {
       method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id: tpl?.id, name, subject: subj, bodyHtml: html, bodyText: text }),
+      body: JSON.stringify({ id: tpl?.id, name, subject: subj, bodyHtml: html, bodyText: text, category: category || null }),
     });
     setBusy(false);
     if (!r.ok) { toast.error("Save failed"); return; }
@@ -44,6 +47,13 @@ export default function TplModal({ tpl, onClose, onSave }: TplModalProps) {
         </div>
         <form onSubmit={save}>
           <div className={TW.field}><label className={TW.label}>Template Name *</label><input className={TW.input} value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. Welcome Email" required /></div>
+          <div className={TW.field}>
+            <label className={TW.label}>Category</label>
+            <select className={TW.select} value={category} onChange={(e) => setCategory(e.target.value)}>
+              <option value="">— None —</option>
+              {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
+            </select>
+          </div>
           <div className={TW.field}><label className={TW.label}>Subject *</label><input className={TW.input} value={subj} onChange={(e) => setSubj(e.target.value)} placeholder="Email subject line" required /></div>
           <div className="flex gap-1.5 mb-3 items-center">
             <button type="button" className={cn(TW.btn, TW.sm, tab === "html" ? TW.gold : TW.ghost)} onClick={() => setTab("html")}><Code size={9} />HTML Body</button>

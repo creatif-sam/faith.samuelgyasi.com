@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
   if (!supabase)
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const { id, name, subject, bodyHtml, bodyText } = await req.json();
+  const { id, name, subject, bodyHtml, bodyText, category } = await req.json();
 
   if (id) {
     const { data, error } = await supabase
@@ -39,6 +39,7 @@ export async function POST(req: NextRequest) {
         subject,
         body_html: bodyHtml ?? "",
         body_text: bodyText ?? "",
+        category: category ?? null,
         updated_at: new Date().toISOString(),
       })
       .eq("id", id)
@@ -51,7 +52,7 @@ export async function POST(req: NextRequest) {
 
   const { data, error } = await supabase
     .from("email_templates")
-    .insert({ name, subject, body_html: bodyHtml ?? "", body_text: bodyText ?? "" })
+    .insert({ name, subject, body_html: bodyHtml ?? "", body_text: bodyText ?? "", category: category ?? null })
     .select()
     .single();
   if (error)

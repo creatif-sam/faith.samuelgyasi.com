@@ -3,7 +3,7 @@ import { SupabaseClient } from "@supabase/supabase-js";
 import { toast } from "sonner";
 import type {
   BlogPost, BlogSeries, BlogTag, Subscriber, Message, EmailLog,
-  InboundEmail, EmailTemplate, AnalyticsData, Testimonial, LibraryItem,
+  InboundEmail, EmailTemplate, EmailCampaign, AnalyticsData, Testimonial, LibraryItem,
   UpcomingEvent, Feedback, Training, BlogComment, GalleryTheme,
   EventRegistration, PrayerSubmission, DiscipleshipContent, Disciple,
   FaithTest, Tab, MailSubTab, AuthUserRow,
@@ -40,7 +40,7 @@ interface Props {
   mailSub: MailSubTab; setMailSub: (v: MailSubTab) => void;
   posts: BlogPost[]; blogSeries: BlogSeries[]; blogTags: BlogTag[];
   subs: Subscriber[]; msgs: Message[]; logs: EmailLog[];
-  inbox: InboundEmail[]; templates: EmailTemplate[]; analytics: AnalyticsData | null;
+  inbox: InboundEmail[]; templates: EmailTemplate[]; campaigns: EmailCampaign[]; analytics: AnalyticsData | null;
   testimonials: Testimonial[]; libraryItems: LibraryItem[];
   upcomingEvents: UpcomingEvent[]; feedbacks: Feedback[]; blogComments: BlogComment[];
   trainings: Training[]; galleryThemes: GalleryTheme[];
@@ -49,7 +49,7 @@ interface Props {
   faithTests: FaithTest[]; users: AuthUserRow[];
 }
 
-export default function AdminTabContent({ tab, db, load, ask, modals, setConfirm, onNav, mailSub, setMailSub, posts, blogSeries, blogTags, subs, msgs, logs, inbox, templates, analytics, testimonials, libraryItems, upcomingEvents, feedbacks, blogComments, trainings, galleryThemes, eventRegistrations, prayerSubmissions, discipleshipContent, disciples, faithTests, users }: Props) {
+export default function AdminTabContent({ tab, db, load, ask, modals, setConfirm, onNav, mailSub, setMailSub, posts, blogSeries, blogTags, subs, msgs, logs, inbox, templates, campaigns, analytics, testimonials, libraryItems, upcomingEvents, feedbacks, blogComments, trainings, galleryThemes, eventRegistrations, prayerSubmissions, discipleshipContent, disciples, faithTests, users }: Props) {
   return (
     <>
       {tab === "overview" && <OverviewTab posts={posts} subs={subs} msgs={msgs} logs={logs} analytics={analytics} onNav={onNav} />}
@@ -118,12 +118,18 @@ export default function AdminTabContent({ tab, db, load, ask, modals, setConfirm
         />
       )}
       {tab === "mail" && (
-        <MailTab sub={mailSub} setSub={setMailSub} logs={logs} inbox={inbox} templates={templates} onReload={load} db={db}
+        <MailTab sub={mailSub} setSub={setMailSub} logs={logs} inbox={inbox} templates={templates} campaigns={campaigns} onReload={load} db={db}
           onEditTpl={(t) => modals.openTpl(t)} onNewTpl={() => modals.openTpl(null)}
           onDeleteTpl={(id, name) => ask(`Delete template "${name}"?`, async () => {
             const r = await fetch(`/api/mail/templates?id=${id}`, { method: "DELETE" });
             if (!r.ok) { toast.error("Delete failed"); return; }
             toast.success("Template deleted"); await load();
+          })}
+          onNewCampaign={() => modals.openCampaign(null)} onEditCampaign={(c) => modals.openCampaign(c)}
+          onDeleteCampaign={(id, subject) => ask(`Delete campaign "${subject}"?`, async () => {
+            const r = await fetch(`/api/mail/campaigns?id=${id}`, { method: "DELETE" });
+            if (!r.ok) { toast.error("Delete failed"); return; }
+            toast.success("Campaign deleted"); await load();
           })}
         />
       )}

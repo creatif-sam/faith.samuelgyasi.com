@@ -15,6 +15,7 @@ interface DashSidebarProps {
   activeTab: DashTab;
   displayName: string;
   initials: string;
+  avatarUrl: string | null;
   email: string;
   t: Translations;
   navItems: NavItem[];
@@ -27,6 +28,7 @@ export default function DashSidebar({
   activeTab,
   displayName,
   initials,
+  avatarUrl,
   email,
   t,
   navItems,
@@ -41,7 +43,11 @@ export default function DashSidebar({
       </div>
 
       <div className="dash-sidebar-user">
-        <div className="dash-sidebar-avatar">{initials}</div>
+        <div className="dash-sidebar-avatar">
+          {avatarUrl
+            ? <img src={avatarUrl} alt={displayName} style={{ width: "100%", height: "100%", borderRadius: "50%", objectFit: "cover" }} />
+            : initials}
+        </div>
         <div>
           <p className="dash-user-name">{displayName}</p>
           <p className="dash-user-email">{email}</p>

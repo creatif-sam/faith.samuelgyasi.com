@@ -254,4 +254,4 @@ export type Tab =
   | "tags"
   | "participant-habits";
 
-export type MailSubTab = "compose" | "inbox" | "sent" | "templates";
+export type MailSubTab = "campaigns" | "templates" | "compose" | "inbox" | "sent";

@@ -8,7 +8,7 @@ export const upcomingLayoutStyles = `
 }
 .up-pg::before {
   content: '';
-  position: fixed;
+  position: absolute;
   inset: 0;
   background-image:
     radial-gradient(ellipse at 20% 40%, rgba(201,168,76,.04) 0%, transparent 55%),

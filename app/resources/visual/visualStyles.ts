@@ -8,7 +8,7 @@ export const visualStyles = `
 }
 .visual-pg::before {
   content: '';
-  position: fixed;
+  position: absolute;
   inset: 0;
   background-image: radial-gradient(ellipse at 20% 60%, rgba(201,168,76,.04) 0%, transparent 55%);
   pointer-events: none;

@@ -49,7 +49,7 @@ export default function AdminPage() {
               onNav={state.go} mailSub={state.mailSub} setMailSub={state.setMailSub}
               posts={state.posts} blogSeries={state.blogSeries} blogTags={state.blogTags}
               subs={state.subs} msgs={state.msgs} logs={state.logs}
-              inbox={state.inbox} templates={state.templates} analytics={state.analytics}
+              inbox={state.inbox} templates={state.templates} campaigns={state.campaigns} analytics={state.analytics}
               testimonials={state.testimonials} libraryItems={state.libraryItems}
               upcomingEvents={state.upcomingEvents} feedbacks={state.feedbacks}
               blogComments={state.blogComments} trainings={state.trainings}
@@ -69,6 +69,8 @@ export default function AdminPage() {
         showTag={state.showTag} editTag={state.editTag} setShowTag={state.setShowTag}
         showReviews={state.showReviews} reviewPost={state.reviewPost} setShowReviews={state.setShowReviews}
         showTpl={state.showTpl} editTpl={state.editTpl} setShowTpl={state.setShowTpl}
+        showCampaign={state.showCampaign} editCampaign={state.editCampaign} setShowCampaign={state.setShowCampaign}
+        templates={state.templates} subs={state.subs}
         showTestimonial={state.showTestimonial} editTestimonial={state.editTestimonial} setShowTestimonial={state.setShowTestimonial}
         showLibItem={state.showLibItem} editLibItem={state.editLibItem} setShowLibItem={state.setShowLibItem}
         showUpcoming={state.showUpcoming} editUpcoming={state.editUpcoming} setShowUpcoming={state.setShowUpcoming}

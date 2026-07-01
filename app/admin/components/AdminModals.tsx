@@ -3,7 +3,7 @@ import { SupabaseClient } from "@supabase/supabase-js";
 import { cn } from "@/lib/utils";
 import { TW } from "./constants";
 import type {
-  BlogPost, BlogSeries, BlogTag, EmailTemplate, Testimonial,
+  BlogPost, BlogSeries, BlogTag, EmailTemplate, EmailCampaign, Subscriber, Testimonial,
   LibraryItem, UpcomingEvent, Training, GalleryTheme, FaithTest, Disciple,
 } from "./types";
 import PostModal from "./modals/PostModal";
@@ -11,6 +11,7 @@ import BlogSeriesModal from "./modals/BlogSeriesModal";
 import BlogSeriesDetailModal from "./modals/BlogSeriesDetailModal";
 import BlogTagModal from "./modals/BlogTagModal";
 import TplModal from "./modals/TplModal";
+import CampaignModal from "./modals/CampaignModal";
 import TestimonialModal from "./modals/TestimonialModal";
 import LibraryItemModal from "./modals/LibraryItemModal";
 import UpcomingEventModal from "./modals/UpcomingEventModal";
@@ -30,6 +31,8 @@ interface Props {
   showTag: boolean; editTag: BlogTag | null; setShowTag: (v: boolean) => void;
   showReviews: boolean; reviewPost: BlogPost | null; setShowReviews: (v: boolean) => void;
   showTpl: boolean; editTpl: EmailTemplate | null; setShowTpl: (v: boolean) => void;
+  showCampaign: boolean; editCampaign: EmailCampaign | null; setShowCampaign: (v: boolean) => void;
+  templates: EmailTemplate[]; subs: Subscriber[];
   showTestimonial: boolean; editTestimonial: Testimonial | null; setShowTestimonial: (v: boolean) => void;
   showLibItem: boolean; editLibItem: LibraryItem | null; setShowLibItem: (v: boolean) => void;
   showUpcoming: boolean; editUpcoming: UpcomingEvent | null; setShowUpcoming: (v: boolean) => void;
@@ -42,7 +45,7 @@ interface Props {
   setConfirm: (v: { msg: string; fn: () => Promise<void> } | null) => void;
 }
 
-export default function AdminModals({ db, load, showPost, editPost, setShowPost, showSeries, editSeries, setShowSeries, viewSeries, setViewSeries, setEditPost, showTag, editTag, setShowTag, showReviews, reviewPost, setShowReviews, showTpl, editTpl, setShowTpl, showTestimonial, editTestimonial, setShowTestimonial, showLibItem, editLibItem, setShowLibItem, showUpcoming, editUpcoming, setShowUpcoming, showTraining, editTraining, setShowTraining, showGallery, editGallery, setShowGallery, showFaithTest, editFaithTest, setShowFaithTest, showDisciple, editDisciple, setShowDisciple, viewProgressDisciple, setViewProgressDisciple, confirm, setConfirm }: Props) {
+export default function AdminModals({ db, load, showPost, editPost, setShowPost, showSeries, editSeries, setShowSeries, viewSeries, setViewSeries, setEditPost, showTag, editTag, setShowTag, showReviews, reviewPost, setShowReviews, showTpl, editTpl, setShowTpl, showCampaign, editCampaign, setShowCampaign, templates, subs, showTestimonial, editTestimonial, setShowTestimonial, showLibItem, editLibItem, setShowLibItem, showUpcoming, editUpcoming, setShowUpcoming, showTraining, editTraining, setShowTraining, showGallery, editGallery, setShowGallery, showFaithTest, editFaithTest, setShowFaithTest, showDisciple, editDisciple, setShowDisciple, viewProgressDisciple, setViewProgressDisciple, confirm, setConfirm }: Props) {
   const onSave = async (close: () => void) => { close(); await load(); };
   return (
     <>
@@ -58,6 +61,7 @@ export default function AdminModals({ db, load, showPost, editPost, setShowPost,
       {showTag && <BlogTagModal tag={editTag} onClose={() => setShowTag(false)} onSave={async () => onSave(() => setShowTag(false))} db={db} />}
       {showReviews && reviewPost && <BlogReviewsModal postId={reviewPost.id} postTitle={reviewPost.title} onClose={() => setShowReviews(false)} db={db} />}
       {showTpl && <TplModal tpl={editTpl} onClose={() => setShowTpl(false)} onSave={async () => onSave(() => setShowTpl(false))} />}
+      {showCampaign && <CampaignModal campaign={editCampaign} templates={templates} subs={subs} onClose={() => setShowCampaign(false)} onSave={async () => onSave(() => setShowCampaign(false))} />}
       {showTraining && <TrainingModal training={editTraining} onClose={() => setShowTraining(false)} onSave={async () => onSave(() => setShowTraining(false))} db={db} />}
       {showGallery && <GalleryThemeModal theme={editGallery} onClose={() => setShowGallery(false)} onSave={async () => onSave(() => setShowGallery(false))} db={db} />}
       {showFaithTest && <FaithTestModal test={editFaithTest} onClose={() => setShowFaithTest(false)} onSave={async () => onSave(() => setShowFaithTest(false))} db={db} />}

@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
-import { useRouter } from "next/navigation";
-import { GraduationCap, BookOpen, Flame, User, Search, Mail, Bell, Sun, Moon, Globe, LayoutDashboard } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { GraduationCap, BookOpen, Flame, User, Search, Mail, Sun, Moon, Globe, LayoutDashboard } from "lucide-react";
 import { toast } from "sonner";
 import { createClient } from "@/lib/supabase/client";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
@@ -19,6 +19,7 @@ import ProfileTab from "./components/ProfileTab";
 
 export default function DashboardPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { lang, toggleLang } = useLang();
   const t = translations[lang];
   const [user, setUser] = useState<SupabaseUser | null>(null);
@@ -27,7 +28,11 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const [enrollingId, setEnrollingId] = useState<string | null>(null);
   const [theme, setTheme] = useState<"dark" | "light">("dark");
-  const [activeTab, setActiveTab] = useState<DashTab>("overview");
+  const [activeTab, setActiveTab] = useState<DashTab>(() => {
+    const tab = searchParams.get("tab") as DashTab;
+    const valid: DashTab[] = ["overview", "my-trainings", "browse", "habits", "profile"];
+    return valid.includes(tab) ? tab : "overview";
+  });
   const [navOpen, setNavOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [profileName, setProfileName] = useState("");
@@ -47,7 +52,7 @@ export default function DashboardPage() {
 
   const load = useCallback(async () => {
     const { data: { session } } = await db.auth.getSession();
-    if (!session) { router.push("/auth/login?next=/dashboard"); return; }
+    if (!session) return; // layout handles redirect
     setUser(session.user);
 
     const [tRes, eRes] = await Promise.all([
@@ -58,22 +63,32 @@ export default function DashboardPage() {
     const ts: Training[] = tRes.data ?? [];
     const rawEnrollments = eRes.data ?? [];
 
-    const withProgress: EnrollmentWithProgress[] = await Promise.all(
-      rawEnrollments.map(async (e) => {
-        const training = ts.find((tr) => tr.id === e.training_id);
-        if (!training || !training.total_lessons) return { ...e, completedCount: 0 };
-        const { data: lessonIds } = await db
-          .from("training_lessons").select("id").eq("training_id", e.training_id);
-        if (!lessonIds || lessonIds.length === 0) return { ...e, completedCount: 0 };
-        const { count } = await db
-          .from("lesson_progress")
-          .select("*", { count: "exact", head: true })
-          .eq("user_id", session.user.id)
-          .eq("completed", true)
-          .in("lesson_id", lessonIds.map((l: { id: string }) => l.id));
-        return { ...e, completedCount: count ?? 0 };
-      })
-    );
+    // Batch fetch all lesson IDs + all progress in 2 queries (avoids N+1)
+    const enrolledIds = rawEnrollments
+      .filter(e => ts.find(tr => tr.id === e.training_id)?.total_lessons)
+      .map(e => e.training_id);
+
+    const [allLessonsRes, allProgressRes] = await Promise.all([
+      enrolledIds.length > 0
+        ? db.from("training_lessons").select("id,training_id").in("training_id", enrolledIds)
+        : Promise.resolve({ data: [] as { id: string; training_id: string }[] }),
+      db.from("lesson_progress")
+        .select("lesson_id")
+        .eq("user_id", session.user.id)
+        .eq("completed", true),
+    ]);
+
+    const allLessons = (allLessonsRes.data ?? []) as { id: string; training_id: string }[];
+    const completedSet = new Set((allProgressRes.data ?? []).map((p: { lesson_id: string }) => p.lesson_id));
+
+    const withProgress: EnrollmentWithProgress[] = rawEnrollments.map((e) => {
+      const training = ts.find((tr) => tr.id === e.training_id);
+      if (!training || !training.total_lessons) return { ...e, completedCount: 0 };
+      const trainingLessonIds = allLessons
+        .filter(l => l.training_id === e.training_id)
+        .map(l => l.id);
+      return { ...e, completedCount: trainingLessonIds.filter(id => completedSet.has(id)).length };
+    });
 
     // Pre-load profile name + avatar + habits for overview
     const [profileData, habitsRes, logsRes] = await Promise.all([
@@ -155,6 +170,14 @@ export default function DashboardPage() {
     return max;
   })();
 
+  function handleTabChange(tab: DashTab) {
+    setActiveTab(tab);
+    setNavOpen(false);
+    const url = new URL(window.location.href);
+    url.searchParams.set("tab", tab);
+    window.history.replaceState({}, "", url.toString());
+  }
+
   const NAV_ITEMS: { id: DashTab; label: string; Icon: React.ComponentType<{ size?: number }>; count?: number }[] = [
     { id: "overview",     label: t.overview,    Icon: LayoutDashboard                          },
     { id: "my-trainings", label: t.myTrainings, Icon: GraduationCap, count: myTrainings.length },
@@ -169,8 +192,8 @@ export default function DashboardPage() {
 
       {/* Mobile header */}
       <div className="dash-mobile-header">
-        <button className="dash-mobile-ham" onClick={() => setNavOpen((v) => !v)} aria-label="Menu">
-          <span /><span /><span />
+        <button className="dash-mobile-ham" onClick={() => setNavOpen((v) => !v)} aria-label={navOpen ? "Close menu" : "Open menu"} aria-expanded={navOpen}>
+          <span aria-hidden="true" /><span aria-hidden="true" /><span aria-hidden="true" />
         </button>
         <div className="dash-mobile-brand">
           <span className="dash-mobile-brand-dot" />
@@ -196,10 +219,11 @@ export default function DashboardPage() {
         activeTab={activeTab}
         displayName={displayName}
         initials={initials}
+        avatarUrl={profileAvatarUrl}
         email={user?.email ?? ""}
         t={t}
         navItems={NAV_ITEMS}
-        onTabChange={(tab) => { setActiveTab(tab); setNavOpen(false); }}
+        onTabChange={handleTabChange}
         onLogout={handleLogout}
       />
 
@@ -212,7 +236,8 @@ export default function DashboardPage() {
           <button
             key={id}
             className={`dash-bottom-nav-item${activeTab === id ? " active" : ""}`}
-            onClick={() => setActiveTab(id)}
+            onClick={() => handleTabChange(id)}
+            aria-label={label}
           >
             {count !== undefined && count > 0 && (
               <span className="dash-bottom-nav-badge">{count}</span>
@@ -239,16 +264,16 @@ export default function DashboardPage() {
             </div>
           </div>
           <div className="dash-topbar-right">
-            <span className="dash-icon-btn"><Mail size={14} /></span>
-            <button className="dash-icon-btn" aria-label="Notifications"><Bell size={14} /></button>
+            <button className="dash-icon-btn" aria-label="Mail" title="Mail"><Mail size={14} /></button>
             <button
               className="dash-icon-btn"
               onClick={() => setTheme((v) => v === "dark" ? "light" : "dark")}
               aria-label="Toggle theme"
+              title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
             >
               {theme === "dark" ? <Sun size={14} /> : <Moon size={14} />}
             </button>
-            <button className="dash-icon-btn" onClick={toggleLang} aria-label="Switch language">
+            <button className="dash-icon-btn" onClick={toggleLang} aria-label="Switch language" title="Switch language">
               <Globe size={14} />
             </button>
             <div className="dash-profile">
@@ -264,11 +289,42 @@ export default function DashboardPage() {
         {/* Content */}
         <main className="dash-content">
           {loading ? (
-            <div style={{ display: "flex", gap: 8, justifyContent: "center", padding: "100px 0" }}>
-              {[0, 200, 400].map((d) => (
-                <div key={d} className="dash-dot" style={{ animationDelay: `${d}ms` }} />
-              ))}
-            </div>
+            <>
+              {/* Skeleton hero */}
+              <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 32 }}>
+                <div className="sk-block" style={{ width: 64, height: 64, borderRadius: "50%", flexShrink: 0 }} />
+                <div style={{ flex: 1 }}>
+                  <div className="sk-block sk-title" style={{ marginBottom: 8 }} />
+                  <div className="sk-block sk-sub" />
+                </div>
+              </div>
+              {/* Skeleton stats */}
+              <div className="dash-stats" style={{ marginBottom: 28 }}>
+                {[1, 2, 3, 4].map((i) => (
+                  <div key={i} className="sk-stat">
+                    <div className="sk-block sk-stat-icon" />
+                    <div style={{ flex: 1 }}>
+                      <div className="sk-block sk-stat-num" />
+                      <div className="sk-block sk-stat-lbl" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+              {/* Skeleton cards */}
+              <div className="dash-grid">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="sk-card">
+                    <div className="sk-block sk-thumb" />
+                    <div className="sk-body">
+                      <div className="sk-block sk-sub" />
+                      <div className="sk-block sk-title" />
+                      <div className="sk-block sk-sub" />
+                      <div className="sk-block sk-bar" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
           ) : (
             <>
               {activeTab === "overview" && (
@@ -286,7 +342,7 @@ export default function DashboardPage() {
                   longestStreak={longestStreak}
                   available={available}
                   t={t}
-                  onTabChange={(tab) => setActiveTab(tab)}
+                  onTabChange={handleTabChange}
                 />
               )}
               {activeTab === "my-trainings" && (
@@ -327,6 +383,8 @@ export default function DashboardPage() {
                   handleLogout={handleLogout}
                   onNameChange={setProfileName}
                   initials={initials}
+                  initialName={profileName}
+                  initialAvatarUrl={profileAvatarUrl}
                 />
               )}
             </>

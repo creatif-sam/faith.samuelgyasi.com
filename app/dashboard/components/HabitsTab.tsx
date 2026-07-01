@@ -23,6 +23,7 @@ export default function HabitsTab({ user, t }: HabitsTabProps) {
   const [habitDesc, setHabitDesc] = useState("");
   const [habitIcon, setHabitIcon] = useState("🙏");
   const [habitSaving, setHabitSaving] = useState(false);
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
 
   const today = new Date().toISOString().slice(0, 10);
 
@@ -60,36 +61,56 @@ export default function HabitsTab({ user, t }: HabitsTabProps) {
 
   async function deleteHabit(id: string) {
     const habit = habits.find((h) => h.id === id);
+    setConfirmDeleteId(null);
+    // Optimistic removal
+    setHabits(prev => prev.filter(h => h.id !== id));
+    setHabitLogs(prev => prev.filter(l => l.habit_id !== id));
     await db.from("spiritual_habits").delete().eq("id", id);
     toast.success(`"${habit?.name ?? "Habit"}" deleted.`);
-    await loadHabits();
   }
 
   async function toggleHabitLog(habitId: string) {
     const existing = habitLogs.find((l) => l.habit_id === habitId && l.logged_date === today);
     const habit = habits.find((h) => h.id === habitId);
     if (existing) {
-      await db.from("habit_logs").delete().eq("id", existing.id);
+      // Optimistic unmark
+      setHabitLogs(prev => prev.filter(l => l.id !== existing.id));
       toast(`${habit?.icon ?? ""} ${habit?.name ?? "Habit"} unmarked for today.`);
+      await db.from("habit_logs").delete().eq("id", existing.id);
     } else {
-      await db.from("habit_logs").insert({ habit_id: habitId, user_id: user.id, logged_date: today });
+      // Optimistic mark
+      const tempId = `temp-${Date.now()}`;
+      setHabitLogs(prev => [...prev, { id: tempId, habit_id: habitId, logged_date: today }]);
       toast.success(`${habit?.icon ?? ""} ${habit?.name ?? "Habit"} done today! 🎉`);
+      const { data } = await db
+        .from("habit_logs")
+        .insert({ habit_id: habitId, user_id: user.id, logged_date: today })
+        .select("id")
+        .single();
+      if (data) {
+        setHabitLogs(prev => prev.map(l => l.id === tempId ? { ...l, id: data.id } : l));
+      }
     }
-    await loadHabits();
   }
 
   function getHabitStreak(habitId: string): number {
-    const logs = habitLogs
+    const logDates = habitLogs
       .filter((l) => l.habit_id === habitId)
       .map((l) => l.logged_date)
       .sort((a, b) => b.localeCompare(a));
-    if (logs.length === 0) return 0;
-    let streak = 0;
+    if (logDates.length === 0) return 0;
     const now = new Date();
-    for (let i = 0; i < 30; i++) {
+    const todayStr = now.toISOString().slice(0, 10);
+    const yesterday = new Date(now); yesterday.setDate(now.getDate() - 1);
+    const yesterdayStr = yesterday.toISOString().slice(0, 10);
+    // Streak is valid if the most recent log is today or yesterday
+    if (logDates[0] !== todayStr && logDates[0] !== yesterdayStr) return 0;
+    const startOffset = logDates[0] === todayStr ? 0 : 1;
+    let streak = 0;
+    for (let i = startOffset; i < 31; i++) {
       const d = new Date(now); d.setDate(now.getDate() - i);
       const ds = d.toISOString().slice(0, 10);
-      if (logs.includes(ds)) { streak++; } else { break; }
+      if (logDates.includes(ds)) { streak++; } else { break; }
     }
     return streak;
   }
@@ -209,7 +230,14 @@ export default function HabitsTab({ user, t }: HabitsTabProps) {
       {habits.length === 0 ? (
         <div className="dash-empty" style={{ marginBottom: 32 }}>
           <Sparkles size={32} style={{ margin: "0 auto 12px", color: "rgba(212,168,67,.3)", display: "block" }} />
-          {t.habitEmpty}
+          <div style={{ marginBottom: 16 }}>{t.habitEmpty}</div>
+          <button
+            className="dash-btn dash-btn-gold"
+            style={{ width: "auto", display: "inline-flex", alignItems: "center", gap: 6, padding: "10px 20px" }}
+            onClick={() => setShowHabitForm(true)}
+          >
+            <Plus size={14} /> {t.newHabit}
+          </button>
         </div>
       ) : (
         <div className="hb-list">
@@ -251,9 +279,29 @@ export default function HabitsTab({ user, t }: HabitsTabProps) {
                         <Flame size={10} /> {streak}d
                       </span>
                     )}
-                    <button className="hb-del-btn" title={t.habitDelete} onClick={() => deleteHabit(h.id)}>
-                      <Trash2 size={12} />
-                    </button>
+                    {confirmDeleteId === h.id ? (
+                      <span style={{ display: "inline-flex", gap: 4, alignItems: "center" }}>
+                        <button
+                          className="hb-del-btn"
+                          style={{ background: "rgba(239,68,68,.2)", color: "#ef4444" }}
+                          onClick={() => deleteHabit(h.id)}
+                          title="Confirm delete"
+                        >
+                          {t.habitDelete}?
+                        </button>
+                        <button
+                          className="hb-btn-ghost"
+                          style={{ fontSize: 10, padding: "3px 8px" }}
+                          onClick={() => setConfirmDeleteId(null)}
+                        >
+                          {t.habitCancel}
+                        </button>
+                      </span>
+                    ) : (
+                      <button className="hb-del-btn" title={t.habitDelete} onClick={() => setConfirmDeleteId(h.id)}>
+                        <Trash2 size={12} />
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>

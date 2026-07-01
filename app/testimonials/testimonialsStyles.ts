@@ -10,7 +10,7 @@ export const testimonialsStyles = `
 /* ── AMBIENT ── */
 .tm-pg::before {
   content: '';
-  position: fixed;
+  position: absolute;
   inset: 0;
   background-image:
     radial-gradient(ellipse at 25% 55%, rgba(201,168,76,.04) 0%, transparent 55%),
