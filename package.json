@@ -15,6 +15,7 @@
     "@supabase/supabase-js": "latest",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "d3-geo": "^3.1.1",
     "lucide-react": "^0.511.0",
     "next": "latest",
     "next-themes": "^0.4.6",
@@ -22,13 +23,17 @@
     "react-dom": "^19.0.0",
     "resend": "^6.9.3",
     "sonner": "^2.0.7",
-    "tailwind-merge": "^3.3.0"
+    "tailwind-merge": "^3.3.0",
+    "topojson-client": "^3.1.0",
+    "world-atlas": "^2.0.2"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@types/d3-geo": "^3.1.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/topojson-client": "^3.1.5",
     "autoprefixer": "^10.4.20",
     "eslint": "^9",
     "eslint-config-next": "15.3.1",

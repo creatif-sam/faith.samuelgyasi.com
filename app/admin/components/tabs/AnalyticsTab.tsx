@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { TW } from "../constants";
 import { AnalyticsData } from "../types";
 import MiniBarChart from "../MiniBarChart";
+import WorldVisitorMap from "../WorldVisitorMap";
 
 interface AnalyticsTabProps {
   analytics: AnalyticsData | null;
@@ -11,7 +12,7 @@ interface AnalyticsTabProps {
 
 export default function AnalyticsTab({ analytics }: AnalyticsTabProps) {
   if (!analytics) return <p className={TW.empty}>No analytics data. Visit the site to start tracking.</p>;
-  const { totalViews, uniqueVisitors, topPages, dailyViews } = analytics;
+  const { totalViews, uniqueVisitors, topPages, dailyViews, countryViews } = analytics;
 
   return (
     <>
@@ -67,6 +68,31 @@ export default function AnalyticsTab({ analytics }: AnalyticsTabProps) {
                 ))}
               </tbody>
             </table>
+          </div>
+        )}
+      </div>
+
+      <div className="mt-12">
+        <div className={cn(TW.sHead, "mb-4")}>
+          <div className={TW.sTitle}>Visitors by Location <span className="text-xs font-poppins text-white/30">— 30d</span></div>
+        </div>
+        {countryViews.length === 0 ? (
+          <p className={TW.empty}>No location data yet.</p>
+        ) : (
+          <div className="flex flex-col lg:flex-row gap-8">
+            <div className="flex-1 min-w-0 bg-white/[.015] border border-white/[.06] rounded-lg p-4">
+              <WorldVisitorMap countryViews={countryViews} />
+            </div>
+            <div style={{ width: 240, flexShrink: 0 }}>
+              <div className="flex flex-col gap-2">
+                {countryViews.slice(0, 8).map(({ country, count }) => (
+                  <div key={country} className="flex items-center justify-between gap-3 text-sm">
+                    <span className="font-poppins text-white/60">{country}</span>
+                    <span className="font-poppins text-[#d4a843] font-semibold">{count}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         )}
       </div>

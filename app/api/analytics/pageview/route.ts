@@ -26,7 +26,26 @@ export async function POST(req: NextRequest) {
     visitor_id: visitorId,
     referrer: referrer || null,
     user_agent: req.headers.get("user-agent") ?? null,
+    country: await getVisitorCountry(req),
   });
 
   return NextResponse.json({ ok: true });
+}
+
+// Vercel injects this header at the edge; no lookup needed when deployed there.
+async function getVisitorCountry(req: NextRequest): Promise<string | null> {
+  const vercelCountry = req.headers.get("x-vercel-ip-country");
+  if (vercelCountry) return vercelCountry;
+
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || req.headers.get("x-real-ip");
+  if (!ip || ip === "::1" || ip === "127.0.0.1") return null;
+
+  try {
+    const res = await fetch(`https://ipapi.co/${ip}/country/`, { signal: AbortSignal.timeout(2000) });
+    if (!res.ok) return null;
+    const code = (await res.text()).trim();
+    return /^[A-Z]{2}$/.test(code) ? code : null;
+  } catch {
+    return null;
+  }
 }

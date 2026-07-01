@@ -127,7 +127,7 @@ export function useAdminPage() {
       db.from("inbound_emails").select("*").order("received_at",{ascending:false}),
       db.from("email_templates").select("*").order("created_at",{ascending:false}),
       db.from("email_campaigns").select("*").order("created_at",{ascending:false}),
-      db.from("page_views").select("page_path,visitor_id,created_at").gte("created_at",new Date(Date.now()-30*86400000).toISOString()),
+      db.from("page_views").select("page_path,visitor_id,created_at,country").gte("created_at",new Date(Date.now()-30*86400000).toISOString()),
       db.from("testimonials").select("*").order("sort_order",{ascending:true}).order("created_at",{ascending:false}),
       db.from("library_items").select("*").order("sort_order",{ascending:true}).order("created_at",{ascending:false}),
       db.from("upcoming_events").select("*").order("sort_order",{ascending:true}).order("created_at",{ascending:false}),
@@ -163,7 +163,9 @@ export function useAdminPage() {
     const topPages = Object.entries(pc).sort((a,b)=>b[1]-a[1]).slice(0,10).map(([path,count])=>({path,count}));
     const dailyViews: {date:string;count:number}[] = [];
     for (let i=13;i>=0;i--) { const d=new Date(Date.now()-i*86400000); const str=d.toISOString().slice(0,10); dailyViews.push({date:str,count:views.filter(v=>v.created_at.slice(0,10)===str).length}); }
-    setAnalytics({totalViews,uniqueVisitors,topPages,dailyViews});
+    const cc = views.reduce((a,v)=>{if(v.country){a[v.country]=(a[v.country]??0)+1;}return a;},{} as Record<string,number>);
+    const countryViews = Object.entries(cc).sort((a,b)=>b[1]-a[1]).map(([country,count])=>({country,count}));
+    setAnalytics({totalViews,uniqueVisitors,topPages,dailyViews,countryViews});
     setLoading(false);
   }, [db, router]);
 

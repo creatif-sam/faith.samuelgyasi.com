@@ -94,6 +94,7 @@ export interface PageViewRow {
   page_path: string;
   visitor_id: string;
   created_at: string;
+  country: string | null;
 }
 
 export interface AnalyticsData {
@@ -101,4 +102,5 @@ export interface AnalyticsData {
   uniqueVisitors: number;
   topPages: { path: string; count: number }[];
   dailyViews: { date: string; count: number }[];
+  countryViews: { country: string; count: number }[];
 }
