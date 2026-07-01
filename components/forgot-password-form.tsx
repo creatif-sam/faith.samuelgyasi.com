@@ -15,6 +15,8 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { useState } from "react";
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://faith.samuelgyasi.com";
+
 export function ForgotPasswordForm({
   className,
   ...props
@@ -33,7 +35,7 @@ export function ForgotPasswordForm({
     try {
       // The url which will be included in the email. This URL needs to be configured in your redirect URLs in the Supabase dashboard at https://supabase.com/dashboard/project/_/auth/url-configuration
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/auth/update-password`,
+        redirectTo: `${siteUrl}/auth/update-password`,
       });
       if (error) throw error;
       setSuccess(true);

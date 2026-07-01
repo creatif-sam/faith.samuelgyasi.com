@@ -17,6 +17,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://faith.samuelgyasi.com";
+
 export function SignUpForm({
   className,
   ...props
@@ -47,7 +49,7 @@ export function SignUpForm({
         email,
         password,
         options: {
-          emailRedirectTo: `${window.location.origin}/protected`,
+          emailRedirectTo: `${siteUrl}/dashboard`,
         },
       });
       if (error) throw error;
