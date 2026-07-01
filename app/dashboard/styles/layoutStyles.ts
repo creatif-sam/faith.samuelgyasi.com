@@ -374,9 +374,18 @@ export const layoutStyles = `
   background: rgba(212,168,67,.06);
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
+  position: relative;
 }
 .dash-card-thumb img { width: 100%; height: 100%; object-fit: cover; }
 .dash-card-placeholder { color: rgba(212,168,67,.2); }
+.dash-blog-read-badge {
+  position: absolute; top: 10px; right: 10px;
+  display: inline-flex; align-items: center; gap: 4px;
+  background: rgba(10,10,10,.72); backdrop-filter: blur(4px);
+  color: #4ade80; font-size: 10px; font-weight: 600;
+  padding: 4px 9px; border-radius: 999px;
+  font-family: var(--font-poppins), sans-serif;
+}
 .dash-card-body { padding: 18px 20px; flex: 1; display: flex; flex-direction: column; gap: 7px; }
 .dash-card-cat {
   font-family: var(--font-poppins), sans-serif;

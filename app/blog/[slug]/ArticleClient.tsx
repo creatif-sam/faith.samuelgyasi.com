@@ -10,7 +10,7 @@ import { Link2, MessageCircle, ArrowLeft, ArrowRight, Check } from "lucide-react
 import Breadcrumbs from "@/components/atoms/Breadcrumbs";
 import { BibleEnhancedContent } from "@/components/BibleEnhancedContent";
 import { EvaluationModal } from "./EvaluationModal";
-import { articleCss } from "./articleStyles";
+import { articleCss } from "../articleStyles";
 
 type AdjacentPost = { title: string; title_fr?: string | null; slug: string } | null;
 

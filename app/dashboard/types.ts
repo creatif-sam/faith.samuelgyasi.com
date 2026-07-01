@@ -1,5 +1,5 @@
 // Dashboard types
-export type DashTab = "overview" | "my-trainings" | "browse" | "habits" | "profile";
+export type DashTab = "overview" | "my-trainings" | "browse" | "habits" | "blogs" | "profile";
 
 export interface Training {
   id: string;
@@ -52,4 +52,17 @@ export interface HabitLog {
   id: string;
   habit_id: string;
   logged_date: string;
+}
+
+export interface BlogPostSummary {
+  id: string;
+  title: string;
+  title_fr: string | null;
+  slug: string;
+  category: string;
+  excerpt: string | null;
+  excerpt_fr: string | null;
+  read_time_minutes: number;
+  featured_image_url: string | null;
+  created_at: string;
 }

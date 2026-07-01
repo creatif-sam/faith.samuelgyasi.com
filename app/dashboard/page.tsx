@@ -1,13 +1,13 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { GraduationCap, BookOpen, Flame, User, Search, Bell, Sun, Moon, Globe, LayoutDashboard, LogOut } from "lucide-react";
+import { GraduationCap, BookOpen, Flame, Newspaper, User, Search, Bell, Sun, Moon, Globe, LayoutDashboard, LogOut } from "lucide-react";
 import { toast } from "sonner";
 import { createClient } from "@/lib/supabase/client";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 import { useLang } from "@/lib/i18n";
 import { translations } from "./translations";
-import type { DashTab, Training, EnrollmentWithProgress, SpiritualHabit, HabitLog, TrainingLesson, DashNotification } from "./types";
+import type { DashTab, Training, EnrollmentWithProgress, SpiritualHabit, HabitLog, TrainingLesson, DashNotification, BlogPostSummary } from "./types";
 import { layoutStyles } from "./styles/layoutStyles";
 import { tabStyles } from "./styles/tabStyles";
 import DashSidebar from "./components/DashSidebar";
@@ -15,6 +15,7 @@ import OverviewTab from "./components/OverviewTab";
 import MyTrainingsTab from "./components/MyTrainingsTab";
 import BrowseTab from "./components/BrowseTab";
 import HabitsTab from "./components/HabitsTab";
+import BlogsTab from "./components/BlogsTab";
 import ProfileTab from "./components/ProfileTab";
 
 const NOTIF_READ_KEY = "sg-dash-notif-read";
@@ -116,7 +117,7 @@ export default function DashboardPage() {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
   const [activeTab, setActiveTab] = useState<DashTab>(() => {
     const tab = searchParams.get("tab") as DashTab;
-    const valid: DashTab[] = ["overview", "my-trainings", "browse", "habits", "profile"];
+    const valid: DashTab[] = ["overview", "my-trainings", "browse", "habits", "blogs", "profile"];
     return valid.includes(tab) ? tab : "overview";
   });
   const [navOpen, setNavOpen] = useState(false);
@@ -125,7 +126,8 @@ export default function DashboardPage() {
   const [profileAvatarUrl, setProfileAvatarUrl] = useState<string | null>(null);
   const [overviewHabits, setOverviewHabits] = useState<SpiritualHabit[]>([]);
   const [overviewHabitLogs, setOverviewHabitLogs] = useState<HabitLog[]>([]);
-  const [blogsReadCount, setBlogsReadCount] = useState(0);
+  const [blogPosts, setBlogPosts] = useState<BlogPostSummary[]>([]);
+  const [readPostIds, setReadPostIds] = useState<Set<string>>(new Set());
   const [notifications, setNotifications] = useState<DashNotification[]>([]);
   const [notifOpen, setNotifOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
@@ -181,16 +183,20 @@ export default function DashboardPage() {
     });
 
     // Pre-load profile name + avatar + habits for overview
-    const [profileData, habitsRes, logsRes, notifRes, blogReadsRes] = await Promise.all([
+    const [profileData, habitsRes, logsRes, notifRes, blogReadsRes, blogPostsRes] = await Promise.all([
       db.from("profiles").select("full_name,avatar_url").eq("id", session.user.id).single(),
       db.from("spiritual_habits").select("*").eq("user_id", session.user.id).order("created_at", { ascending: true }),
       db.from("habit_logs").select("id,habit_id,logged_date").eq("user_id", session.user.id)
         .gte("logged_date", new Date(Date.now() - 30 * 86400000).toISOString().slice(0, 10)),
       db.from("user_notifications").select("id,title,body,read,created_at").eq("user_id", session.user.id)
         .order("created_at", { ascending: false }).limit(50),
-      db.from("blog_reads").select("id", { count: "exact", head: true }).eq("user_id", session.user.id),
+      db.from("blog_reads").select("blog_post_id").eq("user_id", session.user.id),
+      db.from("blog_posts")
+        .select("id,title,title_fr,slug,category,excerpt,excerpt_fr,read_time_minutes,featured_image_url,created_at")
+        .eq("published", true).order("created_at", { ascending: false }),
     ]);
-    setBlogsReadCount(blogReadsRes.count ?? 0);
+    setReadPostIds(new Set((blogReadsRes.data ?? []).map((r: { blog_post_id: string }) => r.blog_post_id)));
+    setBlogPosts((blogPostsRes.data as BlogPostSummary[]) ?? []);
     if (profileData.data?.full_name) {
       setProfileName(profileData.data.full_name);
     } else {
@@ -311,7 +317,7 @@ export default function DashboardPage() {
     { id: "my-trainings", label: t.myTrainings, Icon: GraduationCap, count: myTrainings.length },
     { id: "browse",       label: t.browse,      Icon: BookOpen,      count: available.length   },
     { id: "habits",       label: t.habits,      Icon: Flame,         count: undefined           },
-    { id: "profile",      label: t.profile,     Icon: User                                     },
+    { id: "blogs",        label: t.blogs,       Icon: Newspaper,     count: undefined           },
   ];
 
   return (
@@ -521,7 +527,7 @@ export default function DashboardPage() {
                   habits={overviewHabits}
                   habitsCheckedToday={habitsCheckedToday}
                   longestStreak={longestStreak}
-                  blogsReadCount={blogsReadCount}
+                  blogsReadCount={readPostIds.size}
                   available={available}
                   t={t}
                   onTabChange={handleTabChange}
@@ -551,6 +557,15 @@ export default function DashboardPage() {
               )}
               {activeTab === "habits" && user && (
                 <HabitsTab user={user} t={t} />
+              )}
+              {activeTab === "blogs" && (
+                <BlogsTab
+                  posts={blogPosts}
+                  readPostIds={readPostIds}
+                  userId={user?.id ?? null}
+                  t={t}
+                  onMarkRead={(postId) => setReadPostIds((prev) => new Set(prev).add(postId))}
+                />
               )}
               {activeTab === "profile" && user && (
                 <ProfileTab
