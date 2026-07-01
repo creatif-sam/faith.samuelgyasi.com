@@ -60,15 +60,17 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  // Require email confirmation for dashboard access
-  if (
-    user &&
-    !user.email_confirmed_at &&
-    request.nextUrl.pathname.startsWith("/dashboard")
-  ) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/auth/sign-up-success";
-    return NextResponse.redirect(url);
+  // Require email confirmation for dashboard access.
+  // getClaims() decodes the JWT, whose payload never carries
+  // email_confirmed_at (that field only exists on the full user record) —
+  // so this must go through getUser(), which actually hits /auth/v1/user.
+  if (user && request.nextUrl.pathname.startsWith("/dashboard")) {
+    const { data: userData } = await supabase.auth.getUser();
+    if (!userData.user?.email_confirmed_at) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/auth/sign-up-success";
+      return NextResponse.redirect(url);
+    }
   }
 
   // IMPORTANT: You *must* return the supabaseResponse object as it is.
