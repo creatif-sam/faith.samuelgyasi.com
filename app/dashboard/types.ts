@@ -10,12 +10,31 @@ export interface Training {
   total_lessons: number;
   published: boolean;
   sort_order: number;
+  created_at: string;
 }
 
 export interface EnrollmentWithProgress {
   training_id: string;
   enrolled_at: string;
   completedCount: number;
+}
+
+export interface TrainingLesson {
+  id: string;
+  training_id: string;
+  title: string;
+  created_at: string;
+}
+
+export type DashNotificationKind = "admin" | "training" | "lesson" | "habit";
+
+export interface DashNotification {
+  id: string;
+  kind: DashNotificationKind;
+  title: string;
+  body: string | null;
+  created_at: string;
+  read: boolean;
 }
 
 export interface SpiritualHabit {

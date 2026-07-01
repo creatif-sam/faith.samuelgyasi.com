@@ -1,13 +1,13 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { GraduationCap, BookOpen, Flame, User, Search, Mail, Sun, Moon, Globe, LayoutDashboard } from "lucide-react";
+import { GraduationCap, BookOpen, Flame, User, Search, Bell, Sun, Moon, Globe, LayoutDashboard } from "lucide-react";
 import { toast } from "sonner";
 import { createClient } from "@/lib/supabase/client";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 import { useLang } from "@/lib/i18n";
 import { translations } from "./translations";
-import type { DashTab, Training, EnrollmentWithProgress, SpiritualHabit, HabitLog } from "./types";
+import type { DashTab, Training, EnrollmentWithProgress, SpiritualHabit, HabitLog, TrainingLesson, DashNotification } from "./types";
 import { layoutStyles } from "./styles/layoutStyles";
 import { tabStyles } from "./styles/tabStyles";
 import DashSidebar from "./components/DashSidebar";
@@ -16,6 +16,92 @@ import MyTrainingsTab from "./components/MyTrainingsTab";
 import BrowseTab from "./components/BrowseTab";
 import HabitsTab from "./components/HabitsTab";
 import ProfileTab from "./components/ProfileTab";
+
+const NOTIF_READ_KEY = "sg-dash-notif-read";
+const NOTIF_WINDOW_MS = 14 * 86400000; // only surface content notifications from the last 14 days
+
+function getReadKeys(): Set<string> {
+  try {
+    const raw = window.localStorage.getItem(NOTIF_READ_KEY);
+    return new Set(raw ? (JSON.parse(raw) as string[]) : []);
+  } catch {
+    return new Set();
+  }
+}
+
+function addReadKeys(keys: string[]) {
+  try {
+    const merged = new Set([...getReadKeys(), ...keys]);
+    window.localStorage.setItem(NOTIF_READ_KEY, JSON.stringify([...merged]));
+  } catch { /* ignore */ }
+}
+
+function buildNotifications({
+  adminRows,
+  trainings,
+  lessons,
+  habits,
+  habitLogs,
+}: {
+  adminRows: { id: string; title: string; body: string | null; read: boolean; created_at: string }[];
+  trainings: Training[];
+  lessons: TrainingLesson[];
+  habits: SpiritualHabit[];
+  habitLogs: HabitLog[];
+}): DashNotification[] {
+  const readKeys = getReadKeys();
+  const cutoff = Date.now() - NOTIF_WINDOW_MS;
+
+  const admin: DashNotification[] = adminRows.map((r) => ({
+    id: r.id,
+    kind: "admin",
+    title: r.title,
+    body: r.body,
+    created_at: r.created_at,
+    read: r.read,
+  }));
+
+  const newTrainings: DashNotification[] = trainings
+    .filter((tr) => new Date(tr.created_at).getTime() > cutoff)
+    .map((tr) => ({
+      id: `training:${tr.id}`,
+      kind: "training",
+      title: "New training available",
+      body: tr.title,
+      created_at: tr.created_at,
+      read: readKeys.has(`training:${tr.id}`),
+    }));
+
+  // `lessons` is already scoped to trainings the user is enrolled in (see load()).
+  const newLessons: DashNotification[] = lessons
+    .filter((l) => new Date(l.created_at).getTime() > cutoff)
+    .map((l) => ({
+      id: `lesson:${l.id}`,
+      kind: "lesson",
+      title: "New lesson added",
+      body: l.title,
+      created_at: l.created_at,
+      read: readKeys.has(`lesson:${l.id}`),
+    }));
+
+  const today = new Date().toISOString().slice(0, 10);
+  const loggedToday = new Set(habitLogs.filter((l) => l.logged_date === today).map((l) => l.habit_id));
+  const habitReminder: DashNotification[] =
+    habits.length > 0 && habits.some((h) => !loggedToday.has(h.id))
+      ? [{
+          id: `habit:${today}`,
+          kind: "habit",
+          title: "Log today's habit",
+          body: "You haven't logged a spiritual habit today — keep the streak going.",
+          created_at: new Date().toISOString(),
+          read: true, // a standing nudge, not counted toward the unread badge
+        }]
+      : [];
+
+  return [...admin, ...newTrainings, ...newLessons, ...habitReminder].sort(
+    (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+  );
+}
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -39,6 +125,8 @@ export default function DashboardPage() {
   const [profileAvatarUrl, setProfileAvatarUrl] = useState<string | null>(null);
   const [overviewHabits, setOverviewHabits] = useState<SpiritualHabit[]>([]);
   const [overviewHabitLogs, setOverviewHabitLogs] = useState<HabitLog[]>([]);
+  const [notifications, setNotifications] = useState<DashNotification[]>([]);
+  const [notifOpen, setNotifOpen] = useState(false);
   const db = createClient();
 
   useEffect(() => {
@@ -70,15 +158,15 @@ export default function DashboardPage() {
 
     const [allLessonsRes, allProgressRes] = await Promise.all([
       enrolledIds.length > 0
-        ? db.from("training_lessons").select("id,training_id").in("training_id", enrolledIds)
-        : Promise.resolve({ data: [] as { id: string; training_id: string }[] }),
+        ? db.from("training_lessons").select("id,training_id,title,created_at").in("training_id", enrolledIds)
+        : Promise.resolve({ data: [] as TrainingLesson[] }),
       db.from("lesson_progress")
         .select("lesson_id")
         .eq("user_id", session.user.id)
         .eq("completed", true),
     ]);
 
-    const allLessons = (allLessonsRes.data ?? []) as { id: string; training_id: string }[];
+    const allLessons = (allLessonsRes.data ?? []) as TrainingLesson[];
     const completedSet = new Set((allProgressRes.data ?? []).map((p: { lesson_id: string }) => p.lesson_id));
 
     const withProgress: EnrollmentWithProgress[] = rawEnrollments.map((e) => {
@@ -91,11 +179,13 @@ export default function DashboardPage() {
     });
 
     // Pre-load profile name + avatar + habits for overview
-    const [profileData, habitsRes, logsRes] = await Promise.all([
+    const [profileData, habitsRes, logsRes, notifRes] = await Promise.all([
       db.from("profiles").select("full_name,avatar_url").eq("id", session.user.id).single(),
       db.from("spiritual_habits").select("*").eq("user_id", session.user.id).order("created_at", { ascending: true }),
       db.from("habit_logs").select("id,habit_id,logged_date").eq("user_id", session.user.id)
         .gte("logged_date", new Date(Date.now() - 30 * 86400000).toISOString().slice(0, 10)),
+      db.from("user_notifications").select("id,title,body,read,created_at").eq("user_id", session.user.id)
+        .order("created_at", { ascending: false }).limit(50),
     ]);
     if (profileData.data?.full_name) {
       setProfileName(profileData.data.full_name);
@@ -110,8 +200,17 @@ export default function DashboardPage() {
       }
     }
     if (profileData.data?.avatar_url) setProfileAvatarUrl(profileData.data.avatar_url);
-    setOverviewHabits((habitsRes.data as SpiritualHabit[]) ?? []);
-    setOverviewHabitLogs((logsRes.data as HabitLog[]) ?? []);
+    const loadedHabits = (habitsRes.data as SpiritualHabit[]) ?? [];
+    const loadedLogs = (logsRes.data as HabitLog[]) ?? [];
+    setOverviewHabits(loadedHabits);
+    setOverviewHabitLogs(loadedLogs);
+    setNotifications(buildNotifications({
+      adminRows: notifRes.data ?? [],
+      trainings: ts,
+      lessons: allLessons,
+      habits: loadedHabits,
+      habitLogs: loadedLogs,
+    }));
 
     setTrainings(ts);
     setEnrollments(withProgress);
@@ -140,6 +239,19 @@ export default function DashboardPage() {
     router.push("/");
   }
 
+  async function markAllNotificationsRead() {
+    const unreadAdminIds = notifications.filter((n) => n.kind === "admin" && !n.read).map((n) => n.id);
+    const unreadComputedKeys = notifications
+      .filter((n) => n.kind !== "admin" && n.kind !== "habit" && !n.read)
+      .map((n) => n.id);
+
+    if (unreadComputedKeys.length > 0) addReadKeys(unreadComputedKeys);
+    if (unreadAdminIds.length > 0) {
+      await db.from("user_notifications").update({ read: true }).in("id", unreadAdminIds);
+    }
+    setNotifications((prev) => prev.map((n) => (n.kind === "habit" ? n : { ...n, read: true })));
+  }
+
   const enrolledIds = new Set(enrollments.map((e) => e.training_id));
   const myTrainings = trainings.filter((tr) => enrolledIds.has(tr.id));
   const available = trainings.filter((tr) => !enrolledIds.has(tr.id));
@@ -163,6 +275,7 @@ export default function DashboardPage() {
 
   const displayName = profileName.trim() || user?.email?.split("@")[0] || "Student";
   const initials    = (displayName[0] ?? "S").toUpperCase();
+  const unreadNotifCount = notifications.filter((n) => !n.read).length;
 
   const today = new Date().toISOString().slice(0, 10);
   const habitsCheckedToday = overviewHabits.filter((h) =>
@@ -228,10 +341,6 @@ export default function DashboardPage() {
       <DashSidebar
         navOpen={navOpen}
         activeTab={activeTab}
-        displayName={displayName}
-        initials={initials}
-        avatarUrl={profileAvatarUrl}
-        email={user?.email ?? ""}
         t={t}
         navItems={NAV_ITEMS}
         onTabChange={handleTabChange}
@@ -275,7 +384,42 @@ export default function DashboardPage() {
             </div>
           </div>
           <div className="dash-topbar-right">
-            <button className="dash-icon-btn" aria-label="Mail" title="Mail"><Mail size={14} /></button>
+            <div className="dash-notif-wrap">
+              <button
+                className="dash-icon-btn"
+                onClick={() => setNotifOpen((v) => !v)}
+                aria-label="Notifications"
+                title="Notifications"
+              >
+                <Bell size={14} />
+                {unreadNotifCount > 0 && (
+                  <span className="dash-notif-badge">{unreadNotifCount > 9 ? "9+" : unreadNotifCount}</span>
+                )}
+              </button>
+              {notifOpen && (
+                <div className="dash-notif-panel">
+                  <div className="dash-notif-panel-head">
+                    <span className="dash-notif-panel-title">Notifications</span>
+                    <button
+                      className="dash-notif-mark-read"
+                      onClick={markAllNotificationsRead}
+                      disabled={unreadNotifCount === 0}
+                    >
+                      Mark all read
+                    </button>
+                  </div>
+                  {notifications.length === 0 ? (
+                    <p className="dash-notif-empty">No notifications yet.</p>
+                  ) : notifications.map((n) => (
+                    <div key={n.id} className={`dash-notif-item${n.read ? "" : " unread"}`}>
+                      <p className="dash-notif-title-row">{n.title}</p>
+                      {n.body && <p className="dash-notif-body">{n.body}</p>}
+                      <p className="dash-notif-time">{new Date(n.created_at).toLocaleString("en-GB")}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
             <button
               className="dash-icon-btn"
               onClick={() => setTheme((v) => v === "dark" ? "light" : "dark")}

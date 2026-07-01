@@ -13,10 +13,6 @@ interface NavItem {
 interface DashSidebarProps {
   navOpen: boolean;
   activeTab: DashTab;
-  displayName: string;
-  initials: string;
-  avatarUrl: string | null;
-  email: string;
   t: Translations;
   navItems: NavItem[];
   onTabChange: (tab: DashTab) => void;
@@ -26,10 +22,6 @@ interface DashSidebarProps {
 export default function DashSidebar({
   navOpen,
   activeTab,
-  displayName,
-  initials,
-  avatarUrl,
-  email,
   t,
   navItems,
   onTabChange,
@@ -40,18 +32,6 @@ export default function DashSidebar({
       <div className="dash-brand">
         <span className="dash-brand-dot" />
         <span className="dash-brand-name">{t.brand}</span>
-      </div>
-
-      <div className="dash-sidebar-user">
-        <div className="dash-sidebar-avatar">
-          {avatarUrl
-            ? <img src={avatarUrl} alt={displayName} style={{ width: "100%", height: "100%", borderRadius: "50%", objectFit: "cover" }} />
-            : initials}
-        </div>
-        <div>
-          <p className="dash-user-name">{displayName}</p>
-          <p className="dash-user-email">{email}</p>
-        </div>
       </div>
 
       <div className="dash-nav-section" />
