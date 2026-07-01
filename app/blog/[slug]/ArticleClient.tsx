@@ -5,10 +5,13 @@ import Link from "next/link";
 import { useLang } from "@/lib/i18n";
 import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
+import { Link2, MessageCircle, ArrowLeft, ArrowRight, Check } from "lucide-react";
 import Breadcrumbs from "@/components/atoms/Breadcrumbs";
 import { BibleEnhancedContent } from "@/components/BibleEnhancedContent";
 import { EvaluationModal } from "./EvaluationModal";
 import { articleCss } from "./articleStyles";
+
+type AdjacentPost = { title: string; title_fr?: string | null; slug: string } | null;
 
 type DbPost = {
   id: string;
@@ -45,12 +48,17 @@ type BlogComment = {
 export function ArticleClient({
   post,
   related,
+  newerPost,
+  olderPost,
 }: {
   post: DbPost;
   related: RelatedPost[];
+  newerPost?: AdjacentPost;
+  olderPost?: AdjacentPost;
 }) {
   const { lang } = useLang();
   const [showEvalModal, setShowEvalModal] = useState(false);
+  const [linkCopied, setLinkCopied] = useState(false);
   const [hasShownModal, setHasShownModal] = useState(false);
   const [rating, setRating] = useState(0);
   const [hoveredRating, setHoveredRating] = useState(0);
@@ -76,7 +84,16 @@ export function ArticleClient({
     minRead: lang === "fr" ? "min de lecture" : "min read",
     moreInCategory: lang === "fr" ? "Plus dans cette catégorie" : "More in this Category",
     allReflections: lang === "fr" ? "← Toutes les réflexions" : "← All Reflections",
-    myStory: lang === "fr" ? "Mon Histoire →" : "My Story →",
+    shareLabel: lang === "fr" ? "Partager cette réflexion" : "Share this reflection",
+    copyLink: lang === "fr" ? "Copier le lien" : "Copy link",
+    linkCopied: lang === "fr" ? "Lien copié !" : "Link copied!",
+    olderLabel: lang === "fr" ? "Réflexion précédente" : "Older reflection",
+    newerLabel: lang === "fr" ? "Réflexion suivante" : "Newer reflection",
+    authorTagline: lang === "fr" ? "Ministre, Facilitateur et Leader" : "Minister, Facilitator and Leader",
+    authorBio: lang === "fr"
+      ? "Je vous aide à trouver votre BUT de vie, maximiser votre POTENTIEL et développer un ESPRIT Christocentrique."
+      : "I help you find your PURPOSE, maximize your POTENTIAL and develop Christlike MIND.",
+    visitStory: lang === "fr" ? "Découvrir mon histoire →" : "Read my story →",
     evalTitle: lang === "fr" ? "Évaluez cette réflexion" : "Rate this Reflection",
     evalSub: lang === "fr" ? "Votre feedback nous aide à créer un meilleur contenu" : "Your feedback helps us create better content",
     rateLabel: lang === "fr" ? "Note (1-5 étoiles)" : "Rating (1-5 stars)",
@@ -198,6 +215,27 @@ export function ArticleClient({
     return () => document.body.classList.remove("on-article");
   }, []);
 
+  async function copyLink() {
+    await navigator.clipboard.writeText(window.location.href);
+    setLinkCopied(true);
+    toast.success(translations.linkCopied);
+    setTimeout(() => setLinkCopied(false), 2000);
+  }
+
+  function shareTo(target: "x" | "facebook" | "whatsapp") {
+    const url = window.location.href;
+    const text = title;
+    const shareUrls = {
+      x: `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`,
+      facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+      whatsapp: `https://wa.me/?text=${encodeURIComponent(`${text} ${url}`)}`,
+    };
+    window.open(shareUrls[target], "_blank", "noopener,noreferrer,width=600,height=500");
+  }
+
+  const olderTitle = olderPost ? (lang === "fr" && olderPost.title_fr ? olderPost.title_fr : olderPost.title) : null;
+  const newerTitle = newerPost ? (lang === "fr" && newerPost.title_fr ? newerPost.title_fr : newerPost.title) : null;
+
   return (
     <div className="fdp" style={{ minHeight: "100vh" }}>
       <style>{articleCss}</style>
@@ -242,9 +280,36 @@ export function ArticleClient({
               <img src={post.featured_image_url} alt={title} className="fa-cover-img" />
             </div>
           )}
+          <div className="fa-share">
+            <span className="fa-share-label">{translations.shareLabel}</span>
+            <div className="fa-share-buttons">
+              <button className="fa-share-btn" onClick={copyLink} aria-label={translations.copyLink} title={translations.copyLink}>
+                {linkCopied ? <Check size={14} /> : <Link2 size={14} />}
+              </button>
+              <button className="fa-share-btn" onClick={() => shareTo("x")} aria-label="X">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.7 8.8L23.5 22h-7.1l-5.6-7.3L4.4 22H1.2l8.2-9.4L1 2h7.3l5 6.7L18.9 2Zm-1.2 18h1.9L7.4 4H5.4l12.3 16Z"/></svg>
+              </button>
+              <button className="fa-share-btn" onClick={() => shareTo("facebook")} aria-label="Facebook">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+              </button>
+              <button className="fa-share-btn" onClick={() => shareTo("whatsapp")} aria-label="WhatsApp">
+                <MessageCircle size={14} />
+              </button>
+            </div>
+          </div>
         </header>
 
         {content && <BibleEnhancedContent content={content} />}
+
+        <div className="fa-author">
+          <img src="/photo-hero.png" alt="Samuel Kobina Gyasi" className="fa-author-photo" />
+          <div className="fa-author-body">
+            <div className="fa-author-name">Samuel Kobina Gyasi</div>
+            <div className="fa-author-tagline">{translations.authorTagline}</div>
+            <p className="fa-author-bio">{translations.authorBio}</p>
+            <Link href="/my-story" className="fa-author-link">{translations.visitStory}</Link>
+          </div>
+        </div>
 
         {post.infographie_url && (
           <div className="fa-infographie">
@@ -325,7 +390,20 @@ export function ArticleClient({
 
         <footer className="fa-footer">
           <Link href="/blog" className="fa-back-link">{translations.allReflections}</Link>
-          <Link href="/my-story" className="fa-credo-link">{translations.myStory}</Link>
+          <div className="fa-adjacent-nav">
+            {olderPost ? (
+              <Link href={`/blog/${olderPost.slug}`} className="fa-adjacent-card fa-adjacent-older">
+                <span className="fa-adjacent-dir"><ArrowLeft size={11} />{translations.olderLabel}</span>
+                <span className="fa-adjacent-title">{olderTitle}</span>
+              </Link>
+            ) : <span />}
+            {newerPost && (
+              <Link href={`/blog/${newerPost.slug}`} className="fa-adjacent-card fa-adjacent-newer">
+                <span className="fa-adjacent-dir">{translations.newerLabel}<ArrowRight size={11} /></span>
+                <span className="fa-adjacent-title">{newerTitle}</span>
+              </Link>
+            )}
+          </div>
         </footer>
       </article>
 

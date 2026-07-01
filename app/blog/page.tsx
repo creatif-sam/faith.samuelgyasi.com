@@ -26,6 +26,7 @@ function BlogContent() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const [currentSeries, setCurrentSeries] = useState<BlogSeries | null>(null);
+  const [seriesMap, setSeriesMap] = useState<Record<string, { name_en: string; name_fr: string }>>({});
   const [showBlogRequestModal, setShowBlogRequestModal] = useState(false);
   const [visibleCount, setVisibleCount] = useState(7);
 
@@ -46,7 +47,20 @@ function BlogContent() {
       .select("id,title,title_fr,slug,category,excerpt,excerpt_fr,read_time_minutes,featured_image_url,youtube_url,created_at,series_id,series_order")
       .eq("published", true).order("created_at", { ascending: false })
       .then(({ data }) => { setPosts(data ?? []); setLoading(false); });
+    supabase.from("blog_series").select("id,name_en,name_fr").eq("published", true)
+      .then(({ data }) => {
+        const map: Record<string, { name_en: string; name_fr: string }> = {};
+        (data ?? []).forEach((s) => { map[s.id] = { name_en: s.name_en, name_fr: s.name_fr }; });
+        setSeriesMap(map);
+      });
   }, [seriesSlug]);
+
+  const getSeriesBadge = (post: DbPost) => {
+    if (!post.series_id) return null;
+    const s = seriesMap[post.series_id];
+    if (!s) return null;
+    return lang === "fr" ? s.name_fr : s.name_en;
+  };
 
   let baseFiltered = posts;
   if (currentSeries) {
@@ -169,11 +183,11 @@ function BlogContent() {
             </p>
           ) : (
             <div className="fb-content">
-              {featured && <FeaturedPost post={featured} lang={lang} showDates={showDates} getTitle={getTitle} getExcerpt={getExcerpt} />}
+              {featured && <FeaturedPost post={featured} lang={lang} showDates={showDates} getTitle={getTitle} getExcerpt={getExcerpt} seriesName={currentSeries ? null : getSeriesBadge(featured)} />}
               {rest.length > 0 && (
                 <div className="fb-grid">
                   {rest.map((post) => (
-                    <PostCard key={post.slug} post={post} lang={lang} showDates={showDates} getTitle={getTitle} getExcerpt={getExcerpt} />
+                    <PostCard key={post.slug} post={post} lang={lang} showDates={showDates} getTitle={getTitle} getExcerpt={getExcerpt} seriesName={currentSeries ? null : getSeriesBadge(post)} />
                   ))}
                 </div>
               )}

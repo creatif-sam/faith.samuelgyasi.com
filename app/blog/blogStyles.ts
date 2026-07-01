@@ -87,13 +87,25 @@ body.on-fdp { background:#080807; color:#f0ece4; font-family:'Cormorant Garamond
 .fb-card:hover .fb-yt-play { opacity:1; }
 .fb-card-cover-img { width:100%; height:200px; object-fit:cover; display:block; transition:transform .6s ease; }
 .fb-card:hover .fb-card-cover-img { transform:scale(1.08); }
+
+/* Cover placeholder — used when a post has no featured image */
+.fb-cover-placeholder { width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,rgba(255,222,89,.1),rgba(255,145,77,.05)); position:relative; overflow:hidden; }
+.fb-cover-placeholder::before { content:''; position:absolute; inset:0; background-image:radial-gradient(circle at 20% 20%, rgba(255,222,89,.12) 0%, transparent 45%), radial-gradient(circle at 80% 80%, rgba(255,145,77,.1) 0%, transparent 45%); }
+.fb-cover-placeholder svg { position:relative; opacity:.35; color:var(--gold); }
+.fb-card-cover .fb-cover-placeholder { height:200px; }
+.fb-featured-cover .fb-cover-placeholder { height:280px; }
+:root:not(.dark) .fb-cover-placeholder { background:linear-gradient(135deg,rgba(184,134,11,.08),rgba(212,112,10,.04)); }
+
+/* Series badge — shown on cards for posts that belong to a series */
+.fb-series-badge { font-family:'Space Mono',monospace; font-size:8px; letter-spacing:.15em; text-transform:uppercase; color:var(--dimmer); display:inline-flex; align-items:center; gap:6px; margin-top:-4px; }
+:root:not(.dark) .fb-series-badge { color:#8a7f6e; }
 @media(max-width:900px){
   .fdp-blog-nav { padding:18px 24px; }
   .fb-container { padding:90px 24px 0; }
   .fb-header { padding:130px 24px 48px; }
   .fb-search-container { padding: 24px; }
   .fb-filters { padding:20px 24px; top:61px; gap: 8px; }
-  .fb-layout-with-sidebar { flex-direction: column-reverse; padding: 0 24px 60px; gap: 32px; }
+  .fb-layout-with-sidebar { flex-direction: column; padding: 0 24px 60px; gap: 32px; }
   .fb-main-content { width: 100%; }
   .fb-grid { grid-template-columns:1fr; gap: 20px; }
   .fb-pg-footer { padding:36px 24px; flex-direction:column; gap:16px; text-align:center; }
