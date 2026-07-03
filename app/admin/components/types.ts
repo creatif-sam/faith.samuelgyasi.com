@@ -174,6 +174,7 @@ export interface Disciple {
   notes: string | null;
   created_at: string;
   updated_at: string;
+  user_id: string | null;
 }
 
 export interface DiscipleProgress {

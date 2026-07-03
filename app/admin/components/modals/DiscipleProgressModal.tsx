@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { X, Plus, Calendar } from "lucide-react";
+import { X, Plus, Calendar, Link2, Send, Flame, GraduationCap, BookOpen } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { TW } from "../constants";
@@ -10,9 +10,18 @@ interface DiscipleProgressModalProps {
   disciple: Disciple;
   onClose: () => void;
   db: ReturnType<typeof createClient>;
+  load?: () => Promise<void>;
 }
 
-export default function DiscipleProgressModal({ disciple, onClose, db }: DiscipleProgressModalProps) {
+interface Engagement {
+  habitCount: number;
+  logsLast30Days: number;
+  lastLoggedDate: string | null;
+  enrollmentCount: number;
+  lessonsCompleted: number;
+}
+
+export default function DiscipleProgressModal({ disciple, onClose, db, load }: DiscipleProgressModalProps) {
   const [progressEntries, setProgressEntries] = useState<DiscipleProgress[]>([]);
   const [loading, setLoading] = useState(true);
   const [showAddForm, setShowAddForm] = useState(false);
@@ -20,11 +29,62 @@ export default function DiscipleProgressModal({ disciple, onClose, db }: Discipl
   const [challenges, setChallenges] = useState("");
   const [nextSteps, setNextSteps] = useState("");
   const [courseMilestone, setCourseMilestone] = useState("");
+  const [noteToDisciple, setNoteToDisciple] = useState("");
   const [saving, setSaving] = useState(false);
+
+  const [userId, setUserId] = useState<string | null>(disciple.user_id);
+  const [linking, setLinking] = useState(false);
+  const [engagement, setEngagement] = useState<Engagement | null>(null);
+  const [engagementLoading, setEngagementLoading] = useState(false);
 
   useEffect(() => {
     loadProgress();
   }, [disciple.id]);
+
+  useEffect(() => {
+    if (userId) loadEngagement(userId);
+  }, [userId]);
+
+  async function loadEngagement(uid: string) {
+    setEngagementLoading(true);
+    const thirtyDaysAgo = new Date(Date.now() - 30 * 86400000).toISOString().slice(0, 10);
+    const [habitsRes, logsRes, enrollRes, lessonsRes] = await Promise.all([
+      db.from("spiritual_habits").select("id").eq("user_id", uid),
+      db.from("habit_logs").select("logged_date").eq("user_id", uid).gte("logged_date", thirtyDaysAgo).order("logged_date", { ascending: false }),
+      db.from("training_enrollments").select("training_id").eq("user_id", uid),
+      db.from("lesson_progress").select("lesson_id").eq("user_id", uid).eq("completed", true),
+    ]);
+    setEngagement({
+      habitCount: habitsRes.data?.length ?? 0,
+      logsLast30Days: logsRes.data?.length ?? 0,
+      lastLoggedDate: logsRes.data?.[0]?.logged_date ?? null,
+      enrollmentCount: enrollRes.data?.length ?? 0,
+      lessonsCompleted: lessonsRes.data?.length ?? 0,
+    });
+    setEngagementLoading(false);
+  }
+
+  async function handleLink() {
+    if (!disciple.email) {
+      toast.error("This disciple has no email on file to match against.");
+      return;
+    }
+    setLinking(true);
+    const { data, error } = await db.rpc("admin_link_disciple_by_email", { p_disciple_id: disciple.id });
+    setLinking(false);
+    if (error) {
+      toast.error("Could not check for a matching account.");
+      console.error("admin_link_disciple_by_email error:", error);
+      return;
+    }
+    if (!data) {
+      toast.error(`No account found yet for ${disciple.email}.`);
+      return;
+    }
+    setUserId(data as string);
+    toast.success("Account linked — engagement data is now visible.");
+    await load?.();
+  }
 
   async function loadProgress() {
     setLoading(true);
@@ -41,7 +101,7 @@ export default function DiscipleProgressModal({ disciple, onClose, db }: Discipl
   }
 
   async function handleAddEntry() {
-    if (!changesObserved.trim() && !challenges.trim() && !nextSteps.trim() && !courseMilestone.trim()) {
+    if (!changesObserved.trim() && !challenges.trim() && !nextSteps.trim() && !courseMilestone.trim() && !noteToDisciple.trim()) {
       toast.error("Please fill in at least one field");
       return;
     }
@@ -55,17 +115,34 @@ export default function DiscipleProgressModal({ disciple, onClose, db }: Discipl
       course_milestone: courseMilestone.trim() || null,
     });
 
-    setSaving(false);
     if (error) {
+      setSaving(false);
       toast.error("Failed to save progress");
       return;
     }
 
-    toast.success("Progress entry added");
+    if (noteToDisciple.trim() && userId) {
+      const { error: notifError } = await db.from("user_notifications").insert({
+        user_id: userId,
+        title: "A note from Samuel",
+        body: noteToDisciple.trim(),
+      });
+      if (notifError) {
+        toast.error("Progress saved, but the note to the disciple failed to send.");
+        console.error("send disciple note error:", notifError);
+      } else {
+        toast.success("Progress entry added and note sent to disciple");
+      }
+    } else {
+      toast.success("Progress entry added");
+    }
+
+    setSaving(false);
     setChangesObserved("");
     setChallenges("");
     setNextSteps("");
     setCourseMilestone("");
+    setNoteToDisciple("");
     setShowAddForm(false);
     loadProgress();
   }
@@ -87,6 +164,49 @@ export default function DiscipleProgressModal({ disciple, onClose, db }: Discipl
         </div>
 
         <div className={TW.pBody} style={{ maxHeight: '70vh', overflowY: 'auto' }}>
+          {/* Account & Engagement */}
+          <div className="mb-6 p-5 bg-white/[.02] border border-white/[.06] rounded-lg">
+            {!userId ? (
+              <div className="flex items-center justify-between gap-3 flex-wrap">
+                <div className="flex items-center gap-2 text-white/40 text-sm">
+                  <Link2 size={14} /> No linked dashboard account yet
+                </div>
+                <button className={cn(TW.btn, TW.ghost, TW.sm)} onClick={handleLink} disabled={linking}>
+                  {linking ? "Checking..." : "Link Account"}
+                </button>
+              </div>
+            ) : engagementLoading || !engagement ? (
+              <div className="text-white/30 text-sm">Loading engagement data...</div>
+            ) : (
+              <div>
+                <div className="flex items-center gap-2 text-green-400 text-xs mb-3">
+                  <Link2 size={14} /> Linked to dashboard account
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  <div className="p-3 bg-white/[.03] rounded-lg">
+                    <div className="flex items-center gap-1.5 text-[#d4a843] mb-1"><Flame size={13} /><span className="text-[10px] uppercase tracking-wider">Habits</span></div>
+                    <div className="text-white/90 text-sm">{engagement.habitCount} active</div>
+                    <div className="text-white/40 text-xs">{engagement.logsLast30Days} logs / 30d</div>
+                  </div>
+                  <div className="p-3 bg-white/[.03] rounded-lg">
+                    <div className="flex items-center gap-1.5 text-[#d4a843] mb-1"><Calendar size={13} /><span className="text-[10px] uppercase tracking-wider">Last Logged</span></div>
+                    <div className="text-white/90 text-sm">
+                      {engagement.lastLoggedDate ? new Date(engagement.lastLoggedDate).toLocaleDateString() : "Never"}
+                    </div>
+                  </div>
+                  <div className="p-3 bg-white/[.03] rounded-lg">
+                    <div className="flex items-center gap-1.5 text-[#d4a843] mb-1"><GraduationCap size={13} /><span className="text-[10px] uppercase tracking-wider">Trainings</span></div>
+                    <div className="text-white/90 text-sm">{engagement.enrollmentCount} enrolled</div>
+                  </div>
+                  <div className="p-3 bg-white/[.03] rounded-lg">
+                    <div className="flex items-center gap-1.5 text-[#d4a843] mb-1"><BookOpen size={13} /><span className="text-[10px] uppercase tracking-wider">Lessons</span></div>
+                    <div className="text-white/90 text-sm">{engagement.lessonsCompleted} completed</div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
           {/* Add New Entry Section */}
           {!showAddForm ? (
             <button 
@@ -141,8 +261,24 @@ export default function DiscipleProgressModal({ disciple, onClose, db }: Discipl
                 />
               </div>
 
+              <div className={cn(TW.field, "pt-4 border-t border-white/[.06]")}>
+                <label className={TW.label}>
+                  <span className="inline-flex items-center gap-1.5"><Send size={11} /> Note to {disciple.name} (optional)</span>
+                </label>
+                {userId ? (
+                  <textarea
+                    className={cn(TW.tarea, "min-h-[60px]")}
+                    value={noteToDisciple}
+                    onChange={(e) => setNoteToDisciple(e.target.value)}
+                    placeholder="Written to them directly — shows up in their dashboard notifications."
+                  />
+                ) : (
+                  <p className="text-white/30 text-xs italic">Link their account above to send them a note.</p>
+                )}
+              </div>
+
               <div className="flex gap-2">
-                <button 
+                <button
                   className={cn(TW.btn, TW.ghost, "flex-1")}
                   onClick={() => {
                     setShowAddForm(false);
@@ -150,6 +286,7 @@ export default function DiscipleProgressModal({ disciple, onClose, db }: Discipl
                     setChallenges("");
                     setNextSteps("");
                     setCourseMilestone("");
+                    setNoteToDisciple("");
                   }}
                 >
                   Cancel

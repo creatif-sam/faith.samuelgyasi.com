@@ -207,6 +207,9 @@ export default function DiscipleshipTab({
                       {!disciple.email && !disciple.phone && (
                         <span className="text-white/30 text-xs italic">No contact</span>
                       )}
+                      <span className={cn("text-[10px] mt-0.5", disciple.user_id ? "text-green-400" : "text-white/25")}>
+                        {disciple.user_id ? "● Linked account" : "○ Not linked"}
+                      </span>
                     </div>
                   </td>
                   <td className="py-4 px-4">

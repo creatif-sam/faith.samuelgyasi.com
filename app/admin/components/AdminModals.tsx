@@ -66,7 +66,7 @@ export default function AdminModals({ db, load, showPost, editPost, setShowPost,
       {showGallery && <GalleryThemeModal theme={editGallery} onClose={() => setShowGallery(false)} onSave={async () => onSave(() => setShowGallery(false))} db={db} />}
       {showFaithTest && <FaithTestModal test={editFaithTest} onClose={() => setShowFaithTest(false)} onSave={async () => onSave(() => setShowFaithTest(false))} db={db} />}
       {showDisciple && <DiscipleModal disciple={editDisciple} onClose={() => setShowDisciple(false)} onSave={async () => onSave(() => setShowDisciple(false))} db={db} />}
-      {viewProgressDisciple && <DiscipleProgressModal disciple={viewProgressDisciple} onClose={() => setViewProgressDisciple(null)} db={db} />}
+      {viewProgressDisciple && <DiscipleProgressModal disciple={viewProgressDisciple} onClose={() => setViewProgressDisciple(null)} db={db} load={load} />}
       {confirm && (
         <div className={TW.overlay} onClick={() => setConfirm(null)}>
           <div className="bg-[#0d0e15] border border-white/10 rounded-lg p-8 w-[min(440px,92vw)] shadow-[0_28px_60px_rgba(0,0,0,.6)]" onClick={e => e.stopPropagation()}>
