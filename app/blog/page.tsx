@@ -115,7 +115,7 @@ function BlogContent() {
             {getSeriesDescription() && <p className="fb-subtitle">{getSeriesDescription()}</p>}
             <div style={{ marginTop: "20px" }}>
               <Link href={localizedHref(lang, "/blog")} className="fb-series-back"
-                style={{ fontFamily: "'Space Mono', monospace", fontSize: "11px", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--gold)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "8px", transition: "all 0.3s ease" }}
+                style={{ fontFamily: "'Poppins', sans-serif", fontSize: "11px", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--gold)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "8px", transition: "all 0.3s ease" }}
               >
                 ← {lang === "fr" ? "Tous les articles" : "All Posts"}
               </Link>
@@ -214,7 +214,7 @@ export default function FaithBlogPage() {
   return (
     <Suspense fallback={
       <div className="fdp" style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <p style={{ color: "#f0ece4", fontFamily: "'Space Mono', monospace" }}>Loading...</p>
+        <p style={{ color: "#f0ece4", fontFamily: "'Poppins', sans-serif" }}>Loading...</p>
       </div>
     }>
       <BlogContent />

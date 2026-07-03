@@ -145,7 +145,7 @@ const bookCss = `
 }
 
 .bv-back-link {
-  font-family: 'Space Mono', monospace;
+  font-family: 'Poppins', sans-serif;
   font-size: 10px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -196,7 +196,7 @@ const bookCss = `
   flex-direction: column;
   gap: 24px;
 } .bv-badge {
-  font-family: 'Space Mono', monospace;
+  font-family: 'Poppins', sans-serif;
   font-size: 9px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
@@ -233,7 +233,7 @@ const bookCss = `
 }
 
 .bv-rating-label {
-  font-family: 'Space Mono', monospace;
+  font-family: 'Poppins', sans-serif;
   font-size: 10px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -268,7 +268,7 @@ const bookCss = `
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  font-family: 'Space Mono', monospace;
+  font-family: 'Poppins', sans-serif;
   font-size: 11px;
   letter-spacing: 0.2em;
   text-transform: uppercase;

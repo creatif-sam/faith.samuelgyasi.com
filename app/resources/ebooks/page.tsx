@@ -75,7 +75,7 @@ const css = `
   max-width: 1100px; margin: 0 auto;
 }
 .ebooks-back {
-  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 9px; letter-spacing: .22em; text-transform: uppercase;
   color: rgba(245,243,239,.4); text-decoration: none;
   display: flex; align-items: center; gap: 8px; margin-bottom: 40px;
@@ -83,7 +83,7 @@ const css = `
 }
 .ebooks-back:hover { color: var(--gold); }
 .ebooks-eyebrow {
-  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 10px; letter-spacing: .35em; text-transform: uppercase;
   background: var(--gold-gradient);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
@@ -110,7 +110,7 @@ const css = `
   opacity: 0; animation: eb-rise .9s .4s ease forwards;
 }
 .ebooks-sub {
-  font-family: var(--font-cormorant), 'Cormorant Garamond', serif;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: clamp(16px, 1.8vw, 20px); font-style: italic;
   color: rgba(245,243,239,.6); max-width: 520px; line-height: 1.7;
   opacity: 0; animation: eb-rise .9s .5s ease forwards;
@@ -158,7 +158,7 @@ const css = `
 }
 .ebook-card:hover::before { transform: scaleX(1); }
 .ebook-cat {
-  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 9px; letter-spacing: .25em; text-transform: uppercase;
   background: var(--gold-gradient);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
@@ -184,7 +184,7 @@ const css = `
   color: rgba(245,243,239,.55); line-height: 1.7; flex: 1;
 }
 .ebook-date {
-  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 9px; letter-spacing: .15em; text-transform: uppercase;
   color: rgba(245,243,239,.22);
 }
@@ -213,7 +213,7 @@ const css = `
 
 /* ── EMPTY ── */
 .ebooks-empty {
-  font-family: var(--font-cormorant), 'Cormorant Garamond', serif;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 22px; font-style: italic; color: rgba(245,243,239,.35);
   padding: 80px; text-align: center;
 }

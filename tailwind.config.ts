@@ -12,8 +12,8 @@ export default {
     extend: {
       fontFamily: {
         display:  ["Playfair Display", "Georgia", "serif"],
-        serif:    ["Cormorant Garamond", "Georgia", "serif"],
-        mono:     ["Space Mono", "Courier New", "monospace"],
+        serif:    ["var(--font-poppins)", "Poppins", "sans-serif"],
+        mono:     ["var(--font-poppins)", "Poppins", "sans-serif"],
         poppins:  ["var(--font-poppins)", "Poppins", "sans-serif"],
       },
       keyframes: {

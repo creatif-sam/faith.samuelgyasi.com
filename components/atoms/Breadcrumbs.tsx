@@ -55,7 +55,7 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
         }
 
         .breadcrumb-link {
-          font-family: 'Space Mono', monospace;
+          font-family: 'Poppins', sans-serif;
           font-size: 10px;
           letter-spacing: 0.2em;
           text-transform: uppercase;
@@ -69,7 +69,7 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
         }
 
         .breadcrumb-current {
-          font-family: 'Space Mono', monospace;
+          font-family: 'Poppins', sans-serif;
           font-size: 10px;
           letter-spacing: 0.2em;
           text-transform: uppercase;
@@ -77,7 +77,7 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
         }
 
         .breadcrumb-separator {
-          font-family: 'Space Mono', monospace;
+          font-family: 'Poppins', sans-serif;
           font-size: 10px;
           color: var(--dimmer, #3e3830);
         }

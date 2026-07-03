@@ -26,7 +26,7 @@ export const credoStyles = `
   margin: 0 auto;
 }
 .credo-eyebrow {
-  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 10px;
   letter-spacing: 0.35em;
   text-transform: uppercase;
@@ -67,7 +67,7 @@ export const credoStyles = `
   animation: credo-rise .9s .4s ease forwards;
 }
 .credo-hero-sub {
-  font-family: var(--font-cormorant), 'Cormorant Garamond', serif;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: clamp(17px, 2vw, 22px);
   font-style: italic;
   color: rgba(245,243,239,.62);
@@ -87,7 +87,7 @@ export const credoStyles = `
   border-bottom: 1px solid rgba(201,168,76,.1);
   padding: 28px 8%;
   text-align: center;
-  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 10px;
   letter-spacing: 0.32em;
   text-transform: uppercase;
@@ -142,7 +142,7 @@ export const credoStyles = `
   margin-bottom: 20px;
 }
 .credo-item-body {
-  font-family: var(--font-cormorant), 'Cormorant Garamond', serif;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: clamp(16px, 1.7vw, 19px);
   line-height: 1.9;
   color: rgba(245,243,239,.7);
@@ -191,7 +191,7 @@ export const credoStyles = `
   margin-bottom: 24px;
 }
 .credo-close-ref {
-  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 10px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
@@ -202,7 +202,7 @@ export const credoStyles = `
   margin-bottom: 48px;
 }
 .credo-close-sign {
-  font-family: var(--font-cormorant), 'Cormorant Garamond', serif;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 18px;
   font-style: italic;
   color: rgba(245,243,239,.42);

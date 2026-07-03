@@ -23,7 +23,7 @@ export const faithStyles1 = `
   border: 1px solid rgba(255,222,89,0.3);
   border-radius: 4px;
   padding: 4px 10px;
-  font-family: 'Space Mono', monospace;
+  font-family: 'Poppins', sans-serif;
   font-size: 10px;
   letter-spacing: .16em;
   color: var(--dim);
@@ -44,7 +44,7 @@ export const faithStyles1 = `
 body.on-fdp {
   background: #080807;
   color: #f0ece4;
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Poppins', sans-serif;
 }
 body.on-fdp .cursor { background: #c9a84c; mix-blend-mode: normal; width: 8px; height: 8px; border-radius: 50%; }
 body.on-fdp .cursor-ring { border-color: rgba(201,168,76,.35); mix-blend-mode: normal; }
@@ -73,7 +73,7 @@ body.on-fdp .cursor-ring { border-color: rgba(201,168,76,.35); mix-blend-mode: n
   border-bottom:1px solid rgba(255,222,89,.08);
 }
 .fdp .nav-back {
-  font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.22em;
+  font-family:'Poppins', sans-serif;font-size:10px;letter-spacing:.22em;
   text-transform:uppercase;color:var(--dim);text-decoration:none;
   display:flex;align-items:center;gap:10px;transition:color .3s;
 }
@@ -84,7 +84,7 @@ body.on-fdp .cursor-ring { border-color: rgba(201,168,76,.35); mix-blend-mode: n
   color:var(--white);letter-spacing:.06em;
 }
 .fdp .nav-tag {
-  font-family:'Space Mono',monospace;font-size:10px;
+  font-family:'Poppins', sans-serif;font-size:10px;
   letter-spacing:.22em;
   background:linear-gradient(90deg,#ffde59,#ff914d);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
@@ -97,7 +97,7 @@ body.on-fdp .cursor-ring { border-color: rgba(201,168,76,.35); mix-blend-mode: n
   display:flex;align-items:center;gap:28px;
 }
 .fdp .nav-link {
-  font-family:'Space Mono',monospace;font-size:9px;
+  font-family:'Poppins', sans-serif;font-size:9px;
   letter-spacing:.2em;text-transform:uppercase;
   color:var(--dim);text-decoration:none;
   transition:color .25s;
@@ -146,7 +146,7 @@ body.on-fdp .cursor-ring { border-color: rgba(201,168,76,.35); mix-blend-mode: n
   padding:140px 56px 60px;
 }
 .fdp .hero-eyebrow {
-  font-family:'Space Mono',monospace;font-size:9px;
+  font-family:'Poppins', sans-serif;font-size:9px;
   letter-spacing:.4em;text-transform:uppercase;
   background:linear-gradient(90deg,#ffde59,#ff914d);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
@@ -187,7 +187,7 @@ body.on-fdp .cursor-ring { border-color: rgba(201,168,76,.35); mix-blend-mode: n
 }
 .fdp .hero-verse cite {
   display:block;margin-top:12px;
-  font-family:'Space Mono',monospace;font-size:9px;
+  font-family:'Poppins', sans-serif;font-size:9px;
   letter-spacing:.2em;
   background:linear-gradient(90deg,#ffde59,#ff914d);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
@@ -197,7 +197,7 @@ body.on-fdp .cursor-ring { border-color: rgba(201,168,76,.35); mix-blend-mode: n
 }
 .fdp .hero-scroll-hint {
   position:absolute;bottom:40px;right:56px;
-  font-family:'Space Mono',monospace;font-size:9px;
+  font-family:'Poppins', sans-serif;font-size:9px;
   letter-spacing:.3em;text-transform:uppercase;
   color:var(--dimmer);writing-mode:vertical-rl;
   display:flex;align-items:center;gap:12px;z-index:2;
@@ -226,7 +226,7 @@ body.on-fdp .cursor-ring { border-color: rgba(201,168,76,.35); mix-blend-mode: n
 .fdp .fcs-inner {
   display:flex;justify-content:center;align-items:center;
   gap:36px;flex-wrap:wrap;
-  font-family:'Space Mono',monospace;font-size:9px;
+  font-family:'Poppins', sans-serif;font-size:9px;
   letter-spacing:.35em;text-transform:uppercase;
   background:linear-gradient(90deg,#ffde59,#ff914d);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
@@ -241,7 +241,7 @@ body.on-fdp .cursor-ring { border-color: rgba(201,168,76,.35); mix-blend-mode: n
 /* ── SHARED SECTION ── */
 .fdp .section { padding:120px 56px;position:relative;z-index:1; }
 .fdp .s-label {
-  font-family:'Space Mono',monospace;font-size:9px;
+  font-family:'Poppins', sans-serif;font-size:9px;
   letter-spacing:.35em;text-transform:uppercase;
   background:linear-gradient(90deg,#ffde59,#ff914d);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
@@ -380,7 +380,7 @@ body.on-fdp .cursor-ring { border-color: rgba(201,168,76,.35); mix-blend-mode: n
   line-height:1.55;flex:1;
 }
 .fdp .sm-ref {
-  font-family:'Space Mono',monospace;font-size:9px;
+  font-family:'Poppins', sans-serif;font-size:9px;
   letter-spacing:.2em;text-transform:uppercase;
   background:linear-gradient(90deg,#ffde59,#ff914d);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;

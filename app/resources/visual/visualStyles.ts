@@ -23,7 +23,7 @@ export const visualStyles = `
   max-width: 1100px; margin: 0 auto;
 }
 .visual-back {
-  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 9px; letter-spacing: .22em; text-transform: uppercase;
   color: rgba(245,243,239,.4); text-decoration: none;
   display: flex; align-items: center; gap: 8px; margin-bottom: 40px;
@@ -31,7 +31,7 @@ export const visualStyles = `
 }
 .visual-back:hover { color: var(--gold); }
 .visual-eyebrow {
-  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 10px; letter-spacing: .35em; text-transform: uppercase;
   background: var(--gold-gradient);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
@@ -140,7 +140,7 @@ export const visualStyles = `
   flex: 1;
 }
 .video-cat {
-  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 9px; letter-spacing: .25em; text-transform: uppercase;
   background: var(--gold-gradient);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
@@ -157,7 +157,7 @@ export const visualStyles = `
 }
 .video-meta {
   display: flex; gap: 16px; align-items: center;
-  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 9px; letter-spacing: .15em; text-transform: uppercase;
   color: rgba(245,243,239,.25);
   margin-top: auto;
@@ -212,7 +212,7 @@ export const visualStyles = `
   position: absolute; bottom: 8px; right: 8px;
   background: rgba(0,0,0,.65); backdrop-filter: blur(6px);
   color: rgba(245,243,239,.8);
-  font-family: var(--font-space-mono), monospace;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 9px; letter-spacing: .12em;
   padding: 4px 9px; border-radius: 3px;
 }

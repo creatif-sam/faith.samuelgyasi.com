@@ -74,7 +74,7 @@ export function ValuesSection() {
         }
 
         .values-eyebrow {
-          font-family: var(--font-space-mono), 'Space Mono', monospace;
+          font-family: var(--font-poppins), 'Poppins', sans-serif;
           font-size: 10px;
           letter-spacing: 0.3em;
           text-transform: uppercase;
@@ -109,7 +109,7 @@ export function ValuesSection() {
 
         .values-sub {
           margin-top: 18px;
-          font-family: var(--font-cormorant), 'Cormorant Garamond', serif;
+          font-family: var(--font-poppins), 'Poppins', sans-serif;
           font-size: clamp(16px, 1.8vw, 20px);
           color: var(--gray-mid);
           font-style: italic;
@@ -191,7 +191,7 @@ export function ValuesSection() {
         }
 
         .vs-card-num {
-          font-family: var(--font-space-mono), 'Space Mono', monospace;
+          font-family: var(--font-poppins), 'Poppins', sans-serif;
           font-size: 10px;
           letter-spacing: 0.25em;
           color: var(--gold);
@@ -234,7 +234,7 @@ export function ValuesSection() {
         .vs-card:hover .vs-card-word::after { width: 100%; }
 
         .vs-card-body {
-          font-family: var(--font-cormorant), 'Cormorant Garamond', serif;
+          font-family: var(--font-poppins), 'Poppins', sans-serif;
           font-size: clamp(15px, 1.4vw, 17px);
           line-height: 1.7;
           color: var(--gray-mid);
@@ -282,7 +282,7 @@ export function ValuesSection() {
         .vts-item:nth-child(3) .vts-big { animation-delay: 0.8s; }
 
         .vts-label {
-          font-family: var(--font-space-mono), 'Space Mono', monospace;
+          font-family: var(--font-poppins), 'Poppins', sans-serif;
           font-size: 9px;
           letter-spacing: 0.25em;
           text-transform: uppercase;

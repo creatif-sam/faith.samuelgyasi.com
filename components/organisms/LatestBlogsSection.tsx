@@ -83,7 +83,7 @@ export function LatestBlogsSection() {
                     </div>
                   )}
                   <div style={{ padding: '28px 32px 32px' }}>
-                    <span className="pillar-icon" style={{ fontSize: "12px", fontFamily: "var(--font-space-mono,'Space Mono',monospace)", letterSpacing: ".24em", textTransform: "uppercase", color: "var(--gold)" }}>
+                    <span className="pillar-icon" style={{ fontSize: "12px", fontFamily: "var(--font-poppins,'Poppins', sans-serif)", letterSpacing: ".24em", textTransform: "uppercase", color: "var(--gold)" }}>
                       {post.category}
                     </span>
                     <div className="pillar-name" style={{ fontSize: "22px" }}>{title}</div>
@@ -114,7 +114,7 @@ export function LatestBlogsSection() {
             <Link
               href={localizedHref(lang, "/blog")}
               style={{
-                fontFamily: "var(--font-space-mono,'Space Mono',monospace)",
+                fontFamily: "var(--font-poppins,'Poppins', sans-serif)",
                 fontSize: "10px",
                 letterSpacing: ".22em",
                 textTransform: "uppercase",

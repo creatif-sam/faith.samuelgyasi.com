@@ -36,7 +36,7 @@ export default async function PrivacyPage() {
         >
           <p
             style={{
-              fontFamily: "'Space Mono', monospace",
+              fontFamily: "'Poppins', sans-serif",
               fontSize: "9px",
               letterSpacing: "0.4em",
               textTransform: "uppercase",
@@ -65,7 +65,7 @@ export default async function PrivacyPage() {
             style={{
               color: "rgba(240,236,228,0.45)",
               fontSize: "13px",
-              fontFamily: "'Space Mono', monospace",
+              fontFamily: "'Poppins', sans-serif",
               letterSpacing: "0.08em",
               marginBottom: "56px",
             }}
@@ -176,7 +176,7 @@ export default async function PrivacyPage() {
             <Link
               href={localizedHref(lang, "/")}
               style={{
-                fontFamily: "'Space Mono', monospace",
+                fontFamily: "'Poppins', sans-serif",
                 fontSize: "10px",
                 letterSpacing: "0.2em",
                 textTransform: "uppercase",

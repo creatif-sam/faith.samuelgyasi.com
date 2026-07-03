@@ -65,7 +65,7 @@ export const myStoryStyles1 = `
   overflow: hidden;
 }
 .msp-hero-eyebrow {
-  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 10px;
   letter-spacing: 0.32em;
   text-transform: uppercase;
@@ -113,7 +113,7 @@ export const myStoryStyles1 = `
   animation: msp-rise .8s .44s ease both;
 }
 .msp-hero-sub {
-  font-family: var(--font-cormorant), 'Cormorant Garamond', serif;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: clamp(17px, 2vw, 21px);
   font-style: italic;
   color: rgba(245,243,239,.65);
@@ -136,7 +136,7 @@ export const myStoryStyles1 = `
   z-index: 1;
 }
 .msp-mosaic-label {
-  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 9px; letter-spacing: .32em; text-transform: uppercase;
   background: var(--gold-gradient);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
@@ -208,7 +208,7 @@ export const myStoryStyles1 = `
   border-bottom: 1px solid rgba(201,168,76,.12);
 }
 .msp-narrative-eyebrow {
-  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 9px;
   letter-spacing: 0.32em;
   text-transform: uppercase;
@@ -227,7 +227,7 @@ export const myStoryStyles1 = `
   margin-bottom: 24px;
 }
 .msp-narrative-lead {
-  font-family: var(--font-cormorant), 'Cormorant Garamond', serif;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: clamp(17px, 1.9vw, 20px);
   font-style: italic;
   color: rgba(245,243,239,.72);
@@ -246,7 +246,7 @@ export const myStoryStyles1 = `
   padding-top: 20px;
 }
 .msp-act-num {
-  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 9px;
   letter-spacing: 0.28em;
   background: var(--gold-gradient);
@@ -263,7 +263,7 @@ export const myStoryStyles1 = `
   margin-bottom: 10px;
 }
 .msp-act-body {
-  font-family: var(--font-cormorant), 'Cormorant Garamond', serif;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 15px;
   font-style: italic;
   line-height: 1.8;
@@ -328,7 +328,7 @@ export const myStoryStyles1 = `
   margin-bottom: 14px;
 }
 .msp-year {
-  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 11px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -350,7 +350,7 @@ export const myStoryStyles1 = `
   line-height: 1.2;
 }
 .msp-body {
-  font-family: var(--font-cormorant), 'Cormorant Garamond', serif;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 17px;
   line-height: 1.88;
   color: rgba(245,243,239,.75);

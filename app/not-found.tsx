@@ -25,7 +25,7 @@ export default function NotFound() {
     >
       <p
         style={{
-          fontFamily: "'Space Mono', monospace",
+          fontFamily: "'Poppins', sans-serif",
           fontSize: "9px",
           letterSpacing: "0.4em",
           textTransform: "uppercase",
@@ -76,7 +76,7 @@ export default function NotFound() {
       <Link
         href="/"
         style={{
-          fontFamily: "'Space Mono', monospace",
+          fontFamily: "'Poppins', sans-serif",
           fontSize: "11px",
           letterSpacing: "0.18em",
           textTransform: "uppercase",

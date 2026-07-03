@@ -172,7 +172,7 @@ export default function MyStoryPage() {
             borderTop: '1px solid rgba(201,168,76,.18)',
           }}>
             <div style={{
-              fontFamily: "var(--font-space-mono),'Space Mono',monospace",
+              fontFamily: "var(--font-poppins), 'Poppins', sans-serif",
               fontSize: '10px',
               letterSpacing: '0.32em',
               textTransform: 'uppercase',
@@ -185,7 +185,7 @@ export default function MyStoryPage() {
               {lang === "fr" && dbContent.title_fr ? "Mon Histoire" : "My Story"}
             </div>
             <h2 style={{
-              fontFamily: "var(--font-cormorant),'Cormorant Garamond',serif",
+              fontFamily: "var(--font-poppins), 'Poppins', sans-serif",
               fontSize: 'clamp(32px, 5vw, 52px)',
               fontWeight: 500,
               lineHeight: 1.2,

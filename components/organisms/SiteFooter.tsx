@@ -20,14 +20,18 @@ const ft = {
   errAlready:    { en: "You\u2019re already subscribed \u2014 thank you!", fr: "Vous \u00eates d\u00e9j\u00e0 abonn\u00e9 \u2014 merci\u00a0!" },
   successMsg:    { en: "Subscribed! Expect words that matter.", fr: "Abonn\u00e9\u00a0! Attendez-vous \u00e0 des mots qui comptent." },
   errGeneric:    { en: "Something went wrong. Please try again.", fr: "Une erreur s\u2019est produite. Veuillez r\u00e9essayer." },
-  colPillars:    { en: "Pillars",     fr: "Piliers"     },
+  colExplore:    { en: "Explore",     fr: "Explorer"    },
+  colDiscover:   { en: "Discover",    fr: "D\u00e9couvrir" },
   colConnect:    { en: "Connect",     fr: "Contact"     },
-  colSite:       { en: "Site",        fr: "Site"        },
   colLegal:      { en: "Legal",       fr: "L\u00e9gal"  },
-  linkFaith:     { en: "Faith & Beliefs", fr: "Foi &amp; Convictions" },
+  linkFaith:     { en: "Faith & Beliefs", fr: "Foi & Convictions" },
   linkJournal:   { en: "Journal",     fr: "Journal"     },
   linkStory:     { en: "My Story",    fr: "Mon Histoire"},
-  linkConnect:   { en: "Connect",     fr: "Contact"     },
+  linkResources: { en: "Resources",   fr: "Ressources"  },
+  linkAnalyzer:  { en: "Faith Analyzer", fr: "Analyseur de Foi" },
+  linkCredo:     { en: "Credo",       fr: "Credo"       },
+  linkTestimonials: { en: "Testimonials", fr: "T\u00e9moignages" },
+  linkUpcoming:  { en: "Upcoming",    fr: "\u00c0 Venir" },
   linkEmail:     { en: "Email",       fr: "Email"       },
   linkPrivacy:   { en: "Privacy Policy", fr: "Politique de Confidentialit\u00e9" },
   copyright:     { en: "All Rights Reserved", fr: "Tous Droits R\u00e9serv\u00e9s" },
@@ -192,9 +196,11 @@ export function SiteFooter() {
       </div>
 
       <footer className="sf-footer">
-      <div className="sf-brand-row">
-        <div className="sf-brand-name">Samuel Kobina Gyasi</div>
-        <p className="sf-brand-tagline">{ft.tagline[lang]}</p>
+      <div className="sf-top">
+        <div className="sf-brand">
+          <div className="sf-brand-name">Samuel Kobina Gyasi</div>
+          <p className="sf-brand-tagline">{ft.tagline[lang]}</p>
+        </div>
         <div className="sf-social-row">
           {socialLinks.map((s) => (
             <a
@@ -217,12 +223,22 @@ export function SiteFooter() {
       {/* ── LINKS COLUMNS ── */}
       <div className="sf-columns">
         <div className="sf-col">
-          <p className="sf-col-label">{ft.colPillars[lang]}</p>
+          <p className="sf-col-label">{ft.colExplore[lang]}</p>
           <ul className="sf-col-list">
-            <li><Link href={localizedHref(lang, "/faith")}         className="sf-col-link">{lang === "en" ? "Faith & Beliefs"  : "Foi & Convictions"}</Link></li>
-            <li><Link href={localizedHref(lang, "/blog")}          className="sf-col-link">{ft.linkJournal[lang]}</Link></li>
-            <li><Link href={localizedHref(lang, "/my-story")}      className="sf-col-link">{ft.linkStory[lang]}</Link></li>
-            <li><Link href={localizedHref(lang, "/faith#connect")} className="sf-col-link">{ft.linkConnect[lang]}</Link></li>
+            <li><Link href={localizedHref(lang, "/faith")}     className="sf-col-link">{ft.linkFaith[lang]}</Link></li>
+            <li><Link href={localizedHref(lang, "/blog")}      className="sf-col-link">{ft.linkJournal[lang]}</Link></li>
+            <li><Link href={localizedHref(lang, "/my-story")}  className="sf-col-link">{ft.linkStory[lang]}</Link></li>
+            <li><Link href={localizedHref(lang, "/resources")} className="sf-col-link">{ft.linkResources[lang]}</Link></li>
+          </ul>
+        </div>
+
+        <div className="sf-col">
+          <p className="sf-col-label">{ft.colDiscover[lang]}</p>
+          <ul className="sf-col-list">
+            <li><Link href={localizedHref(lang, "/faith-analyzer")} className="sf-col-link">{ft.linkAnalyzer[lang]}</Link></li>
+            <li><Link href={localizedHref(lang, "/credo")}          className="sf-col-link">{ft.linkCredo[lang]}</Link></li>
+            <li><Link href={localizedHref(lang, "/testimonials")}   className="sf-col-link">{ft.linkTestimonials[lang]}</Link></li>
+            <li><Link href={localizedHref(lang, "/upcoming")}       className="sf-col-link">{ft.linkUpcoming[lang]}</Link></li>
           </ul>
         </div>
 
@@ -237,15 +253,6 @@ export function SiteFooter() {
                 </a>
               </li>
             ))}
-          </ul>
-        </div>
-
-        <div className="sf-col">
-          <p className="sf-col-label">{ft.colSite[lang]}</p>
-          <ul className="sf-col-list">
-            <li><Link href={localizedHref(lang, "/faith")}     className="sf-col-link">{lang === "en" ? "Faith" : "Foi"}</Link></li>
-            <li><Link href={localizedHref(lang, "/blog")}      className="sf-col-link">{ft.linkJournal[lang]}</Link></li>
-            <li><Link href={localizedHref(lang, "/my-story")}  className="sf-col-link">{ft.linkStory[lang]}</Link></li>
           </ul>
         </div>
 

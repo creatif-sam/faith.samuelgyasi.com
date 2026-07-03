@@ -23,7 +23,7 @@ export const myStoryStyles2 = `
   padding: 18px 24px;
   border-left: 3px solid rgba(201,168,76,.5);
   background: rgba(201,168,76,.05);
-  font-family: var(--font-cormorant), 'Cormorant Garamond', serif;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-style: italic;
   font-size: 17px;
   line-height: 1.7;
@@ -37,7 +37,7 @@ export const myStoryStyles2 = `
 }
 .msp-now-inner { max-width: 1100px; margin: 0 auto; }
 .msp-now-label {
-  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 9px;
   letter-spacing: 0.32em;
   text-transform: uppercase;
@@ -70,7 +70,7 @@ export const myStoryStyles2 = `
 }
 .msp-now-card.msp-visible { opacity: 1; transform: none; }
 .msp-now-num {
-  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 9px;
   letter-spacing: 0.28em;
   background: var(--gold-gradient);
@@ -88,7 +88,7 @@ export const myStoryStyles2 = `
   line-height: 1.3;
 }
 .msp-now-card-body {
-  font-family: var(--font-cormorant), 'Cormorant Garamond', serif;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 15px;
   font-style: italic;
   line-height: 1.8;

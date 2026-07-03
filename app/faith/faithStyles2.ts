@@ -66,7 +66,7 @@ export const faithStyles2 = `
 }
 .fdp .refl-ref {
   margin-top:32px;
-  font-family:'Space Mono',monospace;font-size:10px;
+  font-family:'Poppins', sans-serif;font-size:10px;
   letter-spacing:.3em;text-transform:uppercase;color:var(--dim);
 }
 .fdp .refl-body {
@@ -120,7 +120,7 @@ export const faithStyles2 = `
   border-top:1px solid var(--line);
 }
 .fdp .bs-eyebrow {
-  font-family:'Space Mono',monospace; font-size:9px;
+  font-family:'Poppins', sans-serif; font-size:9px;
   letter-spacing:.35em; text-transform:uppercase;
   background:linear-gradient(90deg,#ffde59,#ff914d);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
@@ -148,7 +148,7 @@ export const faithStyles2 = `
   display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:8px;
 }
 .fdp .bs-btn {
-  font-family:'Space Mono',monospace; font-size:10px;
+  font-family:'Poppins', sans-serif; font-size:10px;
   letter-spacing:.22em; text-transform:uppercase;
   padding:14px 32px;
   background:linear-gradient(90deg,#ffde59,#ff914d);

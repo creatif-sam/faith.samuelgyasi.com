@@ -29,7 +29,7 @@ export const testimonialsStyles = `
   margin: 0 auto;
 }
 .tm-eyebrow {
-  font-family: var(--font-space-mono),'Space Mono',monospace;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 10px;
   letter-spacing: 0.35em;
   text-transform: uppercase;
@@ -69,7 +69,7 @@ export const testimonialsStyles = `
   animation: tm-rise .85s .38s ease forwards;
 }
 .tm-sub {
-  font-family: var(--font-cormorant),'Cormorant Garamond',serif;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: clamp(17px,2vw,22px);
   font-style: italic;
   color: rgba(245,243,239,.6);
@@ -112,7 +112,7 @@ export const testimonialsStyles = `
   margin-bottom: 6px;
 }
 .tm-stat-label {
-  font-family: var(--font-space-mono),'Space Mono',monospace;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 9px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
@@ -183,7 +183,7 @@ export const testimonialsStyles = `
   border-radius: 50%;
   border: 1px solid rgba(201,168,76,.3);
   display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-space-mono),'Space Mono',monospace;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 11px;
   letter-spacing: 0.05em;
   background: var(--gold-gradient);
@@ -193,14 +193,14 @@ export const testimonialsStyles = `
   flex-shrink: 0;
 }
 .tm-author-name {
-  font-family: var(--font-space-mono),'Space Mono',monospace;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 11px;
   letter-spacing: 0.05em;
   color: var(--white);
   margin-bottom: 3px;
 }
 .tm-author-role {
-  font-family: var(--font-cormorant),'Cormorant Garamond',serif;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 14px;
   font-style: italic;
   color: rgba(245,243,239,.4);
@@ -222,7 +222,7 @@ export const testimonialsStyles = `
 }
 @keyframes tm-pulse { 0%,100%{opacity:.3;} 50%{opacity:.7;} }
 .tm-empty p {
-  font-family: var(--font-cormorant),'Cormorant Garamond',serif;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 20px;
   font-style: italic;
   color: rgba(245,243,239,.35);
@@ -239,7 +239,7 @@ export const testimonialsStyles = `
 }
 .tm-cta-inner { max-width: 620px; margin: 0 auto; }
 .tm-cta-eyebrow {
-  font-family: var(--font-space-mono),'Space Mono',monospace;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 9px;
   letter-spacing: 0.35em;
   text-transform: uppercase;
@@ -258,7 +258,7 @@ export const testimonialsStyles = `
   line-height: 1.2;
 }
 .tm-cta-sub {
-  font-family: var(--font-cormorant),'Cormorant Garamond',serif;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 18px;
   font-style: italic;
   color: rgba(245,243,239,.5);
@@ -267,7 +267,7 @@ export const testimonialsStyles = `
 }
 .tm-cta-btn {
   display: inline-block;
-  font-family: var(--font-space-mono),'Space Mono',monospace;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 10px;
   letter-spacing: 0.25em;
   text-transform: uppercase;

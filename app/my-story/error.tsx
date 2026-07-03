@@ -25,7 +25,7 @@ export default function MyStoryError({
     >
       <p
         style={{
-          fontFamily: "'Space Mono', monospace",
+          fontFamily: "'Poppins', sans-serif",
           fontSize: "9px",
           letterSpacing: "0.4em",
           textTransform: "uppercase",
@@ -50,7 +50,7 @@ export default function MyStoryError({
       <button
         onClick={reset}
         style={{
-          fontFamily: "'Space Mono', monospace",
+          fontFamily: "'Poppins', sans-serif",
           fontSize: "10px",
           letterSpacing: "0.18em",
           textTransform: "uppercase",

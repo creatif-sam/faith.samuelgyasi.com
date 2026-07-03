@@ -44,7 +44,7 @@ const css = `
   max-width: 1100px; margin: 0 auto;
 }
 .audio-back {
-  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 9px; letter-spacing: .22em; text-transform: uppercase;
   color: rgba(245,243,239,.4); text-decoration: none;
   display: flex; align-items: center; gap: 8px; margin-bottom: 40px;
@@ -52,7 +52,7 @@ const css = `
 }
 .audio-back:hover { color: var(--gold); }
 .audio-eyebrow {
-  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 10px; letter-spacing: .35em; text-transform: uppercase;
   background: var(--gold-gradient);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
@@ -120,7 +120,7 @@ const css = `
 .audio-cover img { width: 100%; height: 100%; object-fit: cover; }
 .audio-info { flex: 1; display: flex; flex-direction: column; gap: 12px; }
 .audio-cat {
-  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 9px; letter-spacing: .25em; text-transform: uppercase;
   background: var(--gold-gradient);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
@@ -137,13 +137,13 @@ const css = `
 }
 .audio-meta {
   display: flex; gap: 16px; align-items: center;
-  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 9px; letter-spacing: .15em; text-transform: uppercase;
   color: rgba(245,243,239,.25);
 }
 .audio-download-btn {
   display: inline-flex; align-items: center; gap: 8px;
-  font-family: var(--font-space-mono), 'Space Mono', monospace;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 9px; letter-spacing: .22em; text-transform: uppercase;
   padding: 10px 20px;
   background: linear-gradient(90deg,#ffde59,#ff914d);
