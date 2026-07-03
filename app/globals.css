@@ -3555,6 +3555,166 @@ body {
   .ts-header { margin-bottom: 48px; }
 }
 
+/* Testimonial submission CTA + form */
+.ts-cta {
+  text-align: center;
+  margin-top: 56px;
+}
+.ts-cta-btn {
+  font-family: 'Poppins', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: #c9a84c;
+  background: rgba(201,168,76,.08);
+  border: 1px solid rgba(201,168,76,.3);
+  border-radius: 8px;
+  padding: 16px 36px;
+  cursor: pointer;
+  transition: all .3s ease;
+}
+.ts-cta-btn:hover {
+  background: rgba(201,168,76,.15);
+  border-color: rgba(201,168,76,.5);
+  transform: translateY(-2px);
+}
+.ts-form-wrap {
+  max-width: 620px;
+  margin: 56px auto 0;
+  background: #111009;
+  border: 1px solid rgba(201,168,76,.15);
+  border-radius: 12px;
+  padding: 40px 44px;
+}
+.ts-form-title {
+  font-family: var(--font-playfair), 'Playfair Display', serif;
+  font-size: 24px;
+  color: #f0ece4;
+  margin-bottom: 6px;
+}
+.ts-form-note {
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  color: rgba(240,236,228,.4);
+  margin-bottom: 28px;
+}
+.ts-form-field { margin-bottom: 20px; }
+.ts-form-label {
+  display: block;
+  font-family: 'Poppins', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(240,236,228,.4);
+  margin-bottom: 10px;
+}
+.ts-form-input, .ts-form-textarea {
+  width: 100%;
+  background: rgba(240,236,228,.04);
+  border: 1px solid rgba(240,236,228,.1);
+  border-radius: 8px;
+  color: #f0ece4;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  padding: 13px 16px;
+  outline: none;
+  transition: border-color .3s;
+}
+.ts-form-textarea {
+  min-height: 120px;
+  resize: vertical;
+  line-height: 1.6;
+}
+.ts-form-input:focus, .ts-form-textarea:focus {
+  border-color: rgba(201,168,76,.5);
+}
+.ts-form-input::placeholder, .ts-form-textarea::placeholder {
+  color: rgba(240,236,228,.25);
+}
+.ts-form-stars {
+  display: flex;
+  gap: 8px;
+}
+.ts-form-star {
+  background: transparent;
+  border: none;
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 2px;
+  transition: transform .15s;
+}
+.ts-form-star:hover { transform: scale(1.15); }
+.ts-form-error {
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  color: #e05252;
+  margin-bottom: 16px;
+}
+.ts-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+.ts-form-cancel, .ts-form-submit {
+  font-family: 'Poppins', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  border-radius: 8px;
+  padding: 13px 28px;
+  cursor: pointer;
+  transition: all .25s;
+  border: 1px solid transparent;
+}
+.ts-form-cancel {
+  background: transparent;
+  color: rgba(240,236,228,.5);
+  border-color: rgba(240,236,228,.15);
+}
+.ts-form-cancel:hover { color: #f0ece4; border-color: rgba(240,236,228,.3); }
+.ts-form-submit {
+  background: #c9a84c;
+  color: #0d0c0a;
+}
+.ts-form-submit:hover { background: #d9b95c; }
+.ts-form-submit:disabled, .ts-form-cancel:disabled { opacity: .6; cursor: not-allowed; }
+.ts-form-success {
+  text-align: center;
+  padding: 48px 44px;
+}
+.ts-form-success-check {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(201,168,76,.12);
+  border: 1px solid rgba(201,168,76,.3);
+  color: #c9a84c;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+}
+.ts-form-success p {
+  font-family: var(--font-playfair), 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 17px;
+  color: #e8e0d0;
+  line-height: 1.6;
+  max-width: 440px;
+  margin: 0 auto;
+}
+@media (max-width: 600px) {
+  .ts-form-wrap { padding: 32px 24px; margin-top: 40px; }
+  .ts-form-actions { flex-direction: column-reverse; }
+  .ts-form-cancel, .ts-form-submit { width: 100%; }
+}
+
 
 
 

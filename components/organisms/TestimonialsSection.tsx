@@ -1,4 +1,5 @@
 import { createAnonClient } from "@/lib/supabase/anon";
+import { TestimonialSubmitForm } from "./TestimonialSubmitForm";
 
 interface Testimonial {
   id: string;
@@ -41,8 +42,6 @@ function StarRating({ rating }: { rating: number }) {
 export async function TestimonialsSection() {
   const testimonials = await getTestimonials();
 
-  if (testimonials.length === 0) return null;
-
   return (
     <section id="testimonials" className="ts-section">
       <div className="ts-inner">
@@ -59,6 +58,7 @@ export async function TestimonialsSection() {
           </p>
         </div>
 
+        {testimonials.length > 0 && (
         <div className="ts-grid">
           {testimonials.map((t, idx) => (
             <div
@@ -94,6 +94,9 @@ export async function TestimonialsSection() {
             </div>
           ))}
         </div>
+        )}
+
+        <TestimonialSubmitForm />
       </div>
     </section>
   );

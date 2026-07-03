@@ -17,3 +17,37 @@ export async function GET() {
     return NextResponse.json([]);
   }
 }
+
+export async function POST(request: Request) {
+  let body: { name?: string; role?: string; quote?: string; rating?: number };
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid request body." }, { status: 400 });
+  }
+
+  const name = (body.name ?? "").trim().slice(0, 200);
+  const role = (body.role ?? "").trim().slice(0, 200);
+  const quote = (body.quote ?? "").trim().slice(0, 2000);
+  const rating = Math.min(5, Math.max(1, Math.round(Number(body.rating) || 5)));
+
+  if (!name || !role || !quote) {
+    return NextResponse.json({ error: "Name, profession, and testimony are required." }, { status: 400 });
+  }
+
+  const supabase = await createClient();
+  const { error } = await supabase.from("testimonials").insert({
+    name,
+    role,
+    quote,
+    rating,
+    published: false,
+    sort_order: 0,
+  });
+
+  if (error) {
+    return NextResponse.json({ error: "Could not save your testimony. Please try again." }, { status: 500 });
+  }
+
+  return NextResponse.json({ ok: true });
+}
