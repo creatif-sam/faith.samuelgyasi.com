@@ -131,7 +131,7 @@ export default async function RootLayout({
   const lang = isSupportedLocale(localeHeader) ? localeHeader : "en";
 
   return (
-    <html lang={lang}>
+    <html lang={lang} suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"

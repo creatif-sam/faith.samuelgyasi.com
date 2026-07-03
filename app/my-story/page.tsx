@@ -4,12 +4,9 @@ import { myStoryStyles1 } from "./myStoryStyles1";
 import { myStoryStyles2 } from "./myStoryStyles2";
 
 import { useEffect, useState } from "react";
-import { useTheme } from "next-themes";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
 import { createClient } from "@/lib/supabase/client";
 import { useLang } from "@/lib/i18n";
-
-type Lang = "en" | "fr";
 
 interface MyStoryContent {
   id: string;
@@ -34,7 +31,7 @@ export default function MyStoryPage() {
   useEffect(() => {
     const fetchContent = async () => {
       const db = createClient();
-      const { data } = await db.from("my_story").select("*").single();
+      const { data } = await db.from("my_story").select("*").maybeSingle();
       setDbContent(data);
       setLoading(false);
     };
@@ -59,11 +56,20 @@ export default function MyStoryPage() {
         <div className="msp-mosaic">
           <p className="msp-mosaic-label">Samuel Kobina Gyasi</p>
           <div className="msp-mosaic-grid">
-            {[1,2,3,4,5].map((n) => (
-              <div key={n} className={`msp-photo msp-photo--${n}`}>
-                <img src={`/my-story/my-story${n}.jpg`} alt={`Photo ${n}`} loading={n === 1 ? "eager" : "lazy"} />
-              </div>
-            ))}
+            {[
+              "Samuel Kobina Gyasi speaking into a microphone",
+              "Samuel Kobina Gyasi in traditional attire, arms crossed, against a mural backdrop",
+              "Samuel Kobina Gyasi speaking on stage in traditional attire",
+              "Samuel Kobina Gyasi speaking on stage under coloured lighting",
+              "Samuel Kobina Gyasi speaking with an award displayed behind him",
+            ].map((alt, idx) => {
+              const n = idx + 1;
+              return (
+                <div key={n} className={`msp-photo msp-photo--${n}`}>
+                  <img src={`/my-story/my-story${n}.jpg`} alt={alt} loading={n === 1 ? "eager" : "lazy"} />
+                </div>
+              );
+            })}
           </div>
         </div>
 
@@ -165,78 +171,28 @@ export default function MyStoryPage() {
 
         {/* DATABASE-DRIVEN CONTENT */}
         {dbContent && (
-          <section style={{
-            maxWidth: '1100px',
-            margin: '0 auto',
-            padding: '100px 8% 80px',
-            borderTop: '1px solid rgba(201,168,76,.18)',
-          }}>
-            <div style={{
-              fontFamily: "var(--font-poppins), 'Poppins', sans-serif",
-              fontSize: '10px',
-              letterSpacing: '0.32em',
-              textTransform: 'uppercase',
-              background: 'var(--gold-gradient)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              marginBottom: '20px',
-              animation: 'msp-rise .8s .05s ease both',
-            }}>
+          <section className="msp-db-section">
+            <div className="msp-db-eyebrow" style={{ animation: 'msp-rise .8s .05s ease both' }}>
               {lang === "fr" && dbContent.title_fr ? "Mon Histoire" : "My Story"}
             </div>
-            <h2 style={{
-              fontFamily: "var(--font-poppins), 'Poppins', sans-serif",
-              fontSize: 'clamp(32px, 5vw, 52px)',
-              fontWeight: 500,
-              lineHeight: 1.2,
-              color: 'var(--white)',
-              marginBottom: '32px',
-              animation: 'msp-rise .8s .1s ease both',
-            }}>
+            <h2 className="msp-db-title" style={{ animation: 'msp-rise .8s .1s ease both' }}>
               {lang === "fr" && dbContent.title_fr ? dbContent.title_fr : dbContent.title_en}
             </h2>
-            <div style={{
-              fontFamily: "var(--font-poppins),Poppins,sans-serif",
-              fontSize: 'clamp(15px, 1.8vw, 18px)',
-              lineHeight: 1.75,
-              color: 'rgba(245,243,239,.72)',
-              marginBottom: dbContent.images.length > 0 ? '60px' : '0',
-              maxWidth: '840px',
-              whiteSpace: 'pre-wrap',
-              animation: 'msp-rise .8s .15s ease both',
-            }}>
+            <div
+              className={`msp-db-body${dbContent.images.length > 0 ? " msp-db-body--with-gallery" : ""}`}
+              style={{ animation: 'msp-rise .8s .15s ease both' }}
+            >
               {lang === "fr" && dbContent.content_fr ? dbContent.content_fr : dbContent.content_en}
             </div>
 
             {/* IMAGE GALLERY */}
             {dbContent.images.length > 0 && (
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-                gap: '20px',
-                marginTop: '40px',
-                animation: 'msp-rise .8s .2s ease both',
-              }}>
+              <div className="msp-db-gallery" style={{ animation: 'msp-rise .8s .2s ease both' }}>
                 {dbContent.images.map((img, idx) => (
-                  <div
-                    key={idx}
-                    style={{
-                      position: 'relative',
-                      aspectRatio: '4/3',
-                      borderRadius: '8px',
-                      overflow: 'hidden',
-                      border: '1px solid rgba(201,168,76,.2)',
-                      background: 'rgba(0,0,0,.3)',
-                    }}
-                  >
+                  <div key={idx} className="msp-db-gallery-item">
                     <img
                       src={img}
                       alt={`${lang === "fr" && dbContent.title_fr ? dbContent.title_fr : dbContent.title_en} - ${idx + 1}`}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                      }}
                     />
                   </div>
                 ))}

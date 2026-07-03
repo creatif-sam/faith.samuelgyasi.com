@@ -267,6 +267,8 @@
 .light .sf-nl-msg { color: #B8860B; }
 
 /* Footer text in light mode */
+.light .sf-footer { border-top-color: rgba(10,10,10,.08); }
+.light .sf-brand-tagline { color: #4a4640; }
 .light .sf-col-label { color: #B8860B; }
 .light .sf-col-link { color: #4a4640; }
 .light .sf-col-link:hover { color: #b8860b; }
@@ -2088,7 +2090,7 @@ body {
    SITE FOOTER â€” REBUILT
    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .sf-footer {
-  background: #060605;
+  background: var(--black);
   border-top: 1px solid rgba(245,243,239,0.06);
   padding: 72px 60px 48px;
   color: var(--white);
