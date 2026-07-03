@@ -2,7 +2,7 @@
 import { blogStyles } from "./blogStyles";
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { useLang } from "@/lib/i18n";
 import { localizedHref } from "@/lib/i18n/locale";
@@ -13,17 +13,19 @@ import { Suspense } from "react";
 import { BlogRequestModal } from "@/components/organisms/BlogRequestModal";
 import { Sparkles } from "lucide-react";
 import type { DbPost, BlogSeries } from "./blogHelpers";
-import { CATEGORY_LABELS, formatCategorySlug } from "./blogHelpers";
+import { CATEGORY_LABELS, getCategoryLabel } from "./blogHelpers";
 import FeaturedPost from "./components/FeaturedPost";
 import PostCard from "./components/PostCard";
 
 function BlogContent() {
   const { lang } = useLang();
+  const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const seriesSlug = searchParams?.get("series");
+  const activeCat = searchParams?.get("category") ?? "all";
 
   const [posts, setPosts] = useState<DbPost[]>([]);
-  const [activeCat, setActiveCat] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const [currentSeries, setCurrentSeries] = useState<BlogSeries | null>(null);
@@ -87,7 +89,32 @@ function BlogContent() {
   const rest = searchFiltered.slice(1, visibleCount);
   const hasMore = searchFiltered.length > visibleCount;
   const resetVisible = () => setVisibleCount(7);
-  const categoryValues = Array.from(new Set(posts.map((p) => p.category))).sort();
+
+  const categoryCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
+    posts.forEach((p) => { counts[p.category] = (counts[p.category] ?? 0) + 1; });
+    return counts;
+  }, [posts]);
+
+  // Known categories keep the curated order declared in CATEGORY_LABELS;
+  // any freeform ones (added via the admin's "+ New category" field) are
+  // appended after, most-used first, instead of everything being alphabetical.
+  const categoryValues = useMemo(() => {
+    const known = Object.keys(CATEGORY_LABELS).filter((c) => categoryCounts[c] > 0);
+    const unknown = Object.keys(categoryCounts)
+      .filter((c) => !CATEGORY_LABELS[c])
+      .sort((a, b) => categoryCounts[b] - categoryCounts[a]);
+    return [...known, ...unknown];
+  }, [categoryCounts]);
+
+  function setCategory(cat: string) {
+    const params = new URLSearchParams(searchParams?.toString());
+    if (cat === "all") params.delete("category"); else params.set("category", cat);
+    const qs = params.toString();
+    router.replace(qs ? `${pathname}?${qs}` : pathname ?? "/blog", { scroll: false });
+    resetVisible();
+  }
+
   const getSeriesName = () => lang === "fr" ? currentSeries?.name_fr : currentSeries?.name_en;
   const getSeriesDescription = () => lang === "fr" ? currentSeries?.description_fr : currentSeries?.description_en;
   const showDates = !currentSeries || currentSeries.show_dates;
@@ -164,18 +191,14 @@ function BlogContent() {
         )}
       </div>
       <div className="fb-filters">
-        <button className={`fb-filter${activeCat === "all" ? " fb-filter--active" : ""}`} onClick={() => { setActiveCat("all"); resetVisible(); }}>
-          {lang === "fr" ? "Tout" : "All"}
+        <button className={`fb-filter${activeCat === "all" ? " fb-filter--active" : ""}`} onClick={() => setCategory("all")}>
+          {lang === "fr" ? "Tout" : "All"} <span className="fb-filter-count">{posts.length}</span>
         </button>
-        {categoryValues.map((cat) => {
-          const labels = CATEGORY_LABELS[cat];
-          const label = labels ? labels[lang] : formatCategorySlug(cat);
-          return (
-            <button key={cat} className={`fb-filter${activeCat === cat ? " fb-filter--active" : ""}`} onClick={() => { setActiveCat(cat); resetVisible(); }}>
-              {label}
-            </button>
-          );
-        })}
+        {categoryValues.map((cat) => (
+          <button key={cat} className={`fb-filter${activeCat === cat ? " fb-filter--active" : ""}`} onClick={() => setCategory(cat)}>
+            {getCategoryLabel(cat, lang)} <span className="fb-filter-count">{categoryCounts[cat]}</span>
+          </button>
+        ))}
       </div>
       <div className="fb-layout-with-sidebar">
         <div className="fb-main-content">

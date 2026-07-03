@@ -5,6 +5,7 @@ import { type UpcomingEvent, displayDate, FORMAT_LABEL } from "./types";
 import { RegisterModal } from "./RegisterModal";
 import { RecordingModal } from "./RecordingModal";
 import { Countdown } from "./Countdown";
+import { ShareEventButton } from "./ShareEventButton";
 import { useLang } from "@/lib/i18n";
 import { upcomingTranslations as t } from "../translations";
 
@@ -69,9 +70,11 @@ export function EventCard({ item, delay, isPastEvent }: EventCardProps) {
           {/* Countdown Timer — only for upcoming events with a date */}
           {!isPastEvent && item.event_date && <Countdown eventDate={item.event_date} />}
 
-          {/* CTA buttons — only for upcoming events */}
-          {!isPastEvent && (
-            <div className="up-card-actions">
+          {/* CTA buttons — Share is always available; the rest are upcoming-only */}
+          <div className="up-card-actions">
+            <ShareEventButton eventId={item.id} title={item.title} />
+            {!isPastEvent && (
+              <>
               {item.needs_registration && (
                 <button className="up-btn up-btn--gold" onClick={() => setRegOpen(true)}>
                   {t.card.registerNow[lang]}
@@ -106,8 +109,9 @@ export function EventCard({ item, delay, isPastEvent }: EventCardProps) {
                   Facebook
                 </a>
               )}
-            </div>
-          )}
+              </>
+            )}
+          </div>
 
           {/* Recording signup — shown for both upcoming and past */}
           {item.recording_signup && (

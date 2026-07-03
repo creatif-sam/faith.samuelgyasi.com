@@ -1,5 +1,5 @@
 "use client";
-import { useState, useCallback, useEffect } from "react";
+import { useState } from "react";
 import { Flame, Check, BarChart2, Plus, Sparkles, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { createClient } from "@/lib/supabase/client";
@@ -12,12 +12,14 @@ const HABIT_ICONS = ["🙏", "📖", "✝️", "🕊️", "💪", "🌅", "🧘"
 interface HabitsTabProps {
   user: SupabaseUser;
   t: Translations;
+  habits: SpiritualHabit[];
+  habitLogs: HabitLog[];
+  setHabits: React.Dispatch<React.SetStateAction<SpiritualHabit[]>>;
+  setHabitLogs: React.Dispatch<React.SetStateAction<HabitLog[]>>;
 }
 
-export default function HabitsTab({ user, t }: HabitsTabProps) {
+export default function HabitsTab({ user, t, habits, habitLogs, setHabits, setHabitLogs }: HabitsTabProps) {
   const db = createClient();
-  const [habits, setHabits] = useState<SpiritualHabit[]>([]);
-  const [habitLogs, setHabitLogs] = useState<HabitLog[]>([]);
   const [showHabitForm, setShowHabitForm] = useState(false);
   const [habitName, setHabitName] = useState("");
   const [habitDesc, setHabitDesc] = useState("");
@@ -27,36 +29,24 @@ export default function HabitsTab({ user, t }: HabitsTabProps) {
 
   const today = new Date().toISOString().slice(0, 10);
 
-  const loadHabits = useCallback(async () => {
-    const [hRes, lRes] = await Promise.all([
-      db.from("spiritual_habits").select("*").eq("user_id", user.id).order("created_at", { ascending: true }),
-      db.from("habit_logs").select("id,habit_id,logged_date").eq("user_id", user.id)
-        .gte("logged_date", new Date(Date.now() - 30 * 86400000).toISOString().slice(0, 10)),
-    ]);
-    setHabits((hRes.data as SpiritualHabit[]) ?? []);
-    setHabitLogs((lRes.data as HabitLog[]) ?? []);
-  }, [db, user.id]);
-
-  useEffect(() => { loadHabits(); }, [loadHabits]);
-
   async function createHabit() {
     if (!habitName.trim()) return;
     setHabitSaving(true);
-    const { error } = await db.from("spiritual_habits").insert({
+    const { data, error } = await db.from("spiritual_habits").insert({
       user_id: user.id,
       name: habitName.trim(),
       description: habitDesc.trim() || null,
       icon: habitIcon,
-    });
+    }).select().single();
     setHabitSaving(false);
-    if (error) {
+    if (error || !data) {
       toast.error("Could not create habit. Please try again.");
       return;
     }
     toast.success(`Habit "${habitName.trim()}" created!`);
+    setHabits((prev) => [...prev, data as SpiritualHabit]);
     setHabitName(""); setHabitDesc(""); setHabitIcon("🙏");
     setShowHabitForm(false);
-    await loadHabits();
   }
 
   async function deleteHabit(id: string) {
@@ -78,10 +68,20 @@ export default function HabitsTab({ user, t }: HabitsTabProps) {
       toast(`${habit?.icon ?? ""} ${habit?.name ?? "Habit"} unmarked for today.`);
       await db.from("habit_logs").delete().eq("id", existing.id);
     } else {
+      // Streak as of yesterday (today isn't logged yet at this point), so the
+      // streak this mark produces is always exactly one more than that.
+      const priorStreak = getHabitStreak(habitId);
+      const newStreak = priorStreak + 1;
+      const milestone = [7, 14, 30].includes(newStreak);
+
       // Optimistic mark
       const tempId = `temp-${Date.now()}`;
       setHabitLogs(prev => [...prev, { id: tempId, habit_id: habitId, logged_date: today }]);
-      toast.success(`${habit?.icon ?? ""} ${habit?.name ?? "Habit"} done today! 🎉`);
+      if (milestone) {
+        toast.success(`🔥 ${newStreak}-day streak on "${habit?.name ?? "this habit"}"! Keep going.`, { duration: 5000 });
+      } else {
+        toast.success(`${habit?.icon ?? ""} ${habit?.name ?? "Habit"} done today! 🎉`);
+      }
       const { data } = await db
         .from("habit_logs")
         .insert({ habit_id: habitId, user_id: user.id, logged_date: today })

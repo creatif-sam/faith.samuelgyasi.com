@@ -2,11 +2,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { BookOpen, Folder } from "lucide-react";
 import type { DbPost } from "../blogHelpers";
-import { getPostImage } from "../blogHelpers";
+import { getPostImage, getCategoryLabel } from "../blogHelpers";
 
 interface PostCardProps {
   post: DbPost;
-  lang: string;
+  lang: "en" | "fr";
   showDates: boolean;
   getTitle: (p: DbPost) => string;
   getExcerpt: (p: DbPost) => string | null | undefined;
@@ -35,7 +35,7 @@ export default function PostCard({ post, lang, showDates, getTitle, getExcerpt, 
           </div>
         )}
       </div>
-      <div className="fb-card-tag">{post.category}</div>
+      <div className="fb-card-tag">{getCategoryLabel(post.category, lang)}</div>
       {seriesName && <div className="fb-series-badge"><Folder size={10} />{seriesName}</div>}
       <h3 className="fb-card-title">{getTitle(post)}</h3>
       {getExcerpt(post) && <p className="fb-card-excerpt">{getExcerpt(post)}</p>}

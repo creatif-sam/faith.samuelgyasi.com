@@ -2,7 +2,7 @@
 import Link from "next/link";
 import {
   GraduationCap, CheckCircle2, TrendingUp, Award,
-  Flame, BookOpen, ArrowRight, Sparkles, Newspaper,
+  Flame, BookOpen, ArrowRight, Sparkles, Newspaper, Circle, CheckCircle,
 } from "lucide-react";
 import type { Training, EnrollmentWithProgress, SpiritualHabit } from "../types";
 import type { Translations } from "../translations";
@@ -21,6 +21,7 @@ interface OverviewTabProps {
   longestStreak: number;
   blogsReadCount: number;
   available: Training[];
+  journalCount: number;
   t: Translations;
   onTabChange: (tab: import("../types").DashTab) => void;
 }
@@ -39,14 +40,42 @@ export default function OverviewTab({
   longestStreak,
   blogsReadCount,
   available,
+  journalCount,
   t,
   onTabChange,
 }: OverviewTabProps) {
   const recentTrainings = myTrainings.slice(0, 3);
   const suggestedTrainings = available.slice(0, 2);
 
+  const onboardingSteps = [
+    { done: habits.length > 0, label: t.onboardingHabit, tab: "habits" as const },
+    { done: myTrainings.length > 0, label: t.onboardingTraining, tab: "browse" as const },
+    { done: journalCount > 0, label: t.onboardingJournal, tab: "growth" as const },
+  ];
+  const showOnboarding = onboardingSteps.some((s) => !s.done);
+
   return (
     <>
+      {showOnboarding && (
+        <div className="ob-checklist">
+          <div className="ob-checklist-title">{t.onboardingTitle}</div>
+          <div className="ob-steps">
+            {onboardingSteps.map((step) => (
+              <button
+                key={step.tab}
+                type="button"
+                className={`ob-step${step.done ? " done" : ""}`}
+                onClick={() => onTabChange(step.tab)}
+                disabled={step.done}
+              >
+                {step.done ? <CheckCircle size={15} /> : <Circle size={15} />}
+                <span>{step.label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Welcome hero */}
       <div className="ov-hero">
         <div className="ov-hero-avatar">

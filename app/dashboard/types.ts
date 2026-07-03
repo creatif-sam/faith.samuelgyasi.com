@@ -1,5 +1,6 @@
 // Dashboard types
-export type DashTab = "overview" | "my-trainings" | "browse" | "habits" | "blogs" | "profile";
+export type DashTab = "overview" | "my-trainings" | "browse" | "habits" | "growth" | "blogs" | "profile";
+export type GrowthSubTab = "messages" | "journal" | "goals";
 
 export interface Training {
   id: string;
@@ -64,5 +65,35 @@ export interface BlogPostSummary {
   excerpt_fr: string | null;
   read_time_minutes: number;
   featured_image_url: string | null;
+  created_at: string;
+}
+
+export interface MentorMessage {
+  id: string;
+  title: string;
+  body: string | null;
+  read: boolean;
+  reply: string | null;
+  replied_at: string | null;
+  created_at: string;
+}
+
+export interface JournalEntry {
+  id: string;
+  user_id: string;
+  content: string;
+  shared_with_mentor: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface PersonalGoal {
+  id: string;
+  user_id: string;
+  title: string;
+  description: string | null;
+  target_date: string | null;
+  completed: boolean;
+  completed_at: string | null;
   created_at: string;
 }

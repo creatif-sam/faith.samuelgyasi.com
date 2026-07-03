@@ -1,13 +1,13 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { GraduationCap, BookOpen, Flame, Newspaper, User, Search, Bell, Sun, Moon, Globe, LayoutDashboard, LogOut } from "lucide-react";
+import { GraduationCap, BookOpen, Flame, Newspaper, User, Search, Bell, Sun, Moon, Globe, LayoutDashboard, LogOut, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { createClient } from "@/lib/supabase/client";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 import { useLang } from "@/lib/i18n";
 import { translations } from "./translations";
-import type { DashTab, Training, EnrollmentWithProgress, SpiritualHabit, HabitLog, TrainingLesson, DashNotification, BlogPostSummary } from "./types";
+import type { DashTab, Training, EnrollmentWithProgress, SpiritualHabit, HabitLog, TrainingLesson, DashNotification, BlogPostSummary, MentorMessage, JournalEntry, PersonalGoal } from "./types";
 import { layoutStyles } from "./styles/layoutStyles";
 import { tabStyles } from "./styles/tabStyles";
 import DashSidebar from "./components/DashSidebar";
@@ -15,6 +15,7 @@ import OverviewTab from "./components/OverviewTab";
 import MyTrainingsTab from "./components/MyTrainingsTab";
 import BrowseTab from "./components/BrowseTab";
 import HabitsTab from "./components/HabitsTab";
+import GrowthTab from "./components/GrowthTab";
 import BlogsTab from "./components/BlogsTab";
 import ProfileTab from "./components/ProfileTab";
 
@@ -117,7 +118,7 @@ export default function DashboardPage() {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
   const [activeTab, setActiveTab] = useState<DashTab>(() => {
     const tab = searchParams.get("tab") as DashTab;
-    const valid: DashTab[] = ["overview", "my-trainings", "browse", "habits", "blogs", "profile"];
+    const valid: DashTab[] = ["overview", "my-trainings", "browse", "habits", "growth", "blogs", "profile"];
     return valid.includes(tab) ? tab : "overview";
   });
   const [navOpen, setNavOpen] = useState(false);
@@ -129,6 +130,9 @@ export default function DashboardPage() {
   const [blogPosts, setBlogPosts] = useState<BlogPostSummary[]>([]);
   const [readPostIds, setReadPostIds] = useState<Set<string>>(new Set());
   const [notifications, setNotifications] = useState<DashNotification[]>([]);
+  const [mentorMessages, setMentorMessages] = useState<MentorMessage[]>([]);
+  const [journalEntries, setJournalEntries] = useState<JournalEntry[]>([]);
+  const [personalGoals, setPersonalGoals] = useState<PersonalGoal[]>([]);
   const [notifOpen, setNotifOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const db = createClient();
@@ -147,31 +151,41 @@ export default function DashboardPage() {
     if (!session) return; // layout handles redirect
     setUser(session.user);
 
-    const [tRes, eRes] = await Promise.all([
+    // Everything here only needs session.user.id — none of it depends on
+    // another query's result, so it all fires in one round trip instead of
+    // three sequential batches. Only `training_lessons` below has a real
+    // dependency (it needs the enrolled training IDs from this batch first).
+    const [tRes, eRes, progressRes, profileData, habitsRes, logsRes, notifRes, blogReadsRes, blogPostsRes, journalRes, goalsRes] = await Promise.all([
       db.from("trainings").select("*").eq("published", true).order("sort_order", { ascending: true }),
       db.from("training_enrollments").select("training_id,enrolled_at").eq("user_id", session.user.id),
+      db.from("lesson_progress").select("lesson_id").eq("user_id", session.user.id).eq("completed", true),
+      db.from("profiles").select("full_name,avatar_url").eq("id", session.user.id).single(),
+      db.from("spiritual_habits").select("*").eq("user_id", session.user.id).order("created_at", { ascending: true }),
+      db.from("habit_logs").select("id,habit_id,logged_date").eq("user_id", session.user.id)
+        .gte("logged_date", new Date(Date.now() - 30 * 86400000).toISOString().slice(0, 10)),
+      db.from("user_notifications").select("id,title,body,read,reply,replied_at,created_at").eq("user_id", session.user.id)
+        .order("created_at", { ascending: false }).limit(50),
+      db.from("blog_reads").select("blog_post_id").eq("user_id", session.user.id),
+      db.from("blog_posts")
+        .select("id,title,title_fr,slug,category,excerpt,excerpt_fr,read_time_minutes,featured_image_url,created_at")
+        .eq("published", true).order("created_at", { ascending: false }),
+      db.from("journal_entries").select("*").eq("user_id", session.user.id).order("created_at", { ascending: false }),
+      db.from("personal_goals").select("*").eq("user_id", session.user.id).order("created_at", { ascending: false }),
     ]);
 
     const ts: Training[] = tRes.data ?? [];
     const rawEnrollments = eRes.data ?? [];
 
-    // Batch fetch all lesson IDs + all progress in 2 queries (avoids N+1)
     const enrolledIds = rawEnrollments
       .filter(e => ts.find(tr => tr.id === e.training_id)?.total_lessons)
       .map(e => e.training_id);
 
-    const [allLessonsRes, allProgressRes] = await Promise.all([
-      enrolledIds.length > 0
-        ? db.from("training_lessons").select("id,training_id,title,created_at").in("training_id", enrolledIds)
-        : Promise.resolve({ data: [] as TrainingLesson[] }),
-      db.from("lesson_progress")
-        .select("lesson_id")
-        .eq("user_id", session.user.id)
-        .eq("completed", true),
-    ]);
+    const allLessonsRes = enrolledIds.length > 0
+      ? await db.from("training_lessons").select("id,training_id,title,created_at").in("training_id", enrolledIds)
+      : { data: [] as TrainingLesson[] };
 
     const allLessons = (allLessonsRes.data ?? []) as TrainingLesson[];
-    const completedSet = new Set((allProgressRes.data ?? []).map((p: { lesson_id: string }) => p.lesson_id));
+    const completedSet = new Set((progressRes.data ?? []).map((p: { lesson_id: string }) => p.lesson_id));
 
     const withProgress: EnrollmentWithProgress[] = rawEnrollments.map((e) => {
       const training = ts.find((tr) => tr.id === e.training_id);
@@ -182,21 +196,11 @@ export default function DashboardPage() {
       return { ...e, completedCount: trainingLessonIds.filter(id => completedSet.has(id)).length };
     });
 
-    // Pre-load profile name + avatar + habits for overview
-    const [profileData, habitsRes, logsRes, notifRes, blogReadsRes, blogPostsRes] = await Promise.all([
-      db.from("profiles").select("full_name,avatar_url").eq("id", session.user.id).single(),
-      db.from("spiritual_habits").select("*").eq("user_id", session.user.id).order("created_at", { ascending: true }),
-      db.from("habit_logs").select("id,habit_id,logged_date").eq("user_id", session.user.id)
-        .gte("logged_date", new Date(Date.now() - 30 * 86400000).toISOString().slice(0, 10)),
-      db.from("user_notifications").select("id,title,body,read,created_at").eq("user_id", session.user.id)
-        .order("created_at", { ascending: false }).limit(50),
-      db.from("blog_reads").select("blog_post_id").eq("user_id", session.user.id),
-      db.from("blog_posts")
-        .select("id,title,title_fr,slug,category,excerpt,excerpt_fr,read_time_minutes,featured_image_url,created_at")
-        .eq("published", true).order("created_at", { ascending: false }),
-    ]);
     setReadPostIds(new Set((blogReadsRes.data ?? []).map((r: { blog_post_id: string }) => r.blog_post_id)));
     setBlogPosts((blogPostsRes.data as BlogPostSummary[]) ?? []);
+    setMentorMessages((notifRes.data as MentorMessage[]) ?? []);
+    setJournalEntries((journalRes.data as JournalEntry[]) ?? []);
+    setPersonalGoals((goalsRes.data as PersonalGoal[]) ?? []);
     if (profileData.data?.full_name) {
       setProfileName(profileData.data.full_name);
     } else {
@@ -238,8 +242,10 @@ export default function DashboardPage() {
     } else {
       const tr = trainings.find((t) => t.id === trainingId);
       toast.success(`Enrolled in ${tr?.title ?? "training"}!`);
+      // Enrolling in a brand-new training always starts at 0 lessons
+      // completed — no need to re-fetch all 9 dashboard queries for that.
+      setEnrollments((prev) => [...prev, { training_id: trainingId, enrolled_at: new Date().toISOString(), completedCount: 0 }]);
     }
-    await load();
     setEnrollingId(null);
   }
 
@@ -312,11 +318,14 @@ export default function DashboardPage() {
     window.history.replaceState({}, "", url.toString());
   }
 
+  const unreadMentorMessages = mentorMessages.filter((m) => !m.read).length;
+
   const NAV_ITEMS: { id: DashTab; label: string; Icon: React.ComponentType<{ size?: number }>; count?: number }[] = [
     { id: "overview",     label: t.overview,    Icon: LayoutDashboard                          },
     { id: "my-trainings", label: t.myTrainings, Icon: GraduationCap, count: myTrainings.length },
     { id: "browse",       label: t.browse,      Icon: BookOpen,      count: available.length   },
     { id: "habits",       label: t.habits,      Icon: Flame,         count: undefined           },
+    { id: "growth",       label: t.growth,      Icon: Sparkles,      count: unreadMentorMessages },
     { id: "blogs",        label: t.blogs,       Icon: Newspaper,     count: undefined           },
   ];
 
@@ -529,6 +538,7 @@ export default function DashboardPage() {
                   longestStreak={longestStreak}
                   blogsReadCount={readPostIds.size}
                   available={available}
+                  journalCount={journalEntries.length}
                   t={t}
                   onTabChange={handleTabChange}
                 />
@@ -556,7 +566,28 @@ export default function DashboardPage() {
                 />
               )}
               {activeTab === "habits" && user && (
-                <HabitsTab user={user} t={t} />
+                <HabitsTab
+                  user={user}
+                  t={t}
+                  habits={overviewHabits}
+                  habitLogs={overviewHabitLogs}
+                  setHabits={setOverviewHabits}
+                  setHabitLogs={setOverviewHabitLogs}
+                />
+              )}
+              {activeTab === "growth" && user && (
+                <GrowthTab
+                  user={user}
+                  t={t}
+                  messages={mentorMessages}
+                  onReplySent={(id, reply) => setMentorMessages((prev) =>
+                    prev.map((m) => m.id === id ? { ...m, reply, replied_at: new Date().toISOString(), read: true } : m)
+                  )}
+                  journalEntries={journalEntries}
+                  setJournalEntries={setJournalEntries}
+                  goals={personalGoals}
+                  setGoals={setPersonalGoals}
+                />
               )}
               {activeTab === "blogs" && (
                 <BlogsTab

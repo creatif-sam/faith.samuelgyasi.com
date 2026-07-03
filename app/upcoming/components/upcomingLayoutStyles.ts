@@ -374,4 +374,28 @@ export const upcomingLayoutStyles = `
   text-transform: uppercase;
   color: rgba(245,243,239,.35);
 }
+
+/* ── SINGLE EVENT DETAIL PAGE ── */
+.up-detail-wrap {
+  padding: 140px 8% 100px;
+  max-width: 640px;
+  margin: 0 auto;
+}
+.up-detail-card { margin-bottom: 32px; }
+.up-detail-back {
+  display: inline-block;
+  font-family: var(--font-poppins),'Poppins',sans-serif;
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(245,243,239,.4);
+  text-decoration: none;
+  transition: color .3s;
+}
+.up-detail-back:hover { color: var(--gold); }
+:root:not(.dark) .up-detail-back { color: rgba(10,10,10,.4); }
+:root:not(.dark) .up-detail-back:hover { color: #B8860B; }
+@media (max-width: 640px) {
+  .up-detail-wrap { padding: 120px 6% 72px; }
+}
 `;

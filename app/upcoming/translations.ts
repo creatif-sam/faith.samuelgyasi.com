@@ -32,6 +32,17 @@ export const upcomingTranslations = {
     joinUs:      { en: "Join Us →",    fr: "Rejoindre →" },
     pastBadge:   { en: "Past Event",   fr: "Événement Passé" },
     getRecording:{ en: "Get Recording", fr: "Obtenir l'Enregistrement" },
+    share:       { en: "Share",        fr: "Partager" },
+    linkCopied:  { en: "Link copied!", fr: "Lien copié !" },
+    copyFailed:  { en: "Could not copy the link.", fr: "Impossible de copier le lien." },
+  },
+
+  detail: {
+    breadcrumbHome:     { en: "Home",     fr: "Accueil" },
+    breadcrumbUpcoming: { en: "Upcoming", fr: "À Venir" },
+    backToUpcoming:     { en: "← Back to Upcoming", fr: "← Retour à À Venir" },
+    notFoundTitle:      { en: "Event Not Found", fr: "Événement Introuvable" },
+    notFoundBody:       { en: "This event may have been removed or the link is incorrect.", fr: "Cet événement a peut-être été supprimé ou le lien est incorrect." },
   },
 
   countdown: {

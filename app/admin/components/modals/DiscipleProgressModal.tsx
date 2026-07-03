@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { X, Plus, Calendar, Link2, Send, Flame, GraduationCap, BookOpen } from "lucide-react";
+import { X, Plus, Calendar, Link2, Send, Flame, GraduationCap, BookOpen, BookMarked, Target, MessageCircle } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { TW } from "../constants";
@@ -21,6 +21,10 @@ interface Engagement {
   lessonsCompleted: number;
 }
 
+interface SharedJournalEntry { id: string; content: string; created_at: string; }
+interface Goal { id: string; title: string; description: string | null; target_date: string | null; completed: boolean; }
+interface RecentMessage { id: string; title: string; body: string | null; reply: string | null; created_at: string; }
+
 export default function DiscipleProgressModal({ disciple, onClose, db, load }: DiscipleProgressModalProps) {
   const [progressEntries, setProgressEntries] = useState<DiscipleProgress[]>([]);
   const [loading, setLoading] = useState(true);
@@ -36,13 +40,19 @@ export default function DiscipleProgressModal({ disciple, onClose, db, load }: D
   const [linking, setLinking] = useState(false);
   const [engagement, setEngagement] = useState<Engagement | null>(null);
   const [engagementLoading, setEngagementLoading] = useState(false);
+  const [sharedJournal, setSharedJournal] = useState<SharedJournalEntry[]>([]);
+  const [goals, setGoals] = useState<Goal[]>([]);
+  const [recentMessages, setRecentMessages] = useState<RecentMessage[]>([]);
 
   useEffect(() => {
     loadProgress();
   }, [disciple.id]);
 
   useEffect(() => {
-    if (userId) loadEngagement(userId);
+    if (userId) {
+      loadEngagement(userId);
+      loadAccompanimentData(userId);
+    }
   }, [userId]);
 
   async function loadEngagement(uid: string) {
@@ -62,6 +72,17 @@ export default function DiscipleProgressModal({ disciple, onClose, db, load }: D
       lessonsCompleted: lessonsRes.data?.length ?? 0,
     });
     setEngagementLoading(false);
+  }
+
+  async function loadAccompanimentData(uid: string) {
+    const [journalRes, goalsRes, messagesRes] = await Promise.all([
+      db.from("journal_entries").select("id,content,created_at").eq("user_id", uid).eq("shared_with_mentor", true).order("created_at", { ascending: false }),
+      db.from("personal_goals").select("id,title,description,target_date,completed").eq("user_id", uid).order("created_at", { ascending: false }),
+      db.from("user_notifications").select("id,title,body,reply,created_at").eq("user_id", uid).order("created_at", { ascending: false }).limit(5),
+    ]);
+    setSharedJournal((journalRes.data as SharedJournalEntry[]) ?? []);
+    setGoals((goalsRes.data as Goal[]) ?? []);
+    setRecentMessages((messagesRes.data as RecentMessage[]) ?? []);
   }
 
   async function handleLink() {
@@ -132,6 +153,7 @@ export default function DiscipleProgressModal({ disciple, onClose, db, load }: D
         console.error("send disciple note error:", notifError);
       } else {
         toast.success("Progress entry added and note sent to disciple");
+        loadAccompanimentData(userId);
       }
     } else {
       toast.success("Progress entry added");
@@ -206,6 +228,65 @@ export default function DiscipleProgressModal({ disciple, onClose, db, load }: D
               </div>
             )}
           </div>
+
+          {/* Goals, shared journal, and recent messages — only meaningful once linked */}
+          {userId && (goals.length > 0 || sharedJournal.length > 0 || recentMessages.length > 0) && (
+            <div className="mb-6 grid sm:grid-cols-2 gap-4">
+              {goals.length > 0 && (
+                <div className="p-4 bg-white/[.02] border border-white/[.06] rounded-lg">
+                  <div className="flex items-center gap-1.5 text-[#d4a843] text-xs uppercase tracking-wider mb-3">
+                    <Target size={13} /> Goals ({goals.filter(g => !g.completed).length} active)
+                  </div>
+                  <div className="space-y-2">
+                    {goals.slice(0, 5).map((g) => (
+                      <div key={g.id} className="text-sm flex items-start gap-2">
+                        <span className={g.completed ? "text-green-400" : "text-white/30"}>{g.completed ? "✓" : "○"}</span>
+                        <span className={g.completed ? "text-white/40 line-through" : "text-white/80"}>{g.title}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {sharedJournal.length > 0 && (
+                <div className="p-4 bg-white/[.02] border border-white/[.06] rounded-lg">
+                  <div className="flex items-center gap-1.5 text-[#d4a843] text-xs uppercase tracking-wider mb-3">
+                    <BookMarked size={13} /> Shared Journal ({sharedJournal.length})
+                  </div>
+                  <div className="space-y-3 max-h-[180px] overflow-y-auto">
+                    {sharedJournal.map((entry) => (
+                      <div key={entry.id}>
+                        <div className="text-white/30 text-[10px] mb-0.5">{new Date(entry.created_at).toLocaleDateString()}</div>
+                        <div className="text-white/70 text-sm leading-relaxed">{entry.content}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {recentMessages.length > 0 && (
+                <div className="p-4 bg-white/[.02] border border-white/[.06] rounded-lg sm:col-span-2">
+                  <div className="flex items-center gap-1.5 text-[#d4a843] text-xs uppercase tracking-wider mb-3">
+                    <MessageCircle size={13} /> Recent Messages
+                  </div>
+                  <div className="space-y-3">
+                    {recentMessages.map((m) => (
+                      <div key={m.id} className="text-sm border-l-2 border-[rgba(212,168,67,.25)] pl-3">
+                        <div className="text-white/80 font-medium">{m.title}</div>
+                        {m.body && <div className="text-white/50 text-xs mt-0.5">{m.body}</div>}
+                        {m.reply && (
+                          <div className="mt-1.5 text-xs">
+                            <span className="text-[#d4a843]">{disciple.name} replied: </span>
+                            <span className="text-white/70">{m.reply}</span>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Add New Entry Section */}
           {!showAddForm ? (

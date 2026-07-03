@@ -49,6 +49,8 @@ body.on-fdp { background:#080807; color:#f0ece4; font-family:'Poppins', sans-ser
 .fb-filter:hover { border-color:rgba(255,222,89,.5); color:var(--gold); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255,222,89,0.2); }
 .fb-filter--active { background:linear-gradient(90deg,#ffde59,#ff914d); color:#080807; border-color:transparent; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,222,89,0.3); }
 .fb-filter--active::before { opacity: 1; }
+.fb-filter-count { opacity: .55; margin-left: 6px; }
+.fb-filter--active .fb-filter-count { opacity: .7; }
 .fb-layout-with-sidebar { display: flex; gap: 40px; padding: 0 56px 40px; align-items: flex-start; }
 .fb-main-content { flex: 1; min-width: 0; }
 .fb-content { padding:0; }

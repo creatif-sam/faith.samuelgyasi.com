@@ -37,6 +37,11 @@ export function formatCategorySlug(slug: string): string {
   return slug.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
 }
 
+export function getCategoryLabel(category: string, lang: "en" | "fr"): string {
+  const labels = CATEGORY_LABELS[category];
+  return labels ? labels[lang] : formatCategorySlug(category);
+}
+
 export function getYouTubeId(url: string): string | null {
   const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
   const match = url.match(regExp);

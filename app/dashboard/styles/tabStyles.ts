@@ -477,4 +477,125 @@ export const tabStyles = `
   .ov-hero { flex-direction: column; align-items: flex-start; gap: 12px; padding: 18px; }
   .ov-hero-avatar { width: 50px; height: 50px; font-size: 18px; }
 }
+
+/* Onboarding checklist */
+.ob-checklist {
+  background: var(--d-surf); border: 1px solid rgba(212,168,67,.25);
+  border-radius: 14px; padding: 18px 20px; margin-bottom: 24px;
+}
+.ob-checklist-title {
+  font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--d-gold); margin-bottom: 12px;
+}
+.ob-steps { display: flex; flex-direction: column; gap: 8px; }
+.ob-step {
+  display: flex; align-items: center; gap: 10px;
+  background: transparent; border: none; padding: 4px 0;
+  font-size: 13px; color: var(--d-text); cursor: pointer; text-align: left;
+  font-family: var(--font-poppins), sans-serif;
+}
+.ob-step svg { color: var(--d-gold); flex-shrink: 0; }
+.ob-step.done { color: var(--d-muted); text-decoration: line-through; cursor: default; }
+.ob-step.done svg { color: #22c55e; }
+
+/* Messages tab */
+.msg-list { display: flex; flex-direction: column; gap: 14px; }
+.msg-card {
+  background: var(--d-surf); border: 1px solid var(--d-border);
+  border-radius: 14px; padding: 16px 18px;
+}
+.msg-card.unread { border-color: rgba(212,168,67,.35); }
+.msg-card-head { display: flex; align-items: center; gap: 8px; color: var(--d-gold); margin-bottom: 8px; }
+.msg-card-title { font-size: 13px; font-weight: 700; color: var(--d-text); }
+.msg-card-time { font-size: 11px; color: var(--d-muted); margin-left: auto; }
+.msg-card-body { font-size: 13px; color: var(--d-muted); line-height: 1.6; margin: 0 0 10px; }
+.msg-reply-sent {
+  background: var(--d-soft); border-radius: 10px; padding: 10px 14px; margin-top: 6px;
+}
+.msg-reply-label { font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--d-gold); margin-bottom: 4px; }
+.msg-reply-sent p { font-size: 13px; color: var(--d-text); margin: 0; }
+.msg-reply-form { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+.msg-reply-input {
+  width: 100%; background: var(--d-soft); border: 1px solid var(--d-border); border-radius: 9px;
+  color: var(--d-text); font-family: var(--font-poppins), sans-serif;
+  font-size: 13px; padding: 9px 12px; outline: none; resize: vertical; min-height: 60px;
+  box-sizing: border-box; transition: border-color .18s;
+}
+.msg-reply-input:focus { border-color: rgba(212,168,67,.5); }
+
+/* Journal tab */
+.jr-textarea { min-height: 90px; resize: vertical; }
+.jr-form-actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; flex-wrap: wrap; }
+.jr-share-toggle { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--d-muted); cursor: pointer; }
+.jr-list { display: flex; flex-direction: column; gap: 14px; }
+.jr-card {
+  background: var(--d-surf); border: 1px solid var(--d-border);
+  border-radius: 14px; padding: 16px 18px;
+}
+.jr-card-head { display: flex; align-items: center; gap: 8px; color: var(--d-gold); margin-bottom: 8px; }
+.jr-card-date { font-size: 11px; color: var(--d-muted); }
+.jr-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 10px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
+  color: var(--d-muted); background: var(--d-soft); border: 1px solid var(--d-border);
+  border-radius: 999px; padding: 3px 9px;
+}
+.jr-badge.shared { color: var(--d-gold); border-color: rgba(212,168,67,.3); }
+.jr-card-body { font-size: 13px; color: var(--d-text); line-height: 1.7; margin: 0; white-space: pre-wrap; }
+
+/* Goals tab */
+.gl-list { display: flex; flex-direction: column; gap: 14px; }
+.gl-card {
+  background: var(--d-surf); border: 1px solid var(--d-border);
+  border-radius: 14px; padding: 16px 18px;
+  display: flex; align-items: flex-start; gap: 14px;
+}
+.gl-card.completed { opacity: .6; }
+.gl-card-icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  background: rgba(212,168,67,.1); color: var(--d-gold);
+}
+.gl-card-icon.done { background: rgba(34,197,94,.12); color: #22c55e; }
+.gl-card-body { flex: 1; min-width: 0; }
+.gl-card-title { font-size: 14px; font-weight: 600; color: var(--d-text); }
+.gl-card-desc { font-size: 12px; color: var(--d-muted); margin-top: 2px; }
+.gl-card-date { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--d-muted); margin-top: 6px; }
+.gl-card-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+/* Growth tab — internal sub-nav (Messages / Journal / Goals) */
+.gr-subnav {
+  display: flex; gap: 6px; margin-bottom: 20px;
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; padding-bottom: 2px;
+}
+.gr-subnav::-webkit-scrollbar { display: none; }
+.gr-subnav-item {
+  display: flex; align-items: center; gap: 6px; flex-shrink: 0;
+  background: var(--d-soft); border: 1px solid var(--d-border);
+  border-radius: 999px; padding: 8px 14px;
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 12px; font-weight: 600; color: var(--d-muted);
+  cursor: pointer; white-space: nowrap; transition: border-color .18s, color .18s;
+}
+.gr-subnav-item.active { color: var(--d-gold); border-color: rgba(212,168,67,.4); background: rgba(212,168,67,.08); }
+.gr-subnav-badge {
+  min-width: 16px; height: 16px; border-radius: 999px;
+  background: var(--d-gold); color: #09090d;
+  font-size: 9px; font-weight: 700;
+  display: inline-flex; align-items: center; justify-content: center; padding: 0 4px;
+}
+
+/* Mobile: keep card headers from squeezing titles when a badge/time/delete
+   button share the row — let them wrap onto a second line instead. */
+@media (max-width: 480px) {
+  .msg-card-head, .jr-card-head { flex-wrap: wrap; row-gap: 4px; }
+  .msg-card-time { margin-left: 0; width: 100%; order: 3; }
+  .jr-badge { margin-left: 0; }
+  .jr-card-head > button.hb-del-btn { margin-left: auto; }
+  .gl-card { flex-wrap: wrap; }
+  .gl-card-actions { width: 100%; }
+  .dash-page-header { margin-bottom: 16px; }
+  .hb-form, .msg-card, .jr-card, .gl-card { padding: 14px; }
+}
 `;

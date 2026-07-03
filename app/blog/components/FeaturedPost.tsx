@@ -2,11 +2,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { BookOpen, Folder } from "lucide-react";
 import type { DbPost } from "../blogHelpers";
-import { getPostImage } from "../blogHelpers";
+import { getPostImage, getCategoryLabel } from "../blogHelpers";
 
 interface FeaturedPostProps {
   post: DbPost;
-  lang: string;
+  lang: "en" | "fr";
   showDates: boolean;
   getTitle: (p: DbPost) => string;
   getExcerpt: (p: DbPost) => string | null | undefined;
@@ -36,7 +36,7 @@ export default function FeaturedPost({ post, lang, showDates, getTitle, getExcer
           </div>
         )}
       </div>
-      <div className="fb-featured-tag">{post.category}</div>
+      <div className="fb-featured-tag">{getCategoryLabel(post.category, lang)}</div>
       {seriesName && <div className="fb-series-badge"><Folder size={10} />{seriesName}</div>}
       <h2 className="fb-featured-title">{getTitle(post)}</h2>
       {getExcerpt(post) && <p className="fb-featured-excerpt">{getExcerpt(post)}</p>}
