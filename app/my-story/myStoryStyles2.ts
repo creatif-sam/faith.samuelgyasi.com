@@ -86,6 +86,7 @@ export const myStoryStyles2 = `
   color: var(--white);
   margin-bottom: 12px;
   line-height: 1.3;
+  min-height: 2.6em;
 }
 .msp-now-card-body {
   font-family: var(--font-poppins), 'Poppins', sans-serif;
@@ -99,6 +100,7 @@ export const myStoryStyles2 = `
   .msp-section { padding: 60px 6% 80px; }
   .msp-now { padding: 60px 6%; }
   .msp-now-grid { grid-template-columns: 1fr; gap: 32px; }
+  .msp-now-card-title { min-height: auto; }
   .msp-hero-glow { display: none; }
 }
 

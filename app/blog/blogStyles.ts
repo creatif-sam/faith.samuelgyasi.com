@@ -78,22 +78,20 @@ body.on-fdp { background:#080807; color:#f0ece4; font-family:'Poppins', sans-ser
 .fb-footer-link { font-family:'Poppins', sans-serif; font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); text-decoration:none; transition:all .3s ease; }
 .fb-footer-link:hover { opacity:.8; transform: translateX(4px); }
 .fb-footer-copy { font-family:'Poppins', sans-serif; font-size:9px; color:var(--dimmer); letter-spacing:.1em; }
-.fb-featured-cover { margin-bottom:32px; overflow:hidden; border-radius: 6px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; }
-.fb-featured-cover-img { width:100%; max-height:420px; object-fit:cover; display:block; transition:transform .6s ease; }
+.fb-featured-cover { margin-bottom:32px; overflow:hidden; border-radius: 6px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; height:420px; }
+.fb-featured-cover-img { object-fit:cover; transition:transform .6s ease; }
 .fb-featured:hover .fb-featured-cover-img { transform:scale(1.05); }
-.fb-card-cover { overflow:hidden; margin:-40px -36px 20px; border-radius: 6px 6px 0 0; position: relative; }
-.fb-yt-play { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:52px; height:52px; background:rgba(255,255,255,.92); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#0a0a0a; pointer-events:none; opacity:0; transition:opacity .3s; }
+.fb-card-cover { overflow:hidden; margin:-40px -36px 20px; border-radius: 6px 6px 0 0; position: relative; height:200px; }
+.fb-yt-play { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:52px; height:52px; background:rgba(255,255,255,.92); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#0a0a0a; pointer-events:none; opacity:0; transition:opacity .3s; z-index:1; }
 .fb-featured-cover:hover .fb-yt-play,
 .fb-card:hover .fb-yt-play { opacity:1; }
-.fb-card-cover-img { width:100%; height:200px; object-fit:cover; display:block; transition:transform .6s ease; }
+.fb-card-cover-img { object-fit:cover; transition:transform .6s ease; }
 .fb-card:hover .fb-card-cover-img { transform:scale(1.08); }
 
 /* Cover placeholder — used when a post has no featured image */
 .fb-cover-placeholder { width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,rgba(255,222,89,.1),rgba(255,145,77,.05)); position:relative; overflow:hidden; }
 .fb-cover-placeholder::before { content:''; position:absolute; inset:0; background-image:radial-gradient(circle at 20% 20%, rgba(255,222,89,.12) 0%, transparent 45%), radial-gradient(circle at 80% 80%, rgba(255,145,77,.1) 0%, transparent 45%); }
 .fb-cover-placeholder svg { position:relative; opacity:.35; color:var(--gold); }
-.fb-card-cover .fb-cover-placeholder { height:200px; }
-.fb-featured-cover .fb-cover-placeholder { height:280px; }
 :root:not(.dark) .fb-cover-placeholder { background:linear-gradient(135deg,rgba(184,134,11,.08),rgba(212,112,10,.04)); }
 
 /* Series badge — shown on cards for posts that belong to a series */
@@ -111,6 +109,7 @@ body.on-fdp { background:#080807; color:#f0ece4; font-family:'Poppins', sans-ser
   .fb-pg-footer { padding:36px 24px; flex-direction:column; gap:16px; text-align:center; }
   .fb-card { padding: 32px 24px; }
   .fb-card-cover { margin: -32px -24px 16px; }
+  .fb-featured-cover { height: 240px; }
 }
 
 /* ── LIGHT MODE ── */

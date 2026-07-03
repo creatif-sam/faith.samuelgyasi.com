@@ -1,6 +1,6 @@
 "use client";
 import { blogStyles } from "./blogStyles";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
@@ -27,7 +27,8 @@ function BlogContent() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const [currentSeries, setCurrentSeries] = useState<BlogSeries | null>(null);
-  const [seriesMap, setSeriesMap] = useState<Record<string, { name_en: string; name_fr: string }>>({});
+  const [seriesList, setSeriesList] = useState<BlogSeries[]>([]);
+  const [seriesLoading, setSeriesLoading] = useState(true);
   const [showBlogRequestModal, setShowBlogRequestModal] = useState(false);
   const [visibleCount, setVisibleCount] = useState(7);
 
@@ -48,13 +49,17 @@ function BlogContent() {
       .select("id,title,title_fr,slug,category,excerpt,excerpt_fr,read_time_minutes,featured_image_url,youtube_url,created_at,series_id,series_order")
       .eq("published", true).order("created_at", { ascending: false })
       .then(({ data }) => { setPosts(data ?? []); setLoading(false); });
-    supabase.from("blog_series").select("id,name_en,name_fr").eq("published", true)
-      .then(({ data }) => {
-        const map: Record<string, { name_en: string; name_fr: string }> = {};
-        (data ?? []).forEach((s) => { map[s.id] = { name_en: s.name_en, name_fr: s.name_fr }; });
-        setSeriesMap(map);
-      });
+    supabase.from("blog_series")
+      .select("id,name_en,name_fr,slug,description_en,description_fr,image_url,show_dates,sort_order")
+      .eq("published", true).order("sort_order", { ascending: true })
+      .then(({ data }) => { setSeriesList((data ?? []) as BlogSeries[]); setSeriesLoading(false); });
   }, [seriesSlug]);
+
+  const seriesMap = useMemo(() => {
+    const map: Record<string, { name_en: string; name_fr: string }> = {};
+    seriesList.forEach((s) => { map[s.id] = { name_en: s.name_en, name_fr: s.name_fr }; });
+    return map;
+  }, [seriesList]);
 
   const getSeriesBadge = (post: DbPost) => {
     if (!post.series_id) return null;
@@ -202,7 +207,7 @@ function BlogContent() {
             </div>
           )}
         </div>
-        <SeriesSidebar />
+        <SeriesSidebar series={seriesList} posts={posts} loading={seriesLoading} />
       </div>
       <Suspense fallback={null}><SiteFooter /></Suspense>
       {showBlogRequestModal && <BlogRequestModal onClose={() => setShowBlogRequestModal(false)} lang={lang} />}

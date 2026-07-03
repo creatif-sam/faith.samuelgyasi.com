@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { BookOpen, Folder } from "lucide-react";
 import type { DbPost } from "../blogHelpers";
 import { getPostImage } from "../blogHelpers";
@@ -18,7 +19,14 @@ export default function FeaturedPost({ post, lang, showDates, getTitle, getExcer
     <Link href={`/${lang}/blog/${post.slug}`} className="fb-featured">
       <div className="fb-featured-cover">
         {img ? (
-          <img src={img.url} alt={getTitle(post)} className="fb-featured-cover-img" />
+          <Image
+            src={img.url}
+            alt={getTitle(post)}
+            fill
+            sizes="(max-width: 900px) 100vw, 900px"
+            className="fb-featured-cover-img"
+            priority
+          />
         ) : (
           <div className="fb-cover-placeholder"><BookOpen size={48} /></div>
         )}

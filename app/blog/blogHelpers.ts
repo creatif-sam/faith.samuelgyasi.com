@@ -23,6 +23,7 @@ export type BlogSeries = {
   description_fr: string | null;
   image_url: string | null;
   show_dates: boolean;
+  sort_order: number;
 };
 
 export const CATEGORY_LABELS: Record<string, { en: string; fr: string }> = {

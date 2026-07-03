@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { BookOpen, Folder } from "lucide-react";
 import type { DbPost } from "../blogHelpers";
 import { getPostImage } from "../blogHelpers";
@@ -18,7 +19,13 @@ export default function PostCard({ post, lang, showDates, getTitle, getExcerpt, 
     <Link key={post.slug} href={`/${lang}/blog/${post.slug}`} className="fb-card">
       <div className="fb-card-cover">
         {img ? (
-          <img src={img.url} alt={getTitle(post)} className="fb-card-cover-img" />
+          <Image
+            src={img.url}
+            alt={getTitle(post)}
+            fill
+            sizes="(max-width: 900px) 100vw, 33vw"
+            className="fb-card-cover-img"
+          />
         ) : (
           <div className="fb-cover-placeholder"><BookOpen size={32} /></div>
         )}

@@ -1,65 +1,22 @@
 // components/blog/SeriesSidebar.tsx
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { useLang } from "@/lib/i18n";
 import { localizedHref } from "@/lib/i18n/locale";
-import { createClient } from "@/lib/supabase/client";
 import { ChevronDown, ChevronRight, Folder } from "lucide-react";
+import type { BlogSeries, DbPost } from "@/app/blog/blogHelpers";
 
-type BlogSeries = {
-  id: string;
-  name_en: string;
-  name_fr: string;
-  slug: string;
-  description_en: string | null;
-  description_fr: string | null;
-  image_url: string | null;
-  published: boolean;
-  sort_order: number;
-};
+interface SeriesSidebarProps {
+  series: BlogSeries[];
+  posts: DbPost[];
+  loading: boolean;
+}
 
-type BlogPost = {
-  id: string;
-  title: string;
-  title_fr: string | null;
-  slug: string;
-  series_id: string | null;
-  series_order: number | null;
-};
-
-export function SeriesSidebar() {
+export function SeriesSidebar({ series, posts, loading }: SeriesSidebarProps) {
   const { lang } = useLang();
-  const [series, setSeries] = useState<BlogSeries[]>([]);
-  const [posts, setPosts] = useState<BlogPost[]>([]);
   const [expandedSeries, setExpandedSeries] = useState<Set<string>>(new Set());
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const supabase = createClient();
-    
-    Promise.all([
-      // Fetch series
-      supabase
-        .from("blog_series")
-        .select("*")
-        .eq("published", true)
-        .order("sort_order", { ascending: true }),
-      
-      // Fetch posts that belong to series
-      supabase
-        .from("blog_posts")
-        .select("id,title,title_fr,slug,series_id,series_order")
-        .eq("published", true)
-        .not("series_id", "is", null)
-        .order("series_order", { ascending: true })
-    ]).then(([seriesResult, postsResult]) => {
-      if (seriesResult.data) setSeries(seriesResult.data as BlogSeries[]);
-      if (postsResult.data) setPosts(postsResult.data as BlogPost[]);
-      setLoading(false);
-    });
-  }, []);
 
   const toggleSeries = (seriesId: string) => {
     const newExpanded = new Set(expandedSeries);
@@ -72,7 +29,7 @@ export function SeriesSidebar() {
   };
 
   const getSeriesName = (s: BlogSeries) => lang === "fr" ? s.name_fr : s.name_en;
-  const getPostTitle = (p: BlogPost) => lang === "fr" && p.title_fr ? p.title_fr : p.title;
+  const getPostTitle = (p: DbPost) => lang === "fr" && p.title_fr ? p.title_fr : p.title;
   const getSeriesPosts = (seriesId: string) => 
     posts.filter(p => p.series_id === seriesId).sort((a, b) => (a.series_order ?? 0) - (b.series_order ?? 0));
 

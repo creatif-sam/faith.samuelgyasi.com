@@ -93,12 +93,12 @@ const translations = {
       {
         num: "01",
         title: "Junior Program Officer · SCI, UM6P",
-        body: "At the School of Collective Intelligence, Samuel helps students navigate their careers, internship search, events logistics, and community building.Helping run the the world's first accredited masters' program in collective intelligence",
+        body: "At the School of Collective Intelligence, Samuel helps students navigate their careers, internship search, events logistics, and community building. He also helps run the world's first accredited master's program in collective intelligence.",
       },
       {
         num: "02",
-        title: "Teacher ·Intercessor · Elder · Église Évangélique Au Maroc",
-        body: "Samuel is a member of the elders' board and participates in decision-making alongside our pastors; he serves as a mentor for the intercession and library commissions. ",
+        title: "Teacher · Intercessor · Elder",
+        body: "At Église Évangélique Au Maroc, Samuel serves as an elder and teacher — a member of the elders' board who participates in decision-making alongside the pastors, and a mentor for the intercession and library commissions.",
       },
       {
         num: "03",
@@ -204,8 +204,8 @@ const translations = {
       },
       {
         num: "02",
-        title: "Enseignant · Intercesseur · Ancien · Église Évangélique Au Maroc",
-        body: "Samuel fait partie du conseil presbytéral et participe à la prise de décision aux côtés de nos pasteurs. Il sert de mentor pour la commission d'intercession et la commission bibliothèque",
+        title: "Enseignant · Intercesseur · Ancien",
+        body: "À l'Église Évangélique Au Maroc, Samuel sert comme ancien et enseignant — membre du conseil presbytéral, il participe à la prise de décision aux côtés des pasteurs et sert de mentor pour la commission d'intercession et la commission bibliothèque.",
       },
       {
         num: "03",
