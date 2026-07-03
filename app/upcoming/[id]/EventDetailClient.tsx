@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
 import Breadcrumbs from "@/components/atoms/Breadcrumbs";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
@@ -16,6 +17,15 @@ interface EventDetailClientProps {
 
 export function EventDetailClient({ event }: EventDetailClientProps) {
   const { lang } = useLang();
+
+  // .up-card/.up-section start at opacity:0 and only reveal once JS adds
+  // .up-visible — on the listing page an IntersectionObserver does that as
+  // each card scrolls into view. Here there's exactly one card and it's
+  // already on screen, so just mark it visible immediately instead of
+  // wiring up scroll-based observation for something that isn't scrolling.
+  useEffect(() => {
+    document.querySelectorAll(".up-section, .up-card").forEach((el) => el.classList.add("up-visible"));
+  }, [event.id]);
 
   return (
     <>
