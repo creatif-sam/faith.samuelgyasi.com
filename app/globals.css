@@ -2145,7 +2145,7 @@ body {
 .sf-newsletter {
   display: flex;
   justify-content: center;
-  padding: 8px 0 64px;
+  padding: 8px 60px 64px;
 }
 .sf-nl-card {
   position: relative;
@@ -2312,12 +2312,14 @@ body {
 /* Footer responsive */
 @media (max-width: 768px) {
   .sf-footer { padding: 48px 24px 32px; }
+  .sf-newsletter { padding: 8px 24px 48px; }
   .sf-nl-card { padding: 36px 28px 32px; }
   .sf-columns { grid-template-columns: repeat(2, 1fr); gap: 32px; }
   .sf-rule { margin: 32px 0; }
 }
 @media (max-width: 480px) {
   .sf-footer { padding: 40px 16px 24px; }
+  .sf-newsletter { padding: 8px 16px 40px; }
   .sf-nl-card { padding: 28px 18px 28px; }
   .sf-nl-input-row { flex-direction: column; border-radius: 12px; }
   .sf-nl-input { border-radius: 12px 12px 0 0; }
