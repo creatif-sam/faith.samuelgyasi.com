@@ -4,6 +4,8 @@ import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
 import { X } from "lucide-react";
+import { HoneypotField } from "@/components/HoneypotField";
+import { useHoneypot } from "@/lib/useHoneypot";
 
 interface PrayerModalProps {
   onClose: () => void;
@@ -18,12 +20,20 @@ export function PrayerModal({ onClose, lang }: PrayerModalProps) {
   const [details, setDetails] = useState("");
   const [isUrgent, setIsUrgent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const honeypot = useHoneypot();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!name.trim() || !topic.trim()) {
       toast.error(lang === "en" ? "Name and prayer topic are required" : "Le nom et le sujet de prière sont requis");
+      return;
+    }
+
+    if (honeypot.isBot()) {
+      // Pretend success so the bot doesn't learn it was caught.
+      toast.success(lang === "en" ? "Prayer request submitted successfully!" : "Demande de prière soumise avec succès!");
+      onClose();
       return;
     }
 
@@ -83,6 +93,7 @@ export function PrayerModal({ onClose, lang }: PrayerModalProps) {
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="p-7 space-y-5">
+          <HoneypotField inputRef={honeypot.inputRef} />
           <div>
             <label className="block font-poppins text-[11px] font-medium text-white/50 mb-2">{t.name[lang]}</label>
             <input

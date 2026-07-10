@@ -5,6 +5,8 @@ import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
 import { useLang } from "@/lib/i18n";
 import { upcomingTranslations as t } from "../translations";
+import { HoneypotField } from "@/components/HoneypotField";
+import { useHoneypot } from "@/lib/useHoneypot";
 
 export function NotifySection() {
   const { lang } = useLang();
@@ -13,10 +15,17 @@ export function NotifySection() {
   const [name, setName] = useState("");
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
+  const honeypot = useHoneypot();
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     if (!email.trim()) return;
+    if (honeypot.isBot()) {
+      // Pretend success so the bot doesn't learn it was caught.
+      setDone(true);
+      toast.success(t.notify.successMsg[lang]);
+      return;
+    }
     setBusy(true);
     const db = createClient();
     const { error } = await db.from("notify_requests").insert({
@@ -71,6 +80,7 @@ export function NotifySection() {
                 </div>
                 <p className="up-modal-sub">{t.notify.modalSub[lang]}</p>
                 <form onSubmit={submit} className="up-modal-form">
+                  <HoneypotField inputRef={honeypot.inputRef} />
                   <label className="up-form-label">{t.notify.nameLbl[lang]} <span className="up-form-optional">{t.notify.nameOpt[lang]}</span></label>
                   <input
                     className="up-form-input"

@@ -5,6 +5,8 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { useLang } from "@/lib/i18n";
 import { localizedHref } from "@/lib/i18n/locale";
+import { HoneypotField } from "@/components/HoneypotField";
+import { useHoneypot } from "@/lib/useHoneypot";
 
 const ft = {
   tagline:       { en: "Rooted in the Word.\u2003Walking by Faith.\u2003Living for His Glory.", fr: "Ancr\u00e9 dans la Parole.\u2003Marchant par la Foi.\u2003Vivant pour Sa Gloire." },
@@ -92,6 +94,7 @@ export function SiteFooter() {
   const [status, setStatus]       = useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage]     = useState("");
   const inputRef                  = useRef<HTMLInputElement>(null);
+  const honeypot                  = useHoneypot();
 
   function toggleInterest(value: string) {
     setInterests((prev) =>
@@ -104,6 +107,14 @@ export function SiteFooter() {
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setStatus("error");
       setMessage(ft.errEmail[lang]);
+      return;
+    }
+    if (honeypot.isBot()) {
+      // Pretend success so the bot doesn't learn it was caught.
+      setStatus("success");
+      setMessage(ft.successMsg[lang]);
+      setEmail("");
+      setInterests([]);
       return;
     }
     setStatus("loading");
@@ -147,6 +158,7 @@ export function SiteFooter() {
           <p className="sf-nl-sub">{ft.nlSub[lang]}</p>
 
           <form className="sf-nl-form" onSubmit={handleSubscribe} noValidate>
+            <HoneypotField inputRef={honeypot.inputRef} />
             {/* Interest pills */}
             <div className="sf-nl-interests">
               <p className="sf-nl-interests-label">{ft.interestedIn[lang]}</p>

@@ -4,6 +4,8 @@ import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
 import { X, Sparkles } from "lucide-react";
+import { HoneypotField } from "@/components/HoneypotField";
+import { useHoneypot } from "@/lib/useHoneypot";
 
 interface BlogRequestModalProps {
   onClose: () => void;
@@ -16,10 +18,11 @@ export function BlogRequestModal({ onClose, lang }: BlogRequestModalProps) {
   const [topic, setTopic] = useState("");
   const [details, setDetails] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const honeypot = useHoneypot();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!name.trim() || !email.trim() || !topic.trim()) {
       toast.error(lang === "en" ? "Name, email, and topic are required" : "Le nom, l'email et le sujet sont requis");
       return;
@@ -29,6 +32,13 @@ export function BlogRequestModal({ onClose, lang }: BlogRequestModalProps) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email.trim())) {
       toast.error(lang === "en" ? "Please enter a valid email address" : "Veuillez entrer une adresse email valide");
+      return;
+    }
+
+    if (honeypot.isBot()) {
+      // Pretend success so the bot doesn't learn it was caught.
+      toast.success(lang === "en" ? "Blog request submitted successfully! We'll get back to you soon." : "Demande de blog soumise avec succès! Nous vous répondrons bientôt.");
+      onClose();
       return;
     }
 
@@ -94,6 +104,7 @@ export function BlogRequestModal({ onClose, lang }: BlogRequestModalProps) {
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="p-7 space-y-5">
+          <HoneypotField inputRef={honeypot.inputRef} />
           <div>
             <label className="block font-poppins text-[11px] font-medium text-white/50 mb-2">{t.name[lang]}</label>
             <input

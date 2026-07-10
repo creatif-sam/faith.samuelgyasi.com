@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { HoneypotField } from "@/components/HoneypotField";
+import { useHoneypot } from "@/lib/useHoneypot";
 
 export function TestimonialSubmitForm() {
   const [open, setOpen] = useState(false);
@@ -11,6 +13,7 @@ export function TestimonialSubmitForm() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
+  const honeypot = useHoneypot();
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -24,7 +27,7 @@ export function TestimonialSubmitForm() {
       const res = await fetch("/api/testimonials", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: name.trim(), role: profession.trim(), quote: quote.trim(), rating }),
+        body: JSON.stringify({ name: name.trim(), role: profession.trim(), quote: quote.trim(), rating, ...honeypot.getFields() }),
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
@@ -59,6 +62,7 @@ export function TestimonialSubmitForm() {
 
   return (
     <form className="ts-form-wrap" onSubmit={handleSubmit}>
+      <HoneypotField inputRef={honeypot.inputRef} />
       <p className="ts-form-title">Share Your Testimony</p>
       <p className="ts-form-note">Submitted testimonies are reviewed before they appear publicly.</p>
 

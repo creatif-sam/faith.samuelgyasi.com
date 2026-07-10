@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
+import { isBotSubmission } from "@/lib/bot-protection";
 
 export async function GET() {
   try {
@@ -33,6 +34,11 @@ export async function POST(request: Request) {
 
   if (!name || !role || !quote) {
     return NextResponse.json({ error: "Name, profession, and testimony are required." }, { status: 400 });
+  }
+
+  if (isBotSubmission(body as Record<string, unknown>)) {
+    // Pretend success so the bot doesn't learn it was caught.
+    return NextResponse.json({ ok: true });
   }
 
   const supabase = await createClient();

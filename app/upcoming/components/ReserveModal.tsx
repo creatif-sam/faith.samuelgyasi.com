@@ -4,6 +4,8 @@ import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useLang } from "@/lib/i18n";
 import { upcomingTranslations as ut } from "../translations";
+import { HoneypotField } from "@/components/HoneypotField";
+import { useHoneypot } from "@/lib/useHoneypot";
 
 const TYPES = [
   { value: "intervention", icon: "⚡" },
@@ -26,11 +28,17 @@ export function ReserveModal({ onClose }: ReserveModalProps) {
   const [busy,    setBusy]    = useState(false);
   const [done,    setDone]    = useState(false);
   const [err,     setErr]     = useState("");
+  const honeypot = useHoneypot();
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setErr(t.errValid[lang]);
+      return;
+    }
+    if (honeypot.isBot()) {
+      // Pretend success so the bot doesn't learn it was caught.
+      setDone(true);
       return;
     }
     setBusy(true);
@@ -88,6 +96,7 @@ export function ReserveModal({ onClose }: ReserveModalProps) {
             </div>
 
             <form className="up-reserve-form" onSubmit={submit} noValidate>
+              <HoneypotField inputRef={honeypot.inputRef} />
               <div className="up-reserve-field">
                 <label className="up-reserve-label">{t.nameLbl[lang]} <span className="up-reserve-optional">{t.optional[lang]}</span></label>
                 <input

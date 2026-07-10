@@ -9,6 +9,8 @@ import { toast } from "sonner";
 import { Link2, MessageCircle, ArrowLeft, ArrowRight, Check } from "lucide-react";
 import Breadcrumbs from "@/components/atoms/Breadcrumbs";
 import { BibleEnhancedContent } from "@/components/BibleEnhancedContent";
+import { HoneypotField } from "@/components/HoneypotField";
+import { useHoneypot } from "@/lib/useHoneypot";
 import { EvaluationModal } from "./EvaluationModal";
 import { articleCss } from "../articleStyles";
 
@@ -58,6 +60,8 @@ export function ArticleClient({
   olderPost?: AdjacentPost;
 }) {
   const { lang } = useLang();
+  const commentHoneypot = useHoneypot();
+  const evalHoneypot = useHoneypot();
   const [userId, setUserId] = useState<string | null>(null);
   const [showEvalModal, setShowEvalModal] = useState(false);
   const [linkCopied, setLinkCopied] = useState(false);
@@ -154,6 +158,14 @@ export function ArticleClient({
   async function submitComment(e: React.FormEvent) {
     e.preventDefault();
     if (!commentName.trim() || !commentText.trim()) return;
+    if (commentHoneypot.isBot()) {
+      // Pretend success so the bot doesn't learn it was caught.
+      setCommentName("");
+      setCommentEmail("");
+      setCommentText("");
+      toast.success(translations.commentPending);
+      return;
+    }
     setCommentBusy(true);
     const supabase = createClient();
     const { error } = await supabase.from("blog_comments").insert({
@@ -201,6 +213,13 @@ export function ArticleClient({
   const handleSubmitEvaluation = async () => {
     if (rating === 0) {
       toast.error(translations.rateRequired);
+      return;
+    }
+
+    if (evalHoneypot.isBot()) {
+      // Pretend success so the bot doesn't learn it was caught.
+      toast.success(translations.thankYou);
+      setShowEvalModal(false);
       return;
     }
 
@@ -377,6 +396,7 @@ export function ArticleClient({
           )}
 
           <form className="fa-comment-form" onSubmit={submitComment}>
+            <HoneypotField inputRef={commentHoneypot.inputRef} />
             <div className="fa-comment-row">
               <input
                 className="fa-comment-input"
@@ -429,6 +449,7 @@ export function ArticleClient({
       {showEvalModal && (
         <EvaluationModal
           lang={lang}
+          honeypotRef={evalHoneypot.inputRef}
           rating={rating}
           setRating={setRating}
           hoveredRating={hoveredRating}

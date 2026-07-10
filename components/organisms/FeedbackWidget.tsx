@@ -7,6 +7,8 @@ import { toast } from "sonner";
 import { MessageSquarePlus, X, Bug, Lightbulb, Send, Check } from "lucide-react";
 import { useLang } from "@/lib/i18n";
 import { feedbackTranslations as t } from "@/lib/i18n/feedback";
+import { HoneypotField } from "@/components/HoneypotField";
+import { useHoneypot } from "@/lib/useHoneypot";
 
 type FeedbackType = "bug" | "idea";
 type Stage = "closed" | "form" | "done";
@@ -19,6 +21,7 @@ export function FeedbackWidget() {
   const [email, setEmail] = useState("");
   const [busy, setBusy]   = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
+  const honeypot = useHoneypot();
 
   // Close on outside click
   useEffect(() => {
@@ -46,6 +49,12 @@ export function FeedbackWidget() {
 
   async function submit() {
     if (!msg.trim()) return;
+    if (honeypot.isBot()) {
+      // Pretend success so the bot doesn't learn it was caught.
+      toast.success(type === "bug" ? t.toasts.bugSuccess[lang] : t.toasts.ideaSuccess[lang]);
+      setStage("done");
+      return;
+    }
     setBusy(true);
     const db = createClient();
     const { error } = await db.from("feedback").insert({
@@ -107,6 +116,7 @@ export function FeedbackWidget() {
 
               {/* Body */}
               <div className="p-5 flex flex-col gap-4">
+                <HoneypotField inputRef={honeypot.inputRef} />
                 {/* Type toggle */}
                 <div className="flex gap-2">
                   {([

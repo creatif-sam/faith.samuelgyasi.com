@@ -6,6 +6,8 @@ import { toast } from "sonner";
 import { type UpcomingEvent } from "./types";
 import { useLang } from "@/lib/i18n";
 import { upcomingTranslations as ut } from "../translations";
+import { HoneypotField } from "@/components/HoneypotField";
+import { useHoneypot } from "@/lib/useHoneypot";
 
 interface RegisterModalProps {
   event: UpcomingEvent;
@@ -21,10 +23,17 @@ export function RegisterModal({ event, onClose }: RegisterModalProps) {
   const [msg, setMsg] = useState("");
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
+  const honeypot = useHoneypot();
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     if (!email.trim()) return;
+    if (honeypot.isBot()) {
+      // Pretend success so the bot doesn't learn it was caught.
+      toast.success(t.successMsg[lang]);
+      setDone(true);
+      return;
+    }
     setBusy(true);
     const db = createClient();
     const { error } = await db.from("event_registrations").insert({
@@ -68,6 +77,7 @@ export function RegisterModal({ event, onClose }: RegisterModalProps) {
               </button>
             </div>
             <form onSubmit={submit} className="up-modal-form">
+              <HoneypotField inputRef={honeypot.inputRef} />
               <label className="up-form-label">{t.nameLbl[lang]}</label>
               <input
                 className="up-form-input"

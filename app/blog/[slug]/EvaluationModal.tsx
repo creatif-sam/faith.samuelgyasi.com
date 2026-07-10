@@ -1,7 +1,11 @@
 "use client";
 
+import type { RefObject } from "react";
+import { HoneypotField } from "@/components/HoneypotField";
+
 interface EvaluationModalProps {
   lang: string;
+  honeypotRef: RefObject<HTMLInputElement | null>;
   rating: number;
   setRating: (v: number) => void;
   hoveredRating: number;
@@ -39,6 +43,7 @@ interface EvaluationModalProps {
 
 export function EvaluationModal({
   lang,
+  honeypotRef,
   rating,
   setRating,
   hoveredRating,
@@ -71,6 +76,7 @@ export function EvaluationModal({
         </div>
 
         <div className="eval-body">
+          <HoneypotField inputRef={honeypotRef} />
           <label className="eval-label">
             {translations.rateLabel} <span className="eval-required">*</span>
           </label>
