@@ -45,23 +45,23 @@ html.light .fa-adjacent-card:hover { border-color:rgba(154,109,16,.4); backgroun
 .fa-tag { font-family:'Poppins', sans-serif; font-size:9px; letter-spacing:.3em; text-transform:uppercase; background:linear-gradient(90deg,#ffde59,#ff914d); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:24px; }
 .fa-title { font-family:var(--font-playfair),'Playfair Display',serif; font-size:clamp(32px,5vw,62px); color:var(--white); line-height:1.08; margin-bottom:24px; }
 .fa-meta { font-family:'Poppins', sans-serif; font-size:9px; letter-spacing:.15em; text-transform:uppercase; color:var(--dim); display:flex; gap:12px; align-items:center; margin-bottom:40px; flex-wrap:wrap; }
-.fa-lead { font-family:var(--font-playfair),'Playfair Display',serif; font-size:clamp(18px,2.2vw,24px); font-style:italic; color:var(--cream); line-height:1.55; padding:28px 36px; border-left:3px solid transparent; border-image:linear-gradient(180deg,#ffde59,#ff914d) 1; background:rgba(255,222,89,.04); }
+.fa-lead { font-family:var(--font-playfair),'Playfair Display',serif; font-size:clamp(18px,2.2vw,24px); font-style:italic; color:var(--cream); line-height:1.55; padding:28px 36px; border-left:3px solid transparent; border-image:linear-gradient(180deg,#ffde59,#ff914d) 1; background:rgba(255,222,89,.04); text-align:justify; }
 .fa-body { font-family:var(--font-poppins), 'Poppins', sans-serif; font-size:clamp(17px,1.8vw,21px); line-height:1.9; color:var(--dim); font-weight:300; }
 .fa-body h2 { font-family:var(--font-playfair),'Playfair Display',serif; font-size:clamp(22px,3vw,32px); color:var(--white); margin:52px 0 20px; font-weight:700; }
 .fa-body h3 { font-family:var(--font-playfair),'Playfair Display',serif; font-size:22px; color:var(--white); margin:40px 0 16px; }
-.fa-body p { margin-bottom:28px; }
+.fa-body p { margin-bottom:28px; text-align:justify; }
 .fa-body em { color:var(--cream); }
 .fa-body strong { color:var(--white); }
-.fa-body blockquote { border-left:3px solid transparent; border-image:linear-gradient(180deg,#ffde59,#ff914d) 1; padding:20px 32px; background:rgba(255,222,89,.04); font-style:italic; font-size:19px; color:var(--cream); margin:40px 0; }
+.fa-body blockquote { border-left:3px solid transparent; border-image:linear-gradient(180deg,#ffde59,#ff914d) 1; padding:20px 32px; background:rgba(255,222,89,.04); font-style:italic; font-size:19px; color:var(--cream); margin:40px 0; text-align:justify; }
 .fa-body h1 { font-family:var(--font-playfair),'Playfair Display',serif; font-size:clamp(26px,3.6vw,38px); color:var(--white); margin:0 0 12px; font-weight:700; }
 .fa-body .eyebrow { font-family:'Poppins', sans-serif; font-size:12px; letter-spacing:.25em; text-transform:uppercase; background:linear-gradient(90deg,#ffde59,#ff914d); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:14px; }
 .fa-body .subtitle { font-family:var(--font-playfair),'Playfair Display',serif; font-style:italic; font-size:19px; color:var(--dim); margin-bottom:32px; }
-.fa-body .lede { font-size:19px; color:var(--cream); margin-bottom:32px; }
+.fa-body .lede { font-size:19px; color:var(--cream); margin-bottom:32px; text-align:justify; }
 .fa-body .verse-block { background:var(--card); border:1px solid var(--line); border-left:3px solid transparent; border-image:linear-gradient(180deg,#ffde59,#ff914d) 1; border-radius:8px; padding:32px 36px; margin:36px 0; }
-.fa-body .verse-block p { font-family:var(--font-playfair),'Playfair Display',serif; font-style:italic; font-size:22px; line-height:1.5; color:var(--cream); margin-bottom:0; }
+.fa-body .verse-block p { font-family:var(--font-playfair),'Playfair Display',serif; font-style:italic; font-size:22px; line-height:1.5; color:var(--cream); margin-bottom:0; text-align:justify; }
 .fa-body .verse-block span { display:block; margin-top:16px; font-family:'Poppins', sans-serif; font-style:normal; font-size:11px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; color:var(--gold); }
 .fa-body ol.application { list-style:none; counter-reset:app-counter; margin:24px 0 36px; padding:0; }
-.fa-body ol.application li { counter-increment:app-counter; position:relative; padding:16px 0 16px 56px; border-top:1px solid var(--line); margin-bottom:0; }
+.fa-body ol.application li { counter-increment:app-counter; position:relative; padding:16px 0 16px 56px; border-top:1px solid var(--line); margin-bottom:0; text-align:justify; }
 .fa-body ol.application li:last-child { border-bottom:1px solid var(--line); }
 .fa-body ol.application li::before { content:counter(app-counter); position:absolute; left:0; top:14px; width:30px; height:30px; border-radius:50%; background:var(--card); border:1px solid var(--line); color:var(--gold); font-family:var(--font-playfair),'Playfair Display',serif; font-weight:700; font-size:15px; display:flex; align-items:center; justify-content:center; }
 .fa-body .prayer { margin-top:44px; padding:32px 36px; background:var(--card); border-left:3px solid transparent; border-image:linear-gradient(180deg,#ffde59,#ff914d) 1; border-radius:8px; }
