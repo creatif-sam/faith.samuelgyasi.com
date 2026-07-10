@@ -46,7 +46,8 @@ html.light .fa-adjacent-card:hover { border-color:rgba(154,109,16,.4); backgroun
 .fa-title { font-family:var(--font-playfair),'Playfair Display',serif; font-size:clamp(32px,5vw,62px); color:var(--white); line-height:1.08; margin-bottom:24px; }
 .fa-meta { font-family:'Poppins', sans-serif; font-size:9px; letter-spacing:.15em; text-transform:uppercase; color:var(--dim); display:flex; gap:12px; align-items:center; margin-bottom:40px; flex-wrap:wrap; }
 .fa-lead { font-family:var(--font-playfair),'Playfair Display',serif; font-size:clamp(18px,2.2vw,24px); font-style:italic; color:var(--cream); line-height:1.55; padding:28px 36px; border-left:3px solid transparent; border-image:linear-gradient(180deg,#ffde59,#ff914d) 1; background:rgba(255,222,89,.04); text-align:justify; }
-.fa-body { font-family:var(--font-poppins), 'Poppins', sans-serif; font-size:clamp(17px,1.8vw,21px); line-height:1.9; color:var(--dim); font-weight:300; }
+.fa-body { font-family:var(--font-poppins), 'Poppins', sans-serif; font-size:clamp(17px,1.8vw,21px); line-height:1.9; color:rgba(240,236,228,.78); font-weight:300; }
+html.light .fa-body { color:rgba(26,24,20,.82); }
 .fa-body h2 { font-family:var(--font-playfair),'Playfair Display',serif; font-size:clamp(22px,3vw,32px); color:var(--white); margin:52px 0 20px; font-weight:700; }
 .fa-body h3 { font-family:var(--font-playfair),'Playfair Display',serif; font-size:22px; color:var(--white); margin:40px 0 16px; }
 .fa-body p { margin-bottom:28px; text-align:justify; }
