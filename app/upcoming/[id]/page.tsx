@@ -1,8 +1,10 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
 import type { UpcomingEvent } from "../components/types";
 import { EventDetailClient } from "./EventDetailClient";
+import { resolveLocale, pageAlternates, SITE_URL } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
@@ -14,6 +16,7 @@ const FALLBACK_IMAGE = "/photo-hero.png";
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
+  const locale = resolveLocale((await headers()).get("x-locale"));
   const supabase = await createClient();
   const { data: event } = await supabase
     .from("upcoming_events")
@@ -45,6 +48,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description,
       images: [image],
     },
+    alternates: pageAlternates(locale, `/upcoming/${id}`),
   };
 }
 
@@ -62,5 +66,34 @@ export default async function UpcomingEventPage({ params }: Props) {
 
   if (!event) notFound();
 
-  return <EventDetailClient event={event as UpcomingEvent} />;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    name: event.title,
+    description: event.description ?? undefined,
+    startDate: event.event_date ?? undefined,
+    eventAttendanceMode:
+      event.format === "online"
+        ? "https://schema.org/OnlineEventAttendanceMode"
+        : event.format === "in-person"
+        ? "https://schema.org/OfflineEventAttendanceMode"
+        : "https://schema.org/MixedEventAttendanceMode",
+    eventStatus: "https://schema.org/EventScheduled",
+    location: event.join_url
+      ? { "@type": "VirtualLocation", url: event.join_url }
+      : { "@type": "Place", name: event.location ?? "TBA" },
+    image: event.flyer_url ? [event.flyer_url] : [`${SITE_URL}${FALLBACK_IMAGE}`],
+    organizer: { "@type": "Person", name: event.host_name ?? "Samuel Kobina Gyasi", url: event.host_url ?? SITE_URL },
+    url: `${SITE_URL}/en/upcoming/${id}`,
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <EventDetailClient event={event as UpcomingEvent} />
+    </>
+  );
 }

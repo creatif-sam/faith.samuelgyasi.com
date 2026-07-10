@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
 import { ArticleClient } from "./ArticleClient";
+import { resolveLocale, pageAlternates, SITE_URL } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
@@ -12,7 +13,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const locale = (await headers()).get("x-locale");
+  const locale = resolveLocale((await headers()).get("x-locale"));
   const supabase = await createClient();
   const { data: post } = await supabase
     .from("blog_posts")
@@ -38,11 +39,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: excerpt ?? undefined,
       images,
     },
+    alternates: pageAlternates(locale, `/blog/${slug}`),
   };
 }
 
 export default async function FaithBlogPostPage({ params }: Props) {
   const { slug } = await params;
+  const locale = resolveLocale((await headers()).get("x-locale"));
   const supabase = await createClient();
   const { data: post } = await supabase
     .from("blog_posts")
@@ -135,5 +138,37 @@ export default async function FaithBlogPostPage({ params }: Props) {
       .maybeSingle(),
   ]);
 
-  return <ArticleClient post={post} related={relatedPosts} newerPost={newerPost} olderPost={olderPost} />;
+  const title = locale === "fr" && post.title_fr ? post.title_fr : post.title;
+  const excerpt = locale === "fr" && post.excerpt_fr ? post.excerpt_fr : post.excerpt;
+  const postUrl = `${SITE_URL}/${locale}/blog/${slug}`;
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: title,
+    description: excerpt ?? undefined,
+    image: post.featured_image_url ?? undefined,
+    datePublished: post.created_at,
+    dateModified: post.created_at,
+    inLanguage: locale,
+    mainEntityOfPage: { "@type": "WebPage", "@id": postUrl },
+    url: postUrl,
+    author: { "@type": "Person", name: "Samuel Kobina Gyasi", url: SITE_URL },
+    publisher: {
+      "@type": "Person",
+      name: "Samuel Kobina Gyasi",
+      url: SITE_URL,
+      logo: { "@type": "ImageObject", url: `${SITE_URL}/favicon.png` },
+    },
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <ArticleClient post={post} related={relatedPosts} newerPost={newerPost} olderPost={olderPost} />
+    </>
+  );
 }

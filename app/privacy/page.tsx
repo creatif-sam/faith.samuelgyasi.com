@@ -2,20 +2,23 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { headers } from "next/headers";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
-import { isSupportedLocale, localizedHref } from "@/lib/i18n/locale";
+import { localizedHref } from "@/lib/i18n/locale";
+import { resolveLocale, pageAlternates, SITE_URL } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy",
-  description:
-    "How faith.samuelgyasi.com collects, uses, and protects your personal information.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const lang = resolveLocale((await headers()).get("x-locale"));
+  return {
+    title: "Privacy Policy",
+    description:
+      "How faith.samuelgyasi.com collects, uses, and protects your personal information.",
+    alternates: pageAlternates(lang, "/privacy"),
+  };
+}
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://faith.samuelgyasi.com";
+const siteUrl = SITE_URL;
 
 export default async function PrivacyPage() {
-  const localeHeader = (await headers()).get("x-locale");
-  const lang = isSupportedLocale(localeHeader) ? localeHeader : "en";
+  const lang = resolveLocale((await headers()).get("x-locale"));
 
   return (
     <>

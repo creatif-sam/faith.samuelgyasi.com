@@ -1,10 +1,13 @@
 import type { MetadataRoute } from "next";
+import { SITE_URL } from "@/lib/seo";
 
 export default function robots(): MetadataRoute.Robots {
-  const siteUrl =
-    process.env.NEXT_PUBLIC_SITE_URL ?? "https://faith.samuelgyasi.com";
   return {
-    rules: { userAgent: "*", allow: "/" },
-    sitemap: `${siteUrl}/sitemap.xml`,
+    rules: {
+      userAgent: "*",
+      allow: "/",
+      disallow: ["/admin", "/dashboard", "/auth", "/api"],
+    },
+    sitemap: `${SITE_URL}/sitemap.xml`,
   };
 }

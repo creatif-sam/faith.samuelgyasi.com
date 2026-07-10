@@ -9,7 +9,7 @@ import { Providers } from "./providers";
 import { NavWrapper } from "@/components/organisms/NavWrapper";
 import { FeedbackWidget } from "@/components/organisms/FeedbackWidget";
 import { ThemeSwitcher } from "@/components/theme-switcher";
-import { isSupportedLocale } from "@/lib/i18n/locale";
+import { resolveLocale, pageAlternates, SITE_URL } from "@/lib/seo";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -24,87 +24,89 @@ const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700"],
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://faith.samuelgyasi.com";
+export async function generateMetadata(): Promise<Metadata> {
+  const lang = resolveLocale((await headers()).get("x-locale"));
 
-export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
-  title: {
-    default: "Faith — Samuel Kobina Gyasi",
-    template: "%s | Samuel Kobina Gyasi",
-  },
-  description:
-    "A bilingual (EN/FR) space of faith, scripture, and sacred conviction. Samuel Kobina Gyasi — anchored in the Word, walking in purpose.",
-  keywords: [
-    "Samuel Gyasi faith",
-    "Samuel Kobina Gyasi",
-    "biblical faith",
-    "Christian blog",
-    "foi chrétienne",
-    "Samuel Gyasi Ghana",
-    "faith and scripture",
-    "spiritual reflections",
-    "theology blog bilingual",
-    "Ghanaian Christian writer",
-    "faith over fear",
-    "foi et conviction",
-  ],
-  authors: [{ name: "Samuel Kobina Gyasi", url: siteUrl }],
-  creator: "Samuel Kobina Gyasi",
-  publisher: "Samuel Kobina Gyasi",
-  openGraph: {
-    type: "profile",
-    locale: "en_US",
-    url: siteUrl,
-    siteName: "Samuel Kobina Gyasi — Faith",
-    title: "Faith — Samuel Kobina Gyasi",
+  return {
+    metadataBase: new URL(SITE_URL),
+    title: {
+      default: "Faith — Samuel Kobina Gyasi",
+      template: "%s | Samuel Kobina Gyasi",
+    },
     description:
-      "Bilingual reflections on faith, scripture, and the sacred journey of trusting God.",
-    images: [
-      {
-        url: "/photo-hero.png",
-        width: 1200,
-        height: 630,
-        alt: "Samuel Kobina Gyasi",
-      },
+      "A bilingual (EN/FR) space of faith, scripture, and sacred conviction. Samuel Kobina Gyasi — anchored in the Word, walking in purpose.",
+    keywords: [
+      "Samuel Gyasi faith",
+      "Samuel Kobina Gyasi",
+      "biblical faith",
+      "Christian blog",
+      "foi chrétienne",
+      "Samuel Gyasi Ghana",
+      "faith and scripture",
+      "spiritual reflections",
+      "theology blog bilingual",
+      "Ghanaian Christian writer",
+      "faith over fear",
+      "foi et conviction",
     ],
-    firstName: "Samuel",
-    lastName: "Gyasi",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Faith — Samuel Kobina Gyasi",
-    description: "Bilingual reflections on faith, scripture, and the sacred journey of trusting God.",
-    images: ["/photo-hero.png"],
-    creator: "@samuel_gsi",
-  },
-  icons: {
-    icon: [
-      { url: "/favicon.png", type: "image/png" },
-    ],
-    shortcut: "/favicon.png",
-    apple: "/favicon.png",
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
+    authors: [{ name: "Samuel Kobina Gyasi", url: SITE_URL }],
+    creator: "Samuel Kobina Gyasi",
+    publisher: "Samuel Kobina Gyasi",
+    openGraph: {
+      type: "profile",
+      locale: lang === "fr" ? "fr_FR" : "en_US",
+      url: `${SITE_URL}/${lang}`,
+      siteName: "Samuel Kobina Gyasi — Faith",
+      title: "Faith — Samuel Kobina Gyasi",
+      description:
+        "Bilingual reflections on faith, scripture, and the sacred journey of trusting God.",
+      images: [
+        {
+          url: "/photo-hero.png",
+          width: 1200,
+          height: 630,
+          alt: "Samuel Kobina Gyasi",
+        },
+      ],
+      firstName: "Samuel",
+      lastName: "Gyasi",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Faith — Samuel Kobina Gyasi",
+      description: "Bilingual reflections on faith, scripture, and the sacred journey of trusting God.",
+      images: ["/photo-hero.png"],
+      creator: "@samuel_gsi",
+    },
+    icons: {
+      icon: [
+        { url: "/favicon.png", type: "image/png" },
+      ],
+      shortcut: "/favicon.png",
+      apple: "/favicon.png",
+    },
+    robots: {
       index: true,
       follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
     },
-  },
-  alternates: { canonical: siteUrl },
-};
+    alternates: pageAlternates(lang, ""),
+  };
+}
 
-const jsonLd = {
-  "@context": "https://schema.org",
+const personJsonLd = {
   "@type": "Person",
+  "@id": `${SITE_URL}/#person`,
   name: "Samuel Kobina Gyasi",
   alternateName: ["Samuel Gyasi", "Samuel K. Gyasi"],
-  url: siteUrl,
-  image: `${siteUrl}/photo-hero.png`,
+  url: SITE_URL,
+  image: `${SITE_URL}/photo-hero.png`,
   jobTitle: "Scholar · Leader · Speaker",
   description:
     "Samuel Kobina Gyasi is a scholar, leader, and speaker rooted in faith, dedicated to transformative leadership and community impact.",
@@ -125,11 +127,26 @@ const jsonLd = {
   ],
 };
 
+const websiteJsonLd = {
+  "@type": "WebSite",
+  "@id": `${SITE_URL}/#website`,
+  url: SITE_URL,
+  name: "Faith — Samuel Kobina Gyasi",
+  description:
+    "A bilingual (EN/FR) space of faith, scripture, and sacred conviction.",
+  publisher: { "@id": `${SITE_URL}/#person` },
+  inLanguage: ["en", "fr"],
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [personJsonLd, websiteJsonLd],
+};
+
 export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const localeHeader = (await headers()).get("x-locale");
-  const lang = isSupportedLocale(localeHeader) ? localeHeader : "en";
+  const lang = resolveLocale((await headers()).get("x-locale"));
 
   return (
     <html lang={lang} suppressHydrationWarning>
