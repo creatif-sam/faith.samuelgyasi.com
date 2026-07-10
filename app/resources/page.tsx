@@ -80,7 +80,7 @@ const css = `
   font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: clamp(16px, 1.8vw, 20px);
   font-weight: 300;
-  color: rgba(245,243,239,.62);
+  color: color-mix(in srgb, var(--white) 62%, transparent);
   max-width: 540px;
   line-height: 1.7;
   opacity: 0;
@@ -145,7 +145,7 @@ const css = `
   font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 16px;
   font-weight: 300;
-  color: rgba(245,243,239,.6);
+  color: color-mix(in srgb, var(--white) 60%, transparent);
   line-height: 1.75;
 }
 .lib-card-cta {
@@ -224,7 +224,7 @@ const css = `
   color: #c9a84c;
 }
 .light .lib-card-body {
-  color: rgba(245,243,239,.75);
+  color: color-mix(in srgb, var(--white) 75%, transparent);
 }
 .light .lib-quote-strip blockquote {
   color: #1a1816;

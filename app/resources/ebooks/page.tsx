@@ -78,7 +78,7 @@ const css = `
 .ebooks-back {
   font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 9px; letter-spacing: .22em; text-transform: uppercase;
-  color: rgba(245,243,239,.4); text-decoration: none;
+  color: color-mix(in srgb, var(--white) 40%, transparent); text-decoration: none;
   display: flex; align-items: center; gap: 8px; margin-bottom: 40px;
   transition: color .25s;
 }
@@ -113,7 +113,7 @@ const css = `
 .ebooks-sub {
   font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: clamp(16px, 1.8vw, 20px); font-style: italic;
-  color: rgba(245,243,239,.6); max-width: 520px; line-height: 1.7;
+  color: color-mix(in srgb, var(--white) 60%, transparent); max-width: 520px; line-height: 1.7;
   opacity: 0; animation: eb-rise .9s .5s ease forwards;
 }
 @keyframes eb-rise {
@@ -182,12 +182,12 @@ const css = `
 .ebook-desc {
   font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 13px; font-weight: 300;
-  color: rgba(245,243,239,.55); line-height: 1.7; flex: 1;
+  color: color-mix(in srgb, var(--white) 55%, transparent); line-height: 1.7; flex: 1;
 }
 .ebook-date {
   font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 9px; letter-spacing: .15em; text-transform: uppercase;
-  color: rgba(245,243,239,.22);
+  color: color-mix(in srgb, var(--white) 22%, transparent);
 }
 .ebook-download-btn {
   display: flex; align-items: center; justify-content: center; gap: 8px;
@@ -215,7 +215,7 @@ const css = `
 /* ── EMPTY ── */
 .ebooks-empty {
   font-family: var(--font-poppins), 'Poppins', sans-serif;
-  font-size: 22px; font-style: italic; color: rgba(245,243,239,.35);
+  font-size: 22px; font-style: italic; color: color-mix(in srgb, var(--white) 35%, transparent);
   padding: 80px; text-align: center;
 }
 

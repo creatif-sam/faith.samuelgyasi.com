@@ -25,7 +25,7 @@ export const visualStyles = `
 .visual-back {
   font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 9px; letter-spacing: .22em; text-transform: uppercase;
-  color: rgba(245,243,239,.4); text-decoration: none;
+  color: color-mix(in srgb, var(--white) 40%, transparent); text-decoration: none;
   display: flex; align-items: center; gap: 8px; margin-bottom: 40px;
   transition: color .25s;
 }
@@ -60,7 +60,7 @@ export const visualStyles = `
 .visual-sub {
   font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: clamp(16px, 1.8vw, 20px); font-weight: 300;
-  color: rgba(245,243,239,.6); max-width: 520px; line-height: 1.7;
+  color: color-mix(in srgb, var(--white) 60%, transparent); max-width: 520px; line-height: 1.7;
   opacity: 0; animation: vis-rise .9s .5s ease forwards;
 }
 @keyframes vis-rise {
@@ -153,13 +153,13 @@ export const visualStyles = `
 .video-desc {
   font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 14px; font-weight: 300;
-  color: rgba(245,243,239,.58); line-height: 1.65;
+  color: color-mix(in srgb, var(--white) 58%, transparent); line-height: 1.65;
 }
 .video-meta {
   display: flex; gap: 16px; align-items: center;
   font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 9px; letter-spacing: .15em; text-transform: uppercase;
-  color: rgba(245,243,239,.25);
+  color: color-mix(in srgb, var(--white) 25%, transparent);
   margin-top: auto;
   padding-top: 16px;
   border-top: 1px solid rgba(201,168,76,.08);
@@ -173,7 +173,7 @@ export const visualStyles = `
 .gallery-section-title {
   font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 11px; letter-spacing: .28em; text-transform: uppercase;
-  color: rgba(245,243,239,.3);
+  color: color-mix(in srgb, var(--white) 30%, transparent);
   display: flex; align-items: center; gap: 12px;
   margin-bottom: 28px;
 }
@@ -211,7 +211,7 @@ export const visualStyles = `
 .gallery-card-count {
   position: absolute; bottom: 8px; right: 8px;
   background: rgba(0,0,0,.65); backdrop-filter: blur(6px);
-  color: rgba(245,243,239,.8);
+  color: color-mix(in srgb, var(--white) 80%, transparent);
   font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 9px; letter-spacing: .12em;
   padding: 4px 9px; border-radius: 3px;
@@ -225,7 +225,7 @@ export const visualStyles = `
 }
 .gallery-card-desc {
   font-family: var(--font-poppins), 'Poppins', sans-serif;
-  font-size: 12px; font-weight: 300; color: rgba(245,243,239,.45); line-height: 1.65;
+  font-size: 12px; font-weight: 300; color: color-mix(in srgb, var(--white) 45%, transparent); line-height: 1.65;
 }
 
 /* ── LIGHTBOX ── */
@@ -268,7 +268,7 @@ export const visualStyles = `
 }
 .lb-caption {
   font-family: var(--font-poppins), 'Poppins', sans-serif;
-  font-size: 13px; color: rgba(245,243,239,.55); font-weight: 300;
+  font-size: 13px; color: color-mix(in srgb, var(--white) 55%, transparent); font-weight: 300;
   margin-bottom: 10px; min-height: 20px;
 }
 .lb-dots {
@@ -284,7 +284,7 @@ export const visualStyles = `
 /* ── EMPTY ── */
 .visual-empty {
   font-family: var(--font-poppins), 'Poppins', sans-serif;
-  font-size: 22px; color: rgba(245,243,239,.35);
+  font-size: 22px; color: color-mix(in srgb, var(--white) 35%, transparent);
   padding: 80px; text-align: center; grid-column: 1 / -1;
 }
 

@@ -81,7 +81,7 @@ const css = `
   font-family: var(--font-poppins),'Poppins',sans-serif;
   font-size: clamp(16px,1.8vw,20px);
   font-weight: 300;
-  color: rgba(245,243,239,.62);
+  color: color-mix(in srgb, var(--white) 62%, transparent);
   max-width: 580px;
   line-height: 1.7;
   opacity: 0;
@@ -156,7 +156,7 @@ const css = `
   font-family: var(--font-poppins),'Poppins',sans-serif;
   font-size: 14px;
   font-weight: 300;
-  color: rgba(245,243,239,.55);
+  color: color-mix(in srgb, var(--white) 55%, transparent);
   line-height: 1.75;
   flex: 1;
   display: -webkit-box;
@@ -178,7 +178,7 @@ const css = `
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(245,243,239,.35);
+  color: color-mix(in srgb, var(--white) 35%, transparent);
 }
 .trp-card-cta {
   font-family: var(--font-poppins),'Poppins',sans-serif;
@@ -199,7 +199,7 @@ const css = `
   font-family: var(--font-poppins),'Poppins',sans-serif;
   font-size: 16px;
   font-weight: 300;
-  color: rgba(245,243,239,.35);
+  color: color-mix(in srgb, var(--white) 35%, transparent);
 }
 
 /* ── ENROLL STRIP ── */
@@ -235,7 +235,7 @@ const css = `
   font-family: var(--font-poppins),'Poppins',sans-serif;
   font-size: 16px;
   font-weight: 300;
-  color: rgba(245,243,239,.45);
+  color: color-mix(in srgb, var(--white) 45%, transparent);
   margin-bottom: 32px;
   line-height: 1.6;
 }

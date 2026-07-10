@@ -46,7 +46,7 @@ const css = `
 .audio-back {
   font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 9px; letter-spacing: .22em; text-transform: uppercase;
-  color: rgba(245,243,239,.4); text-decoration: none;
+  color: color-mix(in srgb, var(--white) 40%, transparent); text-decoration: none;
   display: flex; align-items: center; gap: 8px; margin-bottom: 40px;
   transition: color .25s;
 }
@@ -81,7 +81,7 @@ const css = `
 .audio-sub {
   font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: clamp(16px, 1.8vw, 20px); font-weight: 300;
-  color: rgba(245,243,239,.6); max-width: 520px; line-height: 1.7;
+  color: color-mix(in srgb, var(--white) 60%, transparent); max-width: 520px; line-height: 1.7;
   opacity: 0; animation: aud-rise .9s .5s ease forwards;
 }
 @keyframes aud-rise {
@@ -133,13 +133,13 @@ const css = `
 .audio-desc {
   font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 14px; font-weight: 300;
-  color: rgba(245,243,239,.58); line-height: 1.65;
+  color: color-mix(in srgb, var(--white) 58%, transparent); line-height: 1.65;
 }
 .audio-meta {
   display: flex; gap: 16px; align-items: center;
   font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 9px; letter-spacing: .15em; text-transform: uppercase;
-  color: rgba(245,243,239,.25);
+  color: color-mix(in srgb, var(--white) 25%, transparent);
 }
 .audio-download-btn {
   display: inline-flex; align-items: center; gap: 8px;
@@ -156,7 +156,7 @@ const css = `
 /* ── EMPTY ── */
 .audio-empty {
   font-family: var(--font-poppins), 'Poppins', sans-serif;
-  font-size: 22px; color: rgba(245,243,239,.35);
+  font-size: 22px; color: color-mix(in srgb, var(--white) 35%, transparent);
   padding: 80px; text-align: center; grid-column: 1 / -1;
 }
 

@@ -105,7 +105,7 @@ const css = `
 .reviews-back {
   font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 9px; letter-spacing: .22em; text-transform: uppercase;
-  color: rgba(245,243,239,.4); text-decoration: none;
+  color: color-mix(in srgb, var(--white) 40%, transparent); text-decoration: none;
   display: flex; align-items: center; gap: 8px; margin-bottom: 40px;
   transition: color .25s;
 }
@@ -140,7 +140,7 @@ const css = `
 .reviews-sub {
   font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: clamp(16px, 1.8vw, 20px); font-style: italic;
-  color: rgba(245,243,239,.6); max-width: 520px; line-height: 1.7;
+  color: color-mix(in srgb, var(--white) 60%, transparent); max-width: 520px; line-height: 1.7;
   opacity: 0; animation: rv-rise .9s .5s ease forwards;
 }
 @keyframes rv-rise {
@@ -160,7 +160,7 @@ const css = `
   font-size: 9px; letter-spacing: .2em; text-transform: uppercase;
   padding: 8px 18px; background: transparent;
   border: 1px solid rgba(201,168,76,.12);
-  color: rgba(245,243,239,.4); cursor: pointer; transition: all .25s;
+  color: color-mix(in srgb, var(--white) 40%, transparent); cursor: pointer; transition: all .25s;
 }
 .rv-filter:hover { border-color: rgba(201,168,76,.3); color: var(--gold); }
 .rv-filter.active { background: linear-gradient(90deg,#ffde59,#ff914d); color: #0a0a0a; border-color: transparent; }
@@ -214,24 +214,24 @@ const css = `
 .rv-author {
   font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 10px; letter-spacing: .15em; text-transform: uppercase;
-  color: rgba(245,243,239,.3); margin-bottom: 20px;
+  color: color-mix(in srgb, var(--white) 30%, transparent); margin-bottom: 20px;
 }
 .rv-review {
   font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: clamp(16px, 1.6vw, 18px); font-style: italic;
-  color: rgba(245,243,239,.68); line-height: 1.85;
+  color: color-mix(in srgb, var(--white) 68%, transparent); line-height: 1.85;
 }
 .rv-date {
   margin-top: 16px;
   font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 9px; letter-spacing: .15em; text-transform: uppercase;
-  color: rgba(245,243,239,.2);
+  color: color-mix(in srgb, var(--white) 20%, transparent);
 }
 
 /* ── EMPTY ── */
 .reviews-empty {
   font-family: var(--font-poppins), 'Poppins', sans-serif;
-  font-size: 22px; font-style: italic; color: rgba(245,243,239,.35);
+  font-size: 22px; font-style: italic; color: color-mix(in srgb, var(--white) 35%, transparent);
   padding: 80px; text-align: center;
 }
 
