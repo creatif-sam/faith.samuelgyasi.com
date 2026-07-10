@@ -34,6 +34,7 @@ export default function PostModal({ post, onClose, onSave, db }: PostModalProps)
     series_id:          post?.series_id          ?? null as string | null,
     series_order:       post?.series_order       ?? 0,
   });
+  const [lang, setLang] = useState<"en" | "fr">("en");
   const [busy, setBusy] = useState(false);
   const [uploading, setUploading] = useState({ cover: false, infographieEn: false, infographieFr: false });
   const [series, setSeries] = useState<BlogSeries[]>([]);
@@ -160,11 +161,27 @@ export default function PostModal({ post, onClose, onSave, db }: PostModalProps)
           <button onClick={onClose} className={TW.iconBtn}><X size={16} /></button>
         </div>
         <form onSubmit={save}>
-          <div className={TW.field}><label className={TW.label}>Title *</label>
-            <input className={TW.input} value={form.title} onChange={(e) => { setF("title", e.target.value); if (!post) setF("slug", slugify(e.target.value)); }} placeholder="Post title" required />
+          <div className={TW.mSeg}>
+            <button type="button" className={cn(TW.mSegTab, lang === "en" && TW.mSegAct)} onClick={() => setLang("en")}>
+              English
+              <span className={cn("w-1.5 h-1.5 rounded-full", form.title.trim() ? "bg-current opacity-70" : "bg-current opacity-20")} />
+            </button>
+            <button type="button" className={cn(TW.mSegTab, lang === "fr" && TW.mSegAct)} onClick={() => setLang("fr")}>
+              Français
+              <span className={cn("w-1.5 h-1.5 rounded-full", form.title_fr.trim() ? "bg-current opacity-70" : "bg-current opacity-20")} />
+            </button>
           </div>
-          <div className={TW.field}><label className={TW.label}>Title (French)</label>
-            <input className={TW.input} value={form.title_fr} onChange={(e) => setF("title_fr", e.target.value)} placeholder="Titre du post" />
+          <div className={TW.field}><label className={TW.label}>Title {lang === "en" ? "*" : "(French)"}</label>
+            <input
+              className={TW.input}
+              value={lang === "en" ? form.title : form.title_fr}
+              onChange={(e) => {
+                if (lang === "en") { setF("title", e.target.value); if (!post) setF("slug", slugify(e.target.value)); }
+                else setF("title_fr", e.target.value);
+              }}
+              placeholder={lang === "en" ? "Post title" : "Titre du post"}
+              required={lang === "en"}
+            />
           </div>
           <div className={TW.fRow}>
             <div className={TW.field}><label className={TW.label}>Slug *</label><input className={TW.input} value={form.slug} onChange={(e) => setF("slug", e.target.value)} placeholder="url-slug" required /></div>
@@ -253,10 +270,20 @@ export default function PostModal({ post, onClose, onSave, db }: PostModalProps)
             )}
           </div>
           
-          <div className={TW.field}><label className={TW.label}>Excerpt</label><textarea className={cn(TW.tarea, "min-h-[80px]")} value={form.excerpt} onChange={(e) => setF("excerpt", e.target.value)} placeholder="Short summary…" /></div>
-          <div className={TW.field}><label className={TW.label}>Excerpt (French)</label><textarea className={cn(TW.tarea, "min-h-[80px]")} value={form.excerpt_fr} onChange={(e) => setF("excerpt_fr", e.target.value)} placeholder="Résumé court…" /></div>
-          <BlogContentBuilder label="Content" value={form.content} onChange={(v) => setF("content", v)} />
-          <BlogContentBuilder label="Content (French)" value={form.content_fr} onChange={(v) => setF("content_fr", v)} placeholder="<p>Article complet…</p>" />
+          <div className={TW.field}><label className={TW.label}>Excerpt {lang === "fr" && "(French)"}</label>
+            <textarea
+              className={cn(TW.tarea, "min-h-[80px]")}
+              value={lang === "en" ? form.excerpt : form.excerpt_fr}
+              onChange={(e) => setF(lang === "en" ? "excerpt" : "excerpt_fr", e.target.value)}
+              placeholder={lang === "en" ? "Short summary…" : "Résumé court…"}
+            />
+          </div>
+          <BlogContentBuilder
+            label={lang === "en" ? "Content" : "Content (French)"}
+            value={lang === "en" ? form.content : form.content_fr}
+            onChange={(v) => setF(lang === "en" ? "content" : "content_fr", v)}
+            placeholder={lang === "en" ? undefined : "<p>Article complet…</p>"}
+          />
           <div className={TW.fRow}>
             <div className={TW.field}>
               <label className={TW.label}>Cover Photo</label>
@@ -277,33 +304,21 @@ export default function PostModal({ post, onClose, onSave, db }: PostModalProps)
             <label className={TW.label}>YouTube Video URL (optional – auto-shows thumbnail on card)</label>
             <input className={TW.input} value={form.youtube_url} onChange={(e) => setF("youtube_url", e.target.value)} placeholder="https://www.youtube.com/watch?v=..." />
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className={TW.field}>
-              <label className={TW.label}>Summary Infographic (English)</label>
-              <label className={cn(TW.input, "flex items-center gap-3 cursor-pointer py-2.5 px-4 border-dashed")}>
-                <input type="file" accept="image/*" className="hidden" onChange={handleInfographieEn} disabled={uploading.infographieEn} />
-                {uploading.infographieEn ? (
-                  <span className="text-white/40 text-sm">Uploading…</span>
-                ) : form.infographie_url_en ? (
-                  <><img src={form.infographie_url_en} alt="infographic en" className="w-10 h-10 object-cover rounded" /><span className="text-white/50 text-xs truncate max-w-[120px]">{form.infographie_url_en.split("/").pop()}</span></>
-                ) : (
-                  <span className="text-white/30 text-sm">Upload EN infographic…</span>
-                )}
-              </label>
-            </div>
-            <div className={TW.field}>
-              <label className={TW.label}>Summary Infographic (French)</label>
-              <label className={cn(TW.input, "flex items-center gap-3 cursor-pointer py-2.5 px-4 border-dashed")}>
-                <input type="file" accept="image/*" className="hidden" onChange={handleInfographieFr} disabled={uploading.infographieFr} />
-                {uploading.infographieFr ? (
-                  <span className="text-white/40 text-sm">Uploading…</span>
-                ) : form.infographie_url_fr ? (
-                  <><img src={form.infographie_url_fr} alt="infographic fr" className="w-10 h-10 object-cover rounded" /><span className="text-white/50 text-xs truncate max-w-[120px]">{form.infographie_url_fr.split("/").pop()}</span></>
-                ) : (
-                  <span className="text-white/30 text-sm">Upload FR infographic…</span>
-                )}
-              </label>
-            </div>
+          <div className={TW.field}>
+            <label className={TW.label}>Summary Infographic {lang === "fr" && "(French)"}</label>
+            <label className={cn(TW.input, "flex items-center gap-3 cursor-pointer py-2.5 px-4 border-dashed")}>
+              <input type="file" accept="image/*" className="hidden" onChange={lang === "en" ? handleInfographieEn : handleInfographieFr} disabled={lang === "en" ? uploading.infographieEn : uploading.infographieFr} />
+              {(lang === "en" ? uploading.infographieEn : uploading.infographieFr) ? (
+                <span className="text-white/40 text-sm">Uploading…</span>
+              ) : (lang === "en" ? form.infographie_url_en : form.infographie_url_fr) ? (
+                <>
+                  <img src={lang === "en" ? form.infographie_url_en : form.infographie_url_fr} alt="infographic" className="w-10 h-10 object-cover rounded" />
+                  <span className="text-white/50 text-xs truncate max-w-[140px]">{(lang === "en" ? form.infographie_url_en : form.infographie_url_fr).split("/").pop()}</span>
+                </>
+              ) : (
+                <span className="text-white/30 text-sm">Upload {lang === "en" ? "EN" : "FR"} infographic…</span>
+              )}
+            </label>
           </div>
           <div className="flex items-center gap-3 mb-5 py-4 border-y border-white/[.05]">
             <label className="relative inline-flex items-center cursor-pointer">
