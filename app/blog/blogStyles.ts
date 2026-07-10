@@ -11,12 +11,8 @@ export const blogStyles = `
   to { opacity: 1; }
 }
 body.on-fdp { background:#080807; color:#f0ece4; font-family:'Poppins', sans-serif; }
-.fdp-blog-nav { position:fixed; top:0; left:0; right:0; z-index:200; padding:22px 56px; display:flex; justify-content:space-between; align-items:center; background:rgba(6,6,5,.98); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-bottom:1px solid rgba(255,222,89,.1); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
-.nav-back { font-family:'Poppins', sans-serif; font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:var(--dim); text-decoration:none; transition:all .3s ease; transform:translateX(0); }
-.nav-back:hover { color:#ffde59; transform:translateX(-4px); }
-.nav-logo { font-family:var(--font-playfair),'Playfair Display',serif; font-size:17px; color:var(--white); letter-spacing:.06em; }
-.fb-container { max-width:1400px; margin:0 auto; padding:100px 56px 0; }
-.fb-header { padding:160px 56px 72px; border-bottom:1px solid var(--line); animation: slideUp 0.8s ease-out; }
+.fb-container { max-width:1400px; margin:0 auto; padding:104px 56px 0; }
+.fb-header { padding:32px 56px 56px; border-bottom:1px solid var(--line); animation: slideUp 0.8s ease-out; }
 @keyframes slideUp {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
@@ -100,9 +96,8 @@ body.on-fdp { background:#080807; color:#f0ece4; font-family:'Poppins', sans-ser
 .fb-series-badge { font-family:'Poppins', sans-serif; font-size:8px; letter-spacing:.15em; text-transform:uppercase; color:var(--dimmer); display:inline-flex; align-items:center; gap:6px; margin-top:-4px; }
 :root:not(.dark) .fb-series-badge { color:#8a7f6e; }
 @media(max-width:900px){
-  .fdp-blog-nav { padding:18px 24px; }
-  .fb-container { padding:90px 24px 0; }
-  .fb-header { padding:130px 24px 48px; }
+  .fb-container { padding:88px 24px 0; }
+  .fb-header { padding:24px 24px 40px; }
   .fb-search-container { padding: 24px; }
   .fb-filters { padding:20px 24px; top:61px; gap: 8px; }
   .fb-layout-with-sidebar { flex-direction: column; padding: 0 24px 60px; gap: 32px; }
@@ -121,14 +116,6 @@ body.on-fdp { background:#080807; color:#f0ece4; font-family:'Poppins', sans-ser
   --gold: #B8860B; --dim: #4a4640; --dimmer: #7a7060;
   --line: rgba(10,10,10,.1); --card: #f5f3ef;
 }
-:root:not(.dark) .fdp-blog-nav {
-  background: rgba(255,255,255,.97);
-  border-bottom-color: rgba(184,134,11,.25);
-  box-shadow: 0 4px 20px rgba(0,0,0,.08);
-}
-:root:not(.dark) .nav-back { color: #6a6058; }
-:root:not(.dark) .nav-back:hover { color: #B8860B; }
-:root:not(.dark) .nav-logo { color: #1a1816; }
 :root:not(.dark) .fb-title { color: #0a0a0a; }
 :root:not(.dark) .fb-title em {
   background: linear-gradient(90deg, #B8860B, #D4700A);

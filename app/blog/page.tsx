@@ -122,11 +122,6 @@ function BlogContent() {
   return (
     <div className="fdp" style={{ minHeight: "100vh" }}>
       <style>{blogStyles}</style>
-      <nav className="fdp-blog-nav">
-        <Link href={localizedHref(lang, "/faith")} className="nav-back">{"<-"} Faith</Link>
-        <div className="nav-logo">Samuel Kobina Gyasi</div>
-        <span />
-      </nav>
       <div className="fb-container">
         <Breadcrumbs items={[
           { label: lang === "fr" ? "Accueil" : "Home", href: localizedHref(lang, "/") },
