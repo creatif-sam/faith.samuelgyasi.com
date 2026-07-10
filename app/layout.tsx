@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { Playfair_Display, Poppins } from "next/font/google";
 import "./globals.css";
+import { SiteToaster } from "@/components/organisms/SiteToaster";
 import { CookieBanner } from "@/components/organisms/CookieBanner";
 import { Analytics } from "@/components/Analytics";
 import { Providers } from "./providers";
@@ -148,6 +149,7 @@ export default async function RootLayout({
           <ThemeSwitcher />
           <FeedbackWidget />
           <CookieBanner />
+          <SiteToaster />
         </Providers>
       </body>
     </html>
