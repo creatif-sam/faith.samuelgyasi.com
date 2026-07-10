@@ -16,19 +16,27 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const supabase = await createClient();
   const { data: post } = await supabase
     .from("blog_posts")
-    .select("title, title_fr, excerpt, excerpt_fr")
+    .select("title, title_fr, excerpt, excerpt_fr, featured_image_url")
     .eq("slug", slug)
     .eq("published", true)
     .single();
   if (!post) return { title: "Not Found" };
   const title = locale === "fr" && post.title_fr ? post.title_fr : post.title;
   const excerpt = locale === "fr" && post.excerpt_fr ? post.excerpt_fr : post.excerpt;
+  const images = post.featured_image_url ? [{ url: post.featured_image_url }] : undefined;
   return {
     title: `${title} — Faith Journal`,
     description: excerpt ?? undefined,
     openGraph: {
       title,
       description: excerpt ?? undefined,
+      images,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: excerpt ?? undefined,
+      images,
     },
   };
 }

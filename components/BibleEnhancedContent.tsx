@@ -74,13 +74,34 @@ export function BibleEnhancedContent({ content }: BibleEnhancedContentProps) {
       }
     };
 
+    // Touch devices simulate a "mouseenter" on tap but never fire "mouseleave"
+    // (there's no real hover), so the tooltip would otherwise stay open until
+    // some other hover event happens to land elsewhere. Close it on the next
+    // tap anywhere outside the reference, and on scroll (its position is
+    // computed once from the reference's rect, so it'd go stale anyway).
+    const handlePointerDown = (event: MouseEvent | TouchEvent) => {
+      const target = event.target as HTMLElement;
+      if (target.classList.contains("bible-ref")) return;
+      setTooltipData(prev => (prev.visible ? { ...prev, visible: false } : prev));
+    };
+
+    const handleScroll = () => {
+      setTooltipData(prev => (prev.visible ? { ...prev, visible: false } : prev));
+    };
+
     const container = contentRef.current;
     container.addEventListener("mouseenter", handleMouseEnter, true);
     container.addEventListener("mouseleave", handleMouseLeave, true);
+    document.addEventListener("touchstart", handlePointerDown, true);
+    document.addEventListener("mousedown", handlePointerDown, true);
+    window.addEventListener("scroll", handleScroll, true);
 
     return () => {
       container.removeEventListener("mouseenter", handleMouseEnter, true);
       container.removeEventListener("mouseleave", handleMouseLeave, true);
+      document.removeEventListener("touchstart", handlePointerDown, true);
+      document.removeEventListener("mousedown", handlePointerDown, true);
+      window.removeEventListener("scroll", handleScroll, true);
     };
   }, [lang]);
 
