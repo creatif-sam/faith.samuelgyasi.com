@@ -80,7 +80,7 @@ export default function AnalyticsTab({ analytics }: AnalyticsTabProps) {
           <p className={TW.empty}>No location data yet.</p>
         ) : (
           <div className="flex flex-col lg:flex-row gap-8">
-            <div className="flex-1 min-w-0 bg-white/[.015] border border-white/[.06] rounded-lg p-4">
+            <div className="flex-1 min-w-0 bg-[#0e0f14] border border-white/[.08] rounded-lg p-4">
               <WorldVisitorMap countryViews={countryViews} />
             </div>
             <div style={{ width: 240, flexShrink: 0 }}>

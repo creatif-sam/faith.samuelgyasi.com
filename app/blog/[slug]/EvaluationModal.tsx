@@ -118,7 +118,7 @@ export function EvaluationModal({
             value={feedbackText}
             onChange={(e) => setFeedbackText(e.target.value)}
             placeholder={lang === "fr" ? "Partagez vos réflexions (optionnel)..." : "Share your thoughts (optional)..."}
-            rows={4}
+            rows={3}
           />
         </div>
 

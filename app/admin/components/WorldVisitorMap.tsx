@@ -37,14 +37,21 @@ export default function WorldVisitorMap({ countryViews }: Props) {
   }
 
   function colorFor(count: number) {
-    if (!count) return "rgba(255,255,255,.05)";
+    if (!count) return "#262838";
     const t = Math.min(1, Math.log(count + 1) / Math.log(maxCount + 1));
-    return `rgba(212,168,67,${(0.15 + t * 0.75).toFixed(3)})`;
+    // Solid (fully opaque) interpolation from dim to bright gold — stays
+    // visible regardless of the surrounding page background, unlike a
+    // low-alpha overlay which washes out against light backgrounds.
+    const from = [122, 95, 46];
+    const to = [255, 215, 106];
+    const rgb = from.map((c, i) => Math.round(c + (to[i] - c) * t));
+    return `rgb(${rgb.join(",")})`;
   }
 
   return (
     <div style={{ position: "relative" }}>
       <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} style={{ width: "100%", height: "auto", display: "block" }}>
+        <rect x={0} y={0} width={WIDTH} height={HEIGHT} fill="#11121a" rx={8} />
         {features.map((f, i) => {
           const id = String(f.id);
           const count = countFor(id);
@@ -54,7 +61,7 @@ export default function WorldVisitorMap({ countryViews }: Props) {
               key={f.id != null ? id : `feature-${i}`}
               d={path(f) ?? undefined}
               fill={colorFor(count)}
-              stroke="rgba(255,255,255,.08)"
+              stroke="#3a3d4d"
               strokeWidth={0.5}
               onMouseMove={(e) => setHover({ name, count, x: e.clientX, y: e.clientY })}
               onMouseLeave={() => setHover(null)}
