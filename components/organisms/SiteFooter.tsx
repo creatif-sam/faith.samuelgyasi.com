@@ -14,6 +14,8 @@ const ft = {
   nlHeading:     { en: "Join the Conversation",               fr: "Rejoindre la Conversation" },
   nlSub:         { en: "Reflections on faith, scripture, and the sacred journey of walking with God \u2014 delivered to your inbox.", fr: "R\u00e9flexions sur la foi, les \u00c9critures et le voyage sacr\u00e9 de marcher avec Dieu \u2014 livr\u00e9es dans votre bo\u00eete mail." },
   interestedIn:  { en: "I\u2019m interested in:",             fr: "Je m\u2019int\u00e9resse \u00e0\u00a0:" },
+  namePh:        { en: "Your name",                           fr: "Votre nom" },
+  nameLabel:     { en: "Name",                                fr: "Nom" },
   emailPh:       { en: "Your email address",                  fr: "Votre adresse email" },
   emailLabel:    { en: "Email address",                       fr: "Adresse email" },
   btnIdle:       { en: "Subscribe \u2192",                    fr: "S\u2019abonner \u2192" },
@@ -90,6 +92,7 @@ const socialLinks = [
 
 export function SiteFooter() {
   const { lang } = useLang();
+  const [name, setName]           = useState("");
   const [email, setEmail]         = useState("");
   const [interests, setInterests] = useState<string[]>([]);
   const [status, setStatus]       = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -114,6 +117,7 @@ export function SiteFooter() {
       // Pretend success so the bot doesn't learn it was caught.
       setStatus("success");
       setMessage(ft.successMsg[lang]);
+      setName("");
       setEmail("");
       setInterests([]);
       return;
@@ -123,7 +127,7 @@ export function SiteFooter() {
       const supabase = createClient();
       const { error } = await supabase
         .from("newsletter_subscribers")
-        .insert({ email: email.trim().toLowerCase(), interests });
+        .insert({ name: name.trim() || null, email: email.trim().toLowerCase(), interests });
       if (error && error.code === "23505") {
         setStatus("success");
         setMessage(ft.errAlready[lang]);
@@ -132,6 +136,7 @@ export function SiteFooter() {
       } else {
         setStatus("success");
         setMessage(ft.successMsg[lang]);
+        setName("");
         setEmail("");
         setInterests([]);
       }
@@ -148,12 +153,6 @@ export function SiteFooter() {
         <div className="sf-nl-card">
           {/* Decorative glow */}
           <div className="sf-nl-glow" aria-hidden="true" />
-
-          <div className="sf-nl-icon-wrap" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-            </svg>
-          </div>
 
           <p className="sf-nl-heading">{ft.nlHeading[lang]}</p>
           <p className="sf-nl-sub">{ft.nlSub[lang]}</p>
@@ -178,8 +177,18 @@ export function SiteFooter() {
               </div>
             </div>
 
-            {/* Email row */}
+            {/* Name + email row */}
             <div className="sf-nl-input-row">
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder={ft.namePh[lang]}
+                className="sf-nl-input"
+                disabled={status === "loading" || status === "success"}
+                aria-label={ft.nameLabel[lang]}
+                autoComplete="name"
+              />
               <input
                 ref={inputRef}
                 type="email"

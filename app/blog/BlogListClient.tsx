@@ -10,10 +10,11 @@ import { localizedHref } from "@/lib/i18n/locale";
 import Breadcrumbs from "@/components/atoms/Breadcrumbs";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
 import { SeriesSidebar } from "@/components/blog/SeriesSidebar";
+import { BlogSidebar } from "@/components/blog/BlogSidebar";
 import { Suspense } from "react";
 import { BlogRequestModal } from "@/components/organisms/BlogRequestModal";
 import type { DbPost, BlogSeries } from "./blogHelpers";
-import { CATEGORY_LABELS, getCategoryLabel } from "./blogHelpers";
+import { CATEGORY_LABELS } from "./blogHelpers";
 import FeaturedPost from "./components/FeaturedPost";
 import PostCard from "./components/PostCard";
 
@@ -112,6 +113,10 @@ function BlogContent({ initialPosts, initialSeriesList }: BlogContentProps) {
     return [...known, ...unknown];
   }, [categoryCounts]);
 
+  // Sitewide latest 5 posts for the sidebar widget — independent of the
+  // active category/series filter, like a WordPress "Recent Posts" widget.
+  const recentPosts = useMemo(() => posts.slice(0, 5), [posts]);
+
   function setCategory(cat: string) {
     const params = new URLSearchParams(searchParams?.toString());
     if (cat === "all") params.delete("category"); else params.set("category", cat);
@@ -189,17 +194,15 @@ function BlogContent({ initialPosts, initialSeriesList }: BlogContentProps) {
           <p className="fb-search-results">{searchFiltered.length} {lang === "fr" ? "résultat(s) trouvé(s)" : "result(s) found"}</p>
         )}
       </div>
-      <div className="fb-filters">
-        <button className={`fb-filter${activeCat === "all" ? " fb-filter--active" : ""}`} onClick={() => setCategory("all")}>
-          {lang === "fr" ? "Tout" : "All"} <span className="fb-filter-count">{posts.length}</span>
-        </button>
-        {categoryValues.map((cat) => (
-          <button key={cat} className={`fb-filter${activeCat === cat ? " fb-filter--active" : ""}`} onClick={() => setCategory(cat)}>
-            {getCategoryLabel(cat, lang)} <span className="fb-filter-count">{categoryCounts[cat]}</span>
-          </button>
-        ))}
-      </div>
       <div className="fb-layout-with-sidebar">
+        <BlogSidebar
+          categoryValues={categoryValues}
+          categoryCounts={categoryCounts}
+          totalCount={posts.length}
+          activeCategory={activeCat}
+          onSelectCategory={setCategory}
+          recentPosts={recentPosts}
+        />
         <div className="fb-main-content">
           {loading ? (
             <p className="fb-empty">{lang === "fr" ? "Chargement des réflexions..." : "Loading reflections..."}</p>

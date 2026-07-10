@@ -47,8 +47,13 @@ body.on-fdp { background:#080807; color:#f0ece4; font-family:'Poppins', sans-ser
 .fb-filter--active::before { opacity: 1; }
 .fb-filter-count { opacity: .55; margin-left: 6px; }
 .fb-filter--active .fb-filter-count { opacity: .7; }
-.fb-layout-with-sidebar { display: flex; gap: 40px; padding: 0 56px 40px; align-items: flex-start; }
-.fb-main-content { flex: 1; min-width: 0; }
+.fb-layout-with-sidebar { display: flex; gap: 32px; padding: 0 56px 40px; align-items: flex-start; }
+.fb-main-content { flex: 1; min-width: 0; order: 2; }
+.blog-sidebar { flex: 0 0 260px; order: 1; }
+.series-sidebar { flex: 0 0 260px; order: 3; }
+@media (max-width: 1280px) {
+  .blog-sidebar, .series-sidebar { flex-basis: 230px; }
+}
 .fb-content { padding:0; }
 .fb-empty { font-family:var(--font-poppins), 'Poppins', sans-serif; font-size:20px; font-style:italic; color:var(--dim); padding:80px 56px; text-align:center; }
 .fb-featured { display:block; padding:72px 0 56px; border-bottom:1px solid var(--line); text-decoration:none; color:inherit; transition:all .4s ease; animation: fadeInScale 0.8s ease-out 0.6s both; }
@@ -95,6 +100,11 @@ body.on-fdp { background:#080807; color:#f0ece4; font-family:'Poppins', sans-ser
 /* Series badge — shown on cards for posts that belong to a series */
 .fb-series-badge { font-family:'Poppins', sans-serif; font-size:8px; letter-spacing:.15em; text-transform:uppercase; color:var(--dimmer); display:inline-flex; align-items:center; gap:6px; margin-top:-4px; }
 :root:not(.dark) .fb-series-badge { color:#8a7f6e; }
+@media(max-width:1080px){
+  .fb-layout-with-sidebar { flex-direction: column; }
+  .blog-sidebar, .series-sidebar { flex-basis: auto; width: 100%; order: initial; }
+  .fb-main-content { order: initial; }
+}
 @media(max-width:900px){
   .fb-container { padding:88px 24px 0; }
   .fb-header { padding:24px 24px 40px; }
