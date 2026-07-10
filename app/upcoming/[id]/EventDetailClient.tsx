@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import Breadcrumbs from "@/components/atoms/Breadcrumbs";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
 import { useLang } from "@/lib/i18n";
@@ -45,8 +46,8 @@ export function EventDetailClient({ event }: EventDetailClientProps) {
             <EventCard item={event} delay={0} isPastEvent={isPast(event)} />
           </div>
 
-          <Link href={localizedHref(lang, "/upcoming")} className="up-detail-back">
-            {t.detail.backToUpcoming[lang]}
+          <Link href={localizedHref(lang, "/upcoming")} className="up-detail-back" style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+            <ArrowLeft size={14} /> {t.detail.backToUpcoming[lang]}
           </Link>
         </div>
       </div>

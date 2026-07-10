@@ -2,6 +2,7 @@
 
 import { Suspense, useEffect, useState, useCallback } from "react";
 import Link from "next/link";
+import { Diamond, Download, ArrowLeft } from "lucide-react";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
 import { createAnonClient } from "@/lib/supabase/anon";
 import { useLang } from "@/lib/i18n";
@@ -269,7 +270,7 @@ export default function EbooksPage() {
 
         {/* ── HEADER ── */}
         <div className="ebooks-header">
-          <Link href={localizedHref(lang, "/resources")} className="ebooks-back">← Resources</Link>
+          <Link href={localizedHref(lang, "/resources")} className="ebooks-back"><ArrowLeft size={12} /> Resources</Link>
           <p className="ebooks-eyebrow">Samuel Kobina Gyasi · Published Works</p>
           <h1 className="ebooks-headline">
             My<br /><em>eBooks</em>
@@ -294,7 +295,7 @@ export default function EbooksPage() {
                     {book.cover_url ? (
                       <img src={book.cover_url} alt={book.title} />
                     ) : (
-                      <span>◆</span>
+                      <Diamond size={28} />
                     )}
                   </div>
                 </Link>
@@ -308,8 +309,9 @@ export default function EbooksPage() {
                     rel="noopener noreferrer"
                     className="ebook-download-btn"
                     onClick={(e) => e.stopPropagation()}
+                    style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}
                   >
-                    ⬇ Download Free
+                    <Download size={13} /> Download Free
                   </a>
                 ) : (
                   <span className="ebook-soon">Coming Soon</span>

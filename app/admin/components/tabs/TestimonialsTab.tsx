@@ -1,6 +1,7 @@
 import { Plus, Pencil, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { TW } from "../constants";
+import { StarRating } from "@/components/atoms/StarRating";
 import { Testimonial } from "../types";
 
 interface TestimonialsTabProps {
@@ -34,7 +35,7 @@ export default function TestimonialsTab({ testimonials, onNew, onEdit, onDelete,
                     <div className="text-[11px] text-white/40 mt-0.5 italic">{t.quote.slice(0, 60)}{t.quote.length > 60 ? "..." : ""}</div>
                   </td>
                   <td className={TW.td} style={{ fontSize: "12px" }}>{[t.role, t.company].filter(Boolean).join(" · ") || "—"}</td>
-                  <td className={TW.td} style={{ color: "#c9a84c", letterSpacing: "2px" }}>{"★".repeat(t.rating)}{"☆".repeat(5 - t.rating)}</td>
+                  <td className={TW.td}><StarRating rating={t.rating} size={12} gap={1} /></td>
                   <td className={TW.td}>
                     <button className={cn(TW.badge, t.published ? TW.bPub : TW.bDft, "cursor-pointer bg-transparent border-none")}
                       onClick={() => onToggle(t.id, !t.published)} title={t.published ? "Click to unpublish" : "Click to publish"}>

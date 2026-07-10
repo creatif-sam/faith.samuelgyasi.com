@@ -1,8 +1,15 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { Diamond, Sparkle, Target, type LucideIcon } from "lucide-react";
 import { useLang } from "@/lib/i18n";
 import { valuesTranslations as t } from "@/lib/i18n/values";
+
+const VALUE_ICONS: Record<string, LucideIcon> = {
+  diamond: Diamond,
+  sparkle: Sparkle,
+  ring: Target,
+};
 
 export function ValuesSection() {
   const { lang } = useLang();
@@ -325,19 +332,22 @@ export function ValuesSection() {
         </header>
 
         <div className="values-grid">
-          {t.values.map((v, i) => (
-            <div
-              key={v.word[lang]}
-              className="vs-card"
-              ref={(el) => { cardsRef.current[i] = el; }}
-            >
-              <span className="vs-card-bg-letter">{v.letter}</span>
-              <p className="vs-card-num">{v.number}</p>
-              <span className="vs-card-glyph">{v.glyph}</span>
-              <h3 className="vs-card-word">{v.word[lang]}</h3>
-              <p className="vs-card-body">{v.body[lang]}</p>
-            </div>
-          ))}
+          {t.values.map((v, i) => {
+            const GlyphIcon = VALUE_ICONS[v.glyph] ?? Sparkle;
+            return (
+              <div
+                key={v.word[lang]}
+                className="vs-card"
+                ref={(el) => { cardsRef.current[i] = el; }}
+              >
+                <span className="vs-card-bg-letter">{v.letter}</span>
+                <p className="vs-card-num">{v.number}</p>
+                <span className="vs-card-glyph"><GlyphIcon size={20} /></span>
+                <h3 className="vs-card-word">{v.word[lang]}</h3>
+                <p className="vs-card-body">{v.body[lang]}</p>
+              </div>
+            );
+          })}
         </div>
 
         {/* Animated trio footer */}

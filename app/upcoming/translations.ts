@@ -7,7 +7,7 @@ export const upcomingTranslations = {
       en: "Interventions, masterclasses, and facilitated sessions — spaces where ideas become action and individuals become collectives.",
       fr: "Interventions, masterclasses et sessions animées — des espaces où les idées deviennent actions et les individus, collectifs.",
     },
-    reserveBtn:  { en: "Reserve a Spot →", fr: "Réserver une Place →" },
+    reserveBtn:  { en: "Reserve a Spot", fr: "Réserver une Place" },
     reserveHint: { en: "Intervention · Masterclass · Session · Podcast", fr: "Intervention · Masterclass · Session · Podcast" },
   },
 
@@ -29,7 +29,7 @@ export const upcomingTranslations = {
   card: {
     hostedBy:    { en: "Hosted by",   fr: "Organisé par" },
     registerNow: { en: "Register Now", fr: "S'inscrire" },
-    joinUs:      { en: "Join Us →",    fr: "Rejoindre →" },
+    joinUs:      { en: "Join Us",    fr: "Rejoindre" },
     pastBadge:   { en: "Past Event",   fr: "Événement Passé" },
     getRecording:{ en: "Get Recording", fr: "Obtenir l'Enregistrement" },
     share:       { en: "Share",        fr: "Partager" },
@@ -40,7 +40,7 @@ export const upcomingTranslations = {
   detail: {
     breadcrumbHome:     { en: "Home",     fr: "Accueil" },
     breadcrumbUpcoming: { en: "Upcoming", fr: "À Venir" },
-    backToUpcoming:     { en: "← Back to Upcoming", fr: "← Retour à À Venir" },
+    backToUpcoming:     { en: "Back to Upcoming", fr: "Retour à À Venir" },
     notFoundTitle:      { en: "Event Not Found", fr: "Événement Introuvable" },
     notFoundBody:       { en: "This event may have been removed or the link is incorrect.", fr: "Cet événement a peut-être été supprimé ou le lien est incorrect." },
   },

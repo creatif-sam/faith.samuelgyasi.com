@@ -3,6 +3,7 @@ import { X, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { TW } from "../constants";
+import { StarRating } from "@/components/atoms/StarRating";
 import { LibraryItem } from "../types";
 import { createClient } from "@/lib/supabase/client";
 
@@ -130,11 +131,8 @@ export default function LibraryItemModal({ item, onClose, onSave, db }: LibraryI
             ) : (
               <div className={TW.field}>
                 <label className={TW.label}>Rating (1–5)</label>
-                <div className="flex gap-1 items-center pt-1.5">
-                  {[1,2,3,4,5].map((n) => (
-                    <button key={n} type="button" onClick={() => setRating(n)} className="bg-transparent border-0 cursor-pointer text-[22px] p-0"
-                      style={{ color: n <= rating ? "#c9a84c" : "rgba(201,168,76,.2)" }}>★</button>
-                  ))}
+                <div className="pt-1.5">
+                  <StarRating rating={rating} interactive onChange={setRating} size={20} gap={5} />
                 </div>
               </div>
             )}

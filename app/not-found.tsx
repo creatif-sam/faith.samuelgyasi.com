@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -86,9 +87,12 @@ export default function NotFound() {
           padding: "12px 28px",
           borderRadius: "4px",
           transition: "all 0.3s ease",
+          display: "inline-flex",
+          alignItems: "center",
+          gap: "8px",
         }}
       >
-        ← Back to Home
+        <ArrowLeft size={14} /> Back to Home
       </Link>
     </div>
   );

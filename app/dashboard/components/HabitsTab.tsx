@@ -1,13 +1,41 @@
 "use client";
 import { useState } from "react";
-import { Flame, Check, BarChart2, Plus, Sparkles, Trash2 } from "lucide-react";
+import {
+  Flame, Check, BarChart2, Plus, Sparkles, Sparkle, Trash2,
+  HandHeart, BookOpen, Cross, Feather, Dumbbell, Sunrise, Wind, Heart, Leaf, Star, Target,
+  type LucideIcon,
+} from "lucide-react";
 import { toast } from "sonner";
 import { createClient } from "@/lib/supabase/client";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 import type { SpiritualHabit, HabitLog } from "../types";
 import type { Translations } from "../translations";
 
-const HABIT_ICONS = ["🙏", "📖", "✝️", "🕊️", "💪", "🌅", "🧘", "❤️", "🌿", "🔥", "⭐", "🎯"];
+// Habits are stored as a semantic key (e.g. "pray"), not a raw emoji glyph.
+// Legacy rows created before this change may still hold an emoji string, so
+// the lookup below accepts both.
+const HABIT_ICON_OPTIONS: { key: string; Icon: LucideIcon }[] = [
+  { key: "pray",     Icon: HandHeart },
+  { key: "book",     Icon: BookOpen },
+  { key: "cross",    Icon: Cross },
+  { key: "dove",     Icon: Feather },
+  { key: "strength", Icon: Dumbbell },
+  { key: "sunrise",  Icon: Sunrise },
+  { key: "meditate", Icon: Wind },
+  { key: "love",     Icon: Heart },
+  { key: "nature",   Icon: Leaf },
+  { key: "fire",     Icon: Flame },
+  { key: "star",     Icon: Star },
+  { key: "target",   Icon: Target },
+];
+const HABIT_ICON_MAP: Record<string, LucideIcon> = {
+  ...Object.fromEntries(HABIT_ICON_OPTIONS.map(({ key, Icon }) => [key, Icon])),
+  "🙏": HandHeart, "📖": BookOpen, "✝️": Cross, "🕊️": Feather, "💪": Dumbbell,
+  "🌅": Sunrise, "🧘": Wind, "❤️": Heart, "🌿": Leaf, "🔥": Flame, "⭐": Star, "🎯": Target,
+};
+function getHabitIcon(key: string): LucideIcon {
+  return HABIT_ICON_MAP[key] ?? Sparkle;
+}
 
 interface HabitsTabProps {
   user: SupabaseUser;
@@ -23,7 +51,7 @@ export default function HabitsTab({ user, t, habits, habitLogs, setHabits, setHa
   const [showHabitForm, setShowHabitForm] = useState(false);
   const [habitName, setHabitName] = useState("");
   const [habitDesc, setHabitDesc] = useState("");
-  const [habitIcon, setHabitIcon] = useState("🙏");
+  const [habitIcon, setHabitIcon] = useState("pray");
   const [habitSaving, setHabitSaving] = useState(false);
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
 
@@ -45,7 +73,7 @@ export default function HabitsTab({ user, t, habits, habitLogs, setHabits, setHa
     }
     toast.success(`Habit "${habitName.trim()}" created!`);
     setHabits((prev) => [...prev, data as SpiritualHabit]);
-    setHabitName(""); setHabitDesc(""); setHabitIcon("🙏");
+    setHabitName(""); setHabitDesc(""); setHabitIcon("pray");
     setShowHabitForm(false);
   }
 
@@ -62,10 +90,11 @@ export default function HabitsTab({ user, t, habits, habitLogs, setHabits, setHa
   async function toggleHabitLog(habitId: string) {
     const existing = habitLogs.find((l) => l.habit_id === habitId && l.logged_date === today);
     const habit = habits.find((h) => h.id === habitId);
+    const HabitIcon = getHabitIcon(habit?.icon ?? "");
     if (existing) {
       // Optimistic unmark
       setHabitLogs(prev => prev.filter(l => l.id !== existing.id));
-      toast(`${habit?.icon ?? ""} ${habit?.name ?? "Habit"} unmarked for today.`);
+      toast(`${habit?.name ?? "Habit"} unmarked for today.`, { icon: <HabitIcon size={16} /> });
       await db.from("habit_logs").delete().eq("id", existing.id);
     } else {
       // Streak as of yesterday (today isn't logged yet at this point), so the
@@ -78,9 +107,9 @@ export default function HabitsTab({ user, t, habits, habitLogs, setHabits, setHa
       const tempId = `temp-${Date.now()}`;
       setHabitLogs(prev => [...prev, { id: tempId, habit_id: habitId, logged_date: today }]);
       if (milestone) {
-        toast.success(`🔥 ${newStreak}-day streak on "${habit?.name ?? "this habit"}"! Keep going.`, { duration: 5000 });
+        toast.success(`${newStreak}-day streak on "${habit?.name ?? "this habit"}"! Keep going.`, { duration: 5000, icon: <Flame size={16} /> });
       } else {
-        toast.success(`${habit?.icon ?? ""} ${habit?.name ?? "Habit"} done today! 🎉`);
+        toast.success(`${habit?.name ?? "Habit"} done today!`, { icon: <Check size={16} /> });
       }
       const { data } = await db
         .from("habit_logs")
@@ -202,13 +231,14 @@ export default function HabitsTab({ user, t, habits, habitLogs, setHabits, setHa
           <div style={{ marginTop: 12 }}>
             <label className="hb-label">{t.habitIcon}</label>
             <div className="hb-icon-row">
-              {HABIT_ICONS.map((ic) => (
+              {HABIT_ICON_OPTIONS.map(({ key, Icon }) => (
                 <button
-                  key={ic}
+                  key={key}
                   type="button"
-                  className={`hb-icon-pick${habitIcon === ic ? " sel" : ""}`}
-                  onClick={() => setHabitIcon(ic)}
-                >{ic}</button>
+                  aria-label={key}
+                  className={`hb-icon-pick${habitIcon === key ? " sel" : ""}`}
+                  onClick={() => setHabitIcon(key)}
+                ><Icon size={16} /></button>
               ))}
             </div>
           </div>
@@ -246,10 +276,11 @@ export default function HabitsTab({ user, t, habits, habitLogs, setHabits, setHa
             const streak = getHabitStreak(h.id);
             const last30 = getLast30Days();
             const logDates = new Set(habitLogs.filter((l) => l.habit_id === h.id).map((l) => l.logged_date));
+            const HabitIcon = getHabitIcon(h.icon);
             return (
               <div key={h.id} className="hb-card">
                 <div className="hb-card-icon" style={{ background: `${h.color}22` }}>
-                  <span>{h.icon}</span>
+                  <HabitIcon size={16} />
                 </div>
                 <div className="hb-card-body">
                   <div className="hb-card-name">{h.name}</div>

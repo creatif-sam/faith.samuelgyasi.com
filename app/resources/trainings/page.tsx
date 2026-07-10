@@ -2,6 +2,7 @@
 
 import { useEffect, useState, Suspense } from "react";
 import Link from "next/link";
+import { GraduationCap, ArrowRight } from "lucide-react";
 import { createAnonClient } from "@/lib/supabase/anon";
 import { useLang } from "@/lib/i18n";
 import { localizedHref } from "@/lib/i18n/locale";
@@ -344,7 +345,7 @@ export default function TrainingsPreviewPage() {
                     {tr.thumbnail_url ? (
                       <img src={tr.thumbnail_url} alt={tr.title} />
                     ) : (
-                      <div className="trp-card-thumb-placeholder">🎓</div>
+                      <div className="trp-card-thumb-placeholder"><GraduationCap size={32} /></div>
                     )}
                   </div>
                   <div className="trp-card-body">
@@ -357,8 +358,8 @@ export default function TrainingsPreviewPage() {
                       <span className="trp-card-lessons">
                         {tr.total_lessons} {lang === "fr" ? "leçon(s)" : "lesson(s)"}
                       </span>
-                      <span className="trp-card-cta">
-                        {lang === "fr" ? "En savoir plus →" : "Learn more →"}
+                      <span className="trp-card-cta" style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+                        {lang === "fr" ? "En savoir plus" : "Learn more"} <ArrowRight size={11} />
                       </span>
                     </div>
                   </div>

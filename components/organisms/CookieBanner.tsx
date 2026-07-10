@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { Sparkle } from "lucide-react";
 import { useLang } from "@/lib/i18n";
 import { localizedHref } from "@/lib/i18n/locale";
 
@@ -36,7 +37,7 @@ export function CookieBanner() {
     <div className="ck-banner" role="dialog" aria-live="polite" aria-label="Cookie consent">
       <div className="ck-inner">
         <div className="ck-text">
-          <span className="ck-emblem">✦</span>
+          <span className="ck-emblem"><Sparkle size={14} fill="currentColor" /></span>
           <p>
             This site uses cookies to improve your experience and to analyse
             visitor behaviour. Read our{" "}

@@ -1,15 +1,15 @@
 "use client";
 
 import type { RefObject } from "react";
+import { X } from "lucide-react";
 import { HoneypotField } from "@/components/HoneypotField";
+import { StarRating } from "@/components/atoms/StarRating";
 
 interface EvaluationModalProps {
   lang: string;
   honeypotRef: RefObject<HTMLInputElement | null>;
   rating: number;
   setRating: (v: number) => void;
-  hoveredRating: number;
-  setHoveredRating: (v: number) => void;
   pragmatic: boolean;
   setPragmatic: (v: boolean) => void;
   faithBuilding: boolean;
@@ -46,8 +46,6 @@ export function EvaluationModal({
   honeypotRef,
   rating,
   setRating,
-  hoveredRating,
-  setHoveredRating,
   pragmatic,
   setPragmatic,
   faithBuilding,
@@ -68,7 +66,9 @@ export function EvaluationModal({
   return (
     <div className="eval-modal-overlay" onClick={onClose}>
       <div className="eval-modal" onClick={(e) => e.stopPropagation()}>
-        <button className="eval-close" onClick={onClose}>×</button>
+        <button className="eval-close" onClick={onClose} aria-label="Close">
+          <X size={16} />
+        </button>
 
         <div className="eval-header">
           <h3>{translations.evalTitle}</h3>
@@ -80,21 +80,15 @@ export function EvaluationModal({
           <label className="eval-label">
             {translations.rateLabel} <span className="eval-required">*</span>
           </label>
-          <div className="star-rating">
-            {[1, 2, 3, 4, 5].map((star) => (
-              <button
-                key={star}
-                type="button"
-                className={star <= (hoveredRating || rating) ? "star-active" : ""}
-                onMouseEnter={() => setHoveredRating(star)}
-                onMouseLeave={() => setHoveredRating(0)}
-                onClick={() => setRating(star)}
-                aria-label={`Rate ${star} stars`}
-              >
-                {star <= (hoveredRating || rating) ? "★" : "☆"}
-              </button>
-            ))}
-          </div>
+          <StarRating
+            rating={rating}
+            interactive
+            onChange={setRating}
+            size={24}
+            gap={4}
+            color="var(--gold)"
+            emptyColor="var(--dimmer)"
+          />
 
           <label className="eval-label eval-label-categories">
             {translations.categoriesLabel || "What resonated with you?"}

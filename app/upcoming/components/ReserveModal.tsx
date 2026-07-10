@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { X, Sparkle, Zap, GraduationCap, Feather, Mic } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { useLang } from "@/lib/i18n";
 import { upcomingTranslations as ut } from "../translations";
@@ -8,10 +9,10 @@ import { HoneypotField } from "@/components/HoneypotField";
 import { useHoneypot } from "@/lib/useHoneypot";
 
 const TYPES = [
-  { value: "intervention", icon: "⚡" },
-  { value: "masterclass",  icon: "🎓" },
-  { value: "session",      icon: "🕊️" },
-  { value: "podcast",      icon: "🎙️" },
+  { value: "intervention", Icon: Zap },
+  { value: "masterclass",  Icon: GraduationCap },
+  { value: "session",      Icon: Feather },
+  { value: "podcast",      Icon: Mic },
 ];
 
 interface ReserveModalProps {
@@ -63,11 +64,11 @@ export function ReserveModal({ onClose }: ReserveModalProps) {
   return (
     <div className="up-modal-overlay" onClick={onClose}>
       <div className="up-reserve-modal" onClick={(e) => e.stopPropagation()}>
-        <button className="up-modal-close" onClick={onClose} aria-label="Close">✕</button>
+        <button className="up-modal-close" onClick={onClose} aria-label="Close"><X size={16} /></button>
 
         {done ? (
           <div className="up-modal-done">
-            <div className="up-modal-done-icon">✦</div>
+            <div className="up-modal-done-icon"><Sparkle size={26} style={{ color: "#d4a843" }} fill="currentColor" /></div>
             <p className="up-modal-done-h">{t.doneTitle[lang]}</p>
             <p className="up-modal-done-sub">{t.doneSub[lang]}</p>
             <button className="up-btn up-btn--gold" onClick={onClose}>{t.close[lang]}</button>
@@ -89,7 +90,7 @@ export function ReserveModal({ onClose }: ReserveModalProps) {
                   className={`up-reserve-type-pill${type === tp.value ? " up-reserve-type-pill--active" : ""}`}
                   onClick={() => setType(tp.value)}
                 >
-                  <span className="up-reserve-pill-icon">{tp.icon}</span>
+                  <span className="up-reserve-pill-icon"><tp.Icon size={13} /></span>
                   {ut.reserve.typePills[tp.value as keyof typeof ut.reserve.typePills][lang]}
                 </button>
               ))}

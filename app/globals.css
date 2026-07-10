@@ -1664,6 +1664,7 @@ body {
   transition: gap 0.3s, color 0.3s;
   cursor: none;
 }
+.pillar-cta { color: var(--gold); }
 .pillar-cta:hover { gap: 14px; color: var(--white); }
 
 /* â”€â”€ WHAT I DO â”€â”€ */
@@ -2464,7 +2465,6 @@ body {
 .hpb-line,
 .pillar-num-v2,
 .pillar-verse,
-.pillar-cta,
 .wid-card-num,
 .wid-card-org,
 .wid-title em,
@@ -2475,8 +2475,6 @@ body {
 .tl-year,
 .sf-col-label,
 .sf-nl-msg:not(.sf-nl-msg--error),
-.sf-emblem,
-.ck-emblem,
 .ck-link {
   background: var(--gold-gradient) !important;
   -webkit-background-clip: text !important;

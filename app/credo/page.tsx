@@ -2,6 +2,7 @@
 import { credoStyles } from "./credoStyles";
 
 import { Suspense, useEffect, useState } from "react";
+import { Diamond } from "lucide-react";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
 import { createClient } from "@/lib/supabase/client";
 import { useLang } from "@/lib/i18n";
@@ -249,7 +250,11 @@ export default function CredoPage() {
         {/* ── CLOSING DECLARATION ── */}
         <section className="credo-close">
           <div className="credo-close-inner">
-            <div className="credo-close-ornament">◆ ◆ ◆</div>
+            <div className="credo-close-ornament" style={{ display: "flex", justifyContent: "center", gap: 16, color: "#ffde59" }}>
+              <Diamond size={16} fill="currentColor" />
+              <Diamond size={16} fill="currentColor" />
+              <Diamond size={16} fill="currentColor" />
+            </div>
             <p className="credo-close-quote">
               {lang === "fr"
                 ? <>&ldquo;Nous donc aussi, puisque nous sommes environn&eacute;s d&rsquo;une si grande nu&eacute;e de t&eacute;moins, rejetons tout fardeau et le p&eacute;ch&eacute; qui nous enveloppe si facilement, et courons avec pers&eacute;v&eacute;rance dans la carri&egrave;re qui nous est ouverte, les regards fix&eacute;s sur J&eacute;sus, le chef et le consommateur de la foi.&rdquo;</>

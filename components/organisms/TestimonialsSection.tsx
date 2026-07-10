@@ -1,5 +1,6 @@
 import { createAnonClient } from "@/lib/supabase/anon";
 import { TestimonialSubmitForm } from "./TestimonialSubmitForm";
+import { StarRating } from "@/components/atoms/StarRating";
 
 interface Testimonial {
   id: string;
@@ -25,18 +26,6 @@ async function getTestimonials(): Promise<Testimonial[]> {
   } catch {
     return [];
   }
-}
-
-function StarRating({ rating }: { rating: number }) {
-  return (
-    <div className="ts-stars" aria-label={`${rating} out of 5 stars`}>
-      {Array.from({ length: 5 }).map((_, i) => (
-        <span key={i} className={i < rating ? "ts-star ts-star--on" : "ts-star ts-star--off"}>
-          ★
-        </span>
-      ))}
-    </div>
-  );
 }
 
 export async function TestimonialsSection() {
@@ -65,7 +54,7 @@ export async function TestimonialsSection() {
               key={t.id}
               className={`ts-card ${idx === 0 ? "ts-card--featured" : ""}`}
             >
-              <StarRating rating={t.rating} />
+              <StarRating rating={t.rating} size={14} gap={3} className="ts-stars" />
               <blockquote className="ts-quote">
                 &ldquo;{t.quote}&rdquo;
               </blockquote>

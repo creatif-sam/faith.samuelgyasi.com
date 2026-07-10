@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Bold, Italic, Eye, EyeOff } from "lucide-react";
+import { Bold, Italic, Eye, EyeOff, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { TW } from "../constants";
 import { BibleEnhancedContent } from "@/components/BibleEnhancedContent";
@@ -227,7 +227,7 @@ export default function BlogContentBuilder({ value, onChange, label, placeholder
                     placeholder={`Step ${i + 1}…`}
                   />
                   {steps.length > 1 && (
-                    <button type="button" className={cn(TW.btn, TW.ghost, TW.sm, "!px-2")} onClick={() => setSteps((prev) => prev.filter((_, idx) => idx !== i))}>×</button>
+                    <button type="button" className={cn(TW.btn, TW.ghost, TW.sm, "!px-2")} onClick={() => setSteps((prev) => prev.filter((_, idx) => idx !== i))}><X size={12} /></button>
                   )}
                 </div>
               ))}

@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { GraduationCap, CheckCircle2, TrendingUp, Award, BookOpen } from "lucide-react";
+import { GraduationCap, CheckCircle2, TrendingUp, Award, BookOpen, ArrowRight } from "lucide-react";
 import type { Training, EnrollmentWithProgress } from "../types";
 import type { Translations } from "../translations";
 
@@ -106,7 +106,9 @@ export default function MyTrainingsTab({
                       <div className="dash-progress-fill" style={{ width: `${pct}%` }} />
                     </div>
                   </div>
-                  <button className="dash-btn dash-btn-enrolled">{t.continueBtn}</button>
+                  <button className="dash-btn dash-btn-enrolled" style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+                    {t.continueBtn} <ArrowRight size={13} />
+                  </button>
                 </div>
               </Link>
             );

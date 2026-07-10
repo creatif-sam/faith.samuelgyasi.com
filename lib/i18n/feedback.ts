@@ -6,6 +6,18 @@ export const feedbackTranslations = {
     en: "Share Feedback",
     fr: "Partagez vos Commentaires",
   },
+  subtitle: {
+    en: "Bugs, ideas, anything — I'm listening.",
+    fr: "Bugs, idées, tout — je suis à l'écoute.",
+  },
+  trust: {
+    en: "Read personally by Samuel — no bots in between.",
+    fr: "Lu personnellement par Samuel — aucun robot entre nous.",
+  },
+  fab: {
+    en: "Feedback",
+    fr: "Avis",
+  },
   types: {
     bug: {
       en: "Bug Report",

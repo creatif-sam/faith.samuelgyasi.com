@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { X, Plus, Calendar, Link2, Send, Flame, GraduationCap, BookOpen, BookMarked, Target, MessageCircle } from "lucide-react";
+import { X, Plus, Calendar, Link2, Send, Flame, GraduationCap, BookOpen, BookMarked, Target, MessageCircle, CheckCircle2, Circle, AlertTriangle, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { TW } from "../constants";
@@ -240,7 +240,9 @@ export default function DiscipleProgressModal({ disciple, onClose, db, load }: D
                   <div className="space-y-2">
                     {goals.slice(0, 5).map((g) => (
                       <div key={g.id} className="text-sm flex items-start gap-2">
-                        <span className={g.completed ? "text-green-400" : "text-white/30"}>{g.completed ? "✓" : "○"}</span>
+                        <span className={cn("mt-0.5", g.completed ? "text-green-400" : "text-white/30")}>
+                          {g.completed ? <CheckCircle2 size={13} /> : <Circle size={13} />}
+                        </span>
                         <span className={g.completed ? "text-white/40 line-through" : "text-white/80"}>{g.title}</span>
                       </div>
                     ))}
@@ -437,8 +439,8 @@ export default function DiscipleProgressModal({ disciple, onClose, db, load }: D
                     <div className="space-y-3 pl-11">
                       {entry.changes_observed && (
                         <div>
-                          <div className="text-xs font-medium text-green-400 mb-1">
-                            ✓ Changes Observed
+                          <div className="text-xs font-medium text-green-400 mb-1 inline-flex items-center gap-1.5">
+                            <CheckCircle2 size={12} /> Changes Observed
                           </div>
                           <div className="text-sm text-white/70 leading-relaxed">
                             {entry.changes_observed}
@@ -448,8 +450,8 @@ export default function DiscipleProgressModal({ disciple, onClose, db, load }: D
 
                       {entry.challenges && (
                         <div>
-                          <div className="text-xs font-medium text-orange-400 mb-1">
-                            ⚠ Challenges
+                          <div className="text-xs font-medium text-orange-400 mb-1 inline-flex items-center gap-1.5">
+                            <AlertTriangle size={12} /> Challenges
                           </div>
                           <div className="text-sm text-white/70 leading-relaxed">
                             {entry.challenges}
@@ -459,8 +461,8 @@ export default function DiscipleProgressModal({ disciple, onClose, db, load }: D
 
                       {entry.next_steps && (
                         <div>
-                          <div className="text-xs font-medium text-blue-400 mb-1">
-                            → Next Steps
+                          <div className="text-xs font-medium text-blue-400 mb-1 inline-flex items-center gap-1.5">
+                            <ArrowRight size={12} /> Next Steps
                           </div>
                           <div className="text-sm text-white/70 leading-relaxed">
                             {entry.next_steps}
@@ -470,8 +472,8 @@ export default function DiscipleProgressModal({ disciple, onClose, db, load }: D
 
                       {entry.course_milestone && (
                         <div>
-                          <div className="text-xs font-medium text-[#d4a843] mb-1">
-                            📚 Course Milestone
+                          <div className="text-xs font-medium text-[#d4a843] mb-1 inline-flex items-center gap-1.5">
+                            <BookMarked size={12} /> Course Milestone
                           </div>
                           <div className="text-sm text-white/70 leading-relaxed">
                             {entry.course_milestone}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Hand } from "lucide-react";
 import { useLang } from "@/lib/i18n";
 import { localizedHref } from "@/lib/i18n/locale";
 import { heroModernTranslations as t } from "./translations";
@@ -25,7 +26,7 @@ export function HeroModern() {
           {/* Greeting */}
           <div className={styles.greeting}>
             <span>{t.greeting[lang]}</span>
-            <span className={styles.emoji}>👋</span>
+            <span className={styles.emoji}><Hand size={22} /></span>
           </div>
 
           {/* Main Title */}

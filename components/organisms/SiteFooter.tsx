@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react";
 import Link from "next/link";
+import { Sparkle, ArrowUpRight } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { useLang } from "@/lib/i18n";
 import { localizedHref } from "@/lib/i18n/locale";
@@ -260,8 +261,8 @@ export function SiteFooter() {
             <li><a href="mailto:impact@samuelgyasi.com" className="sf-col-link">{ft.linkEmail[lang]}</a></li>
             {socialLinks.map((s) => (
               <li key={s.label}>
-                <a href={s.href} target="_blank" rel="noopener noreferrer" className="sf-col-link">
-                  {s.label} ↗
+                <a href={s.href} target="_blank" rel="noopener noreferrer" className="sf-col-link" style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+                  {s.label} <ArrowUpRight size={11} />
                 </a>
               </li>
             ))}
@@ -280,7 +281,7 @@ export function SiteFooter() {
       <div className="sf-rule" />
       <div className="sf-bottom">
         <span className="sf-copy" suppressHydrationWarning>© {new Date().getFullYear()} Samuel Kobina Gyasi · {ft.copyright[lang]}</span>
-        <span className="sf-emblem">✦</span>
+        <span className="sf-emblem"><Sparkle size={14} fill="currentColor" /></span>
         <span className="sf-credit">{ft.builtWith[lang]} · samuelgyasi.com</span>
       </div>
     </footer>

@@ -7,7 +7,7 @@ import { SiteFooter } from "@/components/organisms/SiteFooter";
 import { createAnonClient } from "@/lib/supabase/anon";
 import { useLang } from "@/lib/i18n";
 import { localizedHref } from "@/lib/i18n/locale";
-import { Play, X, ChevronLeft, ChevronRight, Images } from "lucide-react";
+import { Play, X, ChevronLeft, ChevronRight, Images, ArrowLeft } from "lucide-react";
 
 interface VideoItem {
   id: string;
@@ -65,7 +65,7 @@ export default function VisualPage() {
   const [lightbox, setLightbox] = useState<{ photos: GalleryPhoto[]; index: number } | null>(null);
 
   const translations = {
-    back: lang === "fr" ? "← Ressources" : "← Resources",
+    back: lang === "fr" ? "Ressources" : "Resources",
     eyebrow: lang === "fr" ? "Samuel Kobina Gyasi · Bibliothèque Visuelle" : "Samuel Kobina Gyasi · Visual Library",
     title: lang === "fr" ? "Bibliothèque" : "Visual",
     titleEm: lang === "fr" ? "Visuelle" : "Library",
@@ -132,7 +132,7 @@ export default function VisualPage() {
 
         {/* ── HEADER ── */}
         <div className="visual-header">
-          <Link href={localizedHref(lang, "/resources")} className="visual-back">{translations.back}</Link>
+          <Link href={localizedHref(lang, "/resources")} className="visual-back"><ArrowLeft size={12} /> {translations.back}</Link>
           <p className="visual-eyebrow">{translations.eyebrow}</p>
           <h1 className="visual-headline">
             {translations.title}<br /><em>{translations.titleEm}</em>

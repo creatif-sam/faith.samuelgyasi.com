@@ -67,7 +67,6 @@ export function ArticleClient({
   const [linkCopied, setLinkCopied] = useState(false);
   const [hasShownModal, setHasShownModal] = useState(false);
   const [rating, setRating] = useState(0);
-  const [hoveredRating, setHoveredRating] = useState(0);
   const [pragmatic, setPragmatic] = useState(false);
   const [faithBuilding, setFaithBuilding] = useState(false);
   const [clear, setClear] = useState(false);
@@ -89,7 +88,7 @@ export function ArticleClient({
   const translations = {
     minRead: lang === "fr" ? "min de lecture" : "min read",
     moreInCategory: lang === "fr" ? "Plus dans cette catégorie" : "More in this Category",
-    allReflections: lang === "fr" ? "← Toutes les réflexions" : "← All Reflections",
+    allReflections: lang === "fr" ? "Toutes les réflexions" : "All Reflections",
     shareLabel: lang === "fr" ? "Partager cette réflexion" : "Share this reflection",
     copyLink: lang === "fr" ? "Copier le lien" : "Copy link",
     linkCopied: lang === "fr" ? "Lien copié !" : "Link copied!",
@@ -99,7 +98,7 @@ export function ArticleClient({
     authorBio: lang === "fr"
       ? "Je vous aide à trouver votre BUT de vie, maximiser votre POTENTIEL et développer un ESPRIT Christocentrique."
       : "I help you find your PURPOSE, maximize your POTENTIAL and develop Christlike MIND.",
-    visitStory: lang === "fr" ? "Découvrir mon histoire →" : "Read my story →",
+    visitStory: lang === "fr" ? "Découvrir mon histoire" : "Read my story",
     evalTitle: lang === "fr" ? "Évaluez cette réflexion" : "Rate this Reflection",
     evalSub: lang === "fr" ? "Votre feedback nous aide à créer un meilleur contenu" : "Your feedback helps us create better content",
     rateLabel: lang === "fr" ? "Note (1-5 étoiles)" : "Rating (1-5 stars)",
@@ -280,7 +279,7 @@ export function ArticleClient({
 
       {/* NAV */}
       <nav className="fdp-article-nav">
-        <Link href={localizedHref(lang, "/blog")} className="nav-back">← Journal</Link>
+        <Link href={localizedHref(lang, "/blog")} className="nav-back" style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowLeft size={13} /> Journal</Link>
         <div className="nav-logo">Samuel Kobina Gyasi</div>
         <span />
       </nav>
@@ -345,7 +344,7 @@ export function ArticleClient({
             <div className="fa-author-name">Samuel Kobina Gyasi</div>
             <div className="fa-author-tagline">{translations.authorTagline}</div>
             <p className="fa-author-bio">{translations.authorBio}</p>
-            <Link href={localizedHref(lang, "/my-story")} className="fa-author-link">{translations.visitStory}</Link>
+            <Link href={localizedHref(lang, "/my-story")} className="fa-author-link" style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>{translations.visitStory} <ArrowRight size={13} /></Link>
           </div>
         </div>
 
@@ -428,7 +427,7 @@ export function ArticleClient({
         </section>
 
         <footer className="fa-footer">
-          <Link href={localizedHref(lang, "/blog")} className="fa-back-link">{translations.allReflections}</Link>
+          <Link href={localizedHref(lang, "/blog")} className="fa-back-link" style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowLeft size={13} /> {translations.allReflections}</Link>
           <div className="fa-adjacent-nav">
             {olderPost ? (
               <Link href={localizedHref(lang, `/blog/${olderPost.slug}`)} className="fa-adjacent-card fa-adjacent-older">
@@ -452,8 +451,6 @@ export function ArticleClient({
           honeypotRef={evalHoneypot.inputRef}
           rating={rating}
           setRating={setRating}
-          hoveredRating={hoveredRating}
-          setHoveredRating={setHoveredRating}
           pragmatic={pragmatic}
           setPragmatic={setPragmatic}
           faithBuilding={faithBuilding}

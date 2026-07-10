@@ -5,7 +5,7 @@ import { useLang } from "@/lib/i18n";
 import { localizedHref } from "@/lib/i18n/locale";
 import Breadcrumbs from "@/components/atoms/Breadcrumbs";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
-import { Download, Star } from "lucide-react";
+import { Download, Star, ArrowLeft } from "lucide-react";
 
 interface LibraryItem {
   id: string;
@@ -31,7 +31,7 @@ export default function BookViewClient({ item }: { item: LibraryItem }) {
     about: lang === "fr" ? "À propos de ce livre" : "About this Book",
     download: lang === "fr" ? "Télécharger" : "Download",
     rating: lang === "fr" ? "Évaluation" : "Rating",
-    back: lang === "fr" ? "← Retour aux ressources" : "← Back to Resources",
+    back: lang === "fr" ? "Retour aux ressources" : "Back to Resources",
   };
 
   return (
@@ -41,7 +41,7 @@ export default function BookViewClient({ item }: { item: LibraryItem }) {
         
         {/* Nav */}
         <nav className="bv-nav">
-          <Link href={localizedHref(lang, "/resources")} className="bv-back-link">{translations.back}</Link>
+          <Link href={localizedHref(lang, "/resources")} className="bv-back-link" style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowLeft size={13} /> {translations.back}</Link>
           <div className="bv-logo">Samuel Kobina Gyasi</div>
           <span />
         </nav>

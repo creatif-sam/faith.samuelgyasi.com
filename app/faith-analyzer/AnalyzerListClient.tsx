@@ -8,7 +8,7 @@ import { localizedHref } from "@/lib/i18n/locale";
 import Breadcrumbs from "@/components/atoms/Breadcrumbs";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
 import { Suspense } from "react";
-import { ClipboardCheck, TrendingUp, Users } from "lucide-react";
+import { ClipboardCheck, TrendingUp, Users, ArrowRight } from "lucide-react";
 
 type FaithTest = {
   id: string;
@@ -156,7 +156,7 @@ export default function AnalyzerListClient({ initialTests }: { initialTests: Fai
                       <div className="mt-4">
                         <span className="inline-flex items-center gap-2 text-[#d4a843] font-poppins text-[13px] font-medium group-hover:gap-3 transition-all">
                           {lang === "fr" ? "Commencer le test" : "Take Test"}
-                          <span className="text-[18px]">→</span>
+                          <ArrowRight size={16} />
                         </span>
                       </div>
                     </div>

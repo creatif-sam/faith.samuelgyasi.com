@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Sparkle, ArrowUpRight } from "lucide-react";
 import { type UpcomingEvent, displayDate, FORMAT_LABEL } from "./types";
 import { RegisterModal } from "./RegisterModal";
 import { RecordingModal } from "./RecordingModal";
@@ -86,8 +87,9 @@ export function EventCard({ item, delay, isPastEvent }: EventCardProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="up-btn up-btn--outline"
+                  style={{ display: "inline-flex", alignItems: "center", gap: 6 }}
                 >
-                  {t.card.joinUs[lang]}
+                  {t.card.joinUs[lang]} <ArrowUpRight size={13} />
                 </a>
               )}
               {item.facebook_url && (
@@ -116,7 +118,10 @@ export function EventCard({ item, delay, isPastEvent }: EventCardProps) {
           {/* Recording signup — shown for both upcoming and past */}
           {item.recording_signup && (
             <button className="up-btn up-btn--rec" onClick={() => setRecOpen(true)}>
-              ✦ {t.card.getRecording[lang]}
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+                <Sparkle size={11} fill="currentColor" />
+                {t.card.getRecording[lang]}
+              </span>
             </button>
           )}
         </div>

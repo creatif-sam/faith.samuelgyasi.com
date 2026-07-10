@@ -2,7 +2,9 @@
 import { testimonialsStyles } from "./testimonialsStyles";
 
 import { useEffect, useState } from "react";
+import { Diamond } from "lucide-react";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
+import { StarRating } from "@/components/atoms/StarRating";
 
 interface Testimonial {
   id: string;
@@ -15,17 +17,6 @@ interface Testimonial {
 }
 
 const css = testimonialsStyles;
-
-
-function StarRating({ rating }: { rating: number }) {
-  return (
-    <div className="tm-stars" aria-label={`${rating} out of 5`}>
-      {Array.from({ length: 5 }).map((_, i) => (
-        <span key={i} className={`tm-star${i < rating ? " on" : ""}`}>★</span>
-      ))}
-    </div>
-  );
-}
 
 export default function TestimonialsPageClient({ initialItems }: { initialItems: Testimonial[] }) {
   const [items, setItems] = useState<Testimonial[]>(initialItems);
@@ -93,12 +84,12 @@ export default function TestimonialsPageClient({ initialItems }: { initialItems:
         <div className="tm-grid-wrap">
           {loading ? (
             <div className="tm-empty">
-              <div className="tm-empty-icon">◆</div>
+              <div className="tm-empty-icon" style={{ color: "#ffde59" }}><Diamond size={18} /></div>
               <p>Loading testimonials&hellip;</p>
             </div>
           ) : items.length === 0 ? (
             <div className="tm-empty">
-              <div className="tm-empty-icon">◆</div>
+              <div className="tm-empty-icon" style={{ color: "#ffde59" }}><Diamond size={18} /></div>
               <p>Testimonials coming soon.</p>
             </div>
           ) : (
@@ -109,7 +100,7 @@ export default function TestimonialsPageClient({ initialItems }: { initialItems:
                   className={`tm-card${idx === 0 ? " tm-card--featured" : ""}`}
                   style={{ transitionDelay: `${idx * 0.06}s` }}
                 >
-                  <StarRating rating={t.rating} />
+                  <StarRating rating={t.rating} size={13} gap={2} className="tm-stars" />
                   <blockquote className="tm-quote">
                     &ldquo;{t.quote}&rdquo;
                   </blockquote>

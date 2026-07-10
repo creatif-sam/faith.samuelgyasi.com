@@ -274,7 +274,7 @@ export default function TrainingDetailPage({ params }: Props) {
       <div style={{ minHeight: "100vh", background: theme === "light" ? "#f7f8fb" : "#07080c", display: "flex", alignItems: "center", justifyContent: "center" }}>
         <div style={{ textAlign: "center", color: theme === "light" ? "#334155" : "rgba(255,255,255,.4)", fontFamily: "Poppins,sans-serif" }}>
           <p>Training not found.</p>
-          <Link href="/dashboard" style={{ color: "#d4a843", textDecoration: "none", fontSize: 13 }}>← Back to Dashboard</Link>
+          <Link href="/dashboard" style={{ color: "#d4a843", textDecoration: "none", fontSize: 13, display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowLeft size={13} /> Back to Dashboard</Link>
         </div>
       </div>
     );

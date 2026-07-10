@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { useLang } from "@/lib/i18n";
 import { localizedHref } from "@/lib/i18n/locale";
@@ -31,8 +32,8 @@ export function LatestBlogsSection() {
     subtitle: lang === "fr" 
       ? "Écrits récents sur les Écritures, les convictions sacrées et la pratique quotidienne de faire confiance à Dieu." 
       : "Recent writings on Scripture, sacred conviction, and the daily practice of trusting God.",
-    readReflection: lang === "fr" ? "Lire la Réflexion →" : "Read Reflection →",
-    viewAll: lang === "fr" ? "Voir Toutes les Réflexions →" : "View All Reflections →",
+    readReflection: lang === "fr" ? "Lire la Réflexion" : "Read Reflection",
+    viewAll: lang === "fr" ? "Voir Toutes les Réflexions" : "View All Reflections",
     minRead: lang === "fr" ? "min de lecture" : "min read",
   };
 
@@ -100,7 +101,7 @@ export function LatestBlogsSection() {
                       {post.read_time_minutes} {translations.minRead}
                     </div>
                     <Link href={localizedHref(lang, `/blog/${post.slug}`)} className="pillar-cta">
-                      {translations.readReflection}
+                      {translations.readReflection} <ArrowRight size={13} />
                     </Link>
                   </div>
                 </div>
@@ -122,11 +123,13 @@ export function LatestBlogsSection() {
                 textDecoration: "none",
                 border: "1px solid rgba(201,168,76,.3)",
                 padding: "14px 36px",
-                display: "inline-block",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
                 transition: "border-color .3s, color .3s",
               }}
             >
-              {translations.viewAll}
+              {translations.viewAll} <ArrowRight size={13} />
             </Link>
           </div>
         </ScrollReveal>

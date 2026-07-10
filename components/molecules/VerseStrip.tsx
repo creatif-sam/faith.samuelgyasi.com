@@ -1,7 +1,9 @@
+import { Cross } from "lucide-react";
+
 export function VerseStrip() {
   return (
     <div className="verse-strip">
-      <div className="verse-cross">◆</div>
+      <div className="verse-cross"><Cross size={40} strokeWidth={1.5} /></div>
       <div>
         <p className="verse-text">
           &ldquo;Trust in the Lord with all your heart and lean not on your own understanding;

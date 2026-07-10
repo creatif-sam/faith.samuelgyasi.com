@@ -6,6 +6,8 @@ import { SiteFooter } from "@/components/organisms/SiteFooter";
 import { createAnonClient } from "@/lib/supabase/anon";
 import { useLang } from "@/lib/i18n";
 import { localizedHref } from "@/lib/i18n/locale";
+import { Diamond, ArrowLeft } from "lucide-react";
+import { StarRating } from "@/components/atoms/StarRating";
 
 interface BookReview {
   id: string;
@@ -242,16 +244,6 @@ const css = `
 }
 `;
 
-function StarRating({ rating }: { rating: number }) {
-  return (
-    <div className="rv-stars" aria-label={`${rating} out of 5`}>
-      {Array.from({ length: 5 }).map((_, i) => (
-        <span key={i} className={`rv-star${i < rating ? " on" : ""}`}>★</span>
-      ))}
-    </div>
-  );
-}
-
 function fmt(d: string) {
   return new Date(d).toLocaleDateString("en-GB", { month: "long", year: "numeric" });
 }
@@ -301,7 +293,7 @@ export default function BookReviewsPage() {
 
         {/* ── HEADER ── */}
         <div className="reviews-header">
-          <Link href={localizedHref(lang, "/resources")} className="reviews-back">← Resources</Link>
+          <Link href={localizedHref(lang, "/resources")} className="reviews-back"><ArrowLeft size={12} /> Resources</Link>
           <p className="reviews-eyebrow">Samuel Kobina Gyasi · Reading Journal</p>
           <h1 className="reviews-headline">
             Book<br /><em>Reviews</em>
@@ -337,13 +329,13 @@ export default function BookReviewsPage() {
                   {review.cover_url ? (
                     <img src={review.cover_url} alt={review.title} />
                   ) : (
-                    <span>◆</span>
+                    <Diamond size={24} />
                   )}
                 </div>
                 <div>
                   <div className="rv-meta-row">
                     <span className="rv-cat">{review.category}</span>
-                    {review.rating && <StarRating rating={review.rating} />}
+                    {review.rating && <StarRating rating={review.rating} size={12} gap={2} className="rv-stars" />}
                   </div>
                   <h3 className="rv-title">{review.title}</h3>
                   {review.author && <div className="rv-author">by {review.author}</div>}

@@ -2,7 +2,7 @@
 import Link from "next/link";
 import {
   GraduationCap, CheckCircle2, TrendingUp, Award,
-  Flame, BookOpen, ArrowRight, Sparkles, Newspaper, Circle, CheckCircle,
+  Flame, BookOpen, ArrowRight, Sparkles, Newspaper, Circle, CheckCircle, Hand,
 } from "lucide-react";
 import type { Training, EnrollmentWithProgress, SpiritualHabit } from "../types";
 import type { Translations } from "../translations";
@@ -86,7 +86,8 @@ export default function OverviewTab({
         </div>
         <div>
           <h1 className="ov-hero-greeting">
-            {t.overviewGreeting}, <span className="ov-hero-name">{displayName}</span> 👋
+            {t.overviewGreeting}, <span className="ov-hero-name">{displayName}</span>{" "}
+            <Hand size={22} style={{ display: "inline", verticalAlign: "-3px", color: "#d4a843" }} />
           </h1>
           <p className="ov-hero-sub">{t.overviewSub}</p>
         </div>

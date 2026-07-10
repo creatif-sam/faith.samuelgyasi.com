@@ -3,6 +3,7 @@ import { X, Star, Plus, Trash2, Eye } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { TW } from "../constants";
+import { StarRating } from "@/components/atoms/StarRating";
 import type { BlogReview } from "../types";
 import type { SupabaseClient } from "@supabase/supabase-js";
 
@@ -186,17 +187,15 @@ export default function BlogReviewsModal({ postId, postTitle, onClose, db }: Blo
             <div className={TW.field}>
               <label className={TW.label}>Rating (1-5)</label>
               <div className="flex gap-2 items-center">
-                {[1, 2, 3, 4, 5].map((n) => (
-                  <button
-                    key={n}
-                    type="button"
-                    onClick={() => setRating(n)}
-                    className="bg-transparent border-0 cursor-pointer text-2xl p-0"
-                    style={{ color: n <= rating ? "#fbbf24" : "rgba(251,191,36,.2)" }}
-                  >
-                    ★
-                  </button>
-                ))}
+                <StarRating
+                  rating={rating}
+                  interactive
+                  onChange={setRating}
+                  size={22}
+                  gap={6}
+                  color="#fbbf24"
+                  emptyColor="rgba(251,191,36,.2)"
+                />
                 <span className="ml-2 text-white/60 text-sm">{rating} star{rating !== 1 ? "s" : ""}</span>
               </div>
             </div>
@@ -275,16 +274,8 @@ export default function BlogReviewsModal({ postId, postTitle, onClose, db }: Blo
                   </div>
                 </div>
 
-                <div className="flex gap-0.5 mb-3">
-                  {[1, 2, 3, 4, 5].map((n) => (
-                    <span
-                      key={n}
-                      className="text-lg"
-                      style={{ color: n <= review.rating ? "#fbbf24" : "rgba(251,191,36,.2)" }}
-                    >
-                      ★
-                    </span>
-                  ))}
+                <div className="mb-3">
+                  <StarRating rating={review.rating} size={16} gap={2} color="#fbbf24" emptyColor="rgba(251,191,36,.2)" />
                 </div>
 
                 {review.comment && (

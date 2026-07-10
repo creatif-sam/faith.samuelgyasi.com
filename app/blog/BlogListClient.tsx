@@ -3,6 +3,7 @@ import { blogStyles } from "./blogStyles";
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { X, ArrowLeft } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { useLang } from "@/lib/i18n";
 import { localizedHref } from "@/lib/i18n/locale";
@@ -11,7 +12,6 @@ import { SiteFooter } from "@/components/organisms/SiteFooter";
 import { SeriesSidebar } from "@/components/blog/SeriesSidebar";
 import { Suspense } from "react";
 import { BlogRequestModal } from "@/components/organisms/BlogRequestModal";
-import { Sparkles } from "lucide-react";
 import type { DbPost, BlogSeries } from "./blogHelpers";
 import { CATEGORY_LABELS, getCategoryLabel } from "./blogHelpers";
 import FeaturedPost from "./components/FeaturedPost";
@@ -149,7 +149,7 @@ function BlogContent({ initialPosts, initialSeriesList }: BlogContentProps) {
               <Link href={localizedHref(lang, "/blog")} className="fb-series-back"
                 style={{ fontFamily: "'Poppins', sans-serif", fontSize: "11px", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--gold)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "8px", transition: "all 0.3s ease" }}
               >
-                ← {lang === "fr" ? "Tous les articles" : "All Posts"}
+                <ArrowLeft size={13} /> {lang === "fr" ? "Tous les articles" : "All Posts"}
               </Link>
             </div>
           </>
@@ -167,7 +167,6 @@ function BlogContent({ initialPosts, initialSeriesList }: BlogContentProps) {
             </p>
             <div style={{ marginTop: "32px" }}>
               <button onClick={() => setShowBlogRequestModal(true)} className="fb-request-btn">
-                <Sparkles size={16} />
                 {lang === "fr" ? "Demander un sujet de blog" : "Request a Blog Topic"}
               </button>
             </div>
@@ -184,7 +183,7 @@ function BlogContent({ initialPosts, initialSeriesList }: BlogContentProps) {
             value={searchQuery}
             onChange={(e) => { setSearchQuery(e.target.value); resetVisible(); }}
           />
-          {searchQuery && <button className="fb-search-clear" onClick={() => setSearchQuery("")} aria-label="Clear search">×</button>}
+          {searchQuery && <button className="fb-search-clear" onClick={() => setSearchQuery("")} aria-label="Clear search"><X size={14} /></button>}
         </div>
         {searchQuery && (
           <p className="fb-search-results">{searchFiltered.length} {lang === "fr" ? "résultat(s) trouvé(s)" : "result(s) found"}</p>

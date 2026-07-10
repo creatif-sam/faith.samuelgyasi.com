@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { headers } from "next/headers";
+import { ArrowLeft } from "lucide-react";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
 import { localizedHref } from "@/lib/i18n/locale";
 import { resolveLocale, pageAlternates, SITE_URL } from "@/lib/seo";
@@ -185,9 +186,12 @@ export default async function PrivacyPage() {
                 textTransform: "uppercase",
                 color: "#c9a84c",
                 textDecoration: "none",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
               }}
             >
-              ← Back to Home
+              <ArrowLeft size={13} /> Back to Home
             </Link>
           </div>
         </div>

@@ -16,7 +16,7 @@ export const pillarsTranslations = {
   },
   pillars: [
     {
-      icon: "◆",
+      icon: "diamond",
       name: {
         en: "Faith & Beliefs",
         fr: "Foi & Convictions",
@@ -32,7 +32,7 @@ export const pillarsTranslations = {
       },
     },
     {
-      icon: "✦",
+      icon: "sparkle",
       name: {
         en: "Scripture & Prayer",
         fr: "Écriture & Prière",
@@ -48,7 +48,7 @@ export const pillarsTranslations = {
       },
     },
     {
-      icon: "◎",
+      icon: "ring",
       name: {
         en: "The Word Made Life",
         fr: "La Parole Faite Vie",
@@ -64,7 +64,7 @@ export const pillarsTranslations = {
       },
     },
     {
-      icon: "◎",
+      icon: "ring",
       name: {
         en: "My Story",
         fr: "Mon Histoire",

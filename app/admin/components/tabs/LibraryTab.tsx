@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Plus, Pencil, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { TW } from "../constants";
+import { StarRating } from "@/components/atoms/StarRating";
 import { LibraryItem } from "../types";
 
 interface LibraryTabProps {
@@ -67,7 +68,7 @@ export default function LibraryTab({ items, onNew, onEdit, onDelete, onToggle }:
                   {subTab === "review" && (
                     <td className={TW.td}>
                       {item.rating !== null
-                        ? <span style={{ color: "#c9a84c", letterSpacing: "2px" }}>{"★".repeat(item.rating)}{"☆".repeat(5 - item.rating)}</span>
+                        ? <StarRating rating={item.rating} size={12} gap={1} />
                         : "—"}
                     </td>
                   )}

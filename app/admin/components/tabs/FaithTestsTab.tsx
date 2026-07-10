@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Plus, Pencil, Trash2, List } from "lucide-react";
+import { Plus, Pencil, Trash2, List, X, ArrowLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { TW } from "../constants";
 import { FaithTest, FaithTestQuestion } from "../types";
@@ -98,7 +98,7 @@ export default function FaithTestsTab({ tests, onNew, onEdit, onDelete, onToggle
           {/* Questions View */}
           <div className="mb-6">
             <button className={cn(TW.btn, TW.ghost, TW.sm)} onClick={() => setShowQuestions(false)}>
-              ← Back to Tests
+              <ArrowLeft size={12} /> Back to Tests
             </button>
           </div>
           
@@ -264,7 +264,7 @@ function QuestionModal({
       <div className={TW.panel} onClick={(e) => e.stopPropagation()} style={{ maxWidth: "900px" }}>
         <div className={TW.pHead}>
           <div className={TW.fTitle}>{question ? "Edit Question" : "New Question"}</div>
-          <button className={TW.iconBtn} onClick={onClose}>×</button>
+          <button className={TW.iconBtn} onClick={onClose}><X size={14} /></button>
         </div>
         <div className={TW.pBody}>
           <div className={TW.field}>

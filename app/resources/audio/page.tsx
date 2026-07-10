@@ -6,7 +6,7 @@ import { SiteFooter } from "@/components/organisms/SiteFooter";
 import { createAnonClient } from "@/lib/supabase/anon";
 import { useLang } from "@/lib/i18n";
 import { localizedHref } from "@/lib/i18n/locale";
-import { Download, Play } from "lucide-react";
+import { Download, Play, ArrowLeft } from "lucide-react";
 
 interface AudioItem {
   id: string;
@@ -180,7 +180,7 @@ export default function AudioPage() {
   const [audioItems, setAudioItems] = useState<AudioItem[]>([]);
 
   const translations = {
-    back: lang === "fr" ? "← Ressources" : "← Resources",
+    back: lang === "fr" ? "Ressources" : "Resources",
     eyebrow: lang === "fr" ? "Samuel Kobina Gyasi · Bibliothèque Audio" : "Samuel Kobina Gyasi · Audio Library",
     title: lang === "fr" ? "Bibliothèque" : "Audio",
     titleEm: lang === "fr" ? "Audio" : "Library",
@@ -225,7 +225,7 @@ export default function AudioPage() {
 
         {/* ── HEADER ── */}
         <div className="audio-header">
-          <Link href={localizedHref(lang, "/resources")} className="audio-back">{translations.back}</Link>
+          <Link href={localizedHref(lang, "/resources")} className="audio-back"><ArrowLeft size={12} /> {translations.back}</Link>
           <p className="audio-eyebrow">{translations.eyebrow}</p>
           <h1 className="audio-headline">
             {translations.title}<br /><em>{translations.titleEm}</em>

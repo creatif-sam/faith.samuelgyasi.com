@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { ArrowRight } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { type UpcomingEvent, isPast } from "./components/types";
 import { upcomingStyles } from "./components/styles";
@@ -81,8 +82,8 @@ export default function UpcomingListClient({ initialEvents }: { initialEvents: U
           <div className="up-rule" />
           <p className="up-sub">{t.hero.sub[lang]}</p>
           <div className="up-hero-actions">
-            <button className="up-btn up-btn--gold up-hero-reserve-btn" onClick={() => setShowReserve(true)}>
-              {t.hero.reserveBtn[lang]}
+            <button className="up-btn up-btn--gold up-hero-reserve-btn" onClick={() => setShowReserve(true)} style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+              {t.hero.reserveBtn[lang]} <ArrowRight size={14} />
             </button>
             <p className="up-hero-reserve-hint">{t.hero.reserveHint[lang]}</p>
           </div>

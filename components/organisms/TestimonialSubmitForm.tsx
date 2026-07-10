@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { Check } from "lucide-react";
 import { HoneypotField } from "@/components/HoneypotField";
 import { useHoneypot } from "@/lib/useHoneypot";
+import { StarRating } from "@/components/atoms/StarRating";
 
 export function TestimonialSubmitForm() {
   const [open, setOpen] = useState(false);
@@ -44,7 +46,7 @@ export function TestimonialSubmitForm() {
   if (submitted) {
     return (
       <div className="ts-form-wrap ts-form-success">
-        <div className="ts-form-success-check">✓</div>
+        <div className="ts-form-success-check"><Check size={20} strokeWidth={2.5} /></div>
         <p>Thank you, {name.split(" ")[0]}. Your testimony has been received and will appear here once reviewed.</p>
       </div>
     );
@@ -107,21 +109,15 @@ export function TestimonialSubmitForm() {
 
       <div className="ts-form-field">
         <label className="ts-form-label">Rating</label>
-        <div className="ts-form-stars">
-          {[1, 2, 3, 4, 5].map((n) => (
-            <button
-              key={n}
-              type="button"
-              className="ts-form-star"
-              onClick={() => setRating(n)}
-              aria-label={`${n} star${n > 1 ? "s" : ""}`}
-              disabled={submitting}
-              style={{ color: n <= rating ? "#c9a84c" : "rgba(201,168,76,.25)" }}
-            >
-              ★
-            </button>
-          ))}
-        </div>
+        <StarRating
+          rating={rating}
+          interactive
+          onChange={setRating}
+          disabled={submitting}
+          size={26}
+          gap={8}
+          className="ts-form-stars"
+        />
       </div>
 
       {error && <p className="ts-form-error">{error}</p>}

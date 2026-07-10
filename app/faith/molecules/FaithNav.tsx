@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
 import { LangToggle } from "../atoms/LangToggle";
 import type { Lang } from "../translations";
 import { faithTranslations as t } from "../translations";
@@ -24,7 +25,7 @@ export function FaithNav({ lang, onToggleLang }: FaithNavProps) {
 
   return (
     <nav>
-      <Link href={localizedHref(lang, "/faith")} className="nav-back">{t.nav.back[lang]}</Link>
+      <Link href={localizedHref(lang, "/faith")} className="nav-back"><ArrowLeft size={13} /> {t.nav.back[lang]}</Link>
       <div className="nav-links">
         {NAV_LINKS.map(({ path, label }) => {
           const href = path.startsWith("/#") ? `/${lang}${path.slice(1)}` : localizedHref(lang, path);

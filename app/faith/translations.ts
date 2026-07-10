@@ -118,7 +118,6 @@ export const faithTranslations = {
   },
 
   reflection: {
-    ornament: "✦ ✦ ✦",
     quote: {
       en: "\"I am not defined by where I started,\nnor limited by where I stand today.\nI am being transformed —\nand that is enough to move forward.\"",
       fr: "« Je ne suis pas défini par là où j'ai commencé,\nni limité par là où je me trouve aujourd'hui.\nJe suis en train d'être transformé —\net cela suffit pour avancer. »",
@@ -139,8 +138,8 @@ export const faithTranslations = {
       en: "Essays on scripture, sacred conviction, and the daily practice of trusting God — pen to paper, heart to page.",
       fr: "Essais sur l'Écriture, la conviction sacrée et la pratique quotidienne de la confiance en Dieu — plume sur papier, cœur sur page.",
     },
-    btnBlog:  { en: "Read the Journal →",           fr: "Lire le Journal →" },
-    btnCredo: { en: "Statement of Faith →",          fr: "Profession de Foi →" },
+    btnBlog:  { en: "Read the Journal",           fr: "Lire le Journal" },
+    btnCredo: { en: "Statement of Faith",          fr: "Profession de Foi" },
   },
 
   connect: {

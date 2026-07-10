@@ -78,7 +78,7 @@ body.on-fdp .cursor-ring { border-color: rgba(201,168,76,.35); mix-blend-mode: n
   display:flex;align-items:center;gap:10px;transition:color .3s;
 }
 .fdp .nav-back:hover { color:#ffde59; }
-.fdp .nav-back::before { content:'←';font-size:13px; }
+.fdp .nav-back svg { flex-shrink:0; }
 .fdp .nav-logo {
   font-family:var(--font-playfair),'Playfair Display',serif;font-size:17px;
   color:var(--white);letter-spacing:.06em;

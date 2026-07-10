@@ -2,6 +2,7 @@
 
 import { Suspense, useEffect } from "react";
 import Link from "next/link";
+import { GraduationCap, ArrowRight } from "lucide-react";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
 import { useLang } from "@/lib/i18n";
 import { localizedHref } from "@/lib/i18n/locale";
@@ -273,7 +274,7 @@ export default function ResourcesPage() {
                 ? "Writing is how I think out loud. This section gathers the essays, reflections, and short books I have written — on faith, leadership, collective intelligence, and the examined life."
                 : "L'écriture est ma façon de penser à voix haute. Cette section rassemble les essais, réflexions et courts livres que j'ai écrits — sur la foi, le leadership, l'intelligence collective et la vie examinée."}
             </p>
-            <span className="lib-card-cta">{lang === "en" ? "Browse eBooks →" : "Parcourir les Livres →"}</span>
+            <span className="lib-card-cta">{lang === "en" ? "Browse eBooks" : "Parcourir les Livres"} <ArrowRight size={12} /></span>
           </Link>
 
           <Link href={localizedHref(lang, "/resources/reviews")} className="lib-section-card" style={{ transitionDelay: "0.08s" }}>
@@ -284,7 +285,7 @@ export default function ResourcesPage() {
                 ? "Every significant book I have read has left a mark. Here I share honest reflections on the books that have challenged, shaped, and deepened my thinking across theology, leadership, and human flourishing."
                 : "Chaque livre significatif que j'ai lu a laissé une empreinte. Ici je partage des réflexions honnêtes sur les livres qui ont remis en question, façonné et approfondi ma pensée en théologie, leadership et épanouissement humain."}
             </p>
-            <span className="lib-card-cta">{lang === "en" ? "Browse Reviews →" : "Parcourir les Critiques →"}</span>
+            <span className="lib-card-cta">{lang === "en" ? "Browse Reviews" : "Parcourir les Critiques"} <ArrowRight size={12} /></span>
           </Link>
 
           <Link href={localizedHref(lang, "/resources/audio")} className="lib-section-card" style={{ transitionDelay: "0.16s" }}>
@@ -295,7 +296,7 @@ export default function ResourcesPage() {
                 ? "Spoken teachings, sermons, and reflections on faith, Scripture, and the Christian walk. Listen to messages that encourage, challenge, and inspire deeper devotion to Christ."
                 : "Enseignements parlés, sermons et réflexions sur la foi, les Écritures et la marche chrétienne. Écoutez des messages qui encouragent, défient et inspirent une dévotion plus profonde au Christ."}
             </p>
-            <span className="lib-card-cta">{lang === "en" ? "Listen Now →" : "Écouter Maintenant →"}</span>
+            <span className="lib-card-cta">{lang === "en" ? "Listen Now" : "Écouter Maintenant"} <ArrowRight size={12} /></span>
           </Link>
 
           <Link href={localizedHref(lang, "/resources/visual")} className="lib-section-card" style={{ transitionDelay: "0.24s" }}>
@@ -306,13 +307,13 @@ export default function ResourcesPage() {
                 ? "Video teachings, talks, and visual content exploring the depths of faith, theology, and spiritual formation. Watch engaging messages designed to strengthen your understanding and walk with God."
                 : "Enseignements vidéo, conférences et contenu visuel explorant les profondeurs de la foi, de la théologie et de la formation spirituelle. Regardez des messages captivants conçus pour renforcer votre compréhension et votre marche avec Dieu."}
             </p>
-            <span className="lib-card-cta">{lang === "en" ? "Watch Now →" : "Regarder Maintenant →"}</span>
+            <span className="lib-card-cta">{lang === "en" ? "Watch Now" : "Regarder Maintenant"} <ArrowRight size={12} /></span>
           </Link>
 
           <Link href={localizedHref(lang, "/resources/trainings")} className="lib-section-card lib-section-card--full" style={{ transitionDelay: "0.32s" }}>
             <div style={{ display: "flex", flexDirection: "column", gap: 12, flex: "0 0 auto" }}>
               <div className="lib-card-num">05</div>
-              <div className="lib-card-icon">🎓</div>
+              <div className="lib-card-icon" style={{ color: "#ffde59" }}><GraduationCap size={30} /></div>
             </div>
             <div style={{ flex: 1 }}>
               <h2 className="lib-card-title">{lang === "en" ? "Trainings" : "Formations"}</h2>
@@ -322,7 +323,7 @@ export default function ResourcesPage() {
                   : "Parcours d'apprentissage structurés sur la foi, le leadership et le développement personnel. Explorez les formations disponibles — chacune conçue pour vous approfondir dans votre marche avec Dieu et votre croissance en tant que leader."}
               </p>
             </div>
-            <span className="lib-card-cta">{lang === "en" ? "Explore Trainings →" : "Explorer les Formations →"}</span>
+            <span className="lib-card-cta">{lang === "en" ? "Explore Trainings" : "Explorer les Formations"} <ArrowRight size={12} /></span>
           </Link>
         </div>
 

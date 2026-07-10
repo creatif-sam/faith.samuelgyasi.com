@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { StarRating } from "@/components/atoms/StarRating";
 
 interface Testimonial {
   id: string;
@@ -10,16 +11,6 @@ interface Testimonial {
   avatar_url: string | null;
   quote: string;
   rating: number;
-}
-
-function StarRating({ rating }: { rating: number }) {
-  return (
-    <div className="ts-stars">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <span key={i} className={i < rating ? "ts-star ts-star--on" : "ts-star ts-star--off"}>★</span>
-      ))}
-    </div>
-  );
 }
 
 export function TestimonialsClient() {
@@ -53,7 +44,7 @@ export function TestimonialsClient() {
         <div className="ts-grid">
           {items.map((t, idx) => (
             <div key={t.id} className={`ts-card ${idx === 0 ? "ts-card--featured" : ""}`}>
-              <StarRating rating={t.rating} />
+              <StarRating rating={t.rating} size={14} gap={3} className="ts-stars" />
               <blockquote className="ts-quote">
                 &ldquo;{t.quote}&rdquo;
               </blockquote>

@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { BookOpen, CheckCircle2, Newspaper } from "lucide-react";
+import { BookOpen, CheckCircle2, Newspaper, ArrowLeft, ArrowUpRight } from "lucide-react";
 import { useLang } from "@/lib/i18n";
 import { localizedHref } from "@/lib/i18n/locale";
 import { createClient } from "@/lib/supabase/client";
@@ -54,8 +54,8 @@ export default function BlogsTab({ posts, readPostIds, userId, t, onMarkRead }: 
     return (
       <>
         <style>{articleCss}</style>
-        <button className="dash-btn" onClick={() => setSelected(null)} style={{ marginBottom: 20 }}>
-          {t.backToBlogs}
+        <button className="dash-btn" onClick={() => setSelected(null)} style={{ marginBottom: 20, display: "inline-flex", alignItems: "center", gap: 6 }}>
+          <ArrowLeft size={14} /> {t.backToBlogs}
         </button>
         <div className="fdp">
           <article className="fa-article" style={{ padding: 0, maxWidth: 760 }}>
@@ -79,8 +79,8 @@ export default function BlogsTab({ posts, readPostIds, userId, t, onMarkRead }: 
               <BibleEnhancedContent content={content} />
             )}
             <div style={{ marginTop: 40 }}>
-              <Link href={localizedHref(lang, `/blog/${selected.slug}`)} className="fa-author-link" target="_blank">
-                {t.openFullArticle}
+              <Link href={localizedHref(lang, `/blog/${selected.slug}`)} className="fa-author-link" target="_blank" style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+                {t.openFullArticle} <ArrowUpRight size={13} />
               </Link>
             </div>
           </article>

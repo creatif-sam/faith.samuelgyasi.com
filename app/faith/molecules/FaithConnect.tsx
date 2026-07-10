@@ -2,6 +2,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { faithTranslations as t } from "../translations";
 import type { Lang } from "../translations";
 import { localizedHref } from "@/lib/i18n/locale";
@@ -20,13 +21,13 @@ export function FaithConnect({ lang }: { lang: Lang }) {
       </div>
       <div className="connect-links">
         <a href="mailto:samuel.gyasi@um6p.ma" className="c-link">
-          {c.links.email[lang]} <span>→</span>
+          {c.links.email[lang]} <span><ArrowRight size={16} /></span>
         </a>
         <Link href={localizedHref(lang, "/my-story")} className="c-link">
-          {c.links.credo[lang]} <span>→</span>
+          {c.links.credo[lang]} <span><ArrowRight size={16} /></span>
         </Link>
         <Link href={localizedHref(lang, "/blog")} className="c-link">
-          {c.links.blog[lang]} <span>→</span>
+          {c.links.blog[lang]} <span><ArrowRight size={16} /></span>
         </Link>
       </div>
     </section>
