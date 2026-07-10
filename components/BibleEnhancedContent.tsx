@@ -96,7 +96,7 @@ export function BibleEnhancedContent({ content }: BibleEnhancedContentProps) {
   }, [lang]);
 
   // Parse content and wrap Bible references
-  const enhancedContent = enhanceBibleReferences(content);
+  const enhancedContent = enhanceBibleReferences(stripDocumentBoilerplate(content));
 
   return (
     <>
@@ -119,6 +119,25 @@ export function BibleEnhancedContent({ content }: BibleEnhancedContentProps) {
       )}
     </>
   );
+}
+
+// Some posts were pasted in as full standalone HTML documents (meta/title/link/style
+// tags with hardcoded colors for a fixed light background). A <style> tag applies
+// globally no matter where it's injected in the DOM, so it silently overrides the
+// site's theme-aware colors for that post. Strip document-level boilerplate so only
+// the actual article markup remains.
+function stripDocumentBoilerplate(html: string): string {
+  return html
+    .replace(/<!DOCTYPE[^>]*>/gi, "")
+    .replace(/<\/?html[^>]*>/gi, "")
+    .replace(/<head[\s\S]*?<\/head>/gi, "")
+    .replace(/<style[\s\S]*?<\/style>/gi, "")
+    .replace(/<script[\s\S]*?<\/script>/gi, "")
+    .replace(/<meta[^>]*>/gi, "")
+    .replace(/<title[\s\S]*?<\/title>/gi, "")
+    .replace(/<link[^>]*>/gi, "")
+    .replace(/<\/?body[^>]*>/gi, "")
+    .trim();
 }
 
 // Bible book patterns

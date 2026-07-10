@@ -6,6 +6,7 @@ import { TW, CATEGORIES, slugify } from "../constants";
 import type { DefaultCategory } from "../constants";
 import { BlogPost, BlogSeries, BlogTag } from "../types";
 import { createClient } from "@/lib/supabase/client";
+import BlogContentBuilder from "./BlogContentBuilder";
 
 interface PostModalProps {
   post: BlogPost | null;
@@ -254,8 +255,8 @@ export default function PostModal({ post, onClose, onSave, db }: PostModalProps)
           
           <div className={TW.field}><label className={TW.label}>Excerpt</label><textarea className={cn(TW.tarea, "min-h-[80px]")} value={form.excerpt} onChange={(e) => setF("excerpt", e.target.value)} placeholder="Short summary…" /></div>
           <div className={TW.field}><label className={TW.label}>Excerpt (French)</label><textarea className={cn(TW.tarea, "min-h-[80px]")} value={form.excerpt_fr} onChange={(e) => setF("excerpt_fr", e.target.value)} placeholder="Résumé court…" /></div>
-          <div className={TW.field}><label className={TW.label}>Content (HTML)</label><textarea className={TW.tarea} value={form.content} onChange={(e) => setF("content", e.target.value)} placeholder="<p>Full article…</p>" /></div>
-          <div className={TW.field}><label className={TW.label}>Content (French, HTML)</label><textarea className={TW.tarea} value={form.content_fr} onChange={(e) => setF("content_fr", e.target.value)} placeholder="<p>Article complet…</p>" /></div>
+          <BlogContentBuilder label="Content" value={form.content} onChange={(v) => setF("content", v)} />
+          <BlogContentBuilder label="Content (French)" value={form.content_fr} onChange={(v) => setF("content_fr", v)} placeholder="<p>Article complet…</p>" />
           <div className={TW.fRow}>
             <div className={TW.field}>
               <label className={TW.label}>Cover Photo</label>
