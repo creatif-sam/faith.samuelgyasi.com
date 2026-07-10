@@ -15,11 +15,11 @@ export function Navbar() {
   const { lang, toggleLang }    = useLang();
 
   const navLinks = [
-    { path: "/blog",           label: t.blog[lang]      },
     { path: "/faith-analyzer", label: t.analyzer[lang]  },
+    { path: "/blog",           label: t.blog[lang]      },
+    { path: "/credo",          label: t.credo[lang]     },
     { path: "/my-story",       label: t.story[lang]     },
     { path: "/resources",      label: t.resources[lang] },
-    { path: "/credo",          label: t.credo[lang]     },
     { path: "/upcoming",       label: t.upcoming[lang]  },
   ].map((l) => ({ ...l, href: localizedHref(lang, l.path) }));
 
