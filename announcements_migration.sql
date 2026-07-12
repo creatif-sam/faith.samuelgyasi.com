@@ -27,3 +27,9 @@ create policy "Admins can manage announcements"
   on announcements for all
   using (auth.role() = 'authenticated')
   with check (auth.role() = 'authenticated');
+
+-- RLS policies only take effect once the roles also have the underlying
+-- table privilege — grant that here (the Studio "New Table" UI does this
+-- automatically, but the SQL editor does not).
+grant select on announcements to anon, authenticated;
+grant insert, update, delete on announcements to authenticated;

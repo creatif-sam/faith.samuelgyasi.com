@@ -37,8 +37,8 @@ export default function AnnouncementModal({ announcement, onClose, onSave, db }:
       cta_url: ctaUrl.trim() || null,
       dismissible,
       active,
-      starts_at: startsAt || null,
-      ends_at: endsAt || null,
+      starts_at: startsAt ? `${startsAt}T00:00:00` : null,
+      ends_at: endsAt ? `${endsAt}T23:59:59` : null,
       sort_order: sortOrder,
     };
     const { error } = announcement
