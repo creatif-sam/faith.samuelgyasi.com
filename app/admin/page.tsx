@@ -56,6 +56,7 @@ export default function AdminPage() {
               galleryThemes={state.galleryThemes} eventRegistrations={state.eventRegistrations}
               prayerSubmissions={state.prayerSubmissions} discipleshipContent={state.discipleshipContent}
               disciples={state.disciples} faithTests={state.faithTests} users={state.users}
+              announcements={state.announcements}
             />
           )}
         </main>
@@ -79,6 +80,7 @@ export default function AdminPage() {
         showFaithTest={state.showFaithTest} editFaithTest={state.editFaithTest} setShowFaithTest={state.setShowFaithTest}
         showDisciple={state.showDisciple} editDisciple={state.editDisciple} setShowDisciple={state.setShowDisciple}
         viewProgressDisciple={state.viewProgressDisciple} setViewProgressDisciple={state.setViewProgressDisciple}
+        showAnnouncement={state.showAnnouncement} editAnnouncement={state.editAnnouncement} setShowAnnouncement={state.setShowAnnouncement}
         confirm={state.confirm} setConfirm={state.setConfirm}
       />
     </div>

@@ -8,7 +8,7 @@ import type {
   InboundEmail, EmailTemplate, EmailCampaign, AnalyticsData, Testimonial, LibraryItem,
   UpcomingEvent, Feedback, Training, BlogComment, GalleryTheme,
   EventRegistration, PrayerSubmission, DiscipleshipContent, Disciple,
-  FaithTest, Tab, MailSubTab, PageViewRow, AuthUserRow,
+  FaithTest, Tab, MailSubTab, PageViewRow, AuthUserRow, Announcement,
 } from "./types";
 
 export type AdminNotification = {
@@ -32,6 +32,7 @@ export interface ModalOpeners {
   openDisciple: (d: Disciple | null) => void;
   openProgress: (d: Disciple) => void;
   openCampaign: (c: EmailCampaign | null) => void;
+  openAnnouncement: (a: Announcement | null) => void;
 }
 
 export function useAdminPage() {
@@ -91,6 +92,9 @@ export function useAdminPage() {
   const [users, setUsers] = useState<AuthUserRow[]>([]);
   const [showFaithTest, setShowFaithTest] = useState(false);
   const [editFaithTest, setEditFaithTest] = useState<FaithTest | null>(null);
+  const [announcements, setAnnouncements] = useState<Announcement[]>([]);
+  const [showAnnouncement, setShowAnnouncement] = useState(false);
+  const [editAnnouncement, setEditAnnouncement] = useState<Announcement | null>(null);
   const [confirm, setConfirm] = useState<{ msg: string; fn: () => Promise<void> } | null>(null);
   const [navOpen, setNavOpen] = useState(false);
   const [theme, setTheme] = useState<"dark" | "light">("dark");
@@ -117,7 +121,7 @@ export function useAdminPage() {
     if (!session) { router.push("/auth/login"); return; }
     setAdminEmail(session.user.email ?? "admin@samuelgyasi.com");
     setLoading(true);
-    const [pR,serR,tagR,sR,mR,lR,iR,tR,cR,aR,tsR,libR,upR,fbR,cmtR,trnR,galR,evRegR,prayR,discR,ftR,discipR,usersRes] = await Promise.all([
+    const [pR,serR,tagR,sR,mR,lR,iR,tR,cR,aR,tsR,libR,upR,fbR,cmtR,trnR,galR,evRegR,prayR,discR,ftR,discipR,usersRes,annR] = await Promise.all([
       db.from("blog_posts").select("*").order("created_at",{ascending:false}),
       db.from("blog_series").select("*").order("sort_order",{ascending:true}).order("created_at",{ascending:false}),
       db.from("blog_tags").select("*").order("sort_order",{ascending:true}).order("created_at",{ascending:false}),
@@ -141,6 +145,7 @@ export function useAdminPage() {
       db.from("faith_tests").select("*").order("sort_order",{ascending:true}).order("created_at",{ascending:false}),
       db.from("disciples").select("*").order("started_at",{ascending:false}),
       fetch("/api/admin/users",{cache:"no-store"}),
+      db.from("announcements").select("*").order("sort_order",{ascending:true}).order("created_at",{ascending:false}),
     ]);
     setPosts(pR.data??[]); setBlogSeries((serR.data as BlogSeries[])??[]);
     setBlogTags((tagR.data as BlogTag[])??[]); setSubs(sR.data??[]);
@@ -154,6 +159,7 @@ export function useAdminPage() {
     setDiscipleshipContent(discR.data??null); setFaithTests((ftR.data as FaithTest[])??[]);
     setDisciples((discipR.data as Disciple[])??[]);
     if (usersRes.ok) { const b = await usersRes.json() as {users?:AuthUserRow[]}; setUsers(b.users??[]); } else setUsers([]);
+    setAnnouncements((annR.data as Announcement[])??[]);
     const {data:notifData} = await db.from("admin_notifications").select("id,kind,title,body,read,created_at").order("created_at",{ascending:false}).limit(30);
     setNotifications((notifData as AdminNotification[])??[]);
     const views: PageViewRow[] = aR.data??[];
@@ -205,6 +211,7 @@ export function useAdminPage() {
     openDisciple: (d) => { setEditDisciple(d); setShowDisciple(true); },
     openProgress: (d) => setViewProgressDisciple(d),
     openCampaign: (c) => { setEditCampaign(c); setShowCampaign(true); },
+    openAnnouncement: (a) => { setEditAnnouncement(a); setShowAnnouncement(true); },
   };
 
   return {
@@ -228,6 +235,7 @@ export function useAdminPage() {
     showTraining, editTraining, setShowTraining,
     showGallery, editGallery, setShowGallery,
     showFaithTest, editFaithTest, setShowFaithTest,
+    announcements, showAnnouncement, editAnnouncement, setShowAnnouncement,
     showDisciple, editDisciple, setShowDisciple,
     viewProgressDisciple, setViewProgressDisciple,
     confirm, setConfirm,

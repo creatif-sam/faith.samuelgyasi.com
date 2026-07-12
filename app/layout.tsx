@@ -7,6 +7,8 @@ import { CookieBanner } from "@/components/organisms/CookieBanner";
 import { Analytics } from "@/components/Analytics";
 import { Providers } from "./providers";
 import { NavWrapper } from "@/components/organisms/NavWrapper";
+import { AnnouncementBar } from "@/components/organisms/AnnouncementBar";
+import { AnnouncementPopup } from "@/components/organisms/AnnouncementPopup";
 import { FeedbackWidget } from "@/components/organisms/FeedbackWidget";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { resolveLocale, pageAlternates, SITE_URL } from "@/lib/seo";
@@ -161,11 +163,13 @@ export default async function RootLayout({
       >
         <Providers initialLang={lang}>
           <Analytics />
+          <AnnouncementBar />
           <NavWrapper />
           {children}
           <ThemeSwitcher />
           <FeedbackWidget />
           <CookieBanner />
+          <AnnouncementPopup />
           <SiteToaster />
         </Providers>
       </body>

@@ -231,6 +231,21 @@ export interface FaithTestAttempt {
   attempted_at: string;
 }
 
+export interface Announcement {
+  id: string;
+  type: "bar" | "popup";
+  title: string | null;
+  message: string;
+  cta_text: string | null;
+  cta_url: string | null;
+  dismissible: boolean;
+  active: boolean;
+  starts_at: string | null;
+  ends_at: string | null;
+  sort_order: number;
+  created_at: string;
+}
+
 export type Tab =
   | "overview"
   | "analytics"
@@ -253,6 +268,7 @@ export type Tab =
   | "prayer-submissions"
   | "faith-tests"
   | "tags"
+  | "announcements"
   | "participant-habits";
 
 export type MailSubTab = "campaigns" | "templates" | "compose" | "inbox" | "sent";

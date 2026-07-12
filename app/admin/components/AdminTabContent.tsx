@@ -6,7 +6,7 @@ import type {
   InboundEmail, EmailTemplate, EmailCampaign, AnalyticsData, Testimonial, LibraryItem,
   UpcomingEvent, Feedback, Training, BlogComment, GalleryTheme,
   EventRegistration, PrayerSubmission, DiscipleshipContent, Disciple,
-  FaithTest, Tab, MailSubTab, AuthUserRow,
+  FaithTest, Tab, MailSubTab, AuthUserRow, Announcement,
 } from "./types";
 import type { ModalOpeners } from "./useAdminPage";
 import OverviewTab from "./tabs/OverviewTab";
@@ -31,6 +31,7 @@ import UsersTab from "./tabs/UsersTab";
 import LogsTab from "./tabs/LogsTab";
 import CommentsTab from "./tabs/CommentsTab";
 import HabitsTab from "./tabs/HabitsTab";
+import AnnouncementsTab from "./tabs/AnnouncementsTab";
 
 interface Props {
   tab: Tab; db: SupabaseClient; load: () => Promise<void>; ask: (msg: string, fn: () => Promise<void>) => void;
@@ -46,10 +47,10 @@ interface Props {
   trainings: Training[]; galleryThemes: GalleryTheme[];
   eventRegistrations: EventRegistration[]; prayerSubmissions: PrayerSubmission[];
   discipleshipContent: DiscipleshipContent | null; disciples: Disciple[];
-  faithTests: FaithTest[]; users: AuthUserRow[];
+  faithTests: FaithTest[]; users: AuthUserRow[]; announcements: Announcement[];
 }
 
-export default function AdminTabContent({ tab, db, load, ask, modals, setConfirm, onNav, mailSub, setMailSub, posts, blogSeries, blogTags, subs, msgs, logs, inbox, templates, campaigns, analytics, testimonials, libraryItems, upcomingEvents, feedbacks, blogComments, trainings, galleryThemes, eventRegistrations, prayerSubmissions, discipleshipContent, disciples, faithTests, users }: Props) {
+export default function AdminTabContent({ tab, db, load, ask, modals, setConfirm, onNav, mailSub, setMailSub, posts, blogSeries, blogTags, subs, msgs, logs, inbox, templates, campaigns, analytics, testimonials, libraryItems, upcomingEvents, feedbacks, blogComments, trainings, galleryThemes, eventRegistrations, prayerSubmissions, discipleshipContent, disciples, faithTests, users, announcements }: Props) {
   return (
     <>
       {tab === "overview" && <OverviewTab posts={posts} subs={subs} msgs={msgs} logs={logs} analytics={analytics} onNav={onNav} />}
@@ -280,6 +281,21 @@ export default function AdminTabContent({ tab, db, load, ask, modals, setConfirm
         />
       )}
       {tab === "participant-habits" && <HabitsTab />}
+      {tab === "announcements" && (
+        <AnnouncementsTab announcements={announcements}
+          onNew={() => modals.openAnnouncement(null)} onEdit={(a) => modals.openAnnouncement(a)}
+          onDelete={(id, label) => ask(`Delete announcement "${label}"?`, async () => {
+            const { error } = await db.from("announcements").delete().eq("id", id);
+            if (error) { toast.error("Delete failed"); return; }
+            toast.success("Deleted"); await load();
+          })}
+          onToggle={async (id, val) => {
+            const { error } = await db.from("announcements").update({ active: val }).eq("id", id);
+            if (error) { toast.error("Update failed"); return; }
+            toast.success(val ? "Activated" : "Paused"); await load();
+          }}
+        />
+      )}
     </>
   );
 }

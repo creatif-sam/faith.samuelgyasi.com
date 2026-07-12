@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { TW } from "./constants";
 import type {
   BlogPost, BlogSeries, BlogTag, EmailTemplate, EmailCampaign, Subscriber, Testimonial,
-  LibraryItem, UpcomingEvent, Training, GalleryTheme, FaithTest, Disciple,
+  LibraryItem, UpcomingEvent, Training, GalleryTheme, FaithTest, Disciple, Announcement,
 } from "./types";
 import PostModal from "./modals/PostModal";
 import BlogSeriesModal from "./modals/BlogSeriesModal";
@@ -21,6 +21,7 @@ import GalleryThemeModal from "./modals/GalleryThemeModal";
 import FaithTestModal from "./modals/FaithTestModal";
 import DiscipleModal from "./modals/DiscipleModal";
 import DiscipleProgressModal from "./modals/DiscipleProgressModal";
+import AnnouncementModal from "./modals/AnnouncementModal";
 
 interface Props {
   db: SupabaseClient; load: () => Promise<void>;
@@ -41,11 +42,12 @@ interface Props {
   showFaithTest: boolean; editFaithTest: FaithTest | null; setShowFaithTest: (v: boolean) => void;
   showDisciple: boolean; editDisciple: Disciple | null; setShowDisciple: (v: boolean) => void;
   viewProgressDisciple: Disciple | null; setViewProgressDisciple: (v: Disciple | null) => void;
+  showAnnouncement: boolean; editAnnouncement: Announcement | null; setShowAnnouncement: (v: boolean) => void;
   confirm: { msg: string; fn: () => Promise<void> } | null;
   setConfirm: (v: { msg: string; fn: () => Promise<void> } | null) => void;
 }
 
-export default function AdminModals({ db, load, showPost, editPost, setShowPost, showSeries, editSeries, setShowSeries, viewSeries, setViewSeries, setEditPost, showTag, editTag, setShowTag, showReviews, reviewPost, setShowReviews, showTpl, editTpl, setShowTpl, showCampaign, editCampaign, setShowCampaign, templates, subs, showTestimonial, editTestimonial, setShowTestimonial, showLibItem, editLibItem, setShowLibItem, showUpcoming, editUpcoming, setShowUpcoming, showTraining, editTraining, setShowTraining, showGallery, editGallery, setShowGallery, showFaithTest, editFaithTest, setShowFaithTest, showDisciple, editDisciple, setShowDisciple, viewProgressDisciple, setViewProgressDisciple, confirm, setConfirm }: Props) {
+export default function AdminModals({ db, load, showPost, editPost, setShowPost, showSeries, editSeries, setShowSeries, viewSeries, setViewSeries, setEditPost, showTag, editTag, setShowTag, showReviews, reviewPost, setShowReviews, showTpl, editTpl, setShowTpl, showCampaign, editCampaign, setShowCampaign, templates, subs, showTestimonial, editTestimonial, setShowTestimonial, showLibItem, editLibItem, setShowLibItem, showUpcoming, editUpcoming, setShowUpcoming, showTraining, editTraining, setShowTraining, showGallery, editGallery, setShowGallery, showFaithTest, editFaithTest, setShowFaithTest, showDisciple, editDisciple, setShowDisciple, viewProgressDisciple, setViewProgressDisciple, showAnnouncement, editAnnouncement, setShowAnnouncement, confirm, setConfirm }: Props) {
   const onSave = async (close: () => void) => { close(); await load(); };
   return (
     <>
@@ -67,6 +69,7 @@ export default function AdminModals({ db, load, showPost, editPost, setShowPost,
       {showFaithTest && <FaithTestModal test={editFaithTest} onClose={() => setShowFaithTest(false)} onSave={async () => onSave(() => setShowFaithTest(false))} db={db} />}
       {showDisciple && <DiscipleModal disciple={editDisciple} onClose={() => setShowDisciple(false)} onSave={async () => onSave(() => setShowDisciple(false))} db={db} />}
       {viewProgressDisciple && <DiscipleProgressModal disciple={viewProgressDisciple} onClose={() => setViewProgressDisciple(null)} db={db} load={load} />}
+      {showAnnouncement && <AnnouncementModal announcement={editAnnouncement} onClose={() => setShowAnnouncement(false)} onSave={async () => onSave(() => setShowAnnouncement(false))} db={db} />}
       {confirm && (
         <div className={TW.overlay} onClick={() => setConfirm(null)}>
           <div className="bg-[#0d0e15] border border-white/10 rounded-lg p-8 w-[min(440px,92vw)] shadow-[0_28px_60px_rgba(0,0,0,.6)]" onClick={e => e.stopPropagation()}>
