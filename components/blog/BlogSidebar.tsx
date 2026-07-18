@@ -117,7 +117,7 @@ export function BlogSidebar({
           align-items: center;
           gap: 10px;
           margin-bottom: 18px;
-          color: var(--gold, #d4a843);
+          color: var(--gold, #546cfa);
         }
 
         .bsw-header h3 {
@@ -164,7 +164,7 @@ export function BlogSidebar({
 
         .bsw-cat-btn.active {
           background: rgba(212, 168, 67, 0.1);
-          color: var(--gold, #d4a843);
+          color: var(--gold, #546cfa);
           font-weight: 600;
         }
 
@@ -178,7 +178,7 @@ export function BlogSidebar({
         }
 
         .bsw-cat-btn.active .bsw-cat-count {
-          color: var(--gold, #d4a843);
+          color: var(--gold, #546cfa);
           background: rgba(212, 168, 67, 0.15);
         }
 
@@ -244,7 +244,7 @@ export function BlogSidebar({
         }
 
         .bsw-recent-item:hover .bsw-recent-title {
-          color: var(--gold, #d4a843);
+          color: var(--gold, #546cfa);
         }
 
         .bsw-recent-date {

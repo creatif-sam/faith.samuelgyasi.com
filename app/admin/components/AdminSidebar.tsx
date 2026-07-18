@@ -30,7 +30,7 @@ export default function AdminSidebar({ tab, navOpen, setNavOpen, unreadMsgs, unr
           <Menu size={18} />
         </button>
         <span className="font-poppins text-[14px] font-semibold text-[#f0ece4] flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#d4a843] to-[#c49838] flex items-center justify-center text-[9px] font-bold text-[#09090d]">SG</span>
+          <span className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#546cfa] to-[#546cfa] flex items-center justify-center text-[9px] font-bold text-[#09090d]">SG</span>
           Samuel Gyasi
         </span>
         <div className="flex items-center gap-2">
@@ -51,7 +51,7 @@ export default function AdminSidebar({ tab, navOpen, setNavOpen, unreadMsgs, unr
       )}>
         <div className="px-5 py-5 border-b border-white/[.06]">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#d4a843] to-[#c49838] flex items-center justify-center flex-shrink-0 shadow-[0_4px_14px_rgba(212,168,67,.3)]">
+            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#546cfa] to-[#546cfa] flex items-center justify-center flex-shrink-0 shadow-[0_4px_14px_rgba(212,168,67,.3)]">
               <span className="font-poppins text-[13px] font-bold text-[#09090d]">SG</span>
             </div>
             <div>
@@ -72,13 +72,13 @@ export default function AdminSidebar({ tab, navOpen, setNavOpen, unreadMsgs, unr
             return (
               <button key={id} onClick={() => onGo(id)}
                 className={cn("flex items-center gap-3 px-4 py-2.5 font-poppins text-[13px] font-medium cursor-pointer border-0 w-full text-left transition-all duration-200 rounded-lg relative mb-1",
-                  isActive ? "text-[#d4a843] bg-[rgba(212,168,67,.12)]" : "text-white/[.42] bg-transparent hover:text-white/[.80] hover:bg-white/[.05]"
+                  isActive ? "text-[#546cfa] bg-[rgba(212,168,67,.12)]" : "text-white/[.42] bg-transparent hover:text-white/[.80] hover:bg-white/[.05]"
                 )}
               >
                 <Icon size={15} />
                 <span className="flex-1">{label}</span>
                 {badge !== null && (
-                  <span className="bg-gradient-to-br from-[#d4a843] to-[#f0cc7a] text-[#07080c] font-poppins text-[9px] font-bold px-2 py-0.5 rounded-full leading-tight ml-auto">{badge}</span>
+                  <span className="bg-gradient-to-br from-[#546cfa] to-[#f0cc7a] text-[#07080c] font-poppins text-[9px] font-bold px-2 py-0.5 rounded-full leading-tight ml-auto">{badge}</span>
                 )}
               </button>
             );

@@ -147,7 +147,7 @@ export default function FaithTestsTab({ tests, onNew, onEdit, onDelete, onToggle
                         </div>
                       </div>
                       {q.explanation_en && (
-                        <div className="mt-3 p-2 bg-[rgba(212,168,67,.05)] border-l-2 border-[#d4a843] rounded text-sm text-white/60">
+                        <div className="mt-3 p-2 bg-[rgba(212,168,67,.05)] border-l-2 border-[#546cfa] rounded text-sm text-white/60">
                           <div className="text-[10px] text-white/40 mb-1">Explanation:</div>
                           {q.explanation_en}
                         </div>

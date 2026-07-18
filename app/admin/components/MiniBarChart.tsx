@@ -5,7 +5,7 @@ export default function MiniBarChart({ data }: { data: { date: string; count: nu
       {data.map((d) => (
         <div key={d.date} className="flex-1 min-w-[20px] flex flex-col items-center justify-end h-full relative" title={`${d.date}: ${d.count}`}>
           <div
-            className="w-full max-w-[28px] bg-gradient-to-t from-[#d4a843] to-[rgba(212,168,67,.25)] rounded-t-sm min-h-[3px] transition-all duration-[450ms]"
+            className="w-full max-w-[28px] bg-gradient-to-t from-[#546cfa] to-[rgba(212,168,67,.25)] rounded-t-sm min-h-[3px] transition-all duration-[450ms]"
             style={{ height: `${Math.max((d.count / max) * 100, 2)}%` }}
           />
           <div className="absolute bottom-[-26px] font-poppins text-[7px] text-white/20 whitespace-nowrap tracking-[.03em] text-center">

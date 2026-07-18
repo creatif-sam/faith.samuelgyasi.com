@@ -22,7 +22,7 @@
   --brand-amber: #d97706;
   --brand-cream: #faf8f5;
   --brand-blue: #2563eb;
-  --brand-gold: #d4a843;
+  --brand-gold: #546cfa;
 }
 
 @layer base {
@@ -123,11 +123,11 @@
   --gray-dark: #e8e4de;
   --accent: #2a2520;
   /* Deep gold — visible on white */
-  --gold: #B8860B;
+  --gold: #546cfa;
   --gold-start: #C9900A;
   --gold-end: #D4700A;
-  --brand-gold: #B8860B;
-  --gold-gradient: linear-gradient(90deg, #B8860B, #D4700A);
+  --brand-gold: #546cfa;
+  --gold-gradient: linear-gradient(90deg, #546cfa, #D4700A);
 }
 .light body {
   background: #ffffff;
@@ -217,7 +217,7 @@
 .light .hero-name-v2 { color: #1a1a1a; }
 /* Hero last name gradient — deep gold on light */
 .light .hn-last {
-  background: linear-gradient(90deg, #B8860B, #D4700A);
+  background: linear-gradient(90deg, #546cfa, #D4700A);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -226,7 +226,7 @@
 .light .hero-eyebrow-v2 { color: #3a3530; }
 .light .hero-tagline-v2 { color: #2a2520; }
 /* Section labels */
-.light .section-label { color: #B8860B; border-color: rgba(184,134,11,.3); }
+.light .section-label { color: #546cfa; border-color: rgba(184,134,11,.3); }
 /* Verse strip */
 .light .verse-text { color: #1a1a1a; }
 .light .verse-ref  { color: #6a6058; }
@@ -242,7 +242,7 @@
 .light .sf-nl-icon-wrap {
   background: rgba(184,134,11,.08);
   border-color: rgba(184,134,11,.3);
-  color: #B8860B;
+  color: #546cfa;
 }
 .light .sf-nl-heading { color: #0a0a0a; }
 .light .sf-nl-sub { color: #4a4640; }
@@ -262,25 +262,25 @@
 .light .sf-nl-input-row:focus-within { border-color: rgba(184,134,11,.55); }
 .light .sf-nl-input { background: rgba(10,10,10,.03); color: #0a0a0a; }
 .light .sf-nl-input::placeholder { color: #9a9080; }
-.light .sf-nl-btn { background: #B8860B; color: #ffffff; }
+.light .sf-nl-btn { background: #546cfa; color: #ffffff; }
 .light .sf-nl-btn:hover:not(:disabled) { background: #8A6200; }
-.light .sf-nl-msg { color: #B8860B; }
+.light .sf-nl-msg { color: #546cfa; }
 
 /* Footer text in light mode */
 .light .sf-footer { border-top-color: rgba(10,10,10,.08); }
 .light .sf-brand-tagline { color: #4a4640; }
-.light .sf-col-label { color: #B8860B; }
+.light .sf-col-label { color: #546cfa; }
 .light .sf-col-link { color: #4a4640; }
-.light .sf-col-link:hover { color: #b8860b; }
+.light .sf-col-link:hover { color: #546cfa; }
 .light .sf-copy, .light .sf-credit { color: rgba(10,10,10,.45); }
 .light .sf-rule { border-color: rgba(10,10,10,.1); }
-.light .sf-emblem { color: #B8860B; }
+.light .sf-emblem { color: #546cfa; }
 .light .sf-social-icon { color: #4a4640; border-color: rgba(10,10,10,.18); }
-.light .sf-social-icon:hover { color: #B8860B; border-color: #B8860B; }
+.light .sf-social-icon:hover { color: #546cfa; border-color: #546cfa; }
 
 /* Connect section in light mode */
 .light .connect-title { color: #0a0a0a; }
-.light .connect-title em { color: #B8860B; }
+.light .connect-title em { color: #546cfa; }
 .light .connect-body { color: #4a4640; }
 .light .connect-link { background: #e8e4de; color: #0a0a0a; }
 .light .connect-link:hover { background: #0a0a0a; color: #f5f3ef; }
@@ -300,11 +300,11 @@
 .light .transformation-title { color: #1a1816; }
 .light .stage-from { color: #6a6058; }
 .light .stage-to {
-  background: linear-gradient(90deg, #B8860B, #D4700A);
+  background: linear-gradient(90deg, #546cfa, #D4700A);
   -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
   animation: none;
 }
-.light .stage-arrow { color: #B8860B; }
+.light .stage-arrow { color: #546cfa; }
 .light .transformation-stage:hover .stage-from { color: #1a1816; }
 
 /* What I Do section in light mode */
@@ -314,9 +314,9 @@
 .light .wid-grid { background: rgba(0,0,0,.06); }
 .light .wid-card { background: #ffffff; border-top-color: rgba(0,0,0,.1); box-shadow: none; }
 .light .wid-card:hover { background: #f5f3ef; }
-.light .wid-card-num { color: #B8860B; }
+.light .wid-card-num { color: #546cfa; }
 .light .wid-card-title { color: #1a1816; }
-.light .wid-card-org { color: #B8860B; }
+.light .wid-card-org { color: #546cfa; }
 .light .wid-card-body { color: #4a4640; }
 
 *, *::before, *::after {
@@ -1886,7 +1886,7 @@ body {
 }
 
 .dark .stage-arrow {
-  color: #d4a843;
+  color: #546cfa;
 }
 
 @keyframes arrow-bounce {

@@ -27,7 +27,7 @@
 .decorativeElement1 {
   width: 120px;
   height: 120px;
-  background: #d4a84333;
+  background: #546cfa33;
   top: 10%;
   left: 5%;
   animation: float 6s ease-in-out infinite;
@@ -179,12 +179,12 @@
 .titleIntro {
   display: block;
   font-size: 3.5rem;
-  font-weight: 700;
+  font-weight: 400;
 }
 
 .titleName {
   display: inline;
-  color: #d4a843;
+  color: #546cfa;
   background: linear-gradient(90deg, #ffde59, #ff914d);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -195,7 +195,7 @@
   display: block;
   font-size: 2.5rem;
   margin-top: 0.5rem;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .description {
@@ -214,7 +214,7 @@
   background: white;
   padding: 1.5rem;
   border-radius: 12px;
-  border-left: 4px solid #d4a843;
+  border-left: 4px solid #546cfa;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
   position: relative;
 }
@@ -229,7 +229,7 @@
   top: -10px;
   left: 20px;
   font-size: 3rem;
-  color: #d4a843;
+  color: #546cfa;
   opacity: 0.3;
 }
 
@@ -253,7 +253,7 @@
 }
 
 .darkTheme .quoteAttribution {
-  color: #d4a843;
+  color: #546cfa;
 }
 
 /* Right Image Section */
@@ -375,7 +375,7 @@
 .experienceYears {
   font-size: 2rem;
   font-weight: 700;
-  color: #d4a843;
+  color: #546cfa;
   background: linear-gradient(90deg, #ffde59, #ff914d);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -424,7 +424,7 @@
 
 /* Prayer Button */
 .prayerButton {
-  background: linear-gradient(90deg, #d4a843, #c49838);
+  background: linear-gradient(90deg, #546cfa, #546cfa);
   color: #0a0a0a;
   padding: 0.875rem 2rem;
   border-radius: 50px;
@@ -441,12 +441,12 @@
 }
 
 .darkTheme .prayerButton {
-  background: linear-gradient(90deg, #d4a843, #c49838);
+  background: linear-gradient(90deg, #546cfa, #546cfa);
   color: #0a0a0a;
 }
 
 .prayerButton:hover {
-  background: linear-gradient(90deg, #e0b84e, #d4a843);
+  background: linear-gradient(90deg, #546cfa, #546cfa);
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(212, 168, 67, 0.4);
 }
@@ -489,7 +489,7 @@
   align-items: center;
   justify-content: center;
   background: #f5f3ef;
-  color: #d4a843;
+  color: #546cfa;
   text-decoration: none;
   transition: all 0.3s ease;
   font-size: 1.25rem;

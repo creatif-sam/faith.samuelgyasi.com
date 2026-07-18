@@ -68,7 +68,7 @@ const css = `
   font-size: 11px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase;
   color: var(--tn-muted); text-decoration: none; transition: color .2s;
 }
-.tn-back:hover { color: #d4a843; }
+.tn-back:hover { color: #546cfa; }
 .tn-theme-toggle {
   position: fixed;
   top: 14px;
@@ -78,7 +78,7 @@ const css = `
   height: 34px;
   border-radius: 10px;
   border: 1px solid rgba(212,168,67,.62);
-  background: linear-gradient(135deg,#d4a843,#c49838);
+  background: linear-gradient(135deg,#546cfa,#546cfa);
   color: #09090d;
   display: inline-flex;
   align-items: center;
@@ -124,7 +124,7 @@ const css = `
   border-radius: 3px; transition: width .5s ease;
 }
 .tn-progress-label {
-  font-size: 11px; color: #d4a843; font-weight: 600; white-space: nowrap;
+  font-size: 11px; color: #546cfa; font-weight: 600; white-space: nowrap;
 }
 
 /* LESSONS */
@@ -149,7 +149,7 @@ const css = `
   flex-shrink: 0; cursor: pointer; color: rgba(255,255,255,.2);
   background: transparent; border: none; display: flex; transition: color .2s;
 }
-.tn-lesson.completed .tn-lesson-check { color: #d4a843; }
+.tn-lesson.completed .tn-lesson-check { color: #546cfa; }
 .tn-lesson-title {
   flex: 1; font-size: 14px; font-weight: 500; color: var(--tn-text); line-height: 1.3;
   transition: color .2s;
@@ -262,7 +262,7 @@ export default function TrainingDetailPage({ params }: Props) {
     return (
       <div style={{ minHeight: "100vh", background: theme === "light" ? "#f7f8fb" : "#07080c", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
         {[0, 200, 400].map((d) => (
-          <div key={d} style={{ width: 8, height: 8, background: "#d4a843", borderRadius: "50%", animation: "pulse 1.2s ease-in-out infinite", animationDelay: `${d}ms` }} />
+          <div key={d} style={{ width: 8, height: 8, background: "#546cfa", borderRadius: "50%", animation: "pulse 1.2s ease-in-out infinite", animationDelay: `${d}ms` }} />
         ))}
         <style>{`@keyframes pulse { 0%,100%{opacity:.2;transform:scale(.8)} 50%{opacity:1;transform:scale(1.1)} }`}</style>
       </div>
@@ -274,7 +274,7 @@ export default function TrainingDetailPage({ params }: Props) {
       <div style={{ minHeight: "100vh", background: theme === "light" ? "#f7f8fb" : "#07080c", display: "flex", alignItems: "center", justifyContent: "center" }}>
         <div style={{ textAlign: "center", color: theme === "light" ? "#334155" : "rgba(255,255,255,.4)", fontFamily: "Poppins,sans-serif" }}>
           <p>Training not found.</p>
-          <Link href="/dashboard" style={{ color: "#d4a843", textDecoration: "none", fontSize: 13, display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowLeft size={13} /> Back to Dashboard</Link>
+          <Link href="/dashboard" style={{ color: "#546cfa", textDecoration: "none", fontSize: 13, display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowLeft size={13} /> Back to Dashboard</Link>
         </div>
       </div>
     );

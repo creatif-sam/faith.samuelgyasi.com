@@ -254,7 +254,7 @@ export const visualStyles = `
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0; transition: all .2s;
 }
-.lb-arrow:hover { background: rgba(201,168,76,.2); color: #d4a843; border-color: rgba(201,168,76,.3); }
+.lb-arrow:hover { background: rgba(201,168,76,.2); color: #546cfa; border-color: rgba(201,168,76,.3); }
 .lb-arrow:disabled { opacity: .2; cursor: default; }
 .lb-img-wrap {
   flex: 1; max-height: 78vh; display: flex; align-items: center; justify-content: center;
@@ -279,7 +279,7 @@ export const visualStyles = `
   background: rgba(255,255,255,.18); cursor: pointer; transition: background .2s;
   border: none;
 }
-.lb-dot.active { background: #d4a843; }
+.lb-dot.active { background: #546cfa; }
 
 /* ── EMPTY ── */
 .visual-empty {

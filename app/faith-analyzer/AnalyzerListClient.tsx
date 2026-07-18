@@ -61,7 +61,7 @@ export default function AnalyzerListClient({ initialTests }: { initialTests: Fai
 
   const headingStyles = `
     font-poppins text-[42px] md:text-[54px] font-bold
-    bg-gradient-to-br from-[#f0ece4] via-[#d4a843] to-[#f0ece4]
+    bg-gradient-to-br from-[#f0ece4] via-[#546cfa] to-[#f0ece4]
     bg-clip-text text-transparent leading-tight text-center mb-5
   `;
 
@@ -70,8 +70,8 @@ export default function AnalyzerListClient({ initialTests }: { initialTests: Fai
       {/* Hero Section */}
       <div className={heroStyles}>
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#d4a843] rounded-full blur-[120px]" />
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#c49838] rounded-full blur-[120px]" />
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#546cfa] rounded-full blur-[120px]" />
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#546cfa] rounded-full blur-[120px]" />
         </div>
 
         <div className="relative z-10 max-w-[900px] mx-auto">
@@ -83,7 +83,7 @@ export default function AnalyzerListClient({ initialTests }: { initialTests: Fai
           />
 
           <div className="flex justify-center mb-6">
-            <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#d4a843] to-[#c49838] flex items-center justify-center shadow-[0_8px_30px_rgba(212,168,67,.4)]">
+            <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#546cfa] to-[#546cfa] flex items-center justify-center shadow-[0_8px_30px_rgba(212,168,67,.4)]">
               <ClipboardCheck size={40} className="text-[#09090d]" />
             </div>
           </div>
@@ -100,15 +100,15 @@ export default function AnalyzerListClient({ initialTests }: { initialTests: Fai
 
           <div className="flex items-center justify-center gap-8 text-[15px] text-white/50 font-poppins">
             <div className="flex items-center gap-2">
-              <ClipboardCheck size={18} className="text-[#d4a843]" />
+              <ClipboardCheck size={18} className="text-[#546cfa]" />
               <span>{tests.length} {lang === "fr" ? "Tests" : "Tests"}</span>
             </div>
             <div className="flex items-center gap-2">
-              <TrendingUp size={18} className="text-[#d4a843]" />
+              <TrendingUp size={18} className="text-[#546cfa]" />
               <span>{lang === "fr" ? "Croissance spirituelle" : "Spiritual Growth"}</span>
             </div>
             <div className="flex items-center gap-2">
-              <Users size={18} className="text-[#d4a843]" />
+              <Users size={18} className="text-[#546cfa]" />
               <span>{lang === "fr" ? "Anonyme" : "Anonymous"}</span>
             </div>
           </div>
@@ -127,12 +127,12 @@ export default function AnalyzerListClient({ initialTests }: { initialTests: Fai
               <Link href={localizedHref(lang, `/faith-analyzer/${test.slug}`)} key={test.id} className="no-underline">
                 <div className={cardStyles}>
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[#d4a843]/20 to-[#c49838]/10 flex items-center justify-center flex-shrink-0 border border-[#d4a843]/20 group-hover:border-[#d4a843]/40 transition-all">
-                      <ClipboardCheck size={24} className="text-[#d4a843]" />
+                    <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[#546cfa]/20 to-[#546cfa]/10 flex items-center justify-center flex-shrink-0 border border-[#546cfa]/20 group-hover:border-[#546cfa]/40 transition-all">
+                      <ClipboardCheck size={24} className="text-[#546cfa]" />
                     </div>
 
                     <div className="flex-1">
-                      <h3 className="font-poppins text-[22px] font-semibold text-[#f0ece4] mb-2 group-hover:text-[#d4a843] transition-colors">
+                      <h3 className="font-poppins text-[22px] font-semibold text-[#f0ece4] mb-2 group-hover:text-[#546cfa] transition-colors">
                         {getName(test)}
                       </h3>
 
@@ -154,7 +154,7 @@ export default function AnalyzerListClient({ initialTests }: { initialTests: Fai
                       </div>
 
                       <div className="mt-4">
-                        <span className="inline-flex items-center gap-2 text-[#d4a843] font-poppins text-[13px] font-medium group-hover:gap-3 transition-all">
+                        <span className="inline-flex items-center gap-2 text-[#546cfa] font-poppins text-[13px] font-medium group-hover:gap-3 transition-all">
                           {lang === "fr" ? "Commencer le test" : "Take Test"}
                           <ArrowRight size={16} />
                         </span>
@@ -169,7 +169,7 @@ export default function AnalyzerListClient({ initialTests }: { initialTests: Fai
 
         {/* Biblical Foundation */}
         <div className="mt-20 p-8 bg-[rgba(212,168,67,.05)] border border-[rgba(212,168,67,.15)] rounded-xl">
-          <h3 className="font-poppins text-[20px] font-semibold text-[#d4a843] mb-4">
+          <h3 className="font-poppins text-[20px] font-semibold text-[#546cfa] mb-4">
             {lang === "fr" ? "Fondement Biblique" : "Biblical Foundation"}
           </h3>
           <p className="font-poppins text-[15px] text-white/70 leading-relaxed mb-3">

@@ -87,7 +87,7 @@ export default function OverviewTab({
         <div>
           <h1 className="ov-hero-greeting">
             {t.overviewGreeting}, <span className="ov-hero-name">{displayName}</span>{" "}
-            <Hand size={22} style={{ display: "inline", verticalAlign: "-3px", color: "#d4a843" }} />
+            <Hand size={22} style={{ display: "inline", verticalAlign: "-3px", color: "#546cfa" }} />
           </h1>
           <p className="ov-hero-sub">{t.overviewSub}</p>
         </div>

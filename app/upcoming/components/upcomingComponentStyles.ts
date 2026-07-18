@@ -314,7 +314,7 @@ export const upcomingComponentStyles = `
 :root:not(.dark) .up-pg {
   background: #ffffff;
   color: #1a1816;
-  --gold-gradient: linear-gradient(90deg, #B8860B, #D4700A);
+  --gold-gradient: linear-gradient(90deg, #546cfa, #D4700A);
 }
 :root:not(.dark) .up-headline { color: #0a0a0a; -webkit-text-stroke: 1px rgba(184,134,11,.2); }
 :root:not(.dark) .up-sub { color: #4a4640; }
@@ -325,17 +325,17 @@ export const upcomingComponentStyles = `
 :root:not(.dark) .up-card:hover { border-color: rgba(184,134,11,.4); box-shadow: 0 8px 32px rgba(0,0,0,.1); }
 :root:not(.dark) .up-card-date { color: rgba(10,10,10,.45); }
 :root:not(.dark) .up-card-title { color: #1a1816; }
-:root:not(.dark) .up-card-tag { color: #B8860B; }
+:root:not(.dark) .up-card-tag { color: #546cfa; }
 :root:not(.dark) .up-card-desc { color: #4a4640; }
 :root:not(.dark) .up-card-location { color: #6a6058; }
 :root:not(.dark) .up-card-host { color: #6a6058; }
-:root:not(.dark) .up-card-host-link { color: #B8860B; }
+:root:not(.dark) .up-card-host-link { color: #546cfa; }
 :root:not(.dark) .up-card-past-badge { background: rgba(245,243,239,.9); color: #6a6058; border-color: rgba(10,10,10,.15); }
 :root:not(.dark) .up-coming-soon { background: rgba(184,134,11,.04); border-color: rgba(184,134,11,.15); color: #6a6058; }
 :root:not(.dark) .up-countdown { background: rgba(184,134,11,.05); border-color: rgba(184,134,11,.18); }
-:root:not(.dark) .up-countdown-label { color: #B8860B; }
+:root:not(.dark) .up-countdown-label { color: #546cfa; }
 :root:not(.dark) .up-countdown-name { color: rgba(10,10,10,.45); }
-:root:not(.dark) .up-btn--outline { border-color: rgba(184,134,11,.4); color: #B8860B; }
+:root:not(.dark) .up-btn--outline { border-color: rgba(184,134,11,.4); color: #546cfa; }
 :root:not(.dark) .up-btn--ghost { border-color: rgba(10,10,10,.15); color: #6a6058; }
 :root:not(.dark) .up-notify { background: #f5f3ef; border-top-color: rgba(10,10,10,.1); }
 :root:not(.dark) .up-notify-h { color: #1a1816; }

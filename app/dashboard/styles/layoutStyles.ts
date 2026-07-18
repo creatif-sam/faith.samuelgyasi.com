@@ -12,7 +12,7 @@ export const layoutStyles = `
   --d-border: rgba(255,255,255,.09);
   --d-text:   #eef0f5;
   --d-muted:  rgba(255,255,255,.42);
-  --d-gold:   #d4a843;
+  --d-gold:   #546cfa;
 }
 .dash-root.dash-light {
   --d-page:   #f3f6fb;
@@ -79,7 +79,7 @@ export const layoutStyles = `
 }
 .dash-brand-dot {
   width: 34px; height: 34px; border-radius: 10px;
-  background: linear-gradient(135deg,#d4a843,#c49838);
+  background: linear-gradient(135deg,#546cfa,#546cfa);
   display: flex; align-items: center; justify-content: center;
   font-size: 11px; font-weight: 700; color: #09090d; flex-shrink: 0;
 }
@@ -165,7 +165,7 @@ export const layoutStyles = `
 }
 .dash-mobile-brand-dot {
   width: 28px; height: 28px; border-radius: 8px;
-  background: linear-gradient(135deg,#d4a843,#c49838);
+  background: linear-gradient(135deg,#546cfa,#546cfa);
   color: #09090d; font-size: 9px; font-weight: 700;
   display: flex; align-items: center; justify-content: center;
 }
@@ -214,7 +214,7 @@ export const layoutStyles = `
 .dash-profile:hover { border-color: rgba(212,168,67,.42); }
 .dash-avatar {
   width: 30px; height: 30px; border-radius: 50%;
-  background: linear-gradient(135deg,#d4a843,#c49838);
+  background: linear-gradient(135deg,#546cfa,#546cfa);
   color: #09090d; font-size: 12px; font-weight: 700;
   display: inline-flex; align-items: center; justify-content: center;
   flex-shrink: 0;
@@ -241,7 +241,7 @@ export const layoutStyles = `
 .dash-notif-badge {
   position: absolute; top: -5px; right: -5px;
   min-width: 16px; height: 16px; border-radius: 999px;
-  background: #d4a843; color: #09090d; font-size: 9px; font-weight: 700;
+  background: #546cfa; color: #09090d; font-size: 9px; font-weight: 700;
   display: inline-flex; align-items: center; justify-content: center; padding: 0 4px;
 }
 .dash-notif-panel {
@@ -327,13 +327,13 @@ export const layoutStyles = `
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
 }
-.dash-stat-icon.gold   { background: rgba(212,168,67,.12); color: #d4a843; }
+.dash-stat-icon.gold   { background: rgba(212,168,67,.12); color: #546cfa; }
 .dash-stat-icon.green  { background: rgba(34,197,94,.1);  color: #22c55e; }
 .dash-stat-icon.blue   { background: rgba(96,165,250,.1); color: #60a5fa; }
 .dash-stat-icon.purple { background: rgba(167,139,250,.1); color: #a78bfa; }
 .dash-stat-num {
   font-size: 24px; font-weight: 700;
-  background: linear-gradient(135deg,#d4a843,#f0cc7a);
+  background: linear-gradient(135deg,#546cfa,#f0cc7a);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   line-height: 1;
 }

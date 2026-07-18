@@ -96,7 +96,7 @@ export default function PrayerSubmissionsTab({ prayers, onTogglePrayed, onDelete
                     {prayer.phone && <span> · {prayer.phone}</span>}
                     <span> · {new Date(prayer.created_at).toLocaleString()}</span>
                   </div>
-                  <div className={cn(TW.msgSubj, "!text-[#d4a843] !font-semibold !not-italic")}>
+                  <div className={cn(TW.msgSubj, "!text-[#546cfa] !font-semibold !not-italic")}>
                     {prayer.prayer_topic}
                   </div>
                 </div>

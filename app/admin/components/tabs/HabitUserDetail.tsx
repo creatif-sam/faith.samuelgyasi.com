@@ -54,7 +54,7 @@ export default function HabitUserDetail({ selectedSummary, selectedUserHabits, s
   return (
     <div>
       <div className="flex items-center gap-4 mb-8 pb-6 border-b border-white/[.05]">
-        <div className="w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold" style={{ background: "rgba(212,168,67,.15)", color: "#d4a843" }}>
+        <div className="w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold" style={{ background: "rgba(212,168,67,.15)", color: "#546cfa" }}>
           {selectedSummary?.email[0].toUpperCase()}
         </div>
         <div>
@@ -127,7 +127,7 @@ export default function HabitUserDetail({ selectedSummary, selectedUserHabits, s
                 <div className="px-4 pb-4 border-t border-white/[.05] pt-4">
                   <div className="mb-4">
                     <div className="flex justify-between text-[10px] text-white/40 mb-2"><span>30-day completion</span><span>{last30Count}/30 days ({completionRate}%)</span></div>
-                    <div className="h-1.5 bg-white/[.06] rounded-full overflow-hidden"><div className="h-full rounded-full" style={{ width: `${completionRate}%`, background: "linear-gradient(90deg,#d4a843,#f0cc7a)" }} /></div>
+                    <div className="h-1.5 bg-white/[.06] rounded-full overflow-hidden"><div className="h-full rounded-full" style={{ width: `${completionRate}%`, background: "linear-gradient(90deg,#546cfa,#f0cc7a)" }} /></div>
                   </div>
                   <div className="text-[10px] text-white/40 mb-2">Last 30 days</div>
                   <div className="flex flex-wrap gap-1">

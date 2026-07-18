@@ -25,7 +25,7 @@ export const tabStyles = `
   font-family: var(--font-poppins), sans-serif;
 }
 .dash-btn-gold {
-  background: linear-gradient(135deg,#d4a843,#c49838);
+  background: linear-gradient(135deg,#546cfa,#546cfa);
   color: #09090d;
 }
 .dash-btn-gold:hover { opacity: .88; transform: translateY(-1px); }
@@ -64,7 +64,7 @@ export const tabStyles = `
 }
 .pf-avatar-fallback {
   width: 90px; height: 90px; border-radius: 50%;
-  background: linear-gradient(135deg,#d4a843,#c49838);
+  background: linear-gradient(135deg,#546cfa,#546cfa);
   color: #09090d; font-size: 30px; font-weight: 700;
   display: flex; align-items: center; justify-content: center;
   box-shadow: 0 4px 20px rgba(212,168,67,.3);
@@ -87,7 +87,7 @@ export const tabStyles = `
 .pf-avatar-spinner {
   width: 22px; height: 22px; border-radius: 50%;
   border: 2px solid rgba(255,255,255,.2);
-  border-top-color: #d4a843;
+  border-top-color: #546cfa;
   animation: pf-spin .7s linear infinite;
 }
 @keyframes pf-spin { to { transform: rotate(360deg); } }
@@ -215,7 +215,7 @@ export const tabStyles = `
 /* Loading */
 @keyframes db-pulse { 0%,100%{opacity:.2;transform:scale(.8)} 50%{opacity:1;transform:scale(1.1)} }
 .dash-dot {
-  width: 8px; height: 8px; background: #d4a843; border-radius: 50%;
+  width: 8px; height: 8px; background: #546cfa; border-radius: 50%;
   animation: db-pulse 1.2s ease-in-out infinite;
 }
 
@@ -295,7 +295,7 @@ export const tabStyles = `
   display: flex; gap: 8px; justify-content: flex-end; margin-top: 16px;
 }
 .hb-btn-primary {
-  background: linear-gradient(135deg,#d4a843,#c49838);
+  background: linear-gradient(135deg,#546cfa,#546cfa);
   color: #09090d; border: none;
   font-family: var(--font-poppins), sans-serif;
   font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
@@ -442,7 +442,7 @@ export const tabStyles = `
 }
 .ov-hero-avatar {
   width: 64px; height: 64px; border-radius: 50%; flex-shrink: 0;
-  background: linear-gradient(135deg,#d4a843,#c49838);
+  background: linear-gradient(135deg,#546cfa,#546cfa);
   color: #09090d; font-size: 22px; font-weight: 700;
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
@@ -450,7 +450,7 @@ export const tabStyles = `
 .ov-hero-avatar-img { width: 100%; height: 100%; object-fit: cover; }
 .ov-hero-greeting { font-size: clamp(18px,3vw,24px); font-weight: 700; color: var(--d-text); line-height: 1.25; }
 .ov-hero-name {
-  background: linear-gradient(90deg,#d4a843,#f0cc7a);
+  background: linear-gradient(90deg,#546cfa,#f0cc7a);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 .ov-hero-sub { font-size: 13px; color: var(--d-muted); margin-top: 4px; }

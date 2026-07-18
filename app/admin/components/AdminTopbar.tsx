@@ -64,7 +64,7 @@ export default function AdminTopbar({ searchQuery, setSearchQuery, searchOpen, s
             <div className="adm-notif-panel">
               <div className="flex items-center justify-between mb-2 px-1">
                 <p className="text-[12px] font-semibold" style={{ color: "var(--adm-text)" }}>Notifications</p>
-                <button className="text-[11px]" style={{ color: "#d4a843" }} onClick={markAllNotificationsRead}>Mark all read</button>
+                <button className="text-[11px]" style={{ color: "#546cfa" }} onClick={markAllNotificationsRead}>Mark all read</button>
               </div>
               {notifications.length === 0 ? (
                 <p className="text-[12px] px-1" style={{ color: "var(--adm-text-muted)" }}>No notifications yet.</p>

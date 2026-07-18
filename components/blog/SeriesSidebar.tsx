@@ -129,7 +129,7 @@ export function SeriesSidebar({ series, posts, loading }: SeriesSidebarProps) {
           align-items: center;
           gap: 10px;
           margin-bottom: 20px;
-          color: var(--gold, #d4a843);
+          color: var(--gold, #546cfa);
         }
 
         .series-sidebar-header h3 {
@@ -177,7 +177,7 @@ export function SeriesSidebar({ series, posts, loading }: SeriesSidebarProps) {
         }
 
         .series-item-toggle {
-          color: var(--gold, #d4a843);
+          color: var(--gold, #546cfa);
           flex-shrink: 0;
           margin-top: 2px;
           transition: transform 0.2s ease;
@@ -202,7 +202,7 @@ export function SeriesSidebar({ series, posts, loading }: SeriesSidebarProps) {
         }
 
         .series-item-name:hover {
-          color: var(--gold, #d4a843);
+          color: var(--gold, #546cfa);
         }
 
         .series-item-count {
@@ -245,7 +245,7 @@ export function SeriesSidebar({ series, posts, loading }: SeriesSidebarProps) {
         .series-post-number {
           font-size: 11px;
           font-weight: 600;
-          color: var(--gold, #d4a843);
+          color: var(--gold, #546cfa);
           flex-shrink: 0;
           min-width: 20px;
         }

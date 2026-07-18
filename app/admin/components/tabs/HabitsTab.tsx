@@ -136,7 +136,7 @@ export default function HabitsTab() {
                     style={{ background: selectedUser===u.user_id?"rgba(212,168,67,.08)":"rgba(255,255,255,.02)", borderColor: selectedUser===u.user_id?"rgba(212,168,67,.4)":"rgba(255,255,255,.07)" }}
                   >
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0" style={{ background: "rgba(212,168,67,.15)", color: "#d4a843" }}>
+                      <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0" style={{ background: "rgba(212,168,67,.15)", color: "#546cfa" }}>
                         {u.email[0].toUpperCase()}
                       </div>
                       <div className="flex-1 min-w-0">

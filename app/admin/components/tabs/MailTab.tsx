@@ -73,7 +73,7 @@ export default function MailTab({ sub, setSub, logs, inbox, templates, campaigns
         {UTILS.map(({ id, label, Icon, badge }) => (
           <button key={id} className={cn(TW.mTab, sub === id && TW.mAct)} onClick={() => setSub(id)}>
             <Icon size={12} />{label}
-            {badge ? <span className="bg-[#d4a843] text-[#09090d] font-poppins text-[7px] px-1.5 py-0.5 rounded-full font-bold">{badge}</span> : null}
+            {badge ? <span className="bg-[#546cfa] text-[#09090d] font-poppins text-[7px] px-1.5 py-0.5 rounded-full font-bold">{badge}</span> : null}
           </button>
         ))}
       </div>

@@ -59,7 +59,7 @@ export function RegisterModal({ event, onClose }: RegisterModalProps) {
       <div className="up-modal" onClick={(e) => e.stopPropagation()}>
         {done ? (
           <div className="up-modal-done">
-            <div className="up-modal-done-icon"><Sparkle size={26} style={{ color: "#d4a843" }} fill="currentColor" /></div>
+            <div className="up-modal-done-icon"><Sparkle size={26} style={{ color: "#546cfa" }} fill="currentColor" /></div>
             <p className="up-modal-done-h">{t.doneTitle[lang]}</p>
             <p className="up-modal-done-sub">{t.doneSub[lang]}</p>
             <button className="up-btn up-btn--gold" onClick={onClose}>

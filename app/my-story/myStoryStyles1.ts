@@ -360,13 +360,13 @@ export const myStoryStyles1 = `
   color: #1a1816;
   --white: #1a1816;
   --black: #ffffff;
-  --gold-gradient: linear-gradient(90deg, #B8860B, #D4700A);
+  --gold-gradient: linear-gradient(90deg, #546cfa, #D4700A);
 }
 :root:not(.dark) .msp::before { opacity: 0.08; }
 :root:not(.dark) .msp-year {
   background: rgba(184,134,11,.12);
   border-color: rgba(184,134,11,.4);
-  color: #B8860B;
+  color: #546cfa;
 }
 :root:not(.dark) .msp-dot { background: #ffffff; border-color: rgba(184,134,11,.55); }
 `;

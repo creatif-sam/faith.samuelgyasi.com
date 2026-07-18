@@ -27,9 +27,9 @@ export default {
       },
       colors: {
         gold: {
-          DEFAULT: "#d4a843",
+          DEFAULT: "#546cfa",
           light:   "#f0cc7a",
-          dark:    "#c49838",
+          dark:    "#546cfa",
         },
         adm: {
           bg:      "#07080c",

@@ -140,7 +140,7 @@ export const adminThemeCss = `
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  background: linear-gradient(135deg,#d4a843,#c49838);
+  background: linear-gradient(135deg,#546cfa,#546cfa);
   color: #09090d;
   font-size: 12px;
   font-weight: 700;
@@ -176,10 +176,10 @@ export const adminThemeCss = `
   border-color: var(--adm-border) !important;
 }
 /* ── Light mode: sidebar nav inactive items ── */
-.adm-root.adm-light aside nav button:not([class*="text-[#d4a843]"]) {
+.adm-root.adm-light aside nav button:not([class*="text-[#546cfa]"]) {
   color: var(--adm-text-muted) !important;
 }
-.adm-root.adm-light aside nav button:not([class*="text-[#d4a843]"]):hover {
+.adm-root.adm-light aside nav button:not([class*="text-[#546cfa]"]):hover {
   color: var(--adm-text) !important;
   background: var(--adm-surface-soft) !important;
 }
@@ -237,7 +237,7 @@ export const adminThemeCss = `
   min-width: 16px;
   height: 16px;
   border-radius: 999px;
-  background: #d4a843;
+  background: #546cfa;
   color: #09090d;
   font-size: 9px;
   font-weight: 700;

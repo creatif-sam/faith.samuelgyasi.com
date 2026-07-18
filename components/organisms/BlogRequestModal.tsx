@@ -85,14 +85,14 @@ export function BlogRequestModal({ onClose, lang }: BlogRequestModalProps) {
   return (
     <div className="fixed inset-0 bg-black/80 backdrop-blur-xl z-[9999] flex items-center justify-center p-5" onClick={onClose}>
       <div 
-        className="bg-[#0a0a0d] border border-[#d4a843]/20 rounded-xl w-full max-w-[600px] max-h-[90vh] overflow-y-auto shadow-[0_32px_80px_rgba(0,0,0,.7),0_0_0_1px_rgba(212,168,67,.15)]" 
+        className="bg-[#0a0a0d] border border-[#546cfa]/20 rounded-xl w-full max-w-[600px] max-h-[90vh] overflow-y-auto shadow-[0_32px_80px_rgba(0,0,0,.7),0_0_0_1px_rgba(212,168,67,.15)]" 
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
         <div className="flex justify-between items-start p-7 border-b border-white/[.06]">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <Sparkles size={20} className="text-[#d4a843]" />
+              <Sparkles size={20} className="text-[#546cfa]" />
               <h2 className="font-playfair text-[24px] font-bold text-[#eef0f5]">{t.title[lang]}</h2>
             </div>
             <p className="font-poppins text-[12px] text-white/50 mt-1">{t.subtitle[lang]}</p>
@@ -154,7 +154,7 @@ export function BlogRequestModal({ onClose, lang }: BlogRequestModalProps) {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full bg-gradient-to-r from-[#d4a843] to-[#b8922e] text-[#080807] font-poppins text-sm font-semibold px-6 py-3 rounded-lg transition-all hover:shadow-[0_8px_24px_rgba(212,168,67,.35)] disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-gradient-to-r from-[#546cfa] to-[#b8922e] text-[#080807] font-poppins text-sm font-semibold px-6 py-3 rounded-lg transition-all hover:shadow-[0_8px_24px_rgba(212,168,67,.35)] disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {submitting ? t.submitting[lang] : t.submit[lang]}
           </button>

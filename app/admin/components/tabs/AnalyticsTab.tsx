@@ -60,7 +60,7 @@ export default function AnalyticsTab({ analytics }: AnalyticsTabProps) {
                     <td className={TW.td} style={{ color: "#c9a84c", fontFamily: "'Poppins',sans-serif", fontSize: "22px", fontWeight: 700 }}>{count}</td>
                     <td className={TW.td}>
                       <div className="flex items-center gap-2.5 font-poppins text-[9px] text-white/35 min-w-[120px]">
-                        <div className="h-[3px] bg-gradient-to-r from-[#d4a843] to-[#f0cc7a] rounded-full flex-shrink-0 transition-all max-w-[100px]" style={{ width: `${(count / totalViews) * 100}%` }} />
+                        <div className="h-[3px] bg-gradient-to-r from-[#546cfa] to-[#f0cc7a] rounded-full flex-shrink-0 transition-all max-w-[100px]" style={{ width: `${(count / totalViews) * 100}%` }} />
                         <span>{((count / totalViews) * 100).toFixed(1)}%</span>
                       </div>
                     </td>
@@ -88,7 +88,7 @@ export default function AnalyticsTab({ analytics }: AnalyticsTabProps) {
                 {countryViews.slice(0, 8).map(({ country, count }) => (
                   <div key={country} className="flex items-center justify-between gap-3 text-sm">
                     <span className="font-poppins text-white/60">{country}</span>
-                    <span className="font-poppins text-[#d4a843] font-semibold">{count}</span>
+                    <span className="font-poppins text-[#546cfa] font-semibold">{count}</span>
                   </div>
                 ))}
               </div>

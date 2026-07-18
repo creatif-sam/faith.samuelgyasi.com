@@ -109,9 +109,9 @@ export function FeedbackWidget() {
           {stage === "done" ? (
             <div className="flex flex-col items-center justify-center gap-3 px-7 py-11 text-center">
               <div className="relative flex items-center justify-center">
-                <div className="absolute inset-0 rounded-full bg-[#d4a843]/25 blur-xl animate-pulse" />
+                <div className="absolute inset-0 rounded-full bg-[#546cfa]/25 blur-xl animate-pulse" />
                 <div className="relative w-14 h-14 rounded-full bg-[rgba(212,168,67,.14)] border border-[rgba(212,168,67,.3)] flex items-center justify-center animate-in zoom-in-50 duration-500 ease-out">
-                  <Check size={22} className="text-[#d4a843]" strokeWidth={2.5} />
+                  <Check size={22} className="text-[#546cfa]" strokeWidth={2.5} />
                 </div>
               </div>
               <p className="font-[family-name:'Playfair_Display',serif] text-[19px] text-[#eef0f5] mt-1">
@@ -157,7 +157,7 @@ export function FeedbackWidget() {
                       className={cn(
                         "flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg border text-[9px] font-[family-name:'Poppins',sans-serif] font-semibold tracking-[.15em] uppercase transition-all cursor-pointer",
                         type === id
-                          ? "bg-[rgba(212,168,67,.1)] border-[rgba(212,168,67,.35)] text-[#d4a843] shadow-[0_0_0_1px_rgba(212,168,67,.1)_inset]"
+                          ? "bg-[rgba(212,168,67,.1)] border-[rgba(212,168,67,.35)] text-[#546cfa] shadow-[0_0_0_1px_rgba(212,168,67,.1)_inset]"
                           : "bg-white/[.03] border-white/[.07] text-white/35 hover:text-white/60 hover:border-white/15"
                       )}
                     >
@@ -203,7 +203,7 @@ export function FeedbackWidget() {
                   className={cn(
                     "inline-flex items-center justify-center gap-2 font-[family-name:'Poppins',sans-serif] font-semibold text-[9px] tracking-[.18em] uppercase rounded-lg px-5 py-3 transition-all border-0 cursor-pointer",
                     msg.trim()
-                      ? "bg-gradient-to-br from-[#d4a843] to-[#c49838] text-[#09090d] hover:from-[#e0b84e] hover:to-[#d4a843] shadow-[0_2px_16px_rgba(212,168,67,.3)] hover:shadow-[0_4px_20px_rgba(212,168,67,.4)] hover:-translate-y-px"
+                      ? "bg-gradient-to-br from-[#546cfa] to-[#546cfa] text-[#09090d] hover:from-[#546cfa] hover:to-[#546cfa] shadow-[0_2px_16px_rgba(212,168,67,.3)] hover:shadow-[0_4px_20px_rgba(212,168,67,.4)] hover:-translate-y-px"
                       : "bg-white/[.05] text-white/25 cursor-not-allowed"
                   )}
                 >
@@ -223,7 +223,7 @@ export function FeedbackWidget() {
       {/* FAB toggle button */}
       <div className="relative">
         {stage === "closed" && (
-          <span className="absolute inset-0 rounded-full bg-[#d4a843]/35 blur-md animate-pulse pointer-events-none" />
+          <span className="absolute inset-0 rounded-full bg-[#546cfa]/35 blur-md animate-pulse pointer-events-none" />
         )}
         <button
           onClick={() => setStage(stage === "closed" ? "form" : "closed")}
@@ -233,7 +233,7 @@ export function FeedbackWidget() {
             "group relative w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,.5)] border-0 cursor-pointer",
             stage !== "closed"
               ? "bg-white/10 text-white/60 hover:bg-white/15"
-              : "bg-gradient-to-br from-[#d4a843] to-[#c49838] text-[#09090d] hover:from-[#e0b84e] hover:to-[#d4a843] hover:shadow-[0_6px_24px_rgba(212,168,67,.45)] hover:scale-110"
+              : "bg-gradient-to-br from-[#546cfa] to-[#546cfa] text-[#09090d] hover:from-[#546cfa] hover:to-[#546cfa] hover:shadow-[0_6px_24px_rgba(212,168,67,.45)] hover:scale-110"
           )}
         >
           {stage !== "closed" ? <X size={18} /> : <MessageSquarePlus size={19} />}

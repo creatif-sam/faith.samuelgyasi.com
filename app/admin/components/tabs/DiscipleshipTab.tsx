@@ -57,7 +57,7 @@ export default function DiscipleshipTab({
         <div className="p-4 bg-white/[.02] border border-white/[.06] rounded-lg">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-lg bg-[rgba(212,168,67,.1)] flex items-center justify-center">
-              <User size={20} className="text-[#d4a843]" />
+              <User size={20} className="text-[#546cfa]" />
             </div>
             <div>
               <div className="text-2xl font-bold text-white">{stats.total}</div>
@@ -106,7 +106,7 @@ export default function DiscipleshipTab({
           className={cn(
             "px-4 py-2 rounded-lg text-sm transition-all",
             statusFilter === 'all' 
-              ? "bg-[#d4a843] text-[#09090d] font-medium" 
+              ? "bg-[#546cfa] text-[#09090d] font-medium" 
               : "bg-white/5 text-white/50 hover:bg-white/10"
           )}
           onClick={() => setStatusFilter('all')}
@@ -181,7 +181,7 @@ export default function DiscipleshipTab({
                         />
                       ) : (
                         <div className="w-10 h-10 rounded-full bg-[rgba(212,168,67,.1)] flex items-center justify-center border border-[rgba(212,168,67,.2)]">
-                          <span className="text-[#d4a843] font-medium text-sm">
+                          <span className="text-[#546cfa] font-medium text-sm">
                             {disciple.name.charAt(0).toUpperCase()}
                           </span>
                         </div>
@@ -232,7 +232,7 @@ export default function DiscipleshipTab({
                   <td className="py-4 px-4">
                     <div className="flex items-center justify-end gap-2">
                       <button
-                        className={cn(TW.iconBtn, "!text-[#d4a843] hover:!text-[#e0b84e]")}
+                        className={cn(TW.iconBtn, "!text-[#546cfa] hover:!text-[#546cfa]")}
                         onClick={() => onViewProgress(disciple)}
                         title="View progress"
                       >

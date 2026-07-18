@@ -394,7 +394,7 @@ export const upcomingLayoutStyles = `
 }
 .up-detail-back:hover { color: var(--gold); }
 :root:not(.dark) .up-detail-back { color: rgba(10,10,10,.4); }
-:root:not(.dark) .up-detail-back:hover { color: #B8860B; }
+:root:not(.dark) .up-detail-back:hover { color: #546cfa; }
 @media (max-width: 640px) {
   .up-detail-wrap { padding: 120px 6% 72px; }
 }

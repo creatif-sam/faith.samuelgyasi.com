@@ -206,22 +206,22 @@ export default function DiscipleProgressModal({ disciple, onClose, db, load }: D
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                   <div className="p-3 bg-white/[.03] rounded-lg">
-                    <div className="flex items-center gap-1.5 text-[#d4a843] mb-1"><Flame size={13} /><span className="text-[10px] uppercase tracking-wider">Habits</span></div>
+                    <div className="flex items-center gap-1.5 text-[#546cfa] mb-1"><Flame size={13} /><span className="text-[10px] uppercase tracking-wider">Habits</span></div>
                     <div className="text-white/90 text-sm">{engagement.habitCount} active</div>
                     <div className="text-white/40 text-xs">{engagement.logsLast30Days} logs / 30d</div>
                   </div>
                   <div className="p-3 bg-white/[.03] rounded-lg">
-                    <div className="flex items-center gap-1.5 text-[#d4a843] mb-1"><Calendar size={13} /><span className="text-[10px] uppercase tracking-wider">Last Logged</span></div>
+                    <div className="flex items-center gap-1.5 text-[#546cfa] mb-1"><Calendar size={13} /><span className="text-[10px] uppercase tracking-wider">Last Logged</span></div>
                     <div className="text-white/90 text-sm">
                       {engagement.lastLoggedDate ? new Date(engagement.lastLoggedDate).toLocaleDateString() : "Never"}
                     </div>
                   </div>
                   <div className="p-3 bg-white/[.03] rounded-lg">
-                    <div className="flex items-center gap-1.5 text-[#d4a843] mb-1"><GraduationCap size={13} /><span className="text-[10px] uppercase tracking-wider">Trainings</span></div>
+                    <div className="flex items-center gap-1.5 text-[#546cfa] mb-1"><GraduationCap size={13} /><span className="text-[10px] uppercase tracking-wider">Trainings</span></div>
                     <div className="text-white/90 text-sm">{engagement.enrollmentCount} enrolled</div>
                   </div>
                   <div className="p-3 bg-white/[.03] rounded-lg">
-                    <div className="flex items-center gap-1.5 text-[#d4a843] mb-1"><BookOpen size={13} /><span className="text-[10px] uppercase tracking-wider">Lessons</span></div>
+                    <div className="flex items-center gap-1.5 text-[#546cfa] mb-1"><BookOpen size={13} /><span className="text-[10px] uppercase tracking-wider">Lessons</span></div>
                     <div className="text-white/90 text-sm">{engagement.lessonsCompleted} completed</div>
                   </div>
                 </div>
@@ -234,7 +234,7 @@ export default function DiscipleProgressModal({ disciple, onClose, db, load }: D
             <div className="mb-6 grid sm:grid-cols-2 gap-4">
               {goals.length > 0 && (
                 <div className="p-4 bg-white/[.02] border border-white/[.06] rounded-lg">
-                  <div className="flex items-center gap-1.5 text-[#d4a843] text-xs uppercase tracking-wider mb-3">
+                  <div className="flex items-center gap-1.5 text-[#546cfa] text-xs uppercase tracking-wider mb-3">
                     <Target size={13} /> Goals ({goals.filter(g => !g.completed).length} active)
                   </div>
                   <div className="space-y-2">
@@ -252,7 +252,7 @@ export default function DiscipleProgressModal({ disciple, onClose, db, load }: D
 
               {sharedJournal.length > 0 && (
                 <div className="p-4 bg-white/[.02] border border-white/[.06] rounded-lg">
-                  <div className="flex items-center gap-1.5 text-[#d4a843] text-xs uppercase tracking-wider mb-3">
+                  <div className="flex items-center gap-1.5 text-[#546cfa] text-xs uppercase tracking-wider mb-3">
                     <BookMarked size={13} /> Shared Journal ({sharedJournal.length})
                   </div>
                   <div className="space-y-3 max-h-[180px] overflow-y-auto">
@@ -268,7 +268,7 @@ export default function DiscipleProgressModal({ disciple, onClose, db, load }: D
 
               {recentMessages.length > 0 && (
                 <div className="p-4 bg-white/[.02] border border-white/[.06] rounded-lg sm:col-span-2">
-                  <div className="flex items-center gap-1.5 text-[#d4a843] text-xs uppercase tracking-wider mb-3">
+                  <div className="flex items-center gap-1.5 text-[#546cfa] text-xs uppercase tracking-wider mb-3">
                     <MessageCircle size={13} /> Recent Messages
                   </div>
                   <div className="space-y-3">
@@ -278,7 +278,7 @@ export default function DiscipleProgressModal({ disciple, onClose, db, load }: D
                         {m.body && <div className="text-white/50 text-xs mt-0.5">{m.body}</div>}
                         {m.reply && (
                           <div className="mt-1.5 text-xs">
-                            <span className="text-[#d4a843]">{disciple.name} replied: </span>
+                            <span className="text-[#546cfa]">{disciple.name} replied: </span>
                             <span className="text-white/70">{m.reply}</span>
                           </div>
                         )}
@@ -300,7 +300,7 @@ export default function DiscipleProgressModal({ disciple, onClose, db, load }: D
             </button>
           ) : (
             <div className="mb-6 p-6 bg-white/[.02] border border-[rgba(212,168,67,.2)] rounded-lg">
-              <h3 className="font-poppins text-sm font-semibold text-[#d4a843] mb-4">
+              <h3 className="font-poppins text-sm font-semibold text-[#546cfa] mb-4">
                 New Progress Entry
               </h3>
 
@@ -397,7 +397,7 @@ export default function DiscipleProgressModal({ disciple, onClose, db, load }: D
                   {[0, 200, 400].map((delay) => (
                     <div
                       key={delay}
-                      className="w-2 h-2 bg-[#d4a843] rounded-full animate-pulse"
+                      className="w-2 h-2 bg-[#546cfa] rounded-full animate-pulse"
                       style={{ animationDelay: `${delay}ms` }}
                     />
                   ))}
@@ -416,7 +416,7 @@ export default function DiscipleProgressModal({ disciple, onClose, db, load }: D
                   >
                     <div className="flex items-start gap-3 mb-3">
                       <div className="w-8 h-8 rounded-lg bg-[rgba(212,168,67,.1)] flex items-center justify-center flex-shrink-0">
-                        <Calendar size={14} className="text-[#d4a843]" />
+                        <Calendar size={14} className="text-[#546cfa]" />
                       </div>
                       <div className="flex-1">
                         <div className="text-sm font-medium text-white/90">
@@ -472,7 +472,7 @@ export default function DiscipleProgressModal({ disciple, onClose, db, load }: D
 
                       {entry.course_milestone && (
                         <div>
-                          <div className="text-xs font-medium text-[#d4a843] mb-1 inline-flex items-center gap-1.5">
+                          <div className="text-xs font-medium text-[#546cfa] mb-1 inline-flex items-center gap-1.5">
                             <BookMarked size={12} /> Course Milestone
                           </div>
                           <div className="text-sm text-white/70 leading-relaxed">

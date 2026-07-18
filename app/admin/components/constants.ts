@@ -53,17 +53,17 @@ export const NAV_SORTED = [...NAV].sort((a, b) => {
 export const TW = {
   // Buttons
   btn:     "inline-flex items-center gap-2 font-poppins text-[11px] font-medium cursor-pointer rounded-lg transition-all duration-200 active:scale-[.97] border-0",
-  gold:    "bg-gradient-to-br from-[#d4a843] to-[#c49838] text-[#09090d] px-5 py-2.5 shadow-[0_2px_12px_rgba(212,168,67,.25)] hover:from-[#e0b84e] hover:to-[#d4a843] hover:shadow-[0_4px_18px_rgba(212,168,67,.4)]",
+  gold:    "bg-gradient-to-br from-[#546cfa] to-[#546cfa] text-[#09090d] px-5 py-2.5 shadow-[0_2px_12px_rgba(212,168,67,.25)] hover:from-[#546cfa] hover:to-[#546cfa] hover:shadow-[0_4px_18px_rgba(212,168,67,.4)]",
   ghost:   "bg-white/5 text-white/50 border border-white/10 px-5 py-2.5 hover:bg-white/[.09] hover:text-white/85 hover:border-white/[.18]",
   danger:  "bg-red-500/10 text-red-400 border border-red-500/20 px-5 py-2.5 hover:bg-red-500/[.18] hover:border-red-500/30",
   sm:      "!px-3 !py-1.5 !text-[10px] !rounded-lg gap-1",
   // Badges
   badge:   "font-poppins text-[10px] font-medium px-2.5 py-0.5 inline-block rounded-full",
-  bPub:    "bg-[rgba(212,168,67,.12)] text-[#d4a843] border border-[rgba(212,168,67,.2)]",
+  bPub:    "bg-[rgba(212,168,67,.12)] text-[#546cfa] border border-[rgba(212,168,67,.2)]",
   bDft:    "bg-white/[.06] text-white/40 border border-white/[.08]",
   bSent:   "bg-blue-500/10 text-blue-400 border border-blue-500/20",
   bOpen:   "bg-green-500/10 text-green-400 border border-green-500/20",
-  bNew:    "bg-[rgba(212,168,67,.16)] text-[#d4a843] border border-[rgba(212,168,67,.25)]",
+  bNew:    "bg-[rgba(212,168,67,.16)] text-[#546cfa] border border-[rgba(212,168,67,.25)]",
   bSending:"bg-blue-500/10 text-blue-400 border border-blue-500/20",
   bFailed: "bg-red-500/10 text-red-400 border border-red-500/20",
   // Form
@@ -104,21 +104,21 @@ export const TW = {
   // Mail sub-nav (utility tabs: Compose / Inbox / Sent)
   mNav:    "flex gap-1 mb-6 overflow-x-auto bg-white/[.03] border border-white/[.06] rounded-lg p-1 w-fit",
   mTab:    "flex items-center gap-2 px-4 py-2.5 font-poppins text-[12px] font-medium text-white/40 bg-transparent border-0 cursor-pointer rounded-lg flex-shrink-0 transition-all whitespace-nowrap hover:text-white/75 hover:bg-white/5",
-  mAct:    "!text-[#d4a843] !bg-[rgba(212,168,67,.1)]",
+  mAct:    "!text-[#546cfa] !bg-[rgba(212,168,67,.1)]",
   // Mail section switcher (big segmented toggle: Email Campaigns | Email Templates)
   mSeg:    "flex gap-1 mb-7 bg-white/[.03] border border-white/[.06] rounded-lg p-1.5",
   mSegTab: "flex-1 flex items-center justify-center gap-1.5 sm:gap-2.5 px-2 sm:px-6 py-3 sm:py-3.5 font-poppins text-[11px] sm:text-[13px] font-semibold text-white/45 bg-transparent border-0 cursor-pointer rounded-lg transition-all whitespace-nowrap hover:text-white/75 hover:bg-white/5",
-  mSegAct: "!text-[#09090d] !bg-gradient-to-r !from-[#d4a843] !to-[#c49838] !shadow-[0_2px_16px_rgba(212,168,67,.3)] hover:!text-[#09090d]",
+  mSegAct: "!text-[#09090d] !bg-gradient-to-r !from-[#546cfa] !to-[#546cfa] !shadow-[0_2px_16px_rgba(212,168,67,.3)] hover:!text-[#09090d]",
   // Filter chips (All / Drafts / Sent)
   chipRow: "flex gap-2 items-center",
   chip:    "font-poppins text-[11px] font-medium px-4 py-2 rounded-lg cursor-pointer transition-all border bg-white/[.03] text-white/45 border-white/[.08] hover:text-white/75 hover:bg-white/[.06]",
-  chipAct: "!bg-[rgba(212,168,67,.12)] !text-[#d4a843] !border-[rgba(212,168,67,.25)]",
+  chipAct: "!bg-[rgba(212,168,67,.12)] !text-[#546cfa] !border-[rgba(212,168,67,.25)]",
   // Progress (recipients sent / total)
   progWrap:"w-full h-1.5 bg-white/[.06] rounded-full overflow-hidden mt-1.5 min-w-[80px]",
-  progBar: "h-full bg-gradient-to-r from-[#d4a843] to-[#f0cc7a] rounded-full transition-all duration-500",
+  progBar: "h-full bg-gradient-to-r from-[#546cfa] to-[#f0cc7a] rounded-full transition-all duration-500",
   // Stats
   stat:    "bg-[#0b0c12] p-4 sm:p-6 border border-white/[.06] rounded-lg relative overflow-hidden cursor-default transition-all duration-[250ms] group hover:border-[rgba(212,168,67,.22)] hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(0,0,0,.4),0_0_0_1px_rgba(212,168,67,.1)]",
-  statNum: "font-poppins text-[24px] sm:text-[36px] font-bold leading-none mb-2 bg-gradient-to-br from-[#d4a843] to-[#f0cc7a] bg-clip-text text-transparent",
+  statNum: "font-poppins text-[24px] sm:text-[36px] font-bold leading-none mb-2 bg-gradient-to-br from-[#546cfa] to-[#f0cc7a] bg-clip-text text-transparent",
   statLbl: "font-poppins text-[11px] sm:text-[12px] font-medium text-white/[.40]",
   // Icon button
   iconBtn: "bg-white/5 border border-white/[.08] text-white/40 cursor-pointer p-2 rounded-lg flex items-center transition-all hover:bg-white/10 hover:text-white/80",

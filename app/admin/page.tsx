@@ -39,7 +39,7 @@ export default function AdminPage() {
           {state.loading ? (
             <div className="flex gap-2.5 justify-center py-[140px]">
               {[0, 200, 400].map((delay) => (
-                <div key={delay} className="w-2 h-2 bg-[#d4a843] rounded-full animate-[adm-pulse_1.2s_ease-in-out_infinite]" style={{ animationDelay: `${delay}ms` }} />
+                <div key={delay} className="w-2 h-2 bg-[#546cfa] rounded-full animate-[adm-pulse_1.2s_ease-in-out_infinite]" style={{ animationDelay: `${delay}ms` }} />
               ))}
             </div>
           ) : (

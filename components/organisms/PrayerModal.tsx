@@ -77,7 +77,7 @@ export function PrayerModal({ onClose, lang }: PrayerModalProps) {
   return (
     <div className="fixed inset-0 bg-black/80 backdrop-blur-xl z-[9999] flex items-center justify-center p-5" onClick={onClose}>
       <div 
-        className="bg-[#0a0a0d] border border-[#d4a843]/20 rounded-xl w-full max-w-[560px] max-h-[90vh] overflow-y-auto shadow-[0_32px_80px_rgba(0,0,0,.7),0_0_0_1px_rgba(212,168,67,.15)]" 
+        className="bg-[#0a0a0d] border border-[#546cfa]/20 rounded-xl w-full max-w-[560px] max-h-[90vh] overflow-y-auto shadow-[0_32px_80px_rgba(0,0,0,.7),0_0_0_1px_rgba(212,168,67,.15)]" 
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -158,7 +158,7 @@ export function PrayerModal({ onClose, lang }: PrayerModalProps) {
                 type="checkbox"
                 checked={isUrgent}
                 onChange={(e) => setIsUrgent(e.target.checked)}
-                className="w-5 h-5 rounded border border-white/20 bg-white/5 checked:bg-[#d4a843] checked:border-[#d4a843] cursor-pointer"
+                className="w-5 h-5 rounded border border-white/20 bg-white/5 checked:bg-[#546cfa] checked:border-[#546cfa] cursor-pointer"
               />
               <span className="font-poppins text-[13px] text-white/70">{t.urgent[lang]}</span>
             </label>
@@ -176,7 +176,7 @@ export function PrayerModal({ onClose, lang }: PrayerModalProps) {
             <button
               type="submit"
               disabled={submitting}
-              className="px-5 py-2.5 font-poppins text-[11px] font-medium bg-gradient-to-br from-[#d4a843] to-[#c49838] text-[#09090d] rounded-lg cursor-pointer transition-all shadow-[0_2px_12px_rgba(212,168,67,.25)] hover:from-[#e0b84e] hover:to-[#d4a843] hover:shadow-[0_4px_18px_rgba(212,168,67,.4)] disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-5 py-2.5 font-poppins text-[11px] font-medium bg-gradient-to-br from-[#546cfa] to-[#546cfa] text-[#09090d] rounded-lg cursor-pointer transition-all shadow-[0_2px_12px_rgba(212,168,67,.25)] hover:from-[#546cfa] hover:to-[#546cfa] hover:shadow-[0_4px_18px_rgba(212,168,67,.4)] disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {submitting ? t.submitting[lang] : t.submit[lang]}
             </button>

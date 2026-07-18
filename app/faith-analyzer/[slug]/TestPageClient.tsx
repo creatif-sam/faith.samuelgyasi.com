@@ -101,7 +101,7 @@ export default function TestPageClient({ test, questions }: { test: FaithTest; q
           {/* Header */}
           <div className="text-center mb-10">
             <div className="flex justify-center mb-4">
-              <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-[#d4a843] to-[#c49838] flex items-center justify-center shadow-[0_8px_30px_rgba(212,168,67,.4)]">
+              <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-[#546cfa] to-[#546cfa] flex items-center justify-center shadow-[0_8px_30px_rgba(212,168,67,.4)]">
                 <ClipboardCheck size={32} className="text-[#09090d]" />
               </div>
             </div>
@@ -121,7 +121,7 @@ export default function TestPageClient({ test, questions }: { test: FaithTest; q
           {getDisclaimer(test) && !submitted && (
             <div className="mb-8 p-6 bg-[rgba(212,168,67,.08)] border border-[rgba(212,168,67,.2)] rounded-xl">
               <div className="flex items-start gap-3">
-                <AlertCircle size={20} className="text-[#d4a843] flex-shrink-0 mt-0.5" />
+                <AlertCircle size={20} className="text-[#546cfa] flex-shrink-0 mt-0.5" />
                 <p className="font-poppins text-[14px] text-white/70 leading-relaxed">
                   {getDisclaimer(test)}
                 </p>
@@ -138,7 +138,7 @@ export default function TestPageClient({ test, questions }: { test: FaithTest; q
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                 <div className="p-5 bg-[rgba(212,168,67,.1)] border border-[rgba(212,168,67,.2)] rounded-lg text-center">
-                  <div className="text-[32px] font-bold text-[#d4a843] mb-1">{correct}</div>
+                  <div className="text-[32px] font-bold text-[#546cfa] mb-1">{correct}</div>
                   <div className="text-[13px] text-white/60 font-poppins">
                     {lang === "fr" ? "Correct" : "Correct"}
                   </div>
@@ -151,8 +151,8 @@ export default function TestPageClient({ test, questions }: { test: FaithTest; q
                   </div>
                 </div>
 
-                <div className="p-5 bg-gradient-to-br from-[#d4a843]/10 to-[#c49838]/5 border border-[#d4a843]/20 rounded-lg text-center">
-                  <div className="text-[32px] font-bold text-[#d4a843] mb-1">{percentage}%</div>
+                <div className="p-5 bg-gradient-to-br from-[#546cfa]/10 to-[#546cfa]/5 border border-[#546cfa]/20 rounded-lg text-center">
+                  <div className="text-[32px] font-bold text-[#546cfa] mb-1">{percentage}%</div>
                   <div className="text-[13px] text-white/60 font-poppins">
                     {lang === "fr" ? "Score" : "Score"}
                   </div>
@@ -161,7 +161,7 @@ export default function TestPageClient({ test, questions }: { test: FaithTest; q
 
               {/* Biblical principle: 2-3 witnesses */}
               {incorrect >= 2 && (
-                <div className="p-5 bg-[rgba(212,168,67,.05)] border-l-4 border-[#d4a843] rounded">
+                <div className="p-5 bg-[rgba(212,168,67,.05)] border-l-4 border-[#546cfa] rounded">
                   <p className="font-poppins text-[14px] text-white/70 leading-relaxed mb-2">
                     <em>
                       {lang === "fr"
@@ -190,7 +190,7 @@ export default function TestPageClient({ test, questions }: { test: FaithTest; q
                 </button>
                 <Link
                   href={localizedHref(lang, "/faith-analyzer")}
-                  className="px-6 py-2.5 bg-gradient-to-br from-[#d4a843] to-[#c49838] text-[#09090d] font-poppins text-[13px] font-medium rounded-lg hover:shadow-[0_4px_20px_rgba(212,168,67,.3)] transition-all no-underline"
+                  className="px-6 py-2.5 bg-gradient-to-br from-[#546cfa] to-[#546cfa] text-[#09090d] font-poppins text-[13px] font-medium rounded-lg hover:shadow-[0_4px_20px_rgba(212,168,67,.3)] transition-all no-underline"
                 >
                   {lang === "fr" ? "Plus de Tests" : "More Tests"}
                 </Link>
@@ -219,7 +219,7 @@ export default function TestPageClient({ test, questions }: { test: FaithTest; q
                   }`}
                 >
                   <div className="flex items-start gap-3 mb-4">
-                    <div className="w-8 h-8 rounded-lg bg-[rgba(212,168,67,.15)] border border-[rgba(212,168,67,.3)] flex items-center justify-center flex-shrink-0 font-poppins text-[14px] font-semibold text-[#d4a843]">
+                    <div className="w-8 h-8 rounded-lg bg-[rgba(212,168,67,.15)] border border-[rgba(212,168,67,.3)] flex items-center justify-center flex-shrink-0 font-poppins text-[14px] font-semibold text-[#546cfa]">
                       {idx + 1}
                     </div>
                     <p className="font-poppins text-[16px] text-white/90 leading-relaxed flex-1 pt-0.5">
@@ -265,7 +265,7 @@ export default function TestPageClient({ test, questions }: { test: FaithTest; q
                                 : showIncorrect
                                 ? "border-red-400 bg-red-400 text-[#09090d]"
                                 : isSelected
-                                ? "border-[#d4a843] bg-[#d4a843] text-[#09090d]"
+                                ? "border-[#546cfa] bg-[#546cfa] text-[#09090d]"
                                 : "border-white/30 text-white/50"
                             }`}>
                               {opt}
@@ -281,8 +281,8 @@ export default function TestPageClient({ test, questions }: { test: FaithTest; q
 
                   {/* Explanation */}
                   {showResult && getExplanation(q) && (
-                    <div className="mt-4 p-4 bg-[rgba(212,168,67,.05)] border-l-2 border-[#d4a843] rounded">
-                      <div className="text-[11px] font-poppins font-semibold text-[#d4a843] mb-1 uppercase tracking-wider">
+                    <div className="mt-4 p-4 bg-[rgba(212,168,67,.05)] border-l-2 border-[#546cfa] rounded">
+                      <div className="text-[11px] font-poppins font-semibold text-[#546cfa] mb-1 uppercase tracking-wider">
                         {lang === "fr" ? "Explication" : "Explanation"}
                       </div>
                       <p className="font-poppins text-[13px] text-white/70 leading-relaxed">
@@ -301,7 +301,7 @@ export default function TestPageClient({ test, questions }: { test: FaithTest; q
               <button
                 onClick={handleSubmit}
                 disabled={Object.keys(answers).length !== questions.length}
-                className="px-8 py-3.5 bg-gradient-to-br from-[#d4a843] to-[#c49838] text-[#09090d] font-poppins text-[15px] font-semibold rounded-lg hover:shadow-[0_4px_20px_rgba(212,168,67,.4)] transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+                className="px-8 py-3.5 bg-gradient-to-br from-[#546cfa] to-[#546cfa] text-[#09090d] font-poppins text-[15px] font-semibold rounded-lg hover:shadow-[0_4px_20px_rgba(212,168,67,.4)] transition-all disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 {lang === "fr" ? "Soumettre les Réponses" : "Submit Answers"}
               </button>

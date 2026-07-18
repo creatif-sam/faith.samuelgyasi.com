@@ -41,7 +41,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             key={d}
             style={{
               width: 8, height: 8,
-              background: "#d4a843", borderRadius: "50%",
+              background: "#546cfa", borderRadius: "50%",
               animation: "pulse 1.2s ease-in-out infinite",
               animationDelay: `${d}ms`,
             }}
