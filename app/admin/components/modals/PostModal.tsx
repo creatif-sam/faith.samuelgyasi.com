@@ -253,7 +253,7 @@ export default function PostModal({ post, onClose, onSave, db }: PostModalProps)
                         setSelectedTags(selectedTags.filter(id => id !== tag.id));
                       }
                     }}
-                    className="w-4 h-4 cursor-pointer accent-[#c9a84c]"
+                    className="w-4 h-4 cursor-pointer accent-[#7b8ffc]"
                   />
                   <div className="flex items-center gap-2 flex-1">
                     <div 

@@ -14,10 +14,10 @@ export function FaithMandala() {
       </g>
       <g className="m3">
         <circle r="120" />
-        <line x1="-360" y1="0" x2="360" y2="0" stroke="#c9a84c" strokeWidth=".3" opacity=".06" />
-        <line x1="0" y1="-360" x2="0" y2="360" stroke="#c9a84c" strokeWidth=".3" opacity=".06" />
-        <line x1="-255" y1="-255" x2="255" y2="255" stroke="#c9a84c" strokeWidth=".3" opacity=".04" />
-        <line x1="255" y1="-255" x2="-255" y2="255" stroke="#c9a84c" strokeWidth=".3" opacity=".04" />
+        <line x1="-360" y1="0" x2="360" y2="0" stroke="#7b8ffc" strokeWidth=".3" opacity=".06" />
+        <line x1="0" y1="-360" x2="0" y2="360" stroke="#7b8ffc" strokeWidth=".3" opacity=".06" />
+        <line x1="-255" y1="-255" x2="255" y2="255" stroke="#7b8ffc" strokeWidth=".3" opacity=".04" />
+        <line x1="255" y1="-255" x2="-255" y2="255" stroke="#7b8ffc" strokeWidth=".3" opacity=".04" />
       </g>
     </svg>
   );

@@ -31,7 +31,7 @@ const css = `
 /* ── HERO ── */
 .trp-hero {
   padding: 140px 8% 72px;
-  border-bottom: 1px solid rgba(201,168,76,.12);
+  border-bottom: 1px solid rgba(123,143,252,.12);
   max-width: 1100px;
   margin: 0 auto;
 }
@@ -105,7 +105,7 @@ const css = `
 }
 .trp-card {
   background: rgba(14,13,11,.9);
-  border: 1px solid rgba(201,168,76,.1);
+  border: 1px solid rgba(123,143,252,.1);
   border-radius: 12px;
   overflow: hidden;
   display: flex;
@@ -117,7 +117,7 @@ const css = `
   transition: opacity .65s ease, transform .65s ease, border-color .3s, box-shadow .3s;
 }
 .trp-card.trp-visible { opacity: 1; transform: none; }
-.trp-card:hover { border-color: rgba(201,168,76,.3); box-shadow: 0 8px 32px rgba(0,0,0,.4); }
+.trp-card:hover { border-color: rgba(123,143,252,.3); box-shadow: 0 8px 32px rgba(0,0,0,.4); }
 .trp-card-thumb {
   aspect-ratio: 16/9;
   overflow: hidden;
@@ -130,7 +130,7 @@ const css = `
 .trp-card-thumb-placeholder {
   width: 100%; height: 100%;
   display: flex; align-items: center; justify-content: center;
-  background: linear-gradient(135deg, rgba(201,168,76,.06), rgba(201,168,76,.02));
+  background: linear-gradient(135deg, rgba(123,143,252,.06), rgba(123,143,252,.02));
   font-size: 40px;
 }
 .trp-card-body { padding: 24px 24px 28px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
@@ -169,7 +169,7 @@ const css = `
   align-items: center;
   justify-content: space-between;
   padding-top: 14px;
-  border-top: 1px solid rgba(201,168,76,.1);
+  border-top: 1px solid rgba(123,143,252,.1);
   margin-top: 4px;
 }
 .trp-card-lessons {
@@ -204,9 +204,9 @@ const css = `
 
 /* ── ENROLL STRIP ── */
 .trp-enroll-strip {
-  background: rgba(201,168,76,.04);
-  border-top: 1px solid rgba(201,168,76,.1);
-  border-bottom: 1px solid rgba(201,168,76,.1);
+  background: rgba(123,143,252,.04);
+  border-top: 1px solid rgba(123,143,252,.1);
+  border-bottom: 1px solid rgba(123,143,252,.1);
   padding: 64px 8%;
   text-align: center;
 }

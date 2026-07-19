@@ -118,7 +118,7 @@ export default function TrainingModal({ training, onClose, onSave, db }: Trainin
           </div>
 
           <div className={cn(TW.field, "flex items-center gap-2.5")}>
-            <input type="checkbox" id="trn-pub" checked={published} onChange={(e) => setPub(e.target.checked)} className="w-4 h-4 cursor-pointer accent-[#c9a84c]" />
+            <input type="checkbox" id="trn-pub" checked={published} onChange={(e) => setPub(e.target.checked)} className="w-4 h-4 cursor-pointer accent-[#7b8ffc]" />
             <label htmlFor="trn-pub" className={cn(TW.label, "!mb-0 cursor-pointer")}>
               Publish immediately (visible to enrolled users)
             </label>

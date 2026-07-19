@@ -176,7 +176,7 @@ export function PrayerModal({ onClose, lang }: PrayerModalProps) {
             <button
               type="submit"
               disabled={submitting}
-              className="px-5 py-2.5 font-poppins text-[11px] font-medium bg-gradient-to-br from-[#546cfa] to-[#546cfa] text-[#09090d] rounded-lg cursor-pointer transition-all shadow-[0_2px_12px_rgba(84,108,250,.25)] hover:from-[#546cfa] hover:to-[#546cfa] hover:shadow-[0_4px_18px_rgba(84,108,250,.4)] disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-5 py-2.5 font-poppins text-[11px] font-medium bg-gradient-to-br from-[#546cfa] to-[#546cfa] text-[#09090d] rounded-lg cursor-pointer transition-all shadow-[0_2px_12px_rgba(84,108,250,.25)] hover:from-[#3d54e0] hover:to-[#3d54e0] hover:shadow-[0_4px_18px_rgba(84,108,250,.4)] disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {submitting ? t.submitting[lang] : t.submit[lang]}
             </button>

@@ -42,7 +42,7 @@ export default function BlogSeriesTab({ series, onNew, onEdit, onDelete, onToggl
                     <div className="font-semibold">{s.name_en}</div>
                     <div className="text-[11px] text-white/40 mt-0.5">{s.name_fr}</div>
                   </td>
-                  <td className={TW.td} style={{ fontSize: "12px", fontFamily: "monospace", color: "#c9a84c" }}>
+                  <td className={TW.td} style={{ fontSize: "12px", fontFamily: "monospace", color: "#7b8ffc" }}>
                     /{s.slug}
                   </td>
                   <td className={TW.td}>

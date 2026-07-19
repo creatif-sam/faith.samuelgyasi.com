@@ -46,7 +46,7 @@ export default function FeedbackTab({ feedbacks, onToggleResolved, onDelete }: F
         {FILTERS.map((f) => (
           <button key={f.id} onClick={() => setFilter(f.id)}
             className={cn("font-poppins text-[9px] tracking-[.2em] uppercase px-5 py-3 bg-transparent border-0 cursor-pointer transition-colors whitespace-nowrap",
-              filter === f.id ? "text-[#c9a84c] border-b-2 border-[#c9a84c]" : "text-white/35 border-b-2 border-transparent"
+              filter === f.id ? "text-[#7b8ffc] border-b-2 border-[#7b8ffc]" : "text-white/35 border-b-2 border-transparent"
             )}>
             {f.label}
           </button>

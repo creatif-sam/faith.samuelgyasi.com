@@ -171,7 +171,7 @@ export default function FaithTestModal({ test, onClose, onSave, db }: FaithTestM
               id="test-pub" 
               checked={published} 
               onChange={(e) => setPub(e.target.checked)}
-              className="w-4 h-4 cursor-pointer accent-[#c9a84c]" 
+              className="w-4 h-4 cursor-pointer accent-[#7b8ffc]" 
             />
             <label htmlFor="test-pub" className={cn(TW.label, "!mb-0 cursor-pointer")}>
               Publish immediately (visible on site)

@@ -193,16 +193,16 @@ export default function BlogSeriesModal({ series, onClose, onSave, db }: BlogSer
             {/* Upload Button */}
             <label className={cn(
               "flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-dashed transition-all cursor-pointer",
-              uploading ? "border-[#c9a84c] bg-[#c9a84c]/10 cursor-wait" : "border-white/20 hover:border-[#c9a84c] hover:bg-white/5"
+              uploading ? "border-[#7b8ffc] bg-[#7b8ffc]/10 cursor-wait" : "border-white/20 hover:border-[#7b8ffc] hover:bg-white/5"
             )}>
               {uploading ? (
                 <>
-                  <div className="animate-spin rounded-full h-4 w-4 border-2 border-[#c9a84c] border-t-transparent" />
+                  <div className="animate-spin rounded-full h-4 w-4 border-2 border-[#7b8ffc] border-t-transparent" />
                   <span className="text-sm text-white/70">Uploading...</span>
                 </>
               ) : (
                 <>
-                  <Upload size={16} className="text-[#c9a84c]" />
+                  <Upload size={16} className="text-[#7b8ffc]" />
                   <span className="text-sm text-white/70">
                     {imageUrl ? "Change Image" : "Upload Series Image"}
                   </span>
@@ -252,7 +252,7 @@ export default function BlogSeriesModal({ series, onClose, onSave, db }: BlogSer
               id="series-show-dates" 
               checked={showDates} 
               onChange={(e) => setShowDates(e.target.checked)}
-              className="w-4 h-4 cursor-pointer accent-[#c9a84c]" 
+              className="w-4 h-4 cursor-pointer accent-[#7b8ffc]" 
             />
             <label htmlFor="series-show-dates" className={cn(TW.label, "!mb-0 cursor-pointer")}>
               Show dates for posts in this series
@@ -265,7 +265,7 @@ export default function BlogSeriesModal({ series, onClose, onSave, db }: BlogSer
               id="series-pub" 
               checked={published} 
               onChange={(e) => setPub(e.target.checked)}
-              className="w-4 h-4 cursor-pointer accent-[#c9a84c]" 
+              className="w-4 h-4 cursor-pointer accent-[#7b8ffc]" 
             />
             <label htmlFor="series-pub" className={cn(TW.label, "!mb-0 cursor-pointer")}>
               Publish immediately (visible on site)

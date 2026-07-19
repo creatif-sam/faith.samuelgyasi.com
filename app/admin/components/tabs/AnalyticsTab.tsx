@@ -57,7 +57,7 @@ export default function AnalyticsTab({ analytics }: AnalyticsTabProps) {
                         <a href={path} target="_blank" rel="noreferrer" style={{ color: "rgba(240,236,228,.25)", lineHeight: 0 }}><ExternalLink size={10} /></a>
                       </span>
                     </td>
-                    <td className={TW.td} style={{ color: "#c9a84c", fontFamily: "'Poppins',sans-serif", fontSize: "22px", fontWeight: 700 }}>{count}</td>
+                    <td className={TW.td} style={{ color: "#7b8ffc", fontFamily: "'Poppins',sans-serif", fontSize: "22px", fontWeight: 700 }}>{count}</td>
                     <td className={TW.td}>
                       <div className="flex items-center gap-2.5 font-poppins text-[9px] text-white/35 min-w-[120px]">
                         <div className="h-[3px] bg-gradient-to-r from-[#546cfa] to-[#f0cc7a] rounded-full flex-shrink-0 transition-all max-w-[100px]" style={{ width: `${(count / totalViews) * 100}%` }} />

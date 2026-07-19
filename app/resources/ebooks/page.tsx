@@ -63,7 +63,7 @@ const css = `
   content: '';
   position: fixed;
   inset: 0;
-  background-image: radial-gradient(ellipse at 20% 60%, rgba(201,168,76,.04) 0%, transparent 55%);
+  background-image: radial-gradient(ellipse at 20% 60%, rgba(123,143,252,.04) 0%, transparent 55%);
   pointer-events: none;
   z-index: 0;
 }
@@ -72,7 +72,7 @@ const css = `
 /* ── HEADER ── */
 .ebooks-header {
   padding: 140px 8% 64px;
-  border-bottom: 1px solid rgba(201,168,76,.1);
+  border-bottom: 1px solid rgba(123,143,252,.1);
   max-width: 1100px; margin: 0 auto;
 }
 .ebooks-back {
@@ -131,7 +131,7 @@ const css = `
 }
 .ebook-card {
   background: rgba(14,13,11,.95);
-  border: 1px solid rgba(201,168,76,.1);
+  border: 1px solid rgba(123,143,252,.1);
   border-radius: 6px;
   padding: 32px 28px;
   display: flex; flex-direction: column; gap: 14px;
@@ -153,7 +153,7 @@ const css = `
 }
 .ebook-card.eb-visible { opacity: 1; transform: none; }
 .ebook-card:hover {
-  border-color: rgba(201,168,76,.3);
+  border-color: rgba(123,143,252,.3);
   box-shadow: 0 12px 36px rgba(0,0,0,.45);
   transform: translateY(-4px);
 }
@@ -166,11 +166,11 @@ const css = `
 }
 .ebook-cover {
   width: 100%; aspect-ratio: 2/3;
-  background: linear-gradient(135deg, rgba(201,168,76,.12) 0%, rgba(14,13,11,.8) 100%);
-  border: 1px solid rgba(201,168,76,.15);
+  background: linear-gradient(135deg, rgba(123,143,252,.12) 0%, rgba(14,13,11,.8) 100%);
+  border: 1px solid rgba(123,143,252,.15);
   border-radius: 4px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 36px; color: rgba(201,168,76,.35);
+  font-size: 36px; color: rgba(123,143,252,.35);
   overflow: hidden;
 }
 .ebook-cover img { width: 100%; height: 100%; object-fit: cover; border-radius: 3px; }
@@ -207,9 +207,9 @@ const css = `
   font-size: 11px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase;
   padding: 12px 20px;
   background: transparent;
-  border: 1px solid rgba(201,168,76,.2);
+  border: 1px solid rgba(123,143,252,.2);
   border-radius: 4px;
-  color: rgba(201,168,76,.45); margin-top: 8px; width: 100%; text-align: center;
+  color: rgba(123,143,252,.45); margin-top: 8px; width: 100%; text-align: center;
 }
 
 /* ── EMPTY ── */

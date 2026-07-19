@@ -184,7 +184,7 @@ function TrainingRow({
                       href={lesson.video_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-poppins text-[10px] text-[#c9a84c] hover:text-[#546cfa] transition-colors"
+                      className="font-poppins text-[10px] text-[#7b8ffc] hover:text-[#546cfa] transition-colors"
                     >
                       ▶ Video
                     </a>

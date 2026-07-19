@@ -94,7 +94,7 @@ export default function LibraryItemModal({ item, onClose, onSave, db }: LibraryI
               ] as const).map((t) => (
                 <button key={t.id} type="button" onClick={() => setCategory(t.id)}
                   className={cn("py-2.5 px-3 font-poppins text-[9px] tracking-[.2em] uppercase border border-white/[.08] cursor-pointer transition-colors",
-                    category === t.id ? "bg-[rgba(201,168,76,.12)] text-[#c9a84c] border-[#c9a84c]/30" : "bg-transparent text-white/35"
+                    category === t.id ? "bg-[rgba(123,143,252,.12)] text-[#7b8ffc] border-[#7b8ffc]/30" : "bg-transparent text-white/35"
                   )}>
                   {t.label}
                 </button>
@@ -141,7 +141,7 @@ export default function LibraryItemModal({ item, onClose, onSave, db }: LibraryI
             <div className={TW.field}><label className={TW.label}>Sort Order (lower = first)</label><input className={TW.input} type="number" min={0} value={sortOrder} onChange={(e) => setSort(Number(e.target.value))} /></div>
           </div>
           <div className={cn(TW.field, "flex items-center gap-2.5")}>
-            <input type="checkbox" id="lib-pub" checked={published} onChange={(e) => setPub(e.target.checked)} className="w-4 h-4 cursor-pointer accent-[#c9a84c]" />
+            <input type="checkbox" id="lib-pub" checked={published} onChange={(e) => setPub(e.target.checked)} className="w-4 h-4 cursor-pointer accent-[#7b8ffc]" />
             <label htmlFor="lib-pub" className={cn(TW.label, "!mb-0 cursor-pointer")}>Publish immediately (visible on site)</label>
           </div>
         </div>

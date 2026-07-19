@@ -121,7 +121,7 @@ export default function BlogReviewsModal({ postId, postTitle, onClose, db }: Blo
             <h2 className={TW.fTitle}>Reviews for "{postTitle}"</h2>
             <div className="flex gap-4 mt-3 text-sm">
               <span className="text-white/50">
-                <Star size={14} className="inline mr-1 text-yellow-500" />
+                <Star size={14} className="inline mr-1 text-[#546cfa]" />
                 Avg: <strong className="text-white/80">{avgRating}</strong>
               </span>
               <span className="text-white/50">

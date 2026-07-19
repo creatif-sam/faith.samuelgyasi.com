@@ -69,7 +69,7 @@ export default function AnnouncementModal({ announcement, onClose, onSave, db }:
               ] as const).map((t) => (
                 <button key={t.v} type="button" onClick={() => setType(t.v)}
                   className={cn("flex-1 py-2 font-poppins text-[9px] tracking-[.2em] uppercase border-0 cursor-pointer transition-colors",
-                    type === t.v ? "bg-[rgba(201,168,76,.12)] text-[#c9a84c]" : "bg-transparent text-white/35"
+                    type === t.v ? "bg-[rgba(123,143,252,.12)] text-[#7b8ffc]" : "bg-transparent text-white/35"
                   )}>
                   {t.label}
                 </button>
@@ -99,11 +99,11 @@ export default function AnnouncementModal({ announcement, onClose, onSave, db }:
           <div className="border border-white/[.07] rounded-lg p-4 flex flex-col gap-3 mb-5">
             <p className="font-poppins text-[9px] tracking-[.2em] uppercase text-white/30 mb-1">Options</p>
             <label className="flex items-center gap-2.5 cursor-pointer">
-              <input type="checkbox" checked={dismissible} onChange={(e) => setDismissible(e.target.checked)} className="w-4 h-4 cursor-pointer accent-[#c9a84c]" />
+              <input type="checkbox" checked={dismissible} onChange={(e) => setDismissible(e.target.checked)} className="w-4 h-4 cursor-pointer accent-[#7b8ffc]" />
               <span className={cn(TW.label, "!mb-0")}>Visitors can dismiss it (remembered via local storage)</span>
             </label>
             <label className="flex items-center gap-2.5 cursor-pointer">
-              <input type="checkbox" id="an-active" checked={active} onChange={(e) => setActive(e.target.checked)} className="w-4 h-4 cursor-pointer accent-[#c9a84c]" />
+              <input type="checkbox" id="an-active" checked={active} onChange={(e) => setActive(e.target.checked)} className="w-4 h-4 cursor-pointer accent-[#7b8ffc]" />
               <label htmlFor="an-active" className={cn(TW.label, "!mb-0 cursor-pointer")}>Active (live on site)</label>
             </label>
           </div>

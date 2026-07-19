@@ -1,10 +1,10 @@
 export const myStoryStyles2 = `
-:root:not(.dark) .msp-timeline::before { background: rgba(184,134,11,.25); }
-:root:not(.dark) .msp-narrative { border-bottom-color: rgba(184,134,11,.15); }
-:root:not(.dark) .msp-act { border-top-color: rgba(184,134,11,.45); }
-:root:not(.dark) .msp-now { background: rgba(184,134,11,.03); border-color: rgba(184,134,11,.15); }
-:root:not(.dark) .msp-now-card { border-top-color: rgba(184,134,11,.5); }
-:root:not(.dark) .msp-hero { border-bottom-color: rgba(184,134,11,.2); }
+:root:not(.dark) .msp-timeline::before { background: rgba(61,84,224,.25); }
+:root:not(.dark) .msp-narrative { border-bottom-color: rgba(61,84,224,.15); }
+:root:not(.dark) .msp-act { border-top-color: rgba(61,84,224,.45); }
+:root:not(.dark) .msp-now { background: rgba(61,84,224,.03); border-color: rgba(61,84,224,.15); }
+:root:not(.dark) .msp-now-card { border-top-color: rgba(61,84,224,.5); }
+:root:not(.dark) .msp-hero { border-bottom-color: rgba(61,84,224,.2); }
 :root:not(.dark) .msp-hero-headline,
 :root:not(.dark) .msp-title,
 :root:not(.dark) .msp-narrative-heading,
@@ -16,13 +16,13 @@ export const myStoryStyles2 = `
 :root:not(.dark) .msp-now-card-body { color: rgba(26,24,22,.8); }
 :root:not(.dark) .msp-hero-sub,
 :root:not(.dark) .msp-narrative-lead { color: rgba(26,24,22,.7); }
-:root:not(.dark) .msp-pullquote { color: rgba(26,24,22,.9); background: rgba(184,134,11,.05); border-left-color: rgba(184,134,11,.5); }
+:root:not(.dark) .msp-pullquote { color: rgba(26,24,22,.9); background: rgba(61,84,224,.05); border-left-color: rgba(61,84,224,.5); }
 .msp-body p + p { margin-top: 14px; }
 .msp-pullquote {
   margin: 22px 0 4px;
   padding: 18px 24px;
-  border-left: 3px solid rgba(201,168,76,.5);
-  background: rgba(201,168,76,.05);
+  border-left: 3px solid rgba(123,143,252,.5);
+  background: rgba(123,143,252,.05);
   font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-style: italic;
   font-size: 17px;
@@ -30,9 +30,9 @@ export const myStoryStyles2 = `
   color: var(--white);
 }
 .msp-now {
-  background: rgba(201,168,76,.04);
-  border-top: 1px solid rgba(201,168,76,.18);
-  border-bottom: 1px solid rgba(201,168,76,.18);
+  background: rgba(123,143,252,.04);
+  border-top: 1px solid rgba(123,143,252,.18);
+  border-bottom: 1px solid rgba(123,143,252,.18);
   padding: 72px 8%;
 }
 .msp-now-inner { max-width: 1100px; margin: 0 auto; }
@@ -62,7 +62,7 @@ export const myStoryStyles2 = `
   gap: 36px;
 }
 .msp-now-card {
-  border-top: 2px solid rgba(201,168,76,.6);
+  border-top: 2px solid rgba(123,143,252,.6);
   padding-top: 22px;
   opacity: 0;
   transform: translateY(14px);
@@ -109,7 +109,7 @@ export const myStoryStyles2 = `
   max-width: 1100px;
   margin: 0 auto;
   padding: 100px 8% 80px;
-  border-top: 1px solid rgba(201,168,76,.18);
+  border-top: 1px solid rgba(123,143,252,.18);
 }
 .msp-db-eyebrow {
   font-family: var(--font-poppins), 'Poppins', sans-serif;
@@ -150,7 +150,7 @@ export const myStoryStyles2 = `
   aspect-ratio: 4/3;
   border-radius: 8px;
   overflow: hidden;
-  border: 1px solid rgba(201,168,76,.2);
+  border: 1px solid rgba(123,143,252,.2);
   background: rgba(0,0,0,.3);
 }
 .msp-db-gallery-item img {

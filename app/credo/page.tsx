@@ -163,7 +163,7 @@ export default function CredoPage() {
             maxWidth: '1100px',
             margin: '60px auto 0',
             padding: '0 8% 80px',
-            borderTop: '1px solid rgba(201,168,76,.18)',
+            borderTop: '1px solid rgba(123,143,252,.18)',
           }}>
             <div style={{
               display: 'flex',
@@ -186,7 +186,7 @@ export default function CredoPage() {
               <div style={{
                 display: 'inline-flex',
                 gap: 0,
-                border: '1px solid rgba(201,168,76,.3)',
+                border: '1px solid rgba(123,143,252,.3)',
               }}>
                 <button
                   onClick={() => { if (lang !== "en") toggleLang(); }}
@@ -196,9 +196,9 @@ export default function CredoPage() {
                     letterSpacing: '0.28em',
                     textTransform: 'uppercase',
                     padding: '8px 18px',
-                    background: lang === "en" ? 'rgba(201,168,76,.1)' : 'transparent',
+                    background: lang === "en" ? 'rgba(123,143,252,.1)' : 'transparent',
                     border: 'none',
-                    color: lang === "en" ? 'rgba(201,168,76,.9)' : 'rgba(245,243,239,.4)',
+                    color: lang === "en" ? 'rgba(123,143,252,.9)' : 'rgba(245,243,239,.4)',
                     cursor: 'pointer',
                     transition: 'color .2s, background .2s',
                   }}
@@ -213,9 +213,9 @@ export default function CredoPage() {
                     letterSpacing: '0.28em',
                     textTransform: 'uppercase',
                     padding: '8px 18px',
-                    background: lang === "fr" ? 'rgba(201,168,76,.1)' : 'transparent',
+                    background: lang === "fr" ? 'rgba(123,143,252,.1)' : 'transparent',
                     border: 'none',
-                    color: lang === "fr" ? 'rgba(201,168,76,.9)' : 'rgba(245,243,239,.4)',
+                    color: lang === "fr" ? 'rgba(123,143,252,.9)' : 'rgba(245,243,239,.4)',
                     cursor: 'pointer',
                     transition: 'color .2s, background .2s',
                   }}

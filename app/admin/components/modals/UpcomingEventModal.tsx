@@ -95,7 +95,7 @@ export default function UpcomingEventModal({ event, onClose, onSave, db }: Upcom
               {(["intervention", "masterclass", "session"] as const).map((t) => (
                 <button key={t} type="button" onClick={() => setCategory(t)}
                   className={cn("flex-1 py-2 font-poppins text-[9px] tracking-[.2em] uppercase border-0 cursor-pointer transition-colors",
-                    category === t ? "bg-[rgba(201,168,76,.12)] text-[#c9a84c]" : "bg-transparent text-white/35"
+                    category === t ? "bg-[rgba(123,143,252,.12)] text-[#7b8ffc]" : "bg-transparent text-white/35"
                   )}>
                   {CAT_LABELS[t]}
                 </button>
@@ -110,7 +110,7 @@ export default function UpcomingEventModal({ event, onClose, onSave, db }: Upcom
               {(["in-person", "online", "both"] as const).map((f) => (
                 <button key={f} type="button" onClick={() => setFormat(f)}
                   className={cn("flex-1 py-2 font-poppins text-[9px] tracking-[.15em] uppercase border-0 cursor-pointer transition-colors",
-                    format === f ? "bg-[rgba(201,168,76,.12)] text-[#c9a84c]" : "bg-transparent text-white/35"
+                    format === f ? "bg-[rgba(123,143,252,.12)] text-[#7b8ffc]" : "bg-transparent text-white/35"
                   )}>
                   {FMT_LABELS[f]}
                 </button>
@@ -167,15 +167,15 @@ export default function UpcomingEventModal({ event, onClose, onSave, db }: Upcom
           <div className="border border-white/[.07] rounded-lg p-4 flex flex-col gap-3 mb-5">
             <p className="font-poppins text-[9px] tracking-[.2em] uppercase text-white/30 mb-1">Options</p>
             <label className="flex items-center gap-2.5 cursor-pointer">
-              <input type="checkbox" checked={needsReg} onChange={(e) => setNeedsReg(e.target.checked)} className="w-4 h-4 cursor-pointer accent-[#c9a84c]" />
+              <input type="checkbox" checked={needsReg} onChange={(e) => setNeedsReg(e.target.checked)} className="w-4 h-4 cursor-pointer accent-[#7b8ffc]" />
               <span className={cn(TW.label, "!mb-0")}>Enable registration form on site</span>
             </label>
             <label className="flex items-center gap-2.5 cursor-pointer">
-              <input type="checkbox" checked={recSignup} onChange={(e) => setRecSignup(e.target.checked)} className="w-4 h-4 cursor-pointer accent-[#c9a84c]" />
+              <input type="checkbox" checked={recSignup} onChange={(e) => setRecSignup(e.target.checked)} className="w-4 h-4 cursor-pointer accent-[#7b8ffc]" />
               <span className={cn(TW.label, "!mb-0")}>Show "Sign up for recording / transcription"</span>
             </label>
             <label className="flex items-center gap-2.5 cursor-pointer">
-              <input type="checkbox" id="up-pub2" checked={published} onChange={(e) => setPub(e.target.checked)} className="w-4 h-4 cursor-pointer accent-[#c9a84c]" />
+              <input type="checkbox" id="up-pub2" checked={published} onChange={(e) => setPub(e.target.checked)} className="w-4 h-4 cursor-pointer accent-[#7b8ffc]" />
               <label htmlFor="up-pub2" className={cn(TW.label, "!mb-0 cursor-pointer")}>Publish (visible on site)</label>
             </label>
           </div>

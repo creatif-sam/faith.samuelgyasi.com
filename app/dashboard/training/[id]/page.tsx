@@ -95,7 +95,7 @@ const css = `
 }
 .tn-thumb {
   width: 100%; aspect-ratio: 16/9; border-radius: 6px; overflow: hidden;
-  background: rgba(201,168,76,.07);
+  background: rgba(123,143,252,.07);
   display: flex; align-items: center; justify-content: center;
 }
 .tn-thumb img { width: 100%; height: 100%; object-fit: cover; }
@@ -141,7 +141,7 @@ const css = `
   background: var(--tn-surface); border: 1px solid var(--tn-border); border-radius: 6px;
   overflow: hidden; transition: border-color .3s;
 }
-.tn-lesson.completed { border-color: rgba(201,168,76,.2); }
+.tn-lesson.completed { border-color: rgba(123,143,252,.2); }
 .tn-lesson-header {
   display: flex; align-items: center; gap: 14px; padding: 16px 20px; cursor: pointer;
 }
@@ -154,7 +154,7 @@ const css = `
   flex: 1; font-size: 14px; font-weight: 500; color: var(--tn-text); line-height: 1.3;
   transition: color .2s;
 }
-.tn-lesson.completed .tn-lesson-title { color: rgba(255,255,255,.55); text-decoration: line-through; text-decoration-color: rgba(201,168,76,.4); }
+.tn-lesson.completed .tn-lesson-title { color: rgba(255,255,255,.55); text-decoration: line-through; text-decoration-color: rgba(123,143,252,.4); }
 .tn-lesson-dur {
   font-family: var(--font-poppins), sans-serif;
   font-size: 9px; letter-spacing: .12em; text-transform: uppercase;
@@ -162,7 +162,7 @@ const css = `
 }
 .tn-lesson-play {
   display: flex; align-items: center; gap: 5px;
-  font-size: 11px; color: #c9a84c; text-decoration: none;
+  font-size: 11px; color: #7b8ffc; text-decoration: none;
   font-weight: 500; transition: color .2s;
   flex-shrink: 0;
 }
@@ -306,7 +306,7 @@ export default function TrainingDetailPage({ params }: Props) {
             {training.thumbnail_url ? (
               <img src={training.thumbnail_url} alt={training.title} />
             ) : (
-              <BookOpen size={48} style={{ color: "rgba(201,168,76,.25)" }} />
+              <BookOpen size={48} style={{ color: "rgba(123,143,252,.25)" }} />
             )}
           </div>
           <div className="tn-hero-content">
@@ -375,7 +375,7 @@ export default function TrainingDetailPage({ params }: Props) {
                       ) : lesson.video_url ? (
                         <div style={{ paddingTop: 16 }}>
                           <a href={lesson.video_url} target="_blank" rel="noopener noreferrer"
-                            style={{ color: "#c9a84c", fontSize: 13, textDecoration: "none" }}>
+                            style={{ color: "#7b8ffc", fontSize: 13, textDecoration: "none" }}>
                             ▶ Open video link
                           </a>
                         </div>

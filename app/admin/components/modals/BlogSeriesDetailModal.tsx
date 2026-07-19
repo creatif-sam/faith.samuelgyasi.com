@@ -104,7 +104,7 @@ export default function BlogSeriesDetailModal({
                 
                 <div className="flex flex-wrap gap-4 mt-3 text-[11px] text-white/40">
                   <div className="flex items-center gap-1.5">
-                    <span className="font-poppins text-[#c9a84c]">/{series.slug}</span>
+                    <span className="font-poppins text-[#7b8ffc]">/{series.slug}</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <Calendar size={12} />
@@ -126,7 +126,7 @@ export default function BlogSeriesDetailModal({
             
             {loading ? (
               <div className="text-center py-8 text-white/40">
-                <div className="animate-spin rounded-full h-8 w-8 border-2 border-[#c9a84c] border-t-transparent mx-auto mb-2" />
+                <div className="animate-spin rounded-full h-8 w-8 border-2 border-[#7b8ffc] border-t-transparent mx-auto mb-2" />
                 Loading posts...
               </div>
             ) : posts.length === 0 ? (
@@ -144,7 +144,7 @@ export default function BlogSeriesDetailModal({
                   >
                     <div className="flex items-start gap-4">
                       {/* Order Number */}
-                      <div className="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-[#c9a84c]/10 border border-[#c9a84c]/20 rounded text-[#c9a84c] text-[13px] font-semibold">
+                      <div className="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-[#7b8ffc]/10 border border-[#7b8ffc]/20 rounded text-[#7b8ffc] text-[13px] font-semibold">
                         {post.series_order ?? index + 1}
                       </div>
 
@@ -213,7 +213,7 @@ export default function BlogSeriesDetailModal({
                             </span>
                           </div>
                           <div className="flex items-center gap-1">
-                            <span className="font-poppins text-[#c9a84c]/60">/{post.slug}</span>
+                            <span className="font-poppins text-[#7b8ffc]/60">/{post.slug}</span>
                           </div>
                         </div>
                         

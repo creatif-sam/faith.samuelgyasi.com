@@ -31,7 +31,7 @@ const css = `
   content: '';
   position: fixed;
   inset: 0;
-  background-image: radial-gradient(ellipse at 20% 60%, rgba(201,168,76,.04) 0%, transparent 55%);
+  background-image: radial-gradient(ellipse at 20% 60%, rgba(123,143,252,.04) 0%, transparent 55%);
   pointer-events: none;
   z-index: 0;
 }
@@ -40,7 +40,7 @@ const css = `
 /* ── HEADER ── */
 .audio-header {
   padding: 140px 8% 64px;
-  border-bottom: 1px solid rgba(201,168,76,.1);
+  border-bottom: 1px solid rgba(123,143,252,.1);
   max-width: 1100px; margin: 0 auto;
 }
 .audio-back {
@@ -99,7 +99,7 @@ const css = `
 }
 .audio-card {
   background: rgba(14,13,11,.9);
-  border: 1px solid rgba(201,168,76,.08);
+  border: 1px solid rgba(123,143,252,.08);
   padding: 32px;
   display: flex; gap: 24px;
   opacity: 0; transform: translateY(18px);
@@ -108,13 +108,13 @@ const css = `
   color: inherit;
 }
 .audio-card.aud-visible { opacity: 1; transform: none; }
-.audio-card:hover { border-color: rgba(201,168,76,.22); }
+.audio-card:hover { border-color: rgba(123,143,252,.22); }
 .audio-cover {
   width: 120px; height: 120px;
-  background: rgba(201,168,76,.08);
-  border: 1px solid rgba(201,168,76,.12);
+  background: rgba(123,143,252,.08);
+  border: 1px solid rgba(123,143,252,.12);
   display: flex; align-items: center; justify-content: center;
-  font-size: 32px; color: rgba(201,168,76,.3);
+  font-size: 32px; color: rgba(123,143,252,.3);
   flex-shrink: 0;
 }
 .audio-cover img { width: 100%; height: 100%; object-fit: cover; }

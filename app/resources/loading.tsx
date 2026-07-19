@@ -16,7 +16,7 @@ export default function Loading() {
           style={{
             width: 8,
             height: 8,
-            background: "#c9a84c",
+            background: "#7b8ffc",
             borderRadius: "50%",
             animation: "pulse 1.2s ease-in-out infinite",
             animationDelay: `${d}ms`,

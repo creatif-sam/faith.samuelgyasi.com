@@ -13,8 +13,8 @@ export const testimonialsStyles = `
   position: absolute;
   inset: 0;
   background-image:
-    radial-gradient(ellipse at 25% 55%, rgba(201,168,76,.04) 0%, transparent 55%),
-    radial-gradient(ellipse at 78% 15%, rgba(201,168,76,.03) 0%, transparent 55%);
+    radial-gradient(ellipse at 25% 55%, rgba(123,143,252,.04) 0%, transparent 55%),
+    radial-gradient(ellipse at 78% 15%, rgba(123,143,252,.03) 0%, transparent 55%);
   pointer-events: none;
   z-index: 0;
 }
@@ -24,7 +24,7 @@ export const testimonialsStyles = `
   position: relative;
   z-index: 1;
   padding: 140px 8% 80px;
-  border-bottom: 1px solid rgba(201,168,76,.12);
+  border-bottom: 1px solid rgba(123,143,252,.12);
   max-width: 1100px;
   margin: 0 auto;
 }
@@ -89,12 +89,12 @@ export const testimonialsStyles = `
   z-index: 1;
   display: flex;
   gap: 0;
-  border-bottom: 1px solid rgba(201,168,76,.12);
+  border-bottom: 1px solid rgba(123,143,252,.12);
 }
 .tm-stat {
   flex: 1;
   padding: 40px 5%;
-  border-right: 1px solid rgba(201,168,76,.12);
+  border-right: 1px solid rgba(123,143,252,.12);
   text-align: center;
   opacity: 0;
   animation: tm-rise .85s ease forwards;
@@ -135,18 +135,18 @@ export const testimonialsStyles = `
 .tm-card {
   padding: 40px;
   background: rgba(245,243,239,.025);
-  border: 1px solid rgba(201,168,76,.1);
+  border: 1px solid rgba(123,143,252,.1);
   transition: border-color .25s, background .25s;
   opacity: 0;
   transform: translateY(20px);
   transition: opacity .6s ease, transform .6s ease, border-color .25s, background .25s;
 }
 .tm-card.tm-visible { opacity:1; transform:none; }
-.tm-card:hover { border-color: rgba(201,168,76,.3); background: rgba(245,243,239,.04); }
+.tm-card:hover { border-color: rgba(123,143,252,.3); background: rgba(245,243,239,.04); }
 .tm-card--featured {
   grid-column: 1 / 3;
-  background: rgba(201,168,76,.04);
-  border-color: rgba(201,168,76,.2);
+  background: rgba(123,143,252,.04);
+  border-color: rgba(123,143,252,.2);
 }
 .tm-stars {
   display: flex;
@@ -154,7 +154,7 @@ export const testimonialsStyles = `
   margin-bottom: 18px;
 }
 .tm-star { font-size: 13px; color: rgba(245,243,239,.2); }
-.tm-star.on { color: #c9a84c; }
+.tm-star.on { color: #7b8ffc; }
 .tm-quote {
   font-family: var(--font-playfair),'Playfair Display',serif;
   font-style: italic;
@@ -175,13 +175,13 @@ export const testimonialsStyles = `
   width: 42px; height: 42px;
   border-radius: 50%;
   object-fit: cover;
-  border: 1px solid rgba(201,168,76,.3);
+  border: 1px solid rgba(123,143,252,.3);
   flex-shrink: 0;
 }
 .tm-avatar-initials {
   width: 42px; height: 42px;
   border-radius: 50%;
-  border: 1px solid rgba(201,168,76,.3);
+  border: 1px solid rgba(123,143,252,.3);
   display: flex; align-items: center; justify-content: center;
   font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 11px;
@@ -232,10 +232,10 @@ export const testimonialsStyles = `
 .tm-cta {
   position: relative;
   z-index: 1;
-  border-top: 1px solid rgba(201,168,76,.12);
+  border-top: 1px solid rgba(123,143,252,.12);
   padding: 80px 8%;
   text-align: center;
-  background: rgba(201,168,76,.02);
+  background: rgba(123,143,252,.02);
 }
 .tm-cta-inner { max-width: 620px; margin: 0 auto; }
 .tm-cta-eyebrow {
@@ -272,15 +272,15 @@ export const testimonialsStyles = `
   letter-spacing: 0.25em;
   text-transform: uppercase;
   padding: 14px 32px;
-  border: 1px solid rgba(201,168,76,.6);
-  color: rgba(201,168,76,.9);
+  border: 1px solid rgba(123,143,252,.6);
+  color: rgba(123,143,252,.9);
   text-decoration: none;
   transition: all .2s ease;
   background: transparent;
 }
 .tm-cta-btn:hover {
-  background: rgba(201,168,76,.08);
-  border-color: rgba(201,168,76,.9);
+  background: rgba(123,143,252,.08);
+  border-color: rgba(123,143,252,.9);
   color: #fff;
 }
 
@@ -296,7 +296,7 @@ export const testimonialsStyles = `
   .tm-cta { padding: 60px 6%; }
   .tm-grid { grid-template-columns: 1fr; }
   .tm-card--featured { grid-column: 1; }
-  .tm-stat { flex: 1 1 100%; border-right: none; border-bottom: 1px solid rgba(201,168,76,.12); }
+  .tm-stat { flex: 1 1 100%; border-right: none; border-bottom: 1px solid rgba(123,143,252,.12); }
   .tm-stat:last-child { border-bottom: none; }
 }
 

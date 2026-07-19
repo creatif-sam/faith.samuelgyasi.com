@@ -63,7 +63,7 @@ export default function FaithTestsTab({ tests, onNew, onEdit, onDelete, onToggle
                         <div className="font-semibold">{t.name_en}</div>
                         <div className="text-[11px] text-white/40 mt-0.5">{t.name_fr}</div>
                       </td>
-                      <td className={TW.td} style={{ fontSize: "12px", fontFamily: "monospace", color: "#c9a84c" }}>
+                      <td className={TW.td} style={{ fontSize: "12px", fontFamily: "monospace", color: "#7b8ffc" }}>
                         /{t.slug}
                       </td>
                       <td className={TW.td}>
@@ -320,7 +320,7 @@ function QuestionModal({
                     name="correct" 
                     checked={correctOption === opt} 
                     onChange={() => setCorrectOption(opt)} 
-                    className="accent-[#c9a84c]"
+                    className="accent-[#7b8ffc]"
                   />
                   <span className="text-white/70">Option {opt}</span>
                 </label>

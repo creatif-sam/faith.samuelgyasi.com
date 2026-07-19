@@ -11,8 +11,8 @@
   position: absolute;
   inset: 0;
   background-image:
-    radial-gradient(ellipse at 15% 50%, rgba(201,168,76,0.05) 0%, transparent 55%),
-    radial-gradient(ellipse at 85% 20%, rgba(201,168,76,0.04) 0%, transparent 50%);
+    radial-gradient(ellipse at 15% 50%, rgba(123,143,252,0.05) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 20%, rgba(123,143,252,0.04) 0%, transparent 50%);
   pointer-events: none;
   z-index: 0;
 }
@@ -21,7 +21,7 @@
 /* ── HERO ── */
 .credo-hero {
   padding: 140px 8% 80px;
-  border-bottom: 1px solid rgba(201,168,76,.12);
+  border-bottom: 1px solid rgba(123,143,252,.12);
   max-width: 1100px;
   margin: 0 auto;
 }
@@ -83,8 +83,8 @@
 
 /* ── DECLARATION STRIP ── */
 .credo-strip {
-  background: rgba(201,168,76,.04);
-  border-bottom: 1px solid rgba(201,168,76,.1);
+  background: rgba(123,143,252,.04);
+  border-bottom: 1px solid rgba(123,143,252,.1);
   padding: 28px 8%;
   text-align: center;
   font-family: var(--font-poppins), 'Poppins', sans-serif;
@@ -113,7 +113,7 @@
   display: grid;
   grid-template-columns: 80px 1fr;
   gap: 0;
-  border-bottom: 1px solid rgba(201,168,76,.1);
+  border-bottom: 1px solid rgba(123,143,252,.1);
   padding: 64px 0;
   opacity: 0;
   transform: translateY(20px);
@@ -127,7 +127,7 @@
   font-size: 64px;
   font-weight: 900;
   color: transparent;
-  -webkit-text-stroke: 1px rgba(201,168,76,.2);
+  -webkit-text-stroke: 1px rgba(123,143,252,.2);
   line-height: 1;
   padding-top: 8px;
   user-select: none;
@@ -150,8 +150,8 @@
 .credo-verse {
   margin-top: 24px;
   padding: 18px 24px;
-  border-left: 3px solid rgba(201,168,76,.35);
-  background: rgba(201,168,76,.04);
+  border-left: 3px solid rgba(123,143,252,.35);
+  background: rgba(123,143,252,.04);
   font-family: var(--font-playfair), 'Playfair Display', serif;
   font-style: italic;
   font-size: 15px;
@@ -164,8 +164,8 @@
 
 /* ── CLOSING ── */
 .credo-close {
-  background: rgba(201,168,76,.04);
-  border-top: 1px solid rgba(201,168,76,.12);
+  background: rgba(123,143,252,.04);
+  border-top: 1px solid rgba(123,143,252,.12);
   padding: 80px 8%;
   text-align: center;
 }
@@ -235,7 +235,7 @@
   color: #7a7060;
 }
 .light .credo-num {
-  -webkit-text-stroke: 1px rgba(184,134,11,.45);
+  -webkit-text-stroke: 1px rgba(61,84,224,.45);
 }
 
 `;

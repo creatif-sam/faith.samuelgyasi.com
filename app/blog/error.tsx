@@ -29,7 +29,7 @@ export default function BlogError({
           fontSize: "9px",
           letterSpacing: "0.4em",
           textTransform: "uppercase",
-          color: "#c9a84c",
+          color: "#7b8ffc",
         }}
       >
         Something went wrong
@@ -55,8 +55,8 @@ export default function BlogError({
           letterSpacing: "0.18em",
           textTransform: "uppercase",
           background: "transparent",
-          color: "#c9a84c",
-          border: "1px solid rgba(201,168,76,0.3)",
+          color: "#7b8ffc",
+          border: "1px solid rgba(123,143,252,0.3)",
           padding: "12px 28px",
           borderRadius: "4px",
           cursor: "pointer",

@@ -424,7 +424,7 @@
 
 /* Prayer Button */
 .prayerButton {
-  background: linear-gradient(90deg, #546cfa, #546cfa);
+  background: linear-gradient(90deg, #546cfa, #7b8ffc);
   color: #0a0a0a;
   padding: 0.875rem 2rem;
   border-radius: 50px;
@@ -441,12 +441,12 @@
 }
 
 .darkTheme .prayerButton {
-  background: linear-gradient(90deg, #546cfa, #546cfa);
+  background: linear-gradient(90deg, #546cfa, #7b8ffc);
   color: #0a0a0a;
 }
 
 .prayerButton:hover {
-  background: linear-gradient(90deg, #546cfa, #546cfa);
+  background: linear-gradient(90deg, #3d54e0, #546cfa);
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(84, 108, 250, 0.4);
 }

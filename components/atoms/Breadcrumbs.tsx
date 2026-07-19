@@ -81,7 +81,7 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
         }
 
         .breadcrumb-link:hover {
-          color: var(--gold, #c9a84c);
+          color: var(--gold, #7b8ffc);
         }
 
         .breadcrumb-current {
@@ -89,7 +89,7 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
           font-size: 10px;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: var(--gold, #c9a84c);
+          color: var(--gold, #7b8ffc);
         }
 
         .breadcrumb-separator {

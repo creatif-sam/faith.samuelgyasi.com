@@ -121,7 +121,7 @@ export function LatestBlogsSection() {
                 textTransform: "uppercase",
                 color: "var(--gold)",
                 textDecoration: "none",
-                border: "1px solid rgba(201,168,76,.3)",
+                border: "1px solid rgba(123,143,252,.3)",
                 padding: "14px 36px",
                 display: "inline-flex",
                 alignItems: "center",

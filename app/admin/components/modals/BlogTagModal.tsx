@@ -19,7 +19,7 @@ export default function BlogTagModal({ tag, onClose, onSave, db }: BlogTagModalP
   const [slug,           setSlug]           = useState(tag?.slug             ?? "");
   const [descriptionEn,  setDescriptionEn]  = useState(tag?.description_en   ?? "");
   const [descriptionFr,  setDescriptionFr]  = useState(tag?.description_fr   ?? "");
-  const [color,          setColor]          = useState(tag?.color            ?? "#c9a84c");
+  const [color,          setColor]          = useState(tag?.color            ?? "#7b8ffc");
   const [published,      setPub]            = useState(tag?.published        ?? true);
   const [sortOrder,      setSort]           = useState(tag?.sort_order       ?? 0);
   const [saving,         setSaving]         = useState(false);
@@ -41,7 +41,7 @@ export default function BlogTagModal({ tag, onClose, onSave, db }: BlogTagModalP
       slug: slug.trim(),
       description_en: descriptionEn.trim() || null,
       description_fr: descriptionFr.trim() || null,
-      color: color.trim() || "#c9a84c",
+      color: color.trim() || "#7b8ffc",
       published,
       sort_order: sortOrder,
     };
@@ -138,7 +138,7 @@ export default function BlogTagModal({ tag, onClose, onSave, db }: BlogTagModalP
                 className={cn(TW.input, "flex-1")} 
                 value={color} 
                 onChange={(e) => setColor(e.target.value)} 
-                placeholder="#c9a84c" 
+                placeholder="#7b8ffc" 
               />
             </div>
             <div className="text-[10px] text-white/30 mt-1.5">
@@ -163,7 +163,7 @@ export default function BlogTagModal({ tag, onClose, onSave, db }: BlogTagModalP
               id="tag-pub" 
               checked={published} 
               onChange={(e) => setPub(e.target.checked)}
-              className="w-4 h-4 cursor-pointer accent-[#c9a84c]" 
+              className="w-4 h-4 cursor-pointer accent-[#7b8ffc]" 
             />
             <label htmlFor="tag-pub" className={cn(TW.label, "!mb-0 cursor-pointer")}>
               Publish immediately (visible on site)

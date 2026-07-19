@@ -33,7 +33,7 @@
 .msp-particle {
   position: absolute;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(201,168,76,.3) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(123,143,252,.3) 0%, transparent 70%);
   animation: msp-float linear infinite;
 }
 @keyframes msp-float {
@@ -48,7 +48,7 @@
   transform: translateY(-50%);
   width: 440px; height: 440px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(201,168,76,.07) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(123,143,252,.07) 0%, transparent 70%);
   pointer-events: none;
   animation: msp-glow-pulse 7s ease-in-out infinite;
 }
@@ -59,7 +59,7 @@
 .msp-hero {
   position: relative;
   padding: 140px 8% 90px;
-  border-bottom: 1px solid rgba(201,168,76,.18);
+  border-bottom: 1px solid rgba(123,143,252,.18);
   max-width: 1100px;
   margin: 0 auto;
   overflow: hidden;
@@ -205,7 +205,7 @@
   padding: 72px 8%;
   max-width: 1100px;
   margin: 0 auto;
-  border-bottom: 1px solid rgba(201,168,76,.12);
+  border-bottom: 1px solid rgba(123,143,252,.12);
 }
 .msp-narrative-eyebrow {
   font-family: var(--font-poppins), 'Poppins', sans-serif;
@@ -242,7 +242,7 @@
   margin-top: 16px;
 }
 .msp-act {
-  border-top: 2px solid rgba(201,168,76,.45);
+  border-top: 2px solid rgba(123,143,252,.45);
   padding-top: 20px;
 }
 .msp-act-num {
@@ -285,7 +285,7 @@
   top: 16px;
   bottom: 16px;
   width: 1px;
-  background: rgba(201,168,76,.25);
+  background: rgba(123,143,252,.25);
 }
 .msp-item {
   display: flex;
@@ -307,14 +307,14 @@
   width: 16px; height: 16px;
   border-radius: 50%;
   background: var(--black);
-  border: 2px solid rgba(201,168,76,.55);
+  border: 2px solid rgba(123,143,252,.55);
   position: relative; z-index: 2;
   transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
 }
 .msp-item:hover .msp-dot {
   background: linear-gradient(135deg,#546cfa,#546cfa);
   border-color: #546cfa;
-  box-shadow: 0 0 14px rgba(201,168,76,.5);
+  box-shadow: 0 0 14px rgba(123,143,252,.5);
 }
 .msp-text {
   padding-left: 24px;
@@ -332,10 +332,10 @@
   font-size: 11px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: #c9a84c;
+  color: #7b8ffc;
   flex-shrink: 0;
-  background: rgba(201,168,76,.12);
-  border: 1px solid rgba(201,168,76,.3);
+  background: rgba(123,143,252,.12);
+  border: 1px solid rgba(123,143,252,.3);
   padding: 4px 12px;
   border-radius: 4px;
   display: inline-block;
@@ -360,13 +360,13 @@
   color: #1a1816;
   --white: #1a1816;
   --black: #ffffff;
-  --gold-gradient: linear-gradient(90deg, #546cfa, #D4700A);
+  --gold-gradient: linear-gradient(90deg, #546cfa, #3d54e0);
 }
 :root:not(.dark) .msp::before { opacity: 0.08; }
 :root:not(.dark) .msp-year {
-  background: rgba(184,134,11,.12);
-  border-color: rgba(184,134,11,.4);
+  background: rgba(61,84,224,.12);
+  border-color: rgba(61,84,224,.4);
   color: #546cfa;
 }
-:root:not(.dark) .msp-dot { background: #ffffff; border-color: rgba(184,134,11,.55); }
+:root:not(.dark) .msp-dot { background: #ffffff; border-color: rgba(61,84,224,.55); }
 `;

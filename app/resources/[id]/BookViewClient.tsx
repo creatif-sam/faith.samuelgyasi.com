@@ -79,8 +79,8 @@ export default function BookViewClient({ item }: { item: LibraryItem }) {
                       <Star
                         key={star}
                         size={20}
-                        fill={star <= item.rating! ? "#c9a84c" : "none"}
-                        stroke={star <= item.rating! ? "#c9a84c" : "#7a7060"}
+                        fill={star <= item.rating! ? "#7b8ffc" : "none"}
+                        stroke={star <= item.rating! ? "#7b8ffc" : "#7a7060"}
                       />
                     ))}
                   </div>
@@ -121,7 +121,7 @@ const bookCss = `
   --bg2: #0e0d0b;
   --white: #f0ece4;
   --cream: #e8e0d0;
-  --gold: #c9a84c;
+  --gold: #7b8ffc;
   --dim: #7a7060;
   min-height: 100vh;
   background: var(--bg);
@@ -188,7 +188,7 @@ const bookCss = `
   width: 100%;
   border-radius: 12px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(201, 168, 76, 0.1);
+  border: 1px solid rgba(123,143,252, 0.1);
 }
 
 .bv-info-section {

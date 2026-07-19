@@ -184,7 +184,7 @@ export default async function PrivacyPage() {
                 fontSize: "10px",
                 letterSpacing: "0.2em",
                 textTransform: "uppercase",
-                color: "#c9a84c",
+                color: "#7b8ffc",
                 textDecoration: "none",
                 display: "inline-flex",
                 alignItems: "center",

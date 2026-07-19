@@ -6,8 +6,8 @@
   --bg2:    #0e0d0b;
   --white:  #f0ece4;
   --cream:  #e8e0d0;
-  --gold:   #c9a84c;
-  --gold2:  #a8863a;
+  --gold:   #7b8ffc;
+  --gold2:  #2d3fc2;
   --gold-grad: linear-gradient(90deg,#546cfa,#546cfa);
   --dim:    #7a7060;
   --dimmer: #3e3830;
@@ -46,8 +46,8 @@ body.on-fdp {
   color: #f0ece4;
   font-family: 'Poppins', sans-serif;
 }
-body.on-fdp .cursor { background: #c9a84c; mix-blend-mode: normal; width: 8px; height: 8px; border-radius: 50%; }
-body.on-fdp .cursor-ring { border-color: rgba(201,168,76,.35); mix-blend-mode: normal; }
+body.on-fdp .cursor { background: #7b8ffc; mix-blend-mode: normal; width: 8px; height: 8px; border-radius: 50%; }
+body.on-fdp .cursor-ring { border-color: rgba(123,143,252,.35); mix-blend-mode: normal; }
 
 /* ── AMBIENT PARTICLES ── */
 .fdp-particles { position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden; }
@@ -131,10 +131,10 @@ body.on-fdp .cursor-ring { border-color: rgba(201,168,76,.35); mix-blend-mode: n
   transform:translate(-50%,-50%);
   pointer-events:none;z-index:0;
 }
-.fdp .m1 { fill:none;stroke:#c9a84c;stroke-width:.6;opacity:.07;animation:fdp-spin 90s linear infinite; }
-.fdp .m2 { fill:none;stroke:#c9a84c;stroke-width:.4;opacity:.05;animation:fdp-spin 70s linear infinite reverse; }
-.fdp .m3 { fill:none;stroke:#c9a84c;stroke-width:.3;opacity:.04;animation:fdp-spin 50s linear infinite; }
-.fdp .m-poly { fill:none;stroke:#c9a84c;stroke-width:.4;opacity:.05;animation:fdp-spin 120s linear infinite reverse; }
+.fdp .m1 { fill:none;stroke:#7b8ffc;stroke-width:.6;opacity:.07;animation:fdp-spin 90s linear infinite; }
+.fdp .m2 { fill:none;stroke:#7b8ffc;stroke-width:.4;opacity:.05;animation:fdp-spin 70s linear infinite reverse; }
+.fdp .m3 { fill:none;stroke:#7b8ffc;stroke-width:.3;opacity:.04;animation:fdp-spin 50s linear infinite; }
+.fdp .m-poly { fill:none;stroke:#7b8ffc;stroke-width:.4;opacity:.05;animation:fdp-spin 120s linear infinite reverse; }
 @keyframes fdp-spin {
   from { transform:rotate(0deg); }
   to   { transform:rotate(360deg); }
@@ -276,7 +276,7 @@ body.on-fdp .cursor-ring { border-color: rgba(201,168,76,.35); mix-blend-mode: n
 .fdp .belief-card:hover::after { opacity:.5; }
 .fdp .bc-number {
   font-family:var(--font-playfair),'Playfair Display',serif;font-size:80px;
-  color:transparent;-webkit-text-stroke:1px rgba(201,168,76,.2);
+  color:transparent;-webkit-text-stroke:1px rgba(123,143,252,.2);
   line-height:1;margin-bottom:8px;
 }
 .fdp .bc-title {

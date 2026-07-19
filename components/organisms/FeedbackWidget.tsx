@@ -203,7 +203,7 @@ export function FeedbackWidget() {
                   className={cn(
                     "inline-flex items-center justify-center gap-2 font-[family-name:'Poppins',sans-serif] font-semibold text-[9px] tracking-[.18em] uppercase rounded-lg px-5 py-3 transition-all border-0 cursor-pointer",
                     msg.trim()
-                      ? "bg-gradient-to-br from-[#546cfa] to-[#546cfa] text-[#09090d] hover:from-[#546cfa] hover:to-[#546cfa] shadow-[0_2px_16px_rgba(84,108,250,.3)] hover:shadow-[0_4px_20px_rgba(84,108,250,.4)] hover:-translate-y-px"
+                      ? "bg-gradient-to-br from-[#546cfa] to-[#546cfa] text-[#09090d] hover:from-[#3d54e0] hover:to-[#3d54e0] shadow-[0_2px_16px_rgba(84,108,250,.3)] hover:shadow-[0_4px_20px_rgba(84,108,250,.4)] hover:-translate-y-px"
                       : "bg-white/[.05] text-white/25 cursor-not-allowed"
                   )}
                 >
@@ -233,7 +233,7 @@ export function FeedbackWidget() {
             "group relative w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,.5)] border-0 cursor-pointer",
             stage !== "closed"
               ? "bg-white/10 text-white/60 hover:bg-white/15"
-              : "bg-gradient-to-br from-[#546cfa] to-[#546cfa] text-[#09090d] hover:from-[#546cfa] hover:to-[#546cfa] hover:shadow-[0_6px_24px_rgba(84,108,250,.45)] hover:scale-110"
+              : "bg-gradient-to-br from-[#546cfa] to-[#546cfa] text-[#09090d] hover:from-[#3d54e0] hover:to-[#3d54e0] hover:shadow-[0_6px_24px_rgba(84,108,250,.45)] hover:scale-110"
           )}
         >
           {stage !== "closed" ? <X size={18} /> : <MessageSquarePlus size={19} />}

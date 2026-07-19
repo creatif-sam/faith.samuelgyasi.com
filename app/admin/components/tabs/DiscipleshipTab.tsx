@@ -232,7 +232,7 @@ export default function DiscipleshipTab({
                   <td className="py-4 px-4">
                     <div className="flex items-center justify-end gap-2">
                       <button
-                        className={cn(TW.iconBtn, "!text-[#546cfa] hover:!text-[#546cfa]")}
+                        className={cn(TW.iconBtn, "!text-[#546cfa] hover:!text-[#7b8ffc]")}
                         onClick={() => onViewProgress(disciple)}
                         title="View progress"
                       >

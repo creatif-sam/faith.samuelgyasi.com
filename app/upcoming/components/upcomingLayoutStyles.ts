@@ -11,8 +11,8 @@ export const upcomingLayoutStyles = `
   position: absolute;
   inset: 0;
   background-image:
-    radial-gradient(ellipse at 20% 40%, rgba(201,168,76,.04) 0%, transparent 55%),
-    radial-gradient(ellipse at 80% 10%, rgba(201,168,76,.03) 0%, transparent 55%);
+    radial-gradient(ellipse at 20% 40%, rgba(123,143,252,.04) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 10%, rgba(123,143,252,.03) 0%, transparent 55%);
   pointer-events: none;
   z-index: 0;
 }
@@ -21,7 +21,7 @@ export const upcomingLayoutStyles = `
 /* ── HERO ── */
 .up-hero {
   padding: 140px 8% 80px;
-  border-bottom: 1px solid rgba(201,168,76,.12);
+  border-bottom: 1px solid rgba(123,143,252,.12);
   max-width: 1100px;
   margin: 0 auto;
 }
@@ -45,7 +45,7 @@ export const upcomingLayoutStyles = `
   line-height: 1.08;
   letter-spacing: -0.02em;
   color: #0a0a0a;
-  -webkit-text-stroke: 1px rgba(201,168,76,.3);
+  -webkit-text-stroke: 1px rgba(123,143,252,.3);
   margin-bottom: 32px;
   opacity: 0;
   animation: up-rise .9s .2s ease forwards;
@@ -103,7 +103,7 @@ export const upcomingLayoutStyles = `
   font-size: 9px;
   letter-spacing: .28em;
   text-transform: uppercase;
-  color: rgba(201,168,76,.5);
+  color: rgba(123,143,252,.5);
   margin-bottom: 10px;
 }
 .up-section-title {
@@ -117,8 +117,8 @@ export const upcomingLayoutStyles = `
 
 /* ── EMPTY STATE ── */
 .up-coming-soon {
-  background: rgba(201,168,76,.025);
-  border: 1px solid rgba(201,168,76,.08);
+  background: rgba(123,143,252,.025);
+  border: 1px solid rgba(123,143,252,.08);
   border-radius: 12px;
   padding: 60px 30px;
   text-align: center;
@@ -149,7 +149,7 @@ export const upcomingLayoutStyles = `
 }
 .up-card {
   background: rgba(245,243,239,.015);
-  border: 1px solid rgba(201,168,76,.08);
+  border: 1px solid rgba(123,143,252,.08);
   border-radius: 14px;
   overflow: hidden;
   position: relative;
@@ -159,7 +159,7 @@ export const upcomingLayoutStyles = `
   cursor: default;
 }
 .up-card.up-visible { opacity: 1; }
-.up-card:hover { border-color: rgba(201,168,76,.2); transform: translateY(-4px); }
+.up-card:hover { border-color: rgba(123,143,252,.2); transform: translateY(-4px); }
 .up-card--past { opacity: .35; }
 .up-card--past:hover { opacity: .65; }
 
@@ -193,7 +193,7 @@ export const upcomingLayoutStyles = `
   text-transform: uppercase;
   padding: 6px 12px;
   border-radius: 6px;
-  border: 1px solid rgba(201,168,76,.15);
+  border: 1px solid rgba(123,143,252,.15);
   z-index: 1;
 }
 .up-card-past-badge--inline {
@@ -226,8 +226,8 @@ export const upcomingLayoutStyles = `
   letter-spacing: .25em;
   padding: 5px 10px;
   border-radius: 6px;
-  background: rgba(201,168,76,.08);
-  color: rgba(201,168,76,.65);
+  background: rgba(123,143,252,.08);
+  color: rgba(123,143,252,.65);
 }
 .up-card-format--online { background: rgba(22,163,74,.12); color: rgba(134,239,172,.75); }
 .up-card-format--in-person { background: rgba(59,130,246,.12); color: rgba(96,165,250,.75); }
@@ -238,7 +238,7 @@ export const upcomingLayoutStyles = `
   font-size: 9px;
   letter-spacing: .24em;
   text-transform: uppercase;
-  color: rgba(201,168,76,.58);
+  color: rgba(123,143,252,.58);
   margin-bottom: 10px;
 }
 .up-card-title {
@@ -272,11 +272,11 @@ export const upcomingLayoutStyles = `
   margin-bottom: 18px;
 }
 .up-card-host-link {
-  color: rgba(201,168,76,.6);
+  color: rgba(123,143,252,.6);
   text-decoration: underline;
   transition: color .2s;
 }
-.up-card-host-link:hover { color: rgba(201,168,76,.85); }
+.up-card-host-link:hover { color: rgba(123,143,252,.85); }
 
 .up-card-actions {
   display: flex;
@@ -305,13 +305,13 @@ export const upcomingLayoutStyles = `
   color: #0a0a0a;
   border: 1px solid transparent;
 }
-.up-btn--gold:hover { box-shadow: 0 4px 18px rgba(201,168,76,.3); transform: translateY(-2px); }
+.up-btn--gold:hover { box-shadow: 0 4px 18px rgba(123,143,252,.3); transform: translateY(-2px); }
 .up-btn--outline {
   background: transparent;
-  border: 1px solid rgba(201,168,76,.25);
-  color: rgba(201,168,76,.8);
+  border: 1px solid rgba(123,143,252,.25);
+  color: rgba(123,143,252,.8);
 }
-.up-btn--outline:hover { border-color: rgba(201,168,76,.5); background: rgba(201,168,76,.04); }
+.up-btn--outline:hover { border-color: rgba(123,143,252,.5); background: rgba(123,143,252,.04); }
 .up-btn--ghost {
   background: transparent;
   border: 1px solid rgba(245,243,239,.08);
@@ -323,18 +323,18 @@ export const upcomingLayoutStyles = `
 .up-btn--rec {
   margin-top: 12px;
   width: 100%;
-  background: rgba(201,168,76,.02);
-  border: 1px solid rgba(201,168,76,.1);
-  color: rgba(201,168,76,.5);
+  background: rgba(123,143,252,.02);
+  border: 1px solid rgba(123,143,252,.1);
+  color: rgba(123,143,252,.5);
   padding: 10px;
   font-size: 9px;
 }
-.up-btn--rec:hover { background: rgba(201,168,76,.05); border-color: rgba(201,168,76,.2); color: rgba(201,168,76,.75); }
+.up-btn--rec:hover { background: rgba(123,143,252,.05); border-color: rgba(123,143,252,.2); color: rgba(123,143,252,.75); }
 
 /* ── COUNTDOWN ── */
 .up-countdown {
-  background: rgba(201,168,76,.04);
-  border: 1px solid rgba(201,168,76,.12);
+  background: rgba(123,143,252,.04);
+  border: 1px solid rgba(123,143,252,.12);
   border-radius: 8px;
   padding: 14px 16px;
   margin-top: 14px;
@@ -345,7 +345,7 @@ export const upcomingLayoutStyles = `
   font-size: 8px;
   letter-spacing: .24em;
   text-transform: uppercase;
-  color: rgba(201,168,76,.5);
+  color: rgba(123,143,252,.5);
   margin-bottom: 8px;
 }
 .up-countdown-grid {

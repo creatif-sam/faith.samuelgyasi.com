@@ -53,7 +53,7 @@ export const NAV_SORTED = [...NAV].sort((a, b) => {
 export const TW = {
   // Buttons
   btn:     "inline-flex items-center gap-2 font-poppins text-[11px] font-medium cursor-pointer rounded-lg transition-all duration-200 active:scale-[.97] border-0",
-  gold:    "bg-gradient-to-br from-[#546cfa] to-[#546cfa] text-[#09090d] px-5 py-2.5 shadow-[0_2px_12px_rgba(84,108,250,.25)] hover:from-[#546cfa] hover:to-[#546cfa] hover:shadow-[0_4px_18px_rgba(84,108,250,.4)]",
+  gold:    "bg-gradient-to-br from-[#546cfa] to-[#546cfa] text-[#09090d] px-5 py-2.5 shadow-[0_2px_12px_rgba(84,108,250,.25)] hover:from-[#3d54e0] hover:to-[#3d54e0] hover:shadow-[0_4px_18px_rgba(84,108,250,.4)]",
   ghost:   "bg-white/5 text-white/50 border border-white/10 px-5 py-2.5 hover:bg-white/[.09] hover:text-white/85 hover:border-white/[.18]",
   danger:  "bg-red-500/10 text-red-400 border border-red-500/20 px-5 py-2.5 hover:bg-red-500/[.18] hover:border-red-500/30",
   sm:      "!px-3 !py-1.5 !text-[10px] !rounded-lg gap-1",

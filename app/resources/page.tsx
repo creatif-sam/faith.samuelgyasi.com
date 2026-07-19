@@ -31,7 +31,7 @@ const css = `
 /* ── HERO ── */
 .lib-hero {
   padding: 140px 8% 72px;
-  border-bottom: 1px solid rgba(201,168,76,.12);
+  border-bottom: 1px solid rgba(123,143,252,.12);
   max-width: 1100px;
   margin: 0 auto;
 }
@@ -102,7 +102,7 @@ const css = `
 }
 .lib-section-card {
   background: rgba(14,13,11,.9);
-  border: 1px solid rgba(201,168,76,.08);
+  border: 1px solid rgba(123,143,252,.08);
   padding: 56px 48px;
   text-decoration: none;
   color: inherit;
@@ -115,7 +115,7 @@ const css = `
   transition: opacity .7s ease, transform .7s ease, border-color .3s, background .3s;
 }
 .lib-section-card.lib-visible { opacity: 1; transform: none; }
-.lib-section-card:hover { border-color: rgba(201,168,76,.25); background: rgba(20,18,14,.95); }
+.lib-section-card:hover { border-color: rgba(123,143,252,.25); background: rgba(20,18,14,.95); }
 .lib-card-icon {
   font-size: 32px;
   background: var(--gold-gradient);
@@ -159,7 +159,7 @@ const css = `
   background-clip: text;
   margin-top: auto;
   padding-top: 16px;
-  border-top: 1px solid rgba(201,168,76,.12);
+  border-top: 1px solid rgba(123,143,252,.12);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -167,9 +167,9 @@ const css = `
 
 /* ── QUOTE STRIP ── */
 .lib-quote-strip {
-  background: rgba(201,168,76,.04);
-  border-top: 1px solid rgba(201,168,76,.1);
-  border-bottom: 1px solid rgba(201,168,76,.1);
+  background: rgba(123,143,252,.04);
+  border-top: 1px solid rgba(123,143,252,.1);
+  border-bottom: 1px solid rgba(123,143,252,.1);
   padding: 56px 8%;
   text-align: center;
 }
@@ -221,7 +221,7 @@ const css = `
   color: #4a4640;
 }
 .light .lib-card-title {
-  color: #c9a84c;
+  color: #7b8ffc;
 }
 .light .lib-card-body {
   color: color-mix(in srgb, var(--white) 75%, transparent);

@@ -166,7 +166,7 @@ export default function VisualPage() {
                       <img src={thumbnailUrl} alt={item.title} />
                     ) : (
                       <div style={{ height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                        <Play size={48} color="rgba(201,168,76,.3)" />
+                        <Play size={48} color="rgba(123,143,252,.3)" />
                       </div>
                     )}
                     <div className="video-play-icon">
@@ -208,7 +208,7 @@ export default function VisualPage() {
                       {cover ? (
                         <img src={cover} alt={theme.title} />
                       ) : (
-                        <Images size={40} style={{ color: "rgba(201,168,76,.25)" }} />
+                        <Images size={40} style={{ color: "rgba(123,143,252,.25)" }} />
                       )}
                       {theme.photos?.length > 0 && (
                         <div className="gallery-card-count">{theme.photos.length} photos</div>
