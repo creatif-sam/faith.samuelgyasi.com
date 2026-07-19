@@ -1,4 +1,4 @@
-export const layoutStyles = `
+﻿export const layoutStyles = `
 
 /* â”€â”€ THEME TOKENS â”€â”€ */
 .dash-root {
@@ -107,7 +107,7 @@ export const layoutStyles = `
   color: var(--d-text);
 }
 .dash-nav-item.active {
-  background: rgba(212,168,67,.12);
+  background: rgba(84,108,250,.12);
   color: var(--d-gold);
   font-weight: 600;
 }
@@ -140,7 +140,7 @@ export const layoutStyles = `
   transition: all .18s;
   width: 100%;
 }
-.dash-logout:hover { border-color: rgba(212,168,67,.4); color: var(--d-gold); }
+.dash-logout:hover { border-color: rgba(84,108,250,.4); color: var(--d-gold); }
 
 /* -- MOBILE HEADER (fixed, md:hidden) -- */
 .dash-mobile-header {
@@ -203,7 +203,7 @@ export const layoutStyles = `
   display: inline-flex; align-items: center; justify-content: center;
   cursor: pointer; flex-shrink: 0; transition: border-color .18s, color .18s;
 }
-.dash-icon-btn:hover { border-color: rgba(212,168,67,.42); color: var(--d-text); }
+.dash-icon-btn:hover { border-color: rgba(84,108,250,.42); color: var(--d-text); }
 .dash-profile-wrap { position: relative; }
 .dash-profile {
   border: 1px solid var(--d-border); background: var(--d-soft);
@@ -211,7 +211,7 @@ export const layoutStyles = `
   display: flex; align-items: center; gap: 8px;
   cursor: pointer; text-align: left; font-family: inherit;
 }
-.dash-profile:hover { border-color: rgba(212,168,67,.42); }
+.dash-profile:hover { border-color: rgba(84,108,250,.42); }
 .dash-avatar {
   width: 30px; height: 30px; border-radius: 50%;
   background: linear-gradient(135deg,#546cfa,#546cfa);
@@ -265,7 +265,7 @@ export const layoutStyles = `
   padding: 10px; margin-bottom: 6px; background: var(--d-soft);
   position: relative;
 }
-.dash-notif-item.unread { border-color: rgba(212,168,67,.4); }
+.dash-notif-item.unread { border-color: rgba(84,108,250,.4); }
 .dash-notif-item.unread::before {
   content: ""; position: absolute; top: 12px; left: -5px;
   width: 8px; height: 8px; border-radius: 50%; background: var(--d-gold);
@@ -319,7 +319,7 @@ export const layoutStyles = `
   transition: border-color .2s, box-shadow .2s;
 }
 .dash-stat:hover {
-  border-color: rgba(212,168,67,.3);
+  border-color: rgba(84,108,250,.3);
   box-shadow: 0 6px 20px rgba(0,0,0,.15);
 }
 .dash-stat-icon {
@@ -327,7 +327,7 @@ export const layoutStyles = `
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
 }
-.dash-stat-icon.gold   { background: rgba(212,168,67,.12); color: #546cfa; }
+.dash-stat-icon.gold   { background: rgba(84,108,250,.12); color: #546cfa; }
 .dash-stat-icon.green  { background: rgba(34,197,94,.1);  color: #22c55e; }
 .dash-stat-icon.blue   { background: rgba(96,165,250,.1); color: #60a5fa; }
 .dash-stat-icon.purple { background: rgba(167,139,250,.1); color: #a78bfa; }
@@ -365,19 +365,19 @@ export const layoutStyles = `
   text-decoration: none; color: inherit;
 }
 .dash-card:hover {
-  border-color: rgba(212,168,67,.4);
+  border-color: rgba(84,108,250,.4);
   box-shadow: 0 14px 36px rgba(0,0,0,.3);
   transform: translateY(-3px);
 }
 .dash-card-thumb {
   width: 100%; aspect-ratio: 16/9;
-  background: rgba(212,168,67,.06);
+  background: rgba(84,108,250,.06);
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
   position: relative;
 }
 .dash-card-thumb img { width: 100%; height: 100%; object-fit: cover; }
-.dash-card-placeholder { color: rgba(212,168,67,.2); }
+.dash-card-placeholder { color: rgba(84,108,250,.2); }
 .dash-blog-read-badge {
   position: absolute; top: 10px; right: 10px;
   display: inline-flex; align-items: center; gap: 4px;
@@ -390,7 +390,7 @@ export const layoutStyles = `
 .dash-card-cat {
   font-family: var(--font-poppins), sans-serif;
   font-size: 9px; letter-spacing: .25em; text-transform: uppercase;
-  background: linear-gradient(90deg,#ffde59,#ff914d);
+  background: linear-gradient(90deg,#546cfa,#546cfa);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 .dash-card-title { font-size: 15px; font-weight: 600; color: var(--d-text); line-height: 1.35; flex: 1; }

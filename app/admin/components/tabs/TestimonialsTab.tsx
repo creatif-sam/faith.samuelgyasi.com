@@ -1,4 +1,4 @@
-import { Plus, Pencil, Trash2 } from "lucide-react";
+﻿import { Plus, Pencil, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { TW } from "../constants";
 import { StarRating } from "@/components/atoms/StarRating";
@@ -29,7 +29,7 @@ export default function TestimonialsTab({ testimonials, onNew, onEdit, onDelete,
             <thead><tr><th className={TW.th}>Name</th><th className={TW.th}>Role / Company</th><th className={TW.th}>Rating</th><th className={TW.th}>Status</th><th className={TW.th}>Actions</th></tr></thead>
             <tbody>
               {testimonials.map((t) => (
-                <tr key={t.id} className="hover:[&>td]:bg-[rgba(212,168,67,.04)]">
+                <tr key={t.id} className="hover:[&>td]:bg-[rgba(84,108,250,.04)]">
                   <td className={TW.td} style={{ color: "#f0ece4", maxWidth: "200px" }}>
                     <div className="font-semibold">{t.name}</div>
                     <div className="text-[11px] text-white/40 mt-0.5 italic">{t.quote.slice(0, 60)}{t.quote.length > 60 ? "..." : ""}</div>

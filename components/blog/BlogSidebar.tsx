@@ -1,4 +1,4 @@
-// components/blog/BlogSidebar.tsx — left sidebar: category list + recent posts (WordPress-style widgets)
+﻿// components/blog/BlogSidebar.tsx — left sidebar: category list + recent posts (WordPress-style widgets)
 "use client";
 
 import Link from "next/link";
@@ -158,12 +158,12 @@ export function BlogSidebar({
         }
 
         .bsw-cat-btn:hover {
-          background: rgba(212, 168, 67, 0.06);
+          background: rgba(84, 108, 250, 0.06);
           color: var(--cream, #f0ece4);
         }
 
         .bsw-cat-btn.active {
-          background: rgba(212, 168, 67, 0.1);
+          background: rgba(84, 108, 250, 0.1);
           color: var(--gold, #546cfa);
           font-weight: 600;
         }
@@ -179,7 +179,7 @@ export function BlogSidebar({
 
         .bsw-cat-btn.active .bsw-cat-count {
           color: var(--gold, #546cfa);
-          background: rgba(212, 168, 67, 0.15);
+          background: rgba(84, 108, 250, 0.15);
         }
 
         .bsw-recent-list {
@@ -202,7 +202,7 @@ export function BlogSidebar({
         }
 
         .bsw-recent-item:hover {
-          background: rgba(212, 168, 67, 0.06);
+          background: rgba(84, 108, 250, 0.06);
         }
 
         .bsw-recent-thumb {
@@ -211,11 +211,11 @@ export function BlogSidebar({
           height: 52px;
           border-radius: 6px;
           overflow: hidden;
-          background: rgba(212, 168, 67, 0.08);
+          background: rgba(84, 108, 250, 0.08);
           display: flex;
           align-items: center;
           justify-content: center;
-          color: rgba(212, 168, 67, 0.4);
+          color: rgba(84, 108, 250, 0.4);
         }
 
         .bsw-recent-thumb img {
@@ -263,11 +263,11 @@ export function BlogSidebar({
           border-radius: 3px;
         }
         .blog-sidebar::-webkit-scrollbar-thumb {
-          background: rgba(212, 168, 67, 0.3);
+          background: rgba(84, 108, 250, 0.3);
           border-radius: 3px;
         }
         .blog-sidebar::-webkit-scrollbar-thumb:hover {
-          background: rgba(212, 168, 67, 0.5);
+          background: rgba(84, 108, 250, 0.5);
         }
 
         @media (max-width: 1024px) {

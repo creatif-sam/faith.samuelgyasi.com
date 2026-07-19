@@ -1,4 +1,4 @@
-// molecules/FaithReflection.tsx — central reflection quote
+﻿// molecules/FaithReflection.tsx — central reflection quote
 "use client";
 import React from "react";
 import { Sparkle } from "lucide-react";
@@ -13,7 +13,7 @@ export function FaithReflection({ lang }: { lang: Lang }) {
   return (
     <section id="reflection">
       <div className="reflection-inner">
-        <div className="refl-ornament" style={{ display: "flex", justifyContent: "center", gap: 14, color: "#ffde59" }}>
+        <div className="refl-ornament" style={{ display: "flex", justifyContent: "center", gap: 14, color: "#546cfa" }}>
           <Sparkle size={18} fill="currentColor" />
           <Sparkle size={18} fill="currentColor" />
           <Sparkle size={18} fill="currentColor" />

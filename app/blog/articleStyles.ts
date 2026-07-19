@@ -1,4 +1,4 @@
-export const articleCss = `
+﻿export const articleCss = `
 /* ── DARK MODE (default) ── */
 .fdp {
   --bg:#080807; --bg2:#0e0d0b; --white:#f0ece4; --cream:#e8e0d0;
@@ -38,14 +38,14 @@ html.light .fa-adjacent-card:hover { border-color:rgba(154,109,16,.4); backgroun
 
 .fdp-article-nav { position:fixed; top:0; left:0; right:0; z-index:200; padding:22px 56px; display:flex; justify-content:space-between; align-items:center; background:rgba(6,6,5,.96); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); border-bottom:1px solid rgba(255,222,89,.08); }
 .nav-back { font-family:'Poppins', sans-serif; font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:var(--dim); text-decoration:none; transition:color .3s; }
-.nav-back:hover { color:#ffde59; }
+.nav-back:hover { color:#546cfa; }
 .nav-logo { font-family:var(--font-playfair),'Playfair Display',serif; font-size:17px; color:var(--white); letter-spacing:.06em; }
 .fa-article { max-width:760px; margin:0 auto; padding:140px 40px 80px; }
 .fa-header { margin-bottom:64px; }
-.fa-tag { font-family:'Poppins', sans-serif; font-size:9px; letter-spacing:.3em; text-transform:uppercase; background:linear-gradient(90deg,#ffde59,#ff914d); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:24px; }
+.fa-tag { font-family:'Poppins', sans-serif; font-size:9px; letter-spacing:.3em; text-transform:uppercase; background:linear-gradient(90deg,#546cfa,#546cfa); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:24px; }
 .fa-title { font-family:var(--font-playfair),'Playfair Display',serif; font-size:clamp(32px,5vw,62px); color:var(--white); line-height:1.08; margin-bottom:24px; }
 .fa-meta { font-family:'Poppins', sans-serif; font-size:9px; letter-spacing:.15em; text-transform:uppercase; color:var(--dim); display:flex; gap:12px; align-items:center; margin-bottom:40px; flex-wrap:wrap; }
-.fa-lead { font-family:var(--font-playfair),'Playfair Display',serif; font-size:clamp(18px,2.2vw,24px); font-style:italic; color:var(--cream); line-height:1.55; padding:28px 36px; border-left:3px solid transparent; border-image:linear-gradient(180deg,#ffde59,#ff914d) 1; background:rgba(255,222,89,.04); text-align:justify; }
+.fa-lead { font-family:var(--font-playfair),'Playfair Display',serif; font-size:clamp(18px,2.2vw,24px); font-style:italic; color:var(--cream); line-height:1.55; padding:28px 36px; border-left:3px solid transparent; border-image:linear-gradient(180deg,#546cfa,#546cfa) 1; background:rgba(255,222,89,.04); text-align:justify; }
 .fa-body { font-family:var(--font-poppins), 'Poppins', sans-serif; font-size:clamp(17px,1.8vw,21px); line-height:1.9; color:rgba(240,236,228,.78); font-weight:300; }
 html.light .fa-body { color:rgba(26,24,20,.82); }
 .fa-body h2 { font-family:var(--font-playfair),'Playfair Display',serif; font-size:clamp(22px,3vw,32px); color:var(--white); margin:52px 0 20px; font-weight:700; }
@@ -53,24 +53,24 @@ html.light .fa-body { color:rgba(26,24,20,.82); }
 .fa-body p { margin-bottom:28px; text-align:justify; }
 .fa-body em { color:var(--cream); }
 .fa-body strong { color:var(--white); }
-.fa-body blockquote { border-left:3px solid transparent; border-image:linear-gradient(180deg,#ffde59,#ff914d) 1; padding:20px 32px; background:rgba(255,222,89,.04); font-style:italic; font-size:19px; color:var(--cream); margin:40px 0; text-align:justify; }
+.fa-body blockquote { border-left:3px solid transparent; border-image:linear-gradient(180deg,#546cfa,#546cfa) 1; padding:20px 32px; background:rgba(255,222,89,.04); font-style:italic; font-size:19px; color:var(--cream); margin:40px 0; text-align:justify; }
 .fa-body h1 { font-family:var(--font-playfair),'Playfair Display',serif; font-size:clamp(26px,3.6vw,38px); color:var(--white); margin:0 0 12px; font-weight:700; }
-.fa-body .eyebrow { font-family:'Poppins', sans-serif; font-size:12px; letter-spacing:.25em; text-transform:uppercase; background:linear-gradient(90deg,#ffde59,#ff914d); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:14px; }
+.fa-body .eyebrow { font-family:'Poppins', sans-serif; font-size:12px; letter-spacing:.25em; text-transform:uppercase; background:linear-gradient(90deg,#546cfa,#546cfa); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:14px; }
 .fa-body .subtitle { font-family:var(--font-playfair),'Playfair Display',serif; font-style:italic; font-size:19px; color:var(--dim); margin-bottom:32px; }
 .fa-body .lede { font-size:19px; color:var(--cream); margin-bottom:32px; text-align:justify; }
-.fa-body .verse-block { background:var(--card); border:1px solid var(--line); border-left:3px solid transparent; border-image:linear-gradient(180deg,#ffde59,#ff914d) 1; border-radius:8px; padding:32px 36px; margin:36px 0; }
+.fa-body .verse-block { background:var(--card); border:1px solid var(--line); border-left:3px solid transparent; border-image:linear-gradient(180deg,#546cfa,#546cfa) 1; border-radius:8px; padding:32px 36px; margin:36px 0; }
 .fa-body .verse-block p { font-family:var(--font-playfair),'Playfair Display',serif; font-style:italic; font-size:22px; line-height:1.5; color:var(--cream); margin-bottom:0; text-align:justify; }
 .fa-body .verse-block span { display:block; margin-top:16px; font-family:'Poppins', sans-serif; font-style:normal; font-size:11px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; color:var(--gold); }
 .fa-body ol.application { list-style:none; counter-reset:app-counter; margin:24px 0 36px; padding:0; }
 .fa-body ol.application li { counter-increment:app-counter; position:relative; padding:16px 0 16px 56px; border-top:1px solid var(--line); margin-bottom:0; text-align:justify; }
 .fa-body ol.application li:last-child { border-bottom:1px solid var(--line); }
 .fa-body ol.application li::before { content:counter(app-counter); position:absolute; left:0; top:14px; width:30px; height:30px; border-radius:50%; background:var(--card); border:1px solid var(--line); color:var(--gold); font-family:var(--font-playfair),'Playfair Display',serif; font-weight:700; font-size:15px; display:flex; align-items:center; justify-content:center; }
-.fa-body .prayer { margin-top:44px; padding:32px 36px; background:var(--card); border-left:3px solid transparent; border-image:linear-gradient(180deg,#ffde59,#ff914d) 1; border-radius:8px; }
+.fa-body .prayer { margin-top:44px; padding:32px 36px; background:var(--card); border-left:3px solid transparent; border-image:linear-gradient(180deg,#546cfa,#546cfa) 1; border-radius:8px; }
 .fa-body .prayer .label { font-family:'Poppins', sans-serif; font-size:11px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; color:var(--gold); margin-bottom:12px; }
 .fa-body .prayer p { font-family:var(--font-playfair),'Playfair Display',serif; font-style:italic; font-size:19px; line-height:1.6; color:var(--cream); margin-bottom:0; }
 .fa-related { margin-top:80px; padding-top:56px; border-top:1px solid var(--line); }
-.fa-related-label { font-family:'Poppins', sans-serif; font-size:9px; letter-spacing:.3em; text-transform:uppercase; background:linear-gradient(90deg,#ffde59,#ff914d); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:32px; display:flex; align-items:center; gap:16px; }
-.fa-related-label::before { content:''; width:36px; height:1px; background:linear-gradient(90deg,#ffde59,#ff914d); }
+.fa-related-label { font-family:'Poppins', sans-serif; font-size:9px; letter-spacing:.3em; text-transform:uppercase; background:linear-gradient(90deg,#546cfa,#546cfa); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:32px; display:flex; align-items:center; gap:16px; }
+.fa-related-label::before { content:''; width:36px; height:1px; background:linear-gradient(90deg,#546cfa,#546cfa); }
 .fa-related-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:2px; }
 .fa-related-card { background:var(--card); border:1px solid var(--line); padding:32px 28px; text-decoration:none; color:var(--white); display:flex; flex-direction:column; gap:10px; transition:border-color .3s,padding-left .3s; }
 .fa-related-card:hover { border-color:rgba(201,168,76,.25); padding-left:36px; }
@@ -111,7 +111,7 @@ html.light .fa-body { color:rgba(26,24,20,.82); }
 .fa-comment-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px; }
 .fa-comment-input,.fa-comment-textarea { width:100%; border:1px solid var(--line); background:#12110d; color:var(--white); padding:10px 12px; font-family:var(--font-poppins),'Poppins',sans-serif; font-size:13px; }
 .fa-comment-textarea { resize:vertical; }
-.fa-comment-btn { margin-top:10px; background:linear-gradient(135deg,#ffde59,#ff914d); color:#080807; border:0; padding:10px 16px; font-size:11px; letter-spacing:.08em; text-transform:uppercase; cursor:pointer; }
+.fa-comment-btn { margin-top:10px; background:linear-gradient(135deg,#546cfa,#546cfa); color:#080807; border:0; padding:10px 16px; font-size:11px; letter-spacing:.08em; text-transform:uppercase; cursor:pointer; }
 .fa-back-link { font-family:'Poppins', sans-serif; font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--dim); text-decoration:none; transition:color .3s; }
 .fa-back-link:hover { color:var(--gold); }
 .fa-cover { margin:40px 0 56px; overflow:hidden; }
@@ -132,7 +132,7 @@ html.light .fa-body { color:rgba(26,24,20,.82); }
 .eval-label { font-family:var(--font-poppins),'Poppins',sans-serif; font-size:10px; font-weight:500; letter-spacing:0.05em; text-transform:uppercase; color:var(--gold); display:block; margin-bottom:8px; }
 .eval-label-categories { margin-top:16px; }
 .eval-label-comment { margin-top:14px; }
-.eval-required { color:#ff914d; }
+.eval-required { color:#546cfa; }
 .star-rating { display:flex; gap:4px; margin-bottom:2px; }
 .star-rating button { background:transparent; border:none; cursor:pointer; font-size:24px; color:var(--dimmer); transition:all 0.2s ease; padding:0; line-height:1; }
 .star-rating button:hover, .star-rating button.star-active { color:var(--gold); transform:scale(1.1); }
@@ -148,7 +148,7 @@ html.light .fa-body { color:rgba(26,24,20,.82); }
 .eval-btn { font-family:var(--font-poppins),'Poppins',sans-serif; font-size:10.5px; font-weight:500; letter-spacing:0.05em; text-transform:uppercase; padding:10px 18px; border-radius:6px; cursor:pointer; transition:all 0.2s; border:none; }
 .eval-btn-skip { background:transparent; color:var(--dim); border:1px solid var(--line); }
 .eval-btn-skip:hover { color:var(--white); border-color:var(--dim); }
-.eval-btn-submit { background:linear-gradient(135deg,#ffde59,#ff914d); color:var(--bg); border:none; }
+.eval-btn-submit { background:linear-gradient(135deg,#546cfa,#546cfa); color:var(--bg); border:none; }
 .eval-btn-submit:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(255,222,89,0.3); }
 .eval-btn-submit:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
 .bible-ref { text-decoration:underline; text-decoration-color:var(--gold); text-decoration-thickness:1px; text-underline-offset:3px; cursor:help; color:var(--cream); transition:all 0.2s ease; position:relative; }

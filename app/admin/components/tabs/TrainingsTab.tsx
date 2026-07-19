@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { Plus, Pencil, Trash2, BookOpen, ChevronDown, ChevronUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { TW } from "../constants";
@@ -184,7 +184,7 @@ function TrainingRow({
                       href={lesson.video_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-poppins text-[10px] text-[#c9a84c] hover:text-[#ffde59] transition-colors"
+                      className="font-poppins text-[10px] text-[#c9a84c] hover:text-[#546cfa] transition-colors"
                     >
                       ▶ Video
                     </a>

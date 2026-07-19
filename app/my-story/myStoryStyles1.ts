@@ -1,4 +1,4 @@
-export const myStoryStyles1 = `
+﻿export const myStoryStyles1 = `
 
 .msp {
   background: var(--black);
@@ -312,8 +312,8 @@ export const myStoryStyles1 = `
   transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
 }
 .msp-item:hover .msp-dot {
-  background: linear-gradient(135deg,#ffde59,#ff914d);
-  border-color: #ffde59;
+  background: linear-gradient(135deg,#546cfa,#546cfa);
+  border-color: #546cfa;
   box-shadow: 0 0 14px rgba(201,168,76,.5);
 }
 .msp-text {

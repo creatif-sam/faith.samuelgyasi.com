@@ -1,4 +1,4 @@
-import { Plus, Pencil, Trash2, Star } from "lucide-react";
+﻿import { Plus, Pencil, Trash2, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { TW } from "../constants";
 import { BlogPost } from "../types";
@@ -25,7 +25,7 @@ export default function PostsTab({ posts, onNew, onEdit, onDelete, onToggle, onV
             <thead><tr><th className={TW.th}>Title</th><th className={TW.th}>Cat.</th><th className={TW.th}>Status</th><th className={TW.th}>Date</th><th className={TW.th}>Actions</th></tr></thead>
             <tbody>
               {posts.map((p) => (
-                <tr key={p.id} className="hover:[&>td]:bg-[rgba(212,168,67,.04)]">
+                <tr key={p.id} className="hover:[&>td]:bg-[rgba(84,108,250,.04)]">
                   <td className={TW.td} style={{ color: "#f0ece4", maxWidth: "240px" }}>
                     <div className="overflow-hidden text-ellipsis whitespace-nowrap">{p.title}</div>
                     <div className="text-[10px] text-white/25 font-poppins mt-0.5">/{p.category}/blog/{p.slug}</div>

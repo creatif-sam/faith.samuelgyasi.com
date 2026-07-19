@@ -1,4 +1,4 @@
-import { Plus, Pencil, Trash2 } from "lucide-react";
+﻿import { Plus, Pencil, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { TW } from "../constants";
 import { Announcement } from "../types";
@@ -37,7 +37,7 @@ export default function AnnouncementsTab({ announcements, onNew, onEdit, onDelet
             </thead>
             <tbody>
               {announcements.map((a) => (
-                <tr key={a.id} className="hover:[&>td]:bg-[rgba(212,168,67,.04)]">
+                <tr key={a.id} className="hover:[&>td]:bg-[rgba(84,108,250,.04)]">
                   <td className={TW.td}><span className={cn(TW.badge, TW.bDft, "capitalize")}>{a.type}</span></td>
                   <td className={TW.td} style={{ maxWidth: 340 }}>
                     {a.title && <div style={{ color: "#f0ece4" }} className="mb-0.5 font-medium">{a.title}</div>}

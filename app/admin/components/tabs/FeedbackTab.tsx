@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { TW } from "../constants";
@@ -64,7 +64,7 @@ export default function FeedbackTab({ feedbacks, onToggleResolved, onDelete }: F
                   <span className={cn(TW.badge,
                     fb.type === "bug"
                       ? "bg-red-500/10 text-red-400 border border-red-500/20"
-                      : "bg-[rgba(212,168,67,.12)] text-[#546cfa] border border-[rgba(212,168,67,.2)]"
+                      : "bg-[rgba(84,108,250,.12)] text-[#546cfa] border border-[rgba(84,108,250,.2)]"
                   )}>
                     {fb.type === "bug" ? "Bug" : "Idea"}
                   </span>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
@@ -323,7 +323,7 @@ export default function PostModal({ post, onClose, onSave, db }: PostModalProps)
           <div className="flex items-center gap-3 mb-5 py-4 border-y border-white/[.05]">
             <label className="relative inline-flex items-center cursor-pointer">
               <input type="checkbox" checked={form.published} onChange={() => setF("published", !form.published)} className="sr-only peer" />
-              <div className="w-10 h-5 bg-white/10 rounded-full peer-checked:bg-[rgba(212,168,67,.7)] after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-5" />
+              <div className="w-10 h-5 bg-white/10 rounded-full peer-checked:bg-[rgba(84,108,250,.7)] after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-5" />
             </label>
             <span className="font-poppins text-[9px] tracking-[.1em] text-white/50">{form.published ? "Published — visible on site" : "Draft — not visible"}</span>
           </div>

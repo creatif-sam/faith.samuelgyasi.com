@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { useState, useEffect, useCallback } from "react";
 import { Flame, User } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
@@ -133,10 +133,10 @@ export default function HabitsTab() {
                 {userSummaries.map((u) => (
                   <button key={u.user_id} onClick={() => setSelectedUser(selectedUser === u.user_id ? null : u.user_id)}
                     className="w-full text-left p-4 rounded-lg border transition-all"
-                    style={{ background: selectedUser===u.user_id?"rgba(212,168,67,.08)":"rgba(255,255,255,.02)", borderColor: selectedUser===u.user_id?"rgba(212,168,67,.4)":"rgba(255,255,255,.07)" }}
+                    style={{ background: selectedUser===u.user_id?"rgba(84,108,250,.08)":"rgba(255,255,255,.02)", borderColor: selectedUser===u.user_id?"rgba(84,108,250,.4)":"rgba(255,255,255,.07)" }}
                   >
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0" style={{ background: "rgba(212,168,67,.15)", color: "#546cfa" }}>
+                      <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0" style={{ background: "rgba(84,108,250,.15)", color: "#546cfa" }}>
                         {u.email[0].toUpperCase()}
                       </div>
                       <div className="flex-1 min-w-0">

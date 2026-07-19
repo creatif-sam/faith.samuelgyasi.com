@@ -1,4 +1,4 @@
-export const adminThemeCss = `
+﻿export const adminThemeCss = `
 
 .adm-root { transition: background-color .24s ease, color .24s ease; }
 .adm-root.adm-dark {
@@ -89,7 +89,7 @@ export const adminThemeCss = `
   cursor: pointer;
 }
 .adm-icon-btn:hover {
-  border-color: rgba(212,168,67,.42);
+  border-color: rgba(84,108,250,.42);
   color: var(--adm-text);
 }
 .adm-profile-wrap { position: relative; }
@@ -104,7 +104,7 @@ export const adminThemeCss = `
   cursor: pointer;
   text-align: left;
 }
-.adm-profile:hover { border-color: rgba(212,168,67,.42); }
+.adm-profile:hover { border-color: rgba(84,108,250,.42); }
 .adm-profile-menu {
   position: absolute;
   top: calc(100% + 8px);

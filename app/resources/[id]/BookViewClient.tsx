@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { useLang } from "@/lib/i18n";
@@ -155,7 +155,7 @@ const bookCss = `
 }
 
 .bv-back-link:hover {
-  color: #ffde59;
+  color: #546cfa;
 }
 
 .bv-logo {
@@ -200,7 +200,7 @@ const bookCss = `
   font-size: 9px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  background: linear-gradient(90deg, #ffde59, #ff914d);
+  background: linear-gradient(90deg, #546cfa, #546cfa);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -273,7 +273,7 @@ const bookCss = `
   letter-spacing: 0.2em;
   text-transform: uppercase;
   padding: 16px 32px;
-  background: linear-gradient(135deg, #ffde59, #ff914d);
+  background: linear-gradient(135deg, #546cfa, #546cfa);
   color: var(--bg);
   border: none;
   border-radius: 8px;

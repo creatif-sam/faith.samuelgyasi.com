@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState, Suspense } from "react";
 import Link from "next/link";
@@ -72,7 +72,7 @@ const css = `
 }
 .trp-rule {
   width: 56px; height: 2px;
-  background: linear-gradient(90deg, #ffde59, #ff914d);
+  background: linear-gradient(90deg, #546cfa, #546cfa);
   margin: 24px 0;
   opacity: 0;
   animation: trp-rise .8s .4s ease forwards;

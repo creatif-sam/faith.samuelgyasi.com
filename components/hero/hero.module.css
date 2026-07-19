@@ -1,4 +1,4 @@
-/* components/hero/hero.module.css - Modern Hero Design Styles */
+﻿/* components/hero/hero.module.css - Modern Hero Design Styles */
 
 .heroModern {
   min-height: 100vh;
@@ -185,7 +185,7 @@
 .titleName {
   display: inline;
   color: #546cfa;
-  background: linear-gradient(90deg, #ffde59, #ff914d);
+  background: linear-gradient(90deg, #546cfa, #7b8ffc);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -311,7 +311,7 @@
 .blob1 {
   width: 300px;
   height: 300px;
-  background: linear-gradient(45deg, #ff914d, #ffde59);
+  background: linear-gradient(45deg, #7b8ffc, #546cfa);
   bottom: -50px;
   left: -50px;
   animation-delay: 0s;
@@ -376,7 +376,7 @@
   font-size: 2rem;
   font-weight: 700;
   color: #546cfa;
-  background: linear-gradient(90deg, #ffde59, #ff914d);
+  background: linear-gradient(90deg, #546cfa, #7b8ffc);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -415,11 +415,11 @@
 }
 
 .followButton:hover {
-  background: linear-gradient(90deg, #ffde59, #ff914d);
+  background: linear-gradient(90deg, #546cfa, #7b8ffc);
   color: #0a0a0a;
   border-color: transparent;
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(212, 168, 67, 0.3);
+  box-shadow: 0 6px 20px rgba(84, 108, 250, 0.3);
 }
 
 /* Prayer Button */
@@ -435,7 +435,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  box-shadow: 0 4px 12px rgba(212, 168, 67, 0.25);
+  box-shadow: 0 4px 12px rgba(84, 108, 250, 0.25);
   text-decoration: none;
   width: fit-content;
 }
@@ -448,7 +448,7 @@
 .prayerButton:hover {
   background: linear-gradient(90deg, #546cfa, #546cfa);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(212, 168, 67, 0.4);
+  box-shadow: 0 6px 20px rgba(84, 108, 250, 0.4);
 }
 
 /* Social Links */
@@ -500,7 +500,7 @@
 }
 
 .socialIcon:hover {
-  background: linear-gradient(90deg, #ffde59, #ff914d);
+  background: linear-gradient(90deg, #546cfa, #7b8ffc);
   color: white;
   transform: translateY(-3px);
 }

@@ -1,4 +1,4 @@
-import { Plus, Pencil, Trash2 } from "lucide-react";
+﻿import { Plus, Pencil, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { TW } from "../constants";
 import { EmailTemplate } from "../types";
@@ -33,7 +33,7 @@ export default function TplsView({ templates, onNew, onEdit, onDelete }: TplsVie
             </thead>
             <tbody>
               {templates.map((t) => (
-                <tr key={t.id} className="hover:[&>td]:bg-[rgba(212,168,67,.04)]">
+                <tr key={t.id} className="hover:[&>td]:bg-[rgba(84,108,250,.04)]">
                   <td className={TW.td} style={{ color: "#f0ece4" }}>{t.name}</td>
                   <td className={TW.td}>
                     {t.category ? <span className={cn(TW.badge, TW.bNew)}>{t.category}</span> : <span className="text-white/30">—</span>}

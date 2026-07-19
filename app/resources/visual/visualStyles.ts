@@ -1,4 +1,4 @@
-export const visualStyles = `
+﻿export const visualStyles = `
 
 .visual-pg {
   background: var(--black);
@@ -53,7 +53,7 @@ export const visualStyles = `
 }
 .visual-rule {
   width: 56px; height: 2px;
-  background: linear-gradient(90deg,#ffde59,#ff914d);
+  background: linear-gradient(90deg,#546cfa,#546cfa);
   margin: 24px 0;
   opacity: 0; animation: vis-rise .9s .4s ease forwards;
 }

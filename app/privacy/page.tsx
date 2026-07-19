@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { headers } from "next/headers";
 import { ArrowLeft } from "lucide-react";
@@ -44,7 +44,7 @@ export default async function PrivacyPage() {
               fontSize: "9px",
               letterSpacing: "0.4em",
               textTransform: "uppercase",
-              background: "linear-gradient(90deg,#ffde59,#ff914d)",
+              background: "linear-gradient(90deg,#546cfa,#546cfa)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",

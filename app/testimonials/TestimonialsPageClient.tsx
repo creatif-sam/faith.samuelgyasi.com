@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { testimonialsStyles } from "./testimonialsStyles";
 
 import { useEffect, useState } from "react";
@@ -84,12 +84,12 @@ export default function TestimonialsPageClient({ initialItems }: { initialItems:
         <div className="tm-grid-wrap">
           {loading ? (
             <div className="tm-empty">
-              <div className="tm-empty-icon" style={{ color: "#ffde59" }}><Diamond size={18} /></div>
+              <div className="tm-empty-icon" style={{ color: "#546cfa" }}><Diamond size={18} /></div>
               <p>Loading testimonials&hellip;</p>
             </div>
           ) : items.length === 0 ? (
             <div className="tm-empty">
-              <div className="tm-empty-icon" style={{ color: "#ffde59" }}><Diamond size={18} /></div>
+              <div className="tm-empty-icon" style={{ color: "#546cfa" }}><Diamond size={18} /></div>
               <p>Testimonials coming soon.</p>
             </div>
           ) : (

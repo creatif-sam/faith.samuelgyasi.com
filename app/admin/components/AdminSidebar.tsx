@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import Link from "next/link";
 import { Globe, LogOut, Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -51,12 +51,12 @@ export default function AdminSidebar({ tab, navOpen, setNavOpen, unreadMsgs, unr
       )}>
         <div className="px-5 py-5 border-b border-white/[.06]">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#546cfa] to-[#546cfa] flex items-center justify-center flex-shrink-0 shadow-[0_4px_14px_rgba(212,168,67,.3)]">
+            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#546cfa] to-[#546cfa] flex items-center justify-center flex-shrink-0 shadow-[0_4px_14px_rgba(84,108,250,.3)]">
               <span className="font-poppins text-[13px] font-bold text-[#09090d]">SG</span>
             </div>
             <div>
               <div className="font-poppins text-[14px] font-semibold text-[#eef0f5] leading-tight">Samuel Gyasi</div>
-              <div className="font-poppins text-[10px] font-medium text-[rgba(212,168,67,.7)] mt-0.5">Admin Dashboard</div>
+              <div className="font-poppins text-[10px] font-medium text-[rgba(84,108,250,.7)] mt-0.5">Admin Dashboard</div>
             </div>
           </div>
         </div>
@@ -72,7 +72,7 @@ export default function AdminSidebar({ tab, navOpen, setNavOpen, unreadMsgs, unr
             return (
               <button key={id} onClick={() => onGo(id)}
                 className={cn("flex items-center gap-3 px-4 py-2.5 font-poppins text-[13px] font-medium cursor-pointer border-0 w-full text-left transition-all duration-200 rounded-lg relative mb-1",
-                  isActive ? "text-[#546cfa] bg-[rgba(212,168,67,.12)]" : "text-white/[.42] bg-transparent hover:text-white/[.80] hover:bg-white/[.05]"
+                  isActive ? "text-[#546cfa] bg-[rgba(84,108,250,.12)]" : "text-white/[.42] bg-transparent hover:text-white/[.80] hover:bg-white/[.05]"
                 )}
               >
                 <Icon size={15} />

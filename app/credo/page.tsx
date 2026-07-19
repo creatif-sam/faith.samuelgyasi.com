@@ -250,7 +250,7 @@ export default function CredoPage() {
         {/* ── CLOSING DECLARATION ── */}
         <section className="credo-close">
           <div className="credo-close-inner">
-            <div className="credo-close-ornament" style={{ display: "flex", justifyContent: "center", gap: 16, color: "#ffde59" }}>
+            <div className="credo-close-ornament" style={{ display: "flex", justifyContent: "center", gap: 16, color: "#546cfa" }}>
               <Diamond size={16} fill="currentColor" />
               <Diamond size={16} fill="currentColor" />
               <Diamond size={16} fill="currentColor" />

@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { TW } from "../constants";
@@ -28,7 +28,7 @@ export default function AnalyticsTab({ analytics }: AnalyticsTabProps) {
           { num: topPages[0]?.count ?? "—",  label: "Top Page Views"  },
         ].map(({ num, label }) => (
           <div key={label} className={TW.stat}>
-            <div className="absolute top-0 inset-x-0 h-0.5 bg-gradient-to-r from-transparent via-[rgba(212,168,67,.5)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="absolute top-0 inset-x-0 h-0.5 bg-gradient-to-r from-transparent via-[rgba(84,108,250,.5)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className={TW.statNum}>{num}</div>
             <div className={TW.statLbl}>{label}</div>
           </div>
@@ -50,7 +50,7 @@ export default function AnalyticsTab({ analytics }: AnalyticsTabProps) {
               <thead><tr><th className={TW.th}>Page</th><th className={TW.th}>Views</th><th className={TW.th}>Share</th></tr></thead>
               <tbody>
                 {topPages.map(({ path, count }) => (
-                  <tr key={path} className="hover:[&>td]:bg-[rgba(212,168,67,.04)]">
+                  <tr key={path} className="hover:[&>td]:bg-[rgba(84,108,250,.04)]">
                     <td className={TW.td} style={{ color: "#f0ece4", fontFamily: "'Poppins',sans-serif", fontSize: "11px" }}>
                       <span className="flex items-center gap-2">
                         {path}

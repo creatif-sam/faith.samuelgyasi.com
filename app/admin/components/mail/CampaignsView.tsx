@@ -1,4 +1,4 @@
-import { useState, Fragment } from "react";
+﻿import { useState, Fragment } from "react";
 import { Plus, Eye, Pencil, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { TW } from "../constants";
@@ -63,7 +63,7 @@ export default function CampaignsView({ campaigns, onNew, onEdit, onDelete }: Ca
             <tbody>
               {filtered.map((c) => (
                 <Fragment key={c.id}>
-                  <tr className="hover:[&>td]:bg-[rgba(212,168,67,.04)]">
+                  <tr className="hover:[&>td]:bg-[rgba(84,108,250,.04)]">
                     <td className={TW.td} style={{ color: "#f0ece4", maxWidth: 320 }}>{c.subject}</td>
                     <td className={TW.td}>
                       <span className={cn(TW.badge, TW.bDft, "capitalize")}>{c.recipient_type}</span>

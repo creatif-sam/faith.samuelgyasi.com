@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { Plus, Pencil, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { TW } from "../constants";
@@ -50,7 +50,7 @@ export default function UpcomingTab({ events, onNew, onEdit, onDelete, onToggle 
             <thead><tr><th className={TW.th}>Title</th><th className={TW.th}>Date</th><th className={TW.th}>Location</th><th className={TW.th}>Status</th><th className={TW.th}>Actions</th></tr></thead>
             <tbody>
               {filtered.map((ev) => (
-                <tr key={ev.id} className="hover:[&>td]:bg-[rgba(212,168,67,.04)]">
+                <tr key={ev.id} className="hover:[&>td]:bg-[rgba(84,108,250,.04)]">
                   <td className={TW.td} style={{ color: "#f0ece4", maxWidth: "260px" }}>
                     <div className="font-semibold">{ev.title}</div>
                     {ev.description && <div className="text-[11px] text-white/40 mt-0.5 italic">{ev.description.slice(0, 70)}{ev.description.length > 70 ? "..." : ""}</div>}

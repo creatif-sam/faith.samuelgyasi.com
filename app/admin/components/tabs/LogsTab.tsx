@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+﻿import { cn } from "@/lib/utils";
 import { TW } from "../constants";
 import { EmailLog } from "../types";
 
@@ -40,7 +40,7 @@ export default function LogsTab({ logs }: LogsTabProps) {
                     : TW.bDft;
 
                 return (
-                  <tr key={l.id} className="hover:[&>td]:bg-[rgba(212,168,67,.04)]">
+                  <tr key={l.id} className="hover:[&>td]:bg-[rgba(84,108,250,.04)]">
                     <td className={TW.td}>{new Date(l.sent_at).toLocaleString("en-GB")}</td>
                     <td className={TW.td} style={{ color: "#f0ece4" }}>{l.to_email}</td>
                     <td className={TW.td}>{l.subject || "-"}</td>

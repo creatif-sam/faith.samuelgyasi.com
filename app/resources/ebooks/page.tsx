@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Suspense, useEffect, useState, useCallback } from "react";
 import Link from "next/link";
@@ -106,7 +106,7 @@ const css = `
 }
 .ebooks-rule {
   width: 56px; height: 2px;
-  background: linear-gradient(90deg,#ffde59,#ff914d);
+  background: linear-gradient(90deg,#546cfa,#546cfa);
   margin: 24px 0;
   opacity: 0; animation: eb-rise .9s .4s ease forwards;
 }
@@ -147,7 +147,7 @@ const css = `
   content: '';
   position: absolute; top: 0; left: 0; right: 0;
   height: 3px;
-  background: linear-gradient(90deg,#ffde59,#ff914d);
+  background: linear-gradient(90deg,#546cfa,#546cfa);
   transform: scaleX(0); transform-origin: left;
   transition: transform .4s ease;
 }
@@ -194,7 +194,7 @@ const css = `
   font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
   padding: 12px 20px;
-  background: linear-gradient(135deg,#ffde59,#ff914d);
+  background: linear-gradient(135deg,#546cfa,#546cfa);
   color: #0a0a0a; text-decoration: none;
   border-radius: 4px;
   transition: opacity .25s, transform .2s; margin-top: 8px;

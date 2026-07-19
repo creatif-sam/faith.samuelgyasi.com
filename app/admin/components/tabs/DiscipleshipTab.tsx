@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { Edit, Trash2, Plus, Eye, Calendar, BookOpen, TrendingUp, User } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
@@ -56,7 +56,7 @@ export default function DiscipleshipTab({
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
         <div className="p-4 bg-white/[.02] border border-white/[.06] rounded-lg">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-[rgba(212,168,67,.1)] flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg bg-[rgba(84,108,250,.1)] flex items-center justify-center">
               <User size={20} className="text-[#546cfa]" />
             </div>
             <div>
@@ -180,7 +180,7 @@ export default function DiscipleshipTab({
                           className="w-10 h-10 rounded-full object-cover border border-white/10"
                         />
                       ) : (
-                        <div className="w-10 h-10 rounded-full bg-[rgba(212,168,67,.1)] flex items-center justify-center border border-[rgba(212,168,67,.2)]">
+                        <div className="w-10 h-10 rounded-full bg-[rgba(84,108,250,.1)] flex items-center justify-center border border-[rgba(84,108,250,.2)]">
                           <span className="text-[#546cfa] font-medium text-sm">
                             {disciple.name.charAt(0).toUpperCase()}
                           </span>

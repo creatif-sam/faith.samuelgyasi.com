@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+﻿import { cn } from "@/lib/utils";
 import { TW } from "../constants";
 import { BlogPost, Subscriber, Message, EmailLog, AnalyticsData, Tab } from "../types";
 import MiniBarChart from "../MiniBarChart";
@@ -41,7 +41,7 @@ export default function OverviewTab({ posts, subs, msgs, logs, analytics, onNav 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-12">
         {STATS.map(({ num, label, nav }) => (
           <div key={label} className={TW.stat} role="button" onClick={() => onNav(nav)}>
-            <div className="absolute top-0 inset-x-0 h-0.5 bg-gradient-to-r from-transparent via-[rgba(212,168,67,.5)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-[250ms]" />
+            <div className="absolute top-0 inset-x-0 h-0.5 bg-gradient-to-r from-transparent via-[rgba(84,108,250,.5)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-[250ms]" />
             <div className={TW.statNum}>{num}</div>
             <div className={TW.statLbl}>{label}</div>
           </div>
@@ -67,7 +67,7 @@ export default function OverviewTab({ posts, subs, msgs, logs, analytics, onNav 
           <thead><tr><th className={TW.th}>Title</th><th className={TW.th}>Category</th><th className={TW.th}>Status</th><th className={TW.th}>Date</th></tr></thead>
           <tbody>
             {posts.slice(0, 5).map((p) => (
-              <tr key={p.id} className="hover:[&>td]:bg-[rgba(212,168,67,.04)]">
+              <tr key={p.id} className="hover:[&>td]:bg-[rgba(84,108,250,.04)]">
                 <td className={TW.td}>{p.title}</td>
                 <td className={TW.td} style={{ textTransform: "capitalize" }}>{p.category}</td>
                 <td className={TW.td}><span className={cn(TW.badge, p.published ? TW.bPub : TW.bDft)}>{p.published ? "Published" : "Draft"}</span></td>

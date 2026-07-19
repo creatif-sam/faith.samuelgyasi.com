@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
@@ -77,7 +77,7 @@ export function PrayerModal({ onClose, lang }: PrayerModalProps) {
   return (
     <div className="fixed inset-0 bg-black/80 backdrop-blur-xl z-[9999] flex items-center justify-center p-5" onClick={onClose}>
       <div 
-        className="bg-[#0a0a0d] border border-[#546cfa]/20 rounded-xl w-full max-w-[560px] max-h-[90vh] overflow-y-auto shadow-[0_32px_80px_rgba(0,0,0,.7),0_0_0_1px_rgba(212,168,67,.15)]" 
+        className="bg-[#0a0a0d] border border-[#546cfa]/20 rounded-xl w-full max-w-[560px] max-h-[90vh] overflow-y-auto shadow-[0_32px_80px_rgba(0,0,0,.7),0_0_0_1px_rgba(84,108,250,.15)]" 
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -100,7 +100,7 @@ export function PrayerModal({ onClose, lang }: PrayerModalProps) {
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-poppins text-sm px-4 py-3 outline-none transition-all focus:border-[rgba(212,168,67,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(212,168,67,.08)]"
+              className="w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-poppins text-sm px-4 py-3 outline-none transition-all focus:border-[rgba(84,108,250,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(84,108,250,.08)]"
               placeholder={lang === "en" ? "Enter your name" : "Entrez votre nom"}
               required
             />
@@ -113,7 +113,7 @@ export function PrayerModal({ onClose, lang }: PrayerModalProps) {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-poppins text-sm px-4 py-3 outline-none transition-all focus:border-[rgba(212,168,67,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(212,168,67,.08)]"
+                className="w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-poppins text-sm px-4 py-3 outline-none transition-all focus:border-[rgba(84,108,250,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(84,108,250,.08)]"
                 placeholder={lang === "en" ? "your@email.com" : "votre@email.com"}
               />
             </div>
@@ -124,7 +124,7 @@ export function PrayerModal({ onClose, lang }: PrayerModalProps) {
                 type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className="w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-poppins text-sm px-4 py-3 outline-none transition-all focus:border-[rgba(212,168,67,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(212,168,67,.08)]"
+                className="w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-poppins text-sm px-4 py-3 outline-none transition-all focus:border-[rgba(84,108,250,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(84,108,250,.08)]"
                 placeholder={lang === "en" ? "Your phone" : "Votre téléphone"}
               />
             </div>
@@ -136,7 +136,7 @@ export function PrayerModal({ onClose, lang }: PrayerModalProps) {
               type="text"
               value={topic}
               onChange={(e) => setTopic(e.target.value)}
-              className="w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-poppins text-sm px-4 py-3 outline-none transition-all focus:border-[rgba(212,168,67,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(212,168,67,.08)]"
+              className="w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-poppins text-sm px-4 py-3 outline-none transition-all focus:border-[rgba(84,108,250,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(84,108,250,.08)]"
               placeholder={lang === "en" ? "e.g., Healing, Guidance, Breakthrough" : "ex: Guérison, Direction, Percée"}
               required
             />
@@ -147,7 +147,7 @@ export function PrayerModal({ onClose, lang }: PrayerModalProps) {
             <textarea
               value={details}
               onChange={(e) => setDetails(e.target.value)}
-              className="w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-poppins text-sm px-4 py-3 outline-none transition-all focus:border-[rgba(212,168,67,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(212,168,67,.08)] resize-y min-h-[120px]"
+              className="w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-poppins text-sm px-4 py-3 outline-none transition-all focus:border-[rgba(84,108,250,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(84,108,250,.08)] resize-y min-h-[120px]"
               placeholder={lang === "en" ? "Share details about your prayer request (optional)" : "Partagez les détails de votre demande de prière (optionnel)"}
             />
           </div>
@@ -176,7 +176,7 @@ export function PrayerModal({ onClose, lang }: PrayerModalProps) {
             <button
               type="submit"
               disabled={submitting}
-              className="px-5 py-2.5 font-poppins text-[11px] font-medium bg-gradient-to-br from-[#546cfa] to-[#546cfa] text-[#09090d] rounded-lg cursor-pointer transition-all shadow-[0_2px_12px_rgba(212,168,67,.25)] hover:from-[#546cfa] hover:to-[#546cfa] hover:shadow-[0_4px_18px_rgba(212,168,67,.4)] disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-5 py-2.5 font-poppins text-[11px] font-medium bg-gradient-to-br from-[#546cfa] to-[#546cfa] text-[#09090d] rounded-lg cursor-pointer transition-all shadow-[0_2px_12px_rgba(84,108,250,.25)] hover:from-[#546cfa] hover:to-[#546cfa] hover:shadow-[0_4px_18px_rgba(84,108,250,.4)] disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {submitting ? t.submitting[lang] : t.submit[lang]}
             </button>

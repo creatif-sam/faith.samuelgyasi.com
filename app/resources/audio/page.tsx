@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Suspense, useEffect, useState, useCallback } from "react";
 import Link from "next/link";
@@ -74,7 +74,7 @@ const css = `
 }
 .audio-rule {
   width: 56px; height: 2px;
-  background: linear-gradient(90deg,#ffde59,#ff914d);
+  background: linear-gradient(90deg,#546cfa,#546cfa);
   margin: 24px 0;
   opacity: 0; animation: aud-rise .9s .4s ease forwards;
 }
@@ -146,7 +146,7 @@ const css = `
   font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 9px; letter-spacing: .22em; text-transform: uppercase;
   padding: 10px 20px;
-  background: linear-gradient(90deg,#ffde59,#ff914d);
+  background: linear-gradient(90deg,#546cfa,#546cfa);
   color: #0a0a0a; text-decoration: none;
   transition: opacity .25s; cursor: pointer; border: none;
   margin-top: auto;

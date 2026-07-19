@@ -1,4 +1,4 @@
-// components/blog/SeriesSidebar.tsx
+﻿// components/blog/SeriesSidebar.tsx
 "use client";
 
 import { useState } from "react";
@@ -163,8 +163,8 @@ export function SeriesSidebar({ series, posts, loading }: SeriesSidebarProps) {
         }
 
         .series-item:hover {
-          border-color: rgba(212, 168, 67, 0.2);
-          background: rgba(212, 168, 67, 0.03);
+          border-color: rgba(84, 108, 250, 0.2);
+          background: rgba(84, 108, 250, 0.03);
         }
 
         .series-item-header {
@@ -237,7 +237,7 @@ export function SeriesSidebar({ series, posts, loading }: SeriesSidebarProps) {
         }
 
         .series-post-item:hover {
-          background: rgba(212, 168, 67, 0.08);
+          background: rgba(84, 108, 250, 0.08);
           color: var(--cream, #f0ece4);
           padding-left: 14px;
         }
@@ -267,12 +267,12 @@ export function SeriesSidebar({ series, posts, loading }: SeriesSidebarProps) {
         }
 
         .series-sidebar::-webkit-scrollbar-thumb {
-          background: rgba(212, 168, 67, 0.3);
+          background: rgba(84, 108, 250, 0.3);
           border-radius: 3px;
         }
 
         .series-sidebar::-webkit-scrollbar-thumb:hover {
-          background: rgba(212, 168, 67, 0.5);
+          background: rgba(84, 108, 250, 0.5);
         }
 
         @media (max-width: 1024px) {

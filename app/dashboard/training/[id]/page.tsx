@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
@@ -77,7 +77,7 @@ const css = `
   width: 34px;
   height: 34px;
   border-radius: 10px;
-  border: 1px solid rgba(212,168,67,.62);
+  border: 1px solid rgba(84,108,250,.62);
   background: linear-gradient(135deg,#546cfa,#546cfa);
   color: #09090d;
   display: inline-flex;
@@ -103,7 +103,7 @@ const css = `
 .tn-cat {
   font-family: var(--font-poppins), sans-serif;
   font-size: 9px; letter-spacing: .3em; text-transform: uppercase;
-  background: linear-gradient(90deg,#ffde59,#ff914d);
+  background: linear-gradient(90deg,#546cfa,#546cfa);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 .tn-title {
@@ -120,7 +120,7 @@ const css = `
   flex: 1; height: 6px; background: color-mix(in srgb, var(--tn-text) 10%, transparent); border-radius: 3px; overflow: hidden;
 }
 .tn-progress-fill {
-  height: 100%; background: linear-gradient(90deg,#ffde59,#ff914d);
+  height: 100%; background: linear-gradient(90deg,#546cfa,#546cfa);
   border-radius: 3px; transition: width .5s ease;
 }
 .tn-progress-label {
@@ -166,7 +166,7 @@ const css = `
   font-weight: 500; transition: color .2s;
   flex-shrink: 0;
 }
-.tn-lesson-play:hover { color: #ffde59; }
+.tn-lesson-play:hover { color: #546cfa; }
 
 /* VIDEO EMBED */
 .tn-video-wrap {

@@ -1,4 +1,4 @@
-import { Plus, Pencil, Trash2, Eye } from "lucide-react";
+﻿import { Plus, Pencil, Trash2, Eye } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { TW } from "../constants";
 import { BlogSeries } from "../types";
@@ -37,7 +37,7 @@ export default function BlogSeriesTab({ series, onNew, onEdit, onDelete, onToggl
             </thead>
             <tbody>
               {series.map((s) => (
-                <tr key={s.id} className="hover:[&>td]:bg-[rgba(212,168,67,.04)]">
+                <tr key={s.id} className="hover:[&>td]:bg-[rgba(84,108,250,.04)]">
                   <td className={TW.td} style={{ color: "#f0ece4", maxWidth: "250px" }}>
                     <div className="font-semibold">{s.name_en}</div>
                     <div className="text-[11px] text-white/40 mt-0.5">{s.name_fr}</div>

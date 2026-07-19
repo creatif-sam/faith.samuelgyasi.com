@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { Bell, X } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
@@ -47,7 +47,7 @@ export default function UsersTab({ users }: UsersTabProps) {
             </thead>
             <tbody>
               {sorted.map((u) => (
-                <tr key={u.id} className="hover:[&>td]:bg-[rgba(212,168,67,.04)]">
+                <tr key={u.id} className="hover:[&>td]:bg-[rgba(84,108,250,.04)]">
                   <td className={TW.td} style={{ color: "#f0ece4", fontFamily: "monospace", fontSize: 12 }}>
                     {u.id}
                   </td>

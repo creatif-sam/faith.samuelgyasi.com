@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -55,7 +55,7 @@ export default function AnalyzerListClient({ initialTests }: { initialTests: Fai
 
   const cardStyles = `
     bg-[#0b0c12] border border-white/[.08] rounded-xl p-8
-    hover:border-[rgba(212,168,67,.3)] hover:shadow-[0_8px_30px_rgba(212,168,67,.15)]
+    hover:border-[rgba(84,108,250,.3)] hover:shadow-[0_8px_30px_rgba(84,108,250,.15)]
     transition-all duration-300 group cursor-pointer
   `;
 
@@ -83,7 +83,7 @@ export default function AnalyzerListClient({ initialTests }: { initialTests: Fai
           />
 
           <div className="flex justify-center mb-6">
-            <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#546cfa] to-[#546cfa] flex items-center justify-center shadow-[0_8px_30px_rgba(212,168,67,.4)]">
+            <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#546cfa] to-[#546cfa] flex items-center justify-center shadow-[0_8px_30px_rgba(84,108,250,.4)]">
               <ClipboardCheck size={40} className="text-[#09090d]" />
             </div>
           </div>
@@ -168,7 +168,7 @@ export default function AnalyzerListClient({ initialTests }: { initialTests: Fai
         )}
 
         {/* Biblical Foundation */}
-        <div className="mt-20 p-8 bg-[rgba(212,168,67,.05)] border border-[rgba(212,168,67,.15)] rounded-xl">
+        <div className="mt-20 p-8 bg-[rgba(84,108,250,.05)] border border-[rgba(84,108,250,.15)] rounded-xl">
           <h3 className="font-poppins text-[20px] font-semibold text-[#546cfa] mb-4">
             {lang === "fr" ? "Fondement Biblique" : "Biblical Foundation"}
           </h3>

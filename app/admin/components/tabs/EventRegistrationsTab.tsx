@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { SupabaseClient } from "@supabase/supabase-js";
 import { cn } from "@/lib/utils";
 import { TW } from "../constants";
@@ -139,7 +139,7 @@ export default function EventRegistrationsTab({ events, db }: EventRegistrations
             </thead>
             <tbody>
               {currentData.map((item) => (
-                <tr key={item.id} className="hover:[&>td]:bg-[rgba(212,168,67,.04)]">
+                <tr key={item.id} className="hover:[&>td]:bg-[rgba(84,108,250,.04)]">
                   <td className={TW.td} style={{ color: "#f0ece4", fontWeight: 500 }}>{item.name}</td>
                   <td className={TW.td} style={{ fontSize: "12px" }}>{item.email}</td>
                   <td className={TW.td} style={{ fontSize: "12px" }}>{item.phone ?? "—"}</td>
@@ -175,7 +175,7 @@ export default function EventRegistrationsTab({ events, db }: EventRegistrations
                   </thead>
                   <tbody>
                     {items.map((item: EventRegistration | RecordingRequest) => (
-                      <tr key={item.id} className="hover:[&>td]:bg-[rgba(212,168,67,.04)]">
+                      <tr key={item.id} className="hover:[&>td]:bg-[rgba(84,108,250,.04)]">
                         <td className={TW.td} style={{ color: "#f0ece4", fontWeight: 500 }}>{item.name}</td>
                         <td className={TW.td} style={{ fontSize: "12px" }}>{item.email}</td>
                         <td className={TW.td} style={{ fontSize: "12px" }}>{item.phone ?? "—"}</td>

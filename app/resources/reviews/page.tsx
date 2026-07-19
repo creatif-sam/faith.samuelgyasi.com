@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Suspense, useEffect, useState, useCallback } from "react";
 import Link from "next/link";
@@ -133,7 +133,7 @@ const css = `
 }
 .reviews-rule {
   width: 56px; height: 2px;
-  background: linear-gradient(90deg,#ffde59,#ff914d);
+  background: linear-gradient(90deg,#546cfa,#546cfa);
   margin: 24px 0;
   opacity: 0; animation: rv-rise .9s .4s ease forwards;
 }
@@ -163,7 +163,7 @@ const css = `
   color: color-mix(in srgb, var(--white) 40%, transparent); cursor: pointer; transition: all .25s;
 }
 .rv-filter:hover { border-color: rgba(201,168,76,.3); color: var(--gold); }
-.rv-filter.active { background: linear-gradient(90deg,#ffde59,#ff914d); color: #0a0a0a; border-color: transparent; }
+.rv-filter.active { background: linear-gradient(90deg,#546cfa,#546cfa); color: #0a0a0a; border-color: transparent; }
 
 /* ── REVIEWS LIST ── */
 .reviews-list {

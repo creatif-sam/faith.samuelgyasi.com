@@ -1,4 +1,4 @@
-export const credoStyles = `
+﻿export const credoStyles = `
 
 .credo-pg {
   background: var(--black);
@@ -61,7 +61,7 @@ export const credoStyles = `
 }
 .credo-rule {
   width: 56px; height: 2px;
-  background: linear-gradient(90deg, #ffde59, #ff914d);
+  background: linear-gradient(90deg, #546cfa, #546cfa);
   margin: 28px 0;
   opacity: 0;
   animation: credo-rise .9s .4s ease forwards;

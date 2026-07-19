@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { X, Plus, Calendar, Link2, Send, Flame, GraduationCap, BookOpen, BookMarked, Target, MessageCircle, CheckCircle2, Circle, AlertTriangle, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
@@ -273,7 +273,7 @@ export default function DiscipleProgressModal({ disciple, onClose, db, load }: D
                   </div>
                   <div className="space-y-3">
                     {recentMessages.map((m) => (
-                      <div key={m.id} className="text-sm border-l-2 border-[rgba(212,168,67,.25)] pl-3">
+                      <div key={m.id} className="text-sm border-l-2 border-[rgba(84,108,250,.25)] pl-3">
                         <div className="text-white/80 font-medium">{m.title}</div>
                         {m.body && <div className="text-white/50 text-xs mt-0.5">{m.body}</div>}
                         {m.reply && (
@@ -299,7 +299,7 @@ export default function DiscipleProgressModal({ disciple, onClose, db, load }: D
               <Plus size={14} /> Add Progress Entry
             </button>
           ) : (
-            <div className="mb-6 p-6 bg-white/[.02] border border-[rgba(212,168,67,.2)] rounded-lg">
+            <div className="mb-6 p-6 bg-white/[.02] border border-[rgba(84,108,250,.2)] rounded-lg">
               <h3 className="font-poppins text-sm font-semibold text-[#546cfa] mb-4">
                 New Progress Entry
               </h3>
@@ -415,7 +415,7 @@ export default function DiscipleProgressModal({ disciple, onClose, db, load }: D
                     className="p-4 bg-white/[.02] border border-white/[.06] rounded-lg hover:border-white/[.12] transition-colors"
                   >
                     <div className="flex items-start gap-3 mb-3">
-                      <div className="w-8 h-8 rounded-lg bg-[rgba(212,168,67,.1)] flex items-center justify-center flex-shrink-0">
+                      <div className="w-8 h-8 rounded-lg bg-[rgba(84,108,250,.1)] flex items-center justify-center flex-shrink-0">
                         <Calendar size={14} className="text-[#546cfa]" />
                       </div>
                       <div className="flex-1">

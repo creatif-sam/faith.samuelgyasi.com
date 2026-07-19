@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { Plus, Pencil, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { TW } from "../constants";
@@ -59,7 +59,7 @@ export default function LibraryTab({ items, onNew, onEdit, onDelete, onToggle }:
             </tr></thead>
             <tbody>
               {filtered.map((item) => (
-                <tr key={item.id} className="hover:[&>td]:bg-[rgba(212,168,67,.04)]">
+                <tr key={item.id} className="hover:[&>td]:bg-[rgba(84,108,250,.04)]">
                   <td className={TW.td} style={{ color: "#f0ece4", maxWidth: "260px" }}>
                     <div className="font-semibold">{item.title}</div>
                     {item.description && <div className="text-[11px] text-white/40 mt-0.5 italic">{item.description.slice(0, 70)}{item.description.length > 70 ? "..." : ""}</div>}

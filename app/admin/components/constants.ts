@@ -1,4 +1,4 @@
-import {
+﻿import {
   LayoutDashboard, BarChart3, FileText, Users, MessageSquare,
   Mail, BookOpen, Star, Calendar, MessageSquarePlus,
   GraduationCap, Images, UserCheck, Heart, List, ClipboardCheck, Tag, ScrollText, MessageCircle, Flame, Megaphone
@@ -53,25 +53,25 @@ export const NAV_SORTED = [...NAV].sort((a, b) => {
 export const TW = {
   // Buttons
   btn:     "inline-flex items-center gap-2 font-poppins text-[11px] font-medium cursor-pointer rounded-lg transition-all duration-200 active:scale-[.97] border-0",
-  gold:    "bg-gradient-to-br from-[#546cfa] to-[#546cfa] text-[#09090d] px-5 py-2.5 shadow-[0_2px_12px_rgba(212,168,67,.25)] hover:from-[#546cfa] hover:to-[#546cfa] hover:shadow-[0_4px_18px_rgba(212,168,67,.4)]",
+  gold:    "bg-gradient-to-br from-[#546cfa] to-[#546cfa] text-[#09090d] px-5 py-2.5 shadow-[0_2px_12px_rgba(84,108,250,.25)] hover:from-[#546cfa] hover:to-[#546cfa] hover:shadow-[0_4px_18px_rgba(84,108,250,.4)]",
   ghost:   "bg-white/5 text-white/50 border border-white/10 px-5 py-2.5 hover:bg-white/[.09] hover:text-white/85 hover:border-white/[.18]",
   danger:  "bg-red-500/10 text-red-400 border border-red-500/20 px-5 py-2.5 hover:bg-red-500/[.18] hover:border-red-500/30",
   sm:      "!px-3 !py-1.5 !text-[10px] !rounded-lg gap-1",
   // Badges
   badge:   "font-poppins text-[10px] font-medium px-2.5 py-0.5 inline-block rounded-full",
-  bPub:    "bg-[rgba(212,168,67,.12)] text-[#546cfa] border border-[rgba(212,168,67,.2)]",
+  bPub:    "bg-[rgba(84,108,250,.12)] text-[#546cfa] border border-[rgba(84,108,250,.2)]",
   bDft:    "bg-white/[.06] text-white/40 border border-white/[.08]",
   bSent:   "bg-blue-500/10 text-blue-400 border border-blue-500/20",
   bOpen:   "bg-green-500/10 text-green-400 border border-green-500/20",
-  bNew:    "bg-[rgba(212,168,67,.16)] text-[#546cfa] border border-[rgba(212,168,67,.25)]",
+  bNew:    "bg-[rgba(84,108,250,.16)] text-[#546cfa] border border-[rgba(84,108,250,.25)]",
   bSending:"bg-blue-500/10 text-blue-400 border border-blue-500/20",
   bFailed: "bg-red-500/10 text-red-400 border border-red-500/20",
   // Form
   field:   "mb-5",
   label:   "font-poppins text-[11px] font-medium text-white/50 block mb-2",
-  input:   "w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-poppins text-sm px-4 py-3 outline-none transition-all focus:border-[rgba(212,168,67,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(212,168,67,.08)]",
-  select:  "w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-poppins text-sm px-4 py-3 outline-none transition-all focus:border-[rgba(212,168,67,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(212,168,67,.08)]",
-  tarea:   "w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-poppins text-sm px-4 py-3 outline-none transition-all focus:border-[rgba(212,168,67,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(212,168,67,.08)] resize-y min-h-[200px]",
+  input:   "w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-poppins text-sm px-4 py-3 outline-none transition-all focus:border-[rgba(84,108,250,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(84,108,250,.08)]",
+  select:  "w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-poppins text-sm px-4 py-3 outline-none transition-all focus:border-[rgba(84,108,250,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(84,108,250,.08)]",
+  tarea:   "w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-poppins text-sm px-4 py-3 outline-none transition-all focus:border-[rgba(84,108,250,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(84,108,250,.08)] resize-y min-h-[200px]",
   // Typography
   pgTitle: "font-poppins text-[22px] sm:text-[30px] font-bold text-[#eef0f5] leading-tight tracking-tight",
   pgSub:   "font-poppins text-[12px] sm:text-[13px] text-white/40 mt-1.5",
@@ -94,8 +94,8 @@ export const TW = {
   pFoot:   "flex flex-wrap gap-2.5 justify-end px-4 sm:px-7 py-4 sm:py-5 border-t border-white/[.055] bg-black/[.12] flex-shrink-0 rounded-b-2xl",
   fTitle:  "font-poppins text-[17px] sm:text-[20px] font-bold text-[#eef0f5]",
   // Message cards
-  msgCard: "bg-[#0b0c12] border border-white/[.06] border-l-[3px] border-l-transparent rounded-lg p-5 transition-all duration-200 mb-2 hover:border-l-[rgba(212,168,67,.35)] hover:shadow-[0_4px_20px_rgba(0,0,0,.25)]",
-  msgNew:  "!bg-[rgba(212,168,67,.03)] !border-[rgba(212,168,67,.15)] !border-l-[rgba(212,168,67,.6)]",
+  msgCard: "bg-[#0b0c12] border border-white/[.06] border-l-[3px] border-l-transparent rounded-lg p-5 transition-all duration-200 mb-2 hover:border-l-[rgba(84,108,250,.35)] hover:shadow-[0_4px_20px_rgba(0,0,0,.25)]",
+  msgNew:  "!bg-[rgba(84,108,250,.03)] !border-[rgba(84,108,250,.15)] !border-l-[rgba(84,108,250,.6)]",
   msgHead: "flex justify-between items-start gap-4 flex-wrap",
   msgName: "font-poppins text-[15px] font-semibold text-[#eef0f5] flex items-center gap-2 flex-wrap",
   msgMeta: "font-poppins text-[11px] text-white/[.35] mt-1",
@@ -104,26 +104,26 @@ export const TW = {
   // Mail sub-nav (utility tabs: Compose / Inbox / Sent)
   mNav:    "flex gap-1 mb-6 overflow-x-auto bg-white/[.03] border border-white/[.06] rounded-lg p-1 w-fit",
   mTab:    "flex items-center gap-2 px-4 py-2.5 font-poppins text-[12px] font-medium text-white/40 bg-transparent border-0 cursor-pointer rounded-lg flex-shrink-0 transition-all whitespace-nowrap hover:text-white/75 hover:bg-white/5",
-  mAct:    "!text-[#546cfa] !bg-[rgba(212,168,67,.1)]",
+  mAct:    "!text-[#546cfa] !bg-[rgba(84,108,250,.1)]",
   // Mail section switcher (big segmented toggle: Email Campaigns | Email Templates)
   mSeg:    "flex gap-1 mb-7 bg-white/[.03] border border-white/[.06] rounded-lg p-1.5",
   mSegTab: "flex-1 flex items-center justify-center gap-1.5 sm:gap-2.5 px-2 sm:px-6 py-3 sm:py-3.5 font-poppins text-[11px] sm:text-[13px] font-semibold text-white/45 bg-transparent border-0 cursor-pointer rounded-lg transition-all whitespace-nowrap hover:text-white/75 hover:bg-white/5",
-  mSegAct: "!text-[#09090d] !bg-gradient-to-r !from-[#546cfa] !to-[#546cfa] !shadow-[0_2px_16px_rgba(212,168,67,.3)] hover:!text-[#09090d]",
+  mSegAct: "!text-[#09090d] !bg-gradient-to-r !from-[#546cfa] !to-[#546cfa] !shadow-[0_2px_16px_rgba(84,108,250,.3)] hover:!text-[#09090d]",
   // Filter chips (All / Drafts / Sent)
   chipRow: "flex gap-2 items-center",
   chip:    "font-poppins text-[11px] font-medium px-4 py-2 rounded-lg cursor-pointer transition-all border bg-white/[.03] text-white/45 border-white/[.08] hover:text-white/75 hover:bg-white/[.06]",
-  chipAct: "!bg-[rgba(212,168,67,.12)] !text-[#546cfa] !border-[rgba(212,168,67,.25)]",
+  chipAct: "!bg-[rgba(84,108,250,.12)] !text-[#546cfa] !border-[rgba(84,108,250,.25)]",
   // Progress (recipients sent / total)
   progWrap:"w-full h-1.5 bg-white/[.06] rounded-full overflow-hidden mt-1.5 min-w-[80px]",
   progBar: "h-full bg-gradient-to-r from-[#546cfa] to-[#f0cc7a] rounded-full transition-all duration-500",
   // Stats
-  stat:    "bg-[#0b0c12] p-4 sm:p-6 border border-white/[.06] rounded-lg relative overflow-hidden cursor-default transition-all duration-[250ms] group hover:border-[rgba(212,168,67,.22)] hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(0,0,0,.4),0_0_0_1px_rgba(212,168,67,.1)]",
+  stat:    "bg-[#0b0c12] p-4 sm:p-6 border border-white/[.06] rounded-lg relative overflow-hidden cursor-default transition-all duration-[250ms] group hover:border-[rgba(84,108,250,.22)] hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(0,0,0,.4),0_0_0_1px_rgba(84,108,250,.1)]",
   statNum: "font-poppins text-[24px] sm:text-[36px] font-bold leading-none mb-2 bg-gradient-to-br from-[#546cfa] to-[#f0cc7a] bg-clip-text text-transparent",
   statLbl: "font-poppins text-[11px] sm:text-[12px] font-medium text-white/[.40]",
   // Icon button
   iconBtn: "bg-white/5 border border-white/[.08] text-white/40 cursor-pointer p-2 rounded-lg flex items-center transition-all hover:bg-white/10 hover:text-white/80",
   // Quick reply
-  qReply:  "mt-4 p-5 bg-white/[.02] border-t border-white/5 border-l-[3px] border-l-[rgba(212,168,67,.25)] rounded-b-xl",
+  qReply:  "mt-4 p-5 bg-white/[.02] border-t border-white/5 border-l-[3px] border-l-[rgba(84,108,250,.25)] rounded-b-xl",
   // WA
   waCard:  "bg-[#0b0c12] border border-white/[.06] rounded-lg p-7",
   // Compose

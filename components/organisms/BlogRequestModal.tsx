@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
@@ -85,7 +85,7 @@ export function BlogRequestModal({ onClose, lang }: BlogRequestModalProps) {
   return (
     <div className="fixed inset-0 bg-black/80 backdrop-blur-xl z-[9999] flex items-center justify-center p-5" onClick={onClose}>
       <div 
-        className="bg-[#0a0a0d] border border-[#546cfa]/20 rounded-xl w-full max-w-[600px] max-h-[90vh] overflow-y-auto shadow-[0_32px_80px_rgba(0,0,0,.7),0_0_0_1px_rgba(212,168,67,.15)]" 
+        className="bg-[#0a0a0d] border border-[#546cfa]/20 rounded-xl w-full max-w-[600px] max-h-[90vh] overflow-y-auto shadow-[0_32px_80px_rgba(0,0,0,.7),0_0_0_1px_rgba(84,108,250,.15)]" 
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -111,7 +111,7 @@ export function BlogRequestModal({ onClose, lang }: BlogRequestModalProps) {
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-poppins text-sm px-4 py-3 outline-none transition-all focus:border-[rgba(212,168,67,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(212,168,67,.08)]"
+              className="w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-poppins text-sm px-4 py-3 outline-none transition-all focus:border-[rgba(84,108,250,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(84,108,250,.08)]"
               placeholder={lang === "en" ? "Enter your name" : "Entrez votre nom"}
               required
             />
@@ -123,7 +123,7 @@ export function BlogRequestModal({ onClose, lang }: BlogRequestModalProps) {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-poppins text-sm px-4 py-3 outline-none transition-all focus:border-[rgba(212,168,67,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(212,168,67,.08)]"
+              className="w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-poppins text-sm px-4 py-3 outline-none transition-all focus:border-[rgba(84,108,250,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(84,108,250,.08)]"
               placeholder={lang === "en" ? "your@email.com" : "votre@email.com"}
               required
             />
@@ -135,7 +135,7 @@ export function BlogRequestModal({ onClose, lang }: BlogRequestModalProps) {
               type="text"
               value={topic}
               onChange={(e) => setTopic(e.target.value)}
-              className="w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-poppins text-sm px-4 py-3 outline-none transition-all focus:border-[rgba(212,168,67,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(212,168,67,.08)]"
+              className="w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-poppins text-sm px-4 py-3 outline-none transition-all focus:border-[rgba(84,108,250,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(84,108,250,.08)]"
               placeholder={t.topicPlaceholder[lang]}
               required
             />
@@ -146,7 +146,7 @@ export function BlogRequestModal({ onClose, lang }: BlogRequestModalProps) {
             <textarea
               value={details}
               onChange={(e) => setDetails(e.target.value)}
-              className="w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-poppins text-sm px-4 py-3 outline-none transition-all focus:border-[rgba(212,168,67,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(212,168,67,.08)] resize-y min-h-[100px]"
+              className="w-full bg-white/[.04] border border-white/[.09] rounded-lg text-[#eef0f5] font-poppins text-sm px-4 py-3 outline-none transition-all focus:border-[rgba(84,108,250,.5)] focus:bg-white/[.06] focus:shadow-[0_0_0_3px_rgba(84,108,250,.08)] resize-y min-h-[100px]"
               placeholder={t.detailsPlaceholder[lang]}
             />
           </div>
@@ -154,7 +154,7 @@ export function BlogRequestModal({ onClose, lang }: BlogRequestModalProps) {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full bg-gradient-to-r from-[#546cfa] to-[#b8922e] text-[#080807] font-poppins text-sm font-semibold px-6 py-3 rounded-lg transition-all hover:shadow-[0_8px_24px_rgba(212,168,67,.35)] disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-gradient-to-r from-[#546cfa] to-[#b8922e] text-[#080807] font-poppins text-sm font-semibold px-6 py-3 rounded-lg transition-all hover:shadow-[0_8px_24px_rgba(84,108,250,.35)] disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {submitting ? t.submitting[lang] : t.submit[lang]}
           </button>

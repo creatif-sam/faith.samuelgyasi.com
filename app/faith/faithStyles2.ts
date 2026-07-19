@@ -1,4 +1,4 @@
-export const faithStyles2 = `
+﻿export const faithStyles2 = `
 
 /* ── PILLARS OF PRACTICE ── */
 .fdp #practice { background:var(--bg); }
@@ -17,7 +17,7 @@ export const faithStyles2 = `
 .fdp .pr-num {
   padding:36px 24px;
   font-family:var(--font-playfair),'Playfair Display',serif;font-size:40px;
-  background:linear-gradient(90deg,#ffde59,#ff914d);
+  background:linear-gradient(90deg,#546cfa,#546cfa);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   background-clip:text;
   opacity:.4;border-right:1px solid var(--line);
@@ -42,7 +42,7 @@ export const faithStyles2 = `
 .fdp .reflection-inner { max-width:780px;margin:0 auto; }
 .fdp .refl-ornament {
   font-size:32px;
-  background:linear-gradient(90deg,#ffde59,#ff914d);
+  background:linear-gradient(90deg,#546cfa,#546cfa);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   background-clip:text;
   opacity:.6;
@@ -60,7 +60,7 @@ export const faithStyles2 = `
 }
 .fdp .refl-quote strong {
   font-style:normal;
-  background:linear-gradient(90deg,#ffde59,#ff914d);
+  background:linear-gradient(90deg,#546cfa,#546cfa);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   background-clip:text;
 }
@@ -89,7 +89,7 @@ export const faithStyles2 = `
 }
 .fdp .connect-title em {
   font-style:italic;
-  background:linear-gradient(90deg,#ffde59,#ff914d);
+  background:linear-gradient(90deg,#546cfa,#546cfa);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   background-clip:text;
 }
@@ -122,21 +122,21 @@ export const faithStyles2 = `
 .fdp .bs-eyebrow {
   font-family:'Poppins', sans-serif; font-size:9px;
   letter-spacing:.35em; text-transform:uppercase;
-  background:linear-gradient(90deg,#ffde59,#ff914d);
+  background:linear-gradient(90deg,#546cfa,#546cfa);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   background-clip:text;
   display:flex; align-items:center; gap:16px;
 }
 .fdp .bs-eyebrow::before,.fdp .bs-eyebrow::after {
   content:''; width:36px; height:1px;
-  background:linear-gradient(90deg,#ffde59,#ff914d);
+  background:linear-gradient(90deg,#546cfa,#546cfa);
 }
 .fdp .bs-title {
   font-family:var(--font-playfair),'Playfair Display',serif;
   font-size:clamp(30px,4vw,52px); color:var(--white); line-height:1.05;
 }
 .fdp .bs-title em { font-style:italic;
-  background:linear-gradient(90deg,#ffde59,#ff914d);
+  background:linear-gradient(90deg,#546cfa,#546cfa);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   background-clip:text;
 }
@@ -151,16 +151,16 @@ export const faithStyles2 = `
   font-family:'Poppins', sans-serif; font-size:10px;
   letter-spacing:.22em; text-transform:uppercase;
   padding:14px 32px;
-  background:linear-gradient(90deg,#ffde59,#ff914d);
+  background:linear-gradient(90deg,#546cfa,#546cfa);
   color:#0a0a0a;
   text-decoration:none; transition:opacity .25s;
   cursor:none;
 }
 .fdp .bs-btn:hover { opacity:.8; }
 .fdp .bs-btn.ghost {
-  background:transparent; color:#ffde59; border:1px solid #ffde59;
+  background:transparent; color:#546cfa; border:1px solid #546cfa;
 }
-.fdp .bs-btn.ghost:hover { background:linear-gradient(90deg,#ffde59,#ff914d); color:#0a0a0a; border-color:transparent; }
+.fdp .bs-btn.ghost:hover { background:linear-gradient(90deg,#546cfa,#546cfa); color:#0a0a0a; border-color:transparent; }
 
 @media(max-width:900px){
   .fdp nav { padding:18px 24px; }

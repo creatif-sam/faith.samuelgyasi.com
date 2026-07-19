@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { useState } from "react";
 import { Flame, Check, BarChart2, ChevronDown, ChevronRight } from "lucide-react";
 
@@ -54,7 +54,7 @@ export default function HabitUserDetail({ selectedSummary, selectedUserHabits, s
   return (
     <div>
       <div className="flex items-center gap-4 mb-8 pb-6 border-b border-white/[.05]">
-        <div className="w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold" style={{ background: "rgba(212,168,67,.15)", color: "#546cfa" }}>
+        <div className="w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold" style={{ background: "rgba(84,108,250,.15)", color: "#546cfa" }}>
           {selectedSummary?.email[0].toUpperCase()}
         </div>
         <div>
@@ -85,7 +85,7 @@ export default function HabitUserDetail({ selectedSummary, selectedUserHabits, s
                 const count = selectedUserLogs.filter(l => l.logged_date === day).length;
                 return (
                   <div key={day} title={`${day}: ${count} check-in${count !== 1 ? "s" : ""}`} className="w-5 h-5 rounded-sm transition-all"
-                    style={{ background: count===0?"rgba(255,255,255,.04)":count===1?"rgba(212,168,67,.25)":count===2?"rgba(212,168,67,.5)":"rgba(212,168,67,.85)", border: day===today?"2px solid rgba(212,168,67,.8)":"1px solid rgba(255,255,255,.06)" }}
+                    style={{ background: count===0?"rgba(255,255,255,.04)":count===1?"rgba(84,108,250,.25)":count===2?"rgba(84,108,250,.5)":"rgba(84,108,250,.85)", border: day===today?"2px solid rgba(84,108,250,.8)":"1px solid rgba(255,255,255,.06)" }}
                   />
                 );
               })}
@@ -132,7 +132,7 @@ export default function HabitUserDetail({ selectedSummary, selectedUserHabits, s
                   <div className="text-[10px] text-white/40 mb-2">Last 30 days</div>
                   <div className="flex flex-wrap gap-1">
                     {last30.map((d) => (
-                      <div key={d} title={d} className="w-5 h-5 rounded" style={{ background: hLogDates.includes(d)?"rgba(212,168,67,.5)":"rgba(255,255,255,.04)", border: d===today?"2px solid rgba(212,168,67,.8)":"1px solid rgba(255,255,255,.06)" }} />
+                      <div key={d} title={d} className="w-5 h-5 rounded" style={{ background: hLogDates.includes(d)?"rgba(84,108,250,.5)":"rgba(255,255,255,.04)", border: d===today?"2px solid rgba(84,108,250,.8)":"1px solid rgba(255,255,255,.06)" }} />
                     ))}
                   </div>
                   {hLogs.length > 0 && (

@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import type { Metadata } from "next";
 
@@ -30,7 +30,7 @@ export default function NotFound() {
           fontSize: "9px",
           letterSpacing: "0.4em",
           textTransform: "uppercase",
-          background: "linear-gradient(90deg,#ffde59,#ff914d)",
+          background: "linear-gradient(90deg,#546cfa,#546cfa)",
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
           backgroundClip: "text",
@@ -53,7 +53,7 @@ export default function NotFound() {
           style={{
             fontStyle: "italic",
             display: "block",
-            background: "linear-gradient(90deg,#ffde59,#ff914d)",
+            background: "linear-gradient(90deg,#546cfa,#546cfa)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",

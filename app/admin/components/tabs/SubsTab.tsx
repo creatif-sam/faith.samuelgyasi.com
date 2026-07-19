@@ -1,4 +1,4 @@
-import { Trash2 } from "lucide-react";
+﻿import { Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { TW } from "../constants";
 import { Subscriber } from "../types";
@@ -20,7 +20,7 @@ export default function SubsTab({ subs, onDelete }: SubsTabProps) {
             <thead><tr><th className={TW.th}>Email</th><th className={TW.th}>Name</th><th className={TW.th}>Interests</th><th className={TW.th}>Confirmed</th><th className={TW.th}>Joined</th><th className={TW.th}></th></tr></thead>
             <tbody>
               {subs.map((s) => (
-                <tr key={s.id} className="hover:[&>td]:bg-[rgba(212,168,67,.04)]">
+                <tr key={s.id} className="hover:[&>td]:bg-[rgba(84,108,250,.04)]">
                   <td className={TW.td} style={{ color: "#f0ece4" }}>{s.email}</td>
                   <td className={TW.td}>{s.name ?? "—"}</td>
                   <td className={TW.td} style={{ maxWidth: 220 }}>

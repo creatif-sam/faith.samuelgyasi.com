@@ -1,4 +1,4 @@
-export const faithStyles1 = `
+﻿export const faithStyles1 = `
 
 /* ── DESIGN TOKENS ── */
 .fdp {
@@ -8,7 +8,7 @@ export const faithStyles1 = `
   --cream:  #e8e0d0;
   --gold:   #c9a84c;
   --gold2:  #a8863a;
-  --gold-grad: linear-gradient(90deg,#ffde59,#ff914d);
+  --gold-grad: linear-gradient(90deg,#546cfa,#546cfa);
   --dim:    #7a7060;
   --dimmer: #3e3830;
   --line:   rgba(240,236,228,.06);
@@ -31,9 +31,9 @@ export const faithStyles1 = `
   display: flex; align-items: center; gap: 6px;
   transition: border-color .25s, color .25s;
 }
-.fdp-lang-toggle:hover { border-color: #ffde59; color: #ffde59; }
+.fdp-lang-toggle:hover { border-color: #546cfa; color: #546cfa; }
 .fdp-lang-toggle .active {
-  background: linear-gradient(90deg,#ffde59,#ff914d);
+  background: linear-gradient(90deg,#546cfa,#546cfa);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -53,7 +53,7 @@ body.on-fdp .cursor-ring { border-color: rgba(201,168,76,.35); mix-blend-mode: n
 .fdp-particles { position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden; }
 .fdp-p {
   position:absolute;width:1px;height:1px;border-radius:50%;
-  background:linear-gradient(90deg,#ffde59,#ff914d);opacity:0;
+  background:linear-gradient(90deg,#546cfa,#546cfa);opacity:0;
   animation:fdp-float var(--dur,20s) var(--delay,0s) linear infinite;
 }
 @keyframes fdp-float {
@@ -77,7 +77,7 @@ body.on-fdp .cursor-ring { border-color: rgba(201,168,76,.35); mix-blend-mode: n
   text-transform:uppercase;color:var(--dim);text-decoration:none;
   display:flex;align-items:center;gap:10px;transition:color .3s;
 }
-.fdp .nav-back:hover { color:#ffde59; }
+.fdp .nav-back:hover { color:#546cfa; }
 .fdp .nav-back svg { flex-shrink:0; }
 .fdp .nav-logo {
   font-family:var(--font-playfair),'Playfair Display',serif;font-size:17px;
@@ -86,7 +86,7 @@ body.on-fdp .cursor-ring { border-color: rgba(201,168,76,.35); mix-blend-mode: n
 .fdp .nav-tag {
   font-family:'Poppins', sans-serif;font-size:10px;
   letter-spacing:.22em;
-  background:linear-gradient(90deg,#ffde59,#ff914d);
+  background:linear-gradient(90deg,#546cfa,#546cfa);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   background-clip:text;
   text-transform:uppercase;
@@ -106,14 +106,14 @@ body.on-fdp .cursor-ring { border-color: rgba(201,168,76,.35); mix-blend-mode: n
 }
 .fdp .nav-link::after {
   content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,#ffde59,#ff914d);
+  background:linear-gradient(90deg,#546cfa,#546cfa);
   transform:scaleX(0);transform-origin:left;
   transition:transform .3s ease;
 }
-.fdp .nav-link:hover { color:#ffde59; }
+.fdp .nav-link:hover { color:#546cfa; }
 .fdp .nav-link:hover::after { transform:scaleX(1); }
 .fdp .nav-link--active {
-  background:linear-gradient(90deg,#ffde59,#ff914d);
+  background:linear-gradient(90deg,#546cfa,#546cfa);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   background-clip:text;
 }
@@ -148,7 +148,7 @@ body.on-fdp .cursor-ring { border-color: rgba(201,168,76,.35); mix-blend-mode: n
 .fdp .hero-eyebrow {
   font-family:'Poppins', sans-serif;font-size:9px;
   letter-spacing:.4em;text-transform:uppercase;
-  background:linear-gradient(90deg,#ffde59,#ff914d);
+  background:linear-gradient(90deg,#546cfa,#546cfa);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   background-clip:text;
   margin-bottom:24px;
@@ -162,7 +162,7 @@ body.on-fdp .cursor-ring { border-color: rgba(201,168,76,.35); mix-blend-mode: n
 }
 .fdp .hero-title em {
   font-style:italic;
-  background:linear-gradient(90deg,#ffde59,#ff914d);
+  background:linear-gradient(90deg,#546cfa,#546cfa);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   background-clip:text;
   display:block;font-size:.75em;
@@ -176,7 +176,7 @@ body.on-fdp .cursor-ring { border-color: rgba(201,168,76,.35); mix-blend-mode: n
 .fdp .hero-verse {
   margin-top:48px;padding:28px 36px;
   border-left:3px solid transparent;
-  border-image:linear-gradient(180deg,#ffde59,#ff914d) 1;
+  border-image:linear-gradient(180deg,#546cfa,#546cfa) 1;
   max-width:640px;
   opacity:0;animation:fdp-rise .9s .8s ease forwards;
   background:rgba(255,222,89,.04);
@@ -189,7 +189,7 @@ body.on-fdp .cursor-ring { border-color: rgba(201,168,76,.35); mix-blend-mode: n
   display:block;margin-top:12px;
   font-family:'Poppins', sans-serif;font-size:9px;
   letter-spacing:.2em;
-  background:linear-gradient(90deg,#ffde59,#ff914d);
+  background:linear-gradient(90deg,#546cfa,#546cfa);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   background-clip:text;
   text-transform:uppercase;
@@ -228,7 +228,7 @@ body.on-fdp .cursor-ring { border-color: rgba(201,168,76,.35); mix-blend-mode: n
   gap:36px;flex-wrap:wrap;
   font-family:'Poppins', sans-serif;font-size:9px;
   letter-spacing:.35em;text-transform:uppercase;
-  background:linear-gradient(90deg,#ffde59,#ff914d);
+  background:linear-gradient(90deg,#546cfa,#546cfa);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   background-clip:text;
 }
@@ -243,13 +243,13 @@ body.on-fdp .cursor-ring { border-color: rgba(201,168,76,.35); mix-blend-mode: n
 .fdp .s-label {
   font-family:'Poppins', sans-serif;font-size:9px;
   letter-spacing:.35em;text-transform:uppercase;
-  background:linear-gradient(90deg,#ffde59,#ff914d);
+  background:linear-gradient(90deg,#546cfa,#546cfa);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   background-clip:text;
   margin-bottom:56px;
   display:flex;align-items:center;gap:16px;
 }
-.fdp .s-label::before { content:'';width:36px;height:1px;background:linear-gradient(90deg,#ffde59,#ff914d); }
+.fdp .s-label::before { content:'';width:36px;height:1px;background:linear-gradient(90deg,#546cfa,#546cfa); }
 
 /* ── CORE BELIEFS ── */
 .fdp #beliefs { background:var(--bg2); }
@@ -270,7 +270,7 @@ body.on-fdp .cursor-ring { border-color: rgba(201,168,76,.35); mix-blend-mode: n
 .fdp .belief-card::after {
   content:'';
   position:absolute;bottom:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,transparent,#ffde59,#ff914d,transparent);
+  background:linear-gradient(90deg,transparent,#546cfa,#546cfa,transparent);
   opacity:0;transition:opacity .4s;
 }
 .fdp .belief-card:hover::after { opacity:.5; }
@@ -291,7 +291,7 @@ body.on-fdp .cursor-ring { border-color: rgba(201,168,76,.35); mix-blend-mode: n
   margin-top:24px;
   font-family:var(--font-playfair),'Playfair Display',serif;font-size:14px;
   font-style:italic;
-  background:linear-gradient(90deg,#ffde59,#ff914d);
+  background:linear-gradient(90deg,#546cfa,#546cfa);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   background-clip:text;
   opacity:.9;line-height:1.5;
@@ -309,7 +309,7 @@ body.on-fdp .cursor-ring { border-color: rgba(201,168,76,.35); mix-blend-mode: n
   color:var(--white);line-height:1.05;
 }
 .fdp .journey-headline em { font-style:italic;
-  background:linear-gradient(90deg,#ffde59,#ff914d);
+  background:linear-gradient(90deg,#546cfa,#546cfa);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   background-clip:text;
 }
@@ -327,7 +327,7 @@ body.on-fdp .cursor-ring { border-color: rgba(201,168,76,.35); mix-blend-mode: n
   cursor:none;
 }
 .fdp .journey-entry.visible { opacity:1;transform:none; }
-.fdp .journey-entry:hover { border-left-color:#ffde59;background:#141210; }
+.fdp .journey-entry:hover { border-left-color:#546cfa;background:#141210; }
 .fdp .je-title {
   font-family:var(--font-playfair),'Playfair Display',serif;font-size:24px;
   color:var(--white);
@@ -341,7 +341,7 @@ body.on-fdp .cursor-ring { border-color: rgba(201,168,76,.35); mix-blend-mode: n
   border-left:2px solid rgba(255,222,89,.3);
   font-family:var(--font-playfair),'Playfair Display',serif;font-style:italic;
   font-size:14px;
-  background:linear-gradient(90deg,#ffde59,#ff914d);
+  background:linear-gradient(90deg,#546cfa,#546cfa);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   background-clip:text;
   opacity:.85;line-height:1.55;
@@ -382,7 +382,7 @@ body.on-fdp .cursor-ring { border-color: rgba(201,168,76,.35); mix-blend-mode: n
 .fdp .sm-ref {
   font-family:'Poppins', sans-serif;font-size:9px;
   letter-spacing:.2em;text-transform:uppercase;
-  background:linear-gradient(90deg,#ffde59,#ff914d);
+  background:linear-gradient(90deg,#546cfa,#546cfa);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   background-clip:text;
   margin-top:20px;

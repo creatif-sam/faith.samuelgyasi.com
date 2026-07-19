@@ -71,7 +71,7 @@ const css = `
 }
 .lib-rule {
   width: 56px; height: 2px;
-  background: linear-gradient(90deg, #ffde59, #ff914d);
+  background: linear-gradient(90deg, #546cfa, #546cfa);
   margin: 24px 0;
   opacity: 0;
   animation: lib-rise .9s .4s ease forwards;
@@ -313,7 +313,7 @@ export default function ResourcesPage() {
           <Link href={localizedHref(lang, "/resources/trainings")} className="lib-section-card lib-section-card--full" style={{ transitionDelay: "0.32s" }}>
             <div style={{ display: "flex", flexDirection: "column", gap: 12, flex: "0 0 auto" }}>
               <div className="lib-card-num">05</div>
-              <div className="lib-card-icon" style={{ color: "#ffde59" }}><GraduationCap size={30} /></div>
+              <div className="lib-card-icon" style={{ color: "#546cfa" }}><GraduationCap size={30} /></div>
             </div>
             <div style={{ flex: 1 }}>
               <h2 className="lib-card-title">{lang === "en" ? "Trainings" : "Formations"}</h2>

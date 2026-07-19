@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { useState } from "react";
 import { BookMarked, Share2, Lock, Trash2, Sparkles } from "lucide-react";
 import { toast } from "sonner";
@@ -77,7 +77,7 @@ export default function JournalTab({ user, t, entries, setEntries }: JournalTabP
 
       {entries.length === 0 ? (
         <div className="dash-empty">
-          <Sparkles size={32} style={{ margin: "0 auto 12px", color: "rgba(212,168,67,.3)", display: "block" }} />
+          <Sparkles size={32} style={{ margin: "0 auto 12px", color: "rgba(84,108,250,.3)", display: "block" }} />
           {t.journalEmpty}
         </div>
       ) : (

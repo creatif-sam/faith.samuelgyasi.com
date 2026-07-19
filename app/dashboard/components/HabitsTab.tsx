@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { useState } from "react";
 import {
   Flame, Check, BarChart2, Plus, Sparkles, Sparkle, Trash2,
@@ -259,7 +259,7 @@ export default function HabitsTab({ user, t, habits, habitLogs, setHabits, setHa
 
       {habits.length === 0 ? (
         <div className="dash-empty" style={{ marginBottom: 32 }}>
-          <Sparkles size={32} style={{ margin: "0 auto 12px", color: "rgba(212,168,67,.3)", display: "block" }} />
+          <Sparkles size={32} style={{ margin: "0 auto 12px", color: "rgba(84,108,250,.3)", display: "block" }} />
           <div style={{ marginBottom: 16 }}>{t.habitEmpty}</div>
           <button
             className="dash-btn dash-btn-gold"

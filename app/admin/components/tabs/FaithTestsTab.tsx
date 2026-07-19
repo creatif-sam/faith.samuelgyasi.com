@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { Plus, Pencil, Trash2, List, X, ArrowLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { TW } from "../constants";
@@ -58,7 +58,7 @@ export default function FaithTestsTab({ tests, onNew, onEdit, onDelete, onToggle
                 </thead>
                 <tbody>
                   {tests.map((t) => (
-                    <tr key={t.id} className="hover:[&>td]:bg-[rgba(212,168,67,.04)]">
+                    <tr key={t.id} className="hover:[&>td]:bg-[rgba(84,108,250,.04)]">
                       <td className={TW.td} style={{ color: "#f0ece4", maxWidth: "250px" }}>
                         <div className="font-semibold">{t.name_en}</div>
                         <div className="text-[11px] text-white/40 mt-0.5">{t.name_fr}</div>
@@ -147,7 +147,7 @@ export default function FaithTestsTab({ tests, onNew, onEdit, onDelete, onToggle
                         </div>
                       </div>
                       {q.explanation_en && (
-                        <div className="mt-3 p-2 bg-[rgba(212,168,67,.05)] border-l-2 border-[#546cfa] rounded text-sm text-white/60">
+                        <div className="mt-3 p-2 bg-[rgba(84,108,250,.05)] border-l-2 border-[#546cfa] rounded text-sm text-white/60">
                           <div className="text-[10px] text-white/40 mb-1">Explanation:</div>
                           {q.explanation_en}
                         </div>
