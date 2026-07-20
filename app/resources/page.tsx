@@ -9,8 +9,8 @@ import { localizedHref } from "@/lib/i18n/locale";
 
 const css = `
 .lib-pg {
-  background: var(--black);
-  color: var(--white);
+  background: #0a0a0a;
+  color: #f5f3ef;
   min-height: 100vh;
   position: relative;
 }
@@ -54,7 +54,7 @@ const css = `
   font-weight: 900;
   line-height: 0.9;
   letter-spacing: -0.03em;
-  color: var(--white);
+  color: #f5f3ef;
   text-transform: uppercase;
   margin-bottom: 28px;
   opacity: 0;
@@ -80,7 +80,7 @@ const css = `
   font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: clamp(16px, 1.8vw, 20px);
   font-weight: 300;
-  color: color-mix(in srgb, var(--white) 62%, transparent);
+  color: rgba(245, 243, 239, 0.72);
   max-width: 540px;
   line-height: 1.7;
   opacity: 0;
@@ -138,14 +138,14 @@ const css = `
   font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: clamp(26px, 3vw, 40px);
   font-weight: 700;
-  color: var(--white);
+  color: #f5f3ef;
   line-height: 1.1;
 }
 .lib-card-body {
   font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 16px;
   font-weight: 300;
-  color: color-mix(in srgb, var(--white) 60%, transparent);
+  color: rgba(245, 243, 239, 0.68);
   line-height: 1.75;
 }
 .lib-card-cta {
@@ -177,7 +177,7 @@ const css = `
   font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: clamp(20px, 2.5vw, 30px);
   font-style: italic;
-  color: var(--white);
+  color: #f5f3ef;
   line-height: 1.4;
   max-width: 700px;
   margin: 0 auto 20px;
@@ -214,20 +214,6 @@ const css = `
   .lib-sections { grid-template-columns: 1fr; padding: 48px 6% 72px; }
   .lib-section-card--full { flex-direction: column; align-items: flex-start; gap: 20px; padding: 40px 28px; }
   .lib-section-card--full .lib-card-cta { margin-left: 0; }
-}
-
-/* ── LIGHT THEME ── */
-.light .lib-sub {
-  color: #4a4640;
-}
-.light .lib-card-title {
-  color: #7b8ffc;
-}
-.light .lib-card-body {
-  color: color-mix(in srgb, var(--white) 75%, transparent);
-}
-.light .lib-quote-strip blockquote {
-  color: #1a1816;
 }
 `;
 

@@ -12,6 +12,62 @@ interface BreadcrumbsProps {
   items: BreadcrumbItem[];
 }
 
+const css = `
+.breadcrumbs {
+  margin-bottom: 32px;
+}
+
+.breadcrumbs-list {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-wrap: wrap;
+}
+
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.breadcrumb-link {
+  font-family: 'Poppins', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--dim, #7a7060);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.breadcrumb-link:hover {
+  color: var(--gold, #7b8ffc);
+}
+
+.breadcrumb-current {
+  font-family: 'Poppins', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold, #7b8ffc);
+}
+
+.breadcrumb-separator {
+  font-family: 'Poppins', sans-serif;
+  font-size: 10px;
+  color: var(--dimmer, #3e3830);
+}
+
+@media (max-width: 768px) {
+  .breadcrumbs {
+    margin-bottom: 24px;
+  }
+}
+`;
+
 export default function Breadcrumbs({ items }: BreadcrumbsProps) {
   const jsonLd = {
     "@context": "https://schema.org",
@@ -26,6 +82,7 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
 
   return (
     <nav className="breadcrumbs" aria-label="Breadcrumb">
+      <style>{css}</style>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -48,62 +105,6 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
           </li>
         ))}
       </ol>
-
-      <style jsx>{`
-        .breadcrumbs {
-          margin-bottom: 32px;
-        }
-
-        .breadcrumbs-list {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          list-style: none;
-          padding: 0;
-          margin: 0;
-          flex-wrap: wrap;
-        }
-
-        .breadcrumb-item {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-        }
-
-        .breadcrumb-link {
-          font-family: 'Poppins', sans-serif;
-          font-size: 10px;
-          letter-spacing: 0.2em;
-          text-transform: uppercase;
-          color: var(--dim, #7a7060);
-          text-decoration: none;
-          transition: color 0.3s ease;
-        }
-
-        .breadcrumb-link:hover {
-          color: var(--gold, #7b8ffc);
-        }
-
-        .breadcrumb-current {
-          font-family: 'Poppins', sans-serif;
-          font-size: 10px;
-          letter-spacing: 0.2em;
-          text-transform: uppercase;
-          color: var(--gold, #7b8ffc);
-        }
-
-        .breadcrumb-separator {
-          font-family: 'Poppins', sans-serif;
-          font-size: 10px;
-          color: var(--dimmer, #3e3830);
-        }
-
-        @media (max-width: 768px) {
-          .breadcrumbs {
-            margin-bottom: 24px;
-          }
-        }
-      `}</style>
     </nav>
   );
 }
