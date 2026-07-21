@@ -88,7 +88,7 @@ export default function TestPageClient({ test, questions }: { test: FaithTest; q
 
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-br from-[#09090d] via-[#0e0f16] to-[#09090d] px-5 py-10">
+      <div className="min-h-screen bg-gradient-to-br from-white via-[#f5f3ef] to-white dark:from-[#09090d] dark:via-[#0e0f16] dark:to-[#09090d] px-5 py-10">
         <div className="max-w-[900px] mx-auto">
           <Breadcrumbs
             items={[
@@ -106,12 +106,12 @@ export default function TestPageClient({ test, questions }: { test: FaithTest; q
               </div>
             </div>
 
-            <h1 className="font-poppins text-[36px] md:text-[44px] font-bold text-[#f0ece4] mb-3">
+            <h1 className="font-poppins text-[36px] md:text-[44px] font-bold text-[#1a1816] dark:text-[#f0ece4] mb-3">
               {getName(test)}
             </h1>
 
             {getDescription(test) && (
-              <p className="font-poppins text-[15px] text-white/60 leading-relaxed max-w-[650px] mx-auto">
+              <p className="font-poppins text-[15px] text-black/60 dark:text-white/60 leading-relaxed max-w-[650px] mx-auto">
                 {getDescription(test)}
               </p>
             )}
@@ -122,7 +122,7 @@ export default function TestPageClient({ test, questions }: { test: FaithTest; q
             <div className="mb-8 p-6 bg-[rgba(84,108,250,.08)] border border-[rgba(84,108,250,.2)] rounded-xl">
               <div className="flex items-start gap-3">
                 <AlertCircle size={20} className="text-[#546cfa] flex-shrink-0 mt-0.5" />
-                <p className="font-poppins text-[14px] text-white/70 leading-relaxed">
+                <p className="font-poppins text-[14px] text-black/70 dark:text-white/70 leading-relaxed">
                   {getDisclaimer(test)}
                 </p>
               </div>
@@ -131,29 +131,29 @@ export default function TestPageClient({ test, questions }: { test: FaithTest; q
 
           {/* Results */}
           {submitted && (
-            <div className="mb-10 p-8 bg-[#0b0c12] border border-white/[.08] rounded-xl">
-              <h2 className="font-poppins text-[28px] font-bold text-[#f0ece4] mb-6 text-center">
+            <div className="mb-10 p-8 bg-[#f5f3ef] border border-black/[.08] dark:bg-[#0b0c12] dark:border-white/[.08] rounded-xl">
+              <h2 className="font-poppins text-[28px] font-bold text-[#1a1816] dark:text-[#f0ece4] mb-6 text-center">
                 {lang === "fr" ? "Vos Résultats" : "Your Results"}
               </h2>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                 <div className="p-5 bg-[rgba(84,108,250,.1)] border border-[rgba(84,108,250,.2)] rounded-lg text-center">
                   <div className="text-[32px] font-bold text-[#546cfa] mb-1">{correct}</div>
-                  <div className="text-[13px] text-white/60 font-poppins">
+                  <div className="text-[13px] text-black/60 dark:text-white/60 font-poppins">
                     {lang === "fr" ? "Correct" : "Correct"}
                   </div>
                 </div>
 
-                <div className="p-5 bg-white/[.04] border border-white/[.1] rounded-lg text-center">
-                  <div className="text-[32px] font-bold text-white/40 mb-1">{incorrect}</div>
-                  <div className="text-[13px] text-white/60 font-poppins">
+                <div className="p-5 bg-black/[.03] border border-black/[.1] dark:bg-white/[.04] dark:border-white/[.1] rounded-lg text-center">
+                  <div className="text-[32px] font-bold text-black/40 dark:text-white/40 mb-1">{incorrect}</div>
+                  <div className="text-[13px] text-black/60 dark:text-white/60 font-poppins">
                     {lang === "fr" ? "Incorrect" : "Incorrect"}
                   </div>
                 </div>
 
                 <div className="p-5 bg-gradient-to-br from-[#546cfa]/10 to-[#546cfa]/5 border border-[#546cfa]/20 rounded-lg text-center">
                   <div className="text-[32px] font-bold text-[#546cfa] mb-1">{percentage}%</div>
-                  <div className="text-[13px] text-white/60 font-poppins">
+                  <div className="text-[13px] text-black/60 dark:text-white/60 font-poppins">
                     {lang === "fr" ? "Score" : "Score"}
                   </div>
                 </div>
@@ -162,14 +162,14 @@ export default function TestPageClient({ test, questions }: { test: FaithTest; q
               {/* Biblical principle: 2-3 witnesses */}
               {incorrect >= 2 && (
                 <div className="p-5 bg-[rgba(84,108,250,.05)] border-l-4 border-[#546cfa] rounded">
-                  <p className="font-poppins text-[14px] text-white/70 leading-relaxed mb-2">
+                  <p className="font-poppins text-[14px] text-black/70 dark:text-white/70 leading-relaxed mb-2">
                     <em>
                       {lang === "fr"
                         ? "« Sur la déposition de deux ou trois témoins, une chose sera établie. » — Matthieu 18:16"
                         : "\"By the testimony of two or three witnesses, a matter shall be established.\" — Matthew 18:16"}
                     </em>
                   </p>
-                  <p className="font-poppins text-[13px] text-white/60">
+                  <p className="font-poppins text-[13px] text-black/60 dark:text-white/60">
                     {lang === "fr"
                       ? `Avec ${incorrect} domaines nécessitant une attention, cela suggère des opportunités pour la croissance spirituelle.`
                       : `With ${incorrect} areas needing attention, this suggests opportunities for spiritual growth.`}
@@ -184,7 +184,7 @@ export default function TestPageClient({ test, questions }: { test: FaithTest; q
                     setSubmitted(false);
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
-                  className="px-6 py-2.5 bg-white/[.08] border border-white/[.15] text-white/80 font-poppins text-[13px] font-medium rounded-lg hover:bg-white/[.12] transition-all"
+                  className="px-6 py-2.5 bg-black/[.05] border border-black/[.15] text-black/80 dark:bg-white/[.08] dark:border-white/[.15] dark:text-white/80 font-poppins text-[13px] font-medium rounded-lg hover:bg-black/[.08] dark:hover:bg-white/[.12] transition-all"
                 >
                   {lang === "fr" ? "Réessayer" : "Retake Test"}
                 </button>
@@ -214,15 +214,15 @@ export default function TestPageClient({ test, questions }: { test: FaithTest; q
                         ? "bg-green-500/[.08] border-green-500/30"
                         : userAnswer
                         ? "bg-red-500/[.08] border-red-500/30"
-                        : "bg-white/[.02] border-white/[.08]"
-                      : "bg-[#0b0c12] border-white/[.08]"
+                        : "bg-black/[.02] border-black/[.08] dark:bg-white/[.02] dark:border-white/[.08]"
+                      : "bg-[#f5f3ef] border-black/[.08] dark:bg-[#0b0c12] dark:border-white/[.08]"
                   }`}
                 >
                   <div className="flex items-start gap-3 mb-4">
                     <div className="w-8 h-8 rounded-lg bg-[rgba(84,108,250,.15)] border border-[rgba(84,108,250,.3)] flex items-center justify-center flex-shrink-0 font-poppins text-[14px] font-semibold text-[#546cfa]">
                       {idx + 1}
                     </div>
-                    <p className="font-poppins text-[16px] text-white/90 leading-relaxed flex-1 pt-0.5">
+                    <p className="font-poppins text-[16px] text-black/90 dark:text-white/90 leading-relaxed flex-1 pt-0.5">
                       {getQuestion(q)}
                     </p>
                     {showResult && (
@@ -250,12 +250,12 @@ export default function TestPageClient({ test, questions }: { test: FaithTest; q
                           disabled={submitted}
                           className={`w-full text-left p-4 rounded-lg border font-poppins text-[14px] transition-all ${
                             showCorrect
-                              ? "bg-green-500/[.15] border-green-500/40 text-green-100"
+                              ? "bg-green-500/[.15] border-green-500/40 text-green-700 dark:text-green-100"
                               : showIncorrect
-                              ? "bg-red-500/[.15] border-red-500/40 text-red-100"
+                              ? "bg-red-500/[.15] border-red-500/40 text-red-700 dark:text-red-100"
                               : isSelected
-                              ? "bg-[rgba(84,108,250,.15)] border-[rgba(84,108,250,.4)] text-white/95"
-                              : "bg-white/[.03] border-white/[.1] text-white/70 hover:bg-white/[.06] hover:border-white/[.15]"
+                              ? "bg-[rgba(84,108,250,.15)] border-[rgba(84,108,250,.4)] text-black/90 dark:text-white/95"
+                              : "bg-black/[.02] border-black/[.1] text-black/70 hover:bg-black/[.05] hover:border-black/[.15] dark:bg-white/[.03] dark:border-white/[.1] dark:text-white/70 dark:hover:bg-white/[.06] dark:hover:border-white/[.15]"
                           } ${submitted ? "cursor-default" : "cursor-pointer"}`}
                         >
                           <div className="flex items-center gap-3">
@@ -266,7 +266,7 @@ export default function TestPageClient({ test, questions }: { test: FaithTest; q
                                 ? "border-red-400 bg-red-400 text-[#09090d]"
                                 : isSelected
                                 ? "border-[#546cfa] bg-[#546cfa] text-[#09090d]"
-                                : "border-white/30 text-white/50"
+                                : "border-black/30 text-black/50 dark:border-white/30 dark:text-white/50"
                             }`}>
                               {opt}
                             </div>
@@ -285,7 +285,7 @@ export default function TestPageClient({ test, questions }: { test: FaithTest; q
                       <div className="text-[11px] font-poppins font-semibold text-[#546cfa] mb-1 uppercase tracking-wider">
                         {lang === "fr" ? "Explication" : "Explanation"}
                       </div>
-                      <p className="font-poppins text-[13px] text-white/70 leading-relaxed">
+                      <p className="font-poppins text-[13px] text-black/70 dark:text-white/70 leading-relaxed">
                         {getExplanation(q)}
                       </p>
                     </div>

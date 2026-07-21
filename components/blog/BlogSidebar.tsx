@@ -2,7 +2,7 @@
 "use client";
 
 import Link from "next/link";
-import { Tags, Clock, BookOpen } from "lucide-react";
+import { Tags, Clock, BookOpen, Hash } from "lucide-react";
 import { useLang } from "@/lib/i18n";
 import { localizedHref } from "@/lib/i18n/locale";
 import type { DbPost } from "@/app/blog/blogHelpers";
@@ -94,7 +94,28 @@ export function BlogSidebar({
         </div>
       )}
 
-      <style jsx>{`
+      {/* ── POPULAR TOPICS WIDGET ── */}
+      {categoryValues.length > 0 && (
+        <div className="bsw">
+          <div className="bsw-header">
+            <Hash size={17} />
+            <h3>{lang === "fr" ? "Sujets Populaires" : "Popular Topics"}</h3>
+          </div>
+          <div className="bsw-tags">
+            {categoryValues.map((cat) => (
+              <button
+                key={cat}
+                className={`bsw-tag${activeCategory === cat ? " active" : ""}`}
+                onClick={() => onSelectCategory(activeCategory === cat ? "all" : cat)}
+              >
+                {getCategoryLabel(cat, lang)}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <style>{`
         .blog-sidebar {
           display: flex;
           flex-direction: column;
@@ -180,6 +201,53 @@ export function BlogSidebar({
         .bsw-cat-btn.active .bsw-cat-count {
           color: var(--gold, #546cfa);
           background: rgba(84, 108, 250, 0.15);
+        }
+
+        .bsw-tags {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+        }
+
+        .bsw-tag {
+          background: rgba(255, 255, 255, 0.04);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 50px;
+          color: var(--dim, rgba(255, 255, 255, 0.6));
+          font-family: var(--font-poppins), 'Poppins', sans-serif;
+          font-size: 11px;
+          padding: 6px 13px;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        .bsw-tag:hover {
+          border-color: rgba(84, 108, 250, 0.4);
+          color: var(--cream, #f0ece4);
+        }
+
+        .bsw-tag.active {
+          background: rgba(84, 108, 250, 0.12);
+          border-color: rgba(84, 108, 250, 0.5);
+          color: var(--gold, #546cfa);
+          font-weight: 600;
+        }
+
+        :root:not(.dark) .bsw-tag {
+          background: rgba(10, 10, 10, 0.03);
+          border-color: rgba(10, 10, 10, 0.15);
+          color: #4a4640;
+        }
+
+        :root:not(.dark) .bsw-tag:hover {
+          border-color: rgba(61, 84, 224, 0.4);
+          color: #1a1816;
+        }
+
+        :root:not(.dark) .bsw-tag.active {
+          background: rgba(61, 84, 224, 0.1);
+          border-color: rgba(61, 84, 224, 0.5);
+          color: #546cfa;
         }
 
         .bsw-recent-list {

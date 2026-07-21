@@ -49,19 +49,22 @@ export default function AnalyzerListClient({ initialTests }: { initialTests: Fai
 
   const heroStyles = `
     min-h-[60vh] flex flex-col items-center justify-center
-    bg-gradient-to-br from-[#09090d] via-[#0e0f16] to-[#09090d]
+    bg-gradient-to-br from-white via-[#f5f3ef] to-white
+    dark:from-[#09090d] dark:via-[#0e0f16] dark:to-[#09090d]
     relative overflow-hidden px-5 py-20
   `;
 
   const cardStyles = `
-    bg-[#0b0c12] border border-white/[.08] rounded-xl p-8
+    bg-[#f5f3ef] border border-black/[.08] rounded-xl p-8
+    dark:bg-[#0b0c12] dark:border-white/[.08]
     hover:border-[rgba(84,108,250,.3)] hover:shadow-[0_8px_30px_rgba(84,108,250,.15)]
     transition-all duration-300 group cursor-pointer
   `;
 
   const headingStyles = `
     font-poppins text-[42px] md:text-[54px] font-bold
-    bg-gradient-to-br from-[#f0ece4] via-[#546cfa] to-[#f0ece4]
+    bg-gradient-to-br from-[#1a1816] via-[#546cfa] to-[#1a1816]
+    dark:from-[#f0ece4] dark:via-[#546cfa] dark:to-[#f0ece4]
     bg-clip-text text-transparent leading-tight text-center mb-5
   `;
 
@@ -92,13 +95,13 @@ export default function AnalyzerListClient({ initialTests }: { initialTests: Fai
             {lang === "fr" ? "Analyseur de Foi" : "Faith Analyzer"}
           </h1>
 
-          <p className="font-poppins text-[17px] text-white/60 leading-relaxed text-center max-w-[700px] mx-auto mb-8">
+          <p className="font-poppins text-[17px] text-black/60 dark:text-white/60 leading-relaxed text-center max-w-[700px] mx-auto mb-8">
             {lang === "fr"
               ? "Évaluez votre foi à travers des tests bibliques conçus pour vous aider à grandir spirituellement. Chaque test comprend 10-12 questions basées sur les Écritures."
               : "Assess your faith through biblical tests designed to help you grow spiritually. Each test includes 10-12 questions based on Scripture."}
           </p>
 
-          <div className="flex items-center justify-center gap-8 text-[15px] text-white/50 font-poppins">
+          <div className="flex items-center justify-center gap-8 text-[15px] text-black/60 dark:text-white/50 font-poppins">
             <div className="flex items-center gap-2">
               <ClipboardCheck size={18} className="text-[#546cfa]" />
               <span>{tests.length} {lang === "fr" ? "Tests" : "Tests"}</span>
@@ -118,7 +121,7 @@ export default function AnalyzerListClient({ initialTests }: { initialTests: Fai
       {/* Tests Grid */}
       <div className="max-w-[1200px] mx-auto px-5 py-20">
         {tests.length === 0 ? (
-          <p className="text-center text-white/40 font-poppins text-[16px] py-20">
+          <p className="text-center text-black/40 dark:text-white/40 font-poppins text-[16px] py-20">
             {lang === "fr" ? "Aucun test disponible pour le moment." : "No tests available at the moment."}
           </p>
         ) : (
@@ -132,17 +135,17 @@ export default function AnalyzerListClient({ initialTests }: { initialTests: Fai
                     </div>
 
                     <div className="flex-1">
-                      <h3 className="font-poppins text-[22px] font-semibold text-[#f0ece4] mb-2 group-hover:text-[#546cfa] transition-colors">
+                      <h3 className="font-poppins text-[22px] font-semibold text-[#1a1816] dark:text-[#f0ece4] mb-2 group-hover:text-[#546cfa] transition-colors">
                         {getName(test)}
                       </h3>
 
                       {getDescription(test) && (
-                        <p className="font-poppins text-[14px] text-white/60 leading-relaxed mb-4">
+                        <p className="font-poppins text-[14px] text-black/60 dark:text-white/60 leading-relaxed mb-4">
                           {getDescription(test)}
                         </p>
                       )}
 
-                      <div className="flex items-center gap-4 text-[12px] font-poppins text-white/40">
+                      <div className="flex items-center gap-4 text-[12px] font-poppins text-black/40 dark:text-white/40">
                         <div className="flex items-center gap-1.5">
                           <Users size={14} />
                           <span>{test.total_takes} {lang === "fr" ? "tentatives" : "attempts"}</span>
@@ -172,14 +175,14 @@ export default function AnalyzerListClient({ initialTests }: { initialTests: Fai
           <h3 className="font-poppins text-[20px] font-semibold text-[#546cfa] mb-4">
             {lang === "fr" ? "Fondement Biblique" : "Biblical Foundation"}
           </h3>
-          <p className="font-poppins text-[15px] text-white/70 leading-relaxed mb-3">
+          <p className="font-poppins text-[15px] text-black/70 dark:text-white/70 leading-relaxed mb-3">
             <em>
               {lang === "fr"
                 ? "« Examinez-vous vous-mêmes pour savoir si vous êtes dans la foi, éprouvez-vous vous-mêmes. » — 2 Corinthiens 13:5"
                 : "\"Examine yourselves to see whether you are in the faith; test yourselves.\" — 2 Corinthians 13:5"}
             </em>
           </p>
-          <p className="font-poppins text-[14px] text-white/60 leading-relaxed">
+          <p className="font-poppins text-[14px] text-black/60 dark:text-white/60 leading-relaxed">
             {lang === "fr"
               ? "Ces tests sont conçus pour vous aider à réfléchir sur votre marche spirituelle. Basés sur le principe de 2-3 témoins (Matthieu 18:16), un résultat indiquant 2+ domaines nécessitant une attention suggère des opportunités de croissance."
               : "These tests are designed to help you reflect on your spiritual walk. Based on the principle of 2-3 witnesses (Matthew 18:16), a result indicating 2+ areas needing attention suggests opportunities for growth."}

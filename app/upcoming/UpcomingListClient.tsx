@@ -14,7 +14,7 @@ import { useLang } from "@/lib/i18n";
 import { upcomingTranslations as t } from "./translations";
 
 export default function UpcomingListClient({ initialEvents }: { initialEvents: UpcomingEvent[] }) {
-  const { lang, toggleLang } = useLang();
+  const { lang } = useLang();
   const [events, setEvents] = useState<UpcomingEvent[]>(initialEvents);
   const [showReserve, setShowReserve] = useState(false);
 
@@ -64,18 +64,6 @@ export default function UpcomingListClient({ initialEvents }: { initialEvents: U
 
         {/* HERO */}
         <div className="up-hero">
-          {/* Language toggle */}
-          <button
-            className="up-lang-toggle"
-            onClick={() => toggleLang()}
-            aria-label="Toggle language"
-          >
-            <span className={lang === "en" ? "active" : ""}> EN</span>
-            <span className="sep"> / </span>
-            <span className={lang === "fr" ? "active" : ""}>FR</span>
-          </button>
-
-          <p className="up-eyebrow">{t.hero.eyebrow[lang]}</p>
           <h1 className="up-headline">
             Up<br /><em>coming</em>
           </h1>

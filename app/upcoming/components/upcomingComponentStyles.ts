@@ -359,34 +359,4 @@ export const upcomingComponentStyles = `
 :root:not(.dark) .up-modal-done-sub { color: #4a4640; }
 
 /* ── LANG TOGGLE ── */
-.up-lang-toggle {
-  background: transparent;
-  border: 1px solid rgba(123,143,252,.25);
-  border-radius: 4px;
-  padding: 4px 10px;
-  font-family: var(--font-poppins),'Poppins',sans-serif;
-  font-size: 10px;
-  letter-spacing: .16em;
-  color: rgba(123,143,252,.5);
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 2px;
-  transition: border-color .25s, color .25s;
-  margin-bottom: 32px;
-  opacity: 0;
-  animation: up-rise .8s .05s ease forwards;
-}
-.up-lang-toggle:hover { border-color: rgba(123,143,252,.6); color: rgba(123,143,252,.8); }
-.up-lang-toggle .active {
-  background: var(--gold-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  font-weight: 700;
-}
-.up-lang-toggle .sep { opacity: .35; }
-:root:not(.dark) .up-lang-toggle { border-color: rgba(61,84,224,.3); color: rgba(61,84,224,.6); }
-:root:not(.dark) .up-lang-toggle:hover { border-color: rgba(61,84,224,.6); }
-
 `;

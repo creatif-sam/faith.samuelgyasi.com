@@ -25,19 +25,6 @@ export const upcomingLayoutStyles = `
   max-width: 1100px;
   margin: 0 auto;
 }
-.up-eyebrow {
-  font-family: var(--font-poppins),'Poppins',sans-serif;
-  font-size: 10px;
-  letter-spacing: 0.34em;
-  text-transform: uppercase;
-  background: var(--gold-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 24px;
-  opacity: 0;
-  animation: up-rise .8s .1s ease forwards;
-}
 .up-headline {
   font-family: var(--font-poppins),'Poppins',sans-serif;
   font-size: clamp(52px,8vw,110px);

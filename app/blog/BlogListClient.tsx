@@ -38,7 +38,9 @@ function BlogContent({ initialPosts, initialSeriesList }: BlogContentProps) {
   const [seriesList, setSeriesList] = useState<BlogSeries[]>(initialSeriesList);
   const [seriesLoading, setSeriesLoading] = useState(false);
   const [showBlogRequestModal, setShowBlogRequestModal] = useState(false);
-  const [visibleCount, setVisibleCount] = useState(7);
+  const [sortOrder, setSortOrder] = useState<"newest" | "oldest">("newest");
+  const [page, setPage] = useState(1);
+  const perPage = 6;
 
   useEffect(() => {
     document.body.classList.add("on-fdp");
@@ -91,10 +93,18 @@ function BlogContent({ initialPosts, initialSeriesList }: BlogContentProps) {
       })
     : filtered;
 
-  const featured = searchFiltered[0];
-  const rest = searchFiltered.slice(1, visibleCount);
-  const hasMore = searchFiltered.length > visibleCount;
-  const resetVisible = () => setVisibleCount(7);
+  const sorted = useMemo(() => {
+    const arr = [...searchFiltered];
+    if (sortOrder === "oldest") arr.reverse();
+    return arr;
+  }, [searchFiltered, sortOrder]);
+
+  const featured = sorted[0];
+  const remaining = sorted.slice(1);
+  const totalPages = Math.max(1, Math.ceil(remaining.length / perPage));
+  const currentPage = Math.min(page, totalPages);
+  const rest = remaining.slice((currentPage - 1) * perPage, currentPage * perPage);
+  const resetPage = () => setPage(1);
 
   const categoryCounts = useMemo(() => {
     const counts: Record<string, number> = {};
@@ -122,7 +132,7 @@ function BlogContent({ initialPosts, initialSeriesList }: BlogContentProps) {
     if (cat === "all") params.delete("category"); else params.set("category", cat);
     const qs = params.toString();
     router.replace(qs ? `${pathname}?${qs}` : pathname ?? "/blog", { scroll: false });
-    resetVisible();
+    resetPage();
   }
 
   const getSeriesName = () => lang === "fr" ? currentSeries?.name_fr : currentSeries?.name_en;
@@ -186,7 +196,7 @@ function BlogContent({ initialPosts, initialSeriesList }: BlogContentProps) {
           <input type="text" className="fb-search-input"
             placeholder={lang === "fr" ? "Rechercher des réflexions..." : "Search reflections..."}
             value={searchQuery}
-            onChange={(e) => { setSearchQuery(e.target.value); resetVisible(); }}
+            onChange={(e) => { setSearchQuery(e.target.value); resetPage(); }}
           />
           {searchQuery && <button className="fb-search-clear" onClick={() => setSearchQuery("")} aria-label="Clear search"><X size={14} /></button>}
         </div>
@@ -215,6 +225,21 @@ function BlogContent({ initialPosts, initialSeriesList }: BlogContentProps) {
           ) : (
             <div className="fb-content">
               {featured && <FeaturedPost post={featured} lang={lang} showDates={showDates} getTitle={getTitle} getExcerpt={getExcerpt} seriesName={currentSeries ? null : getSeriesBadge(featured)} />}
+              <div className="fb-toolbar">
+                <span className="fb-toolbar-count">
+                  {lang === "fr" ? "Affichage de " : "Showing "}<strong>{sorted.length}</strong>{lang === "fr" ? " résultat(s)" : " result(s)"}
+                </span>
+                <label className="fb-toolbar-sort">
+                  {lang === "fr" ? "Trier par" : "Sort by"}
+                  <select
+                    value={sortOrder}
+                    onChange={(e) => { setSortOrder(e.target.value as "newest" | "oldest"); resetPage(); }}
+                  >
+                    <option value="newest">{lang === "fr" ? "Plus récent" : "Newest"}</option>
+                    <option value="oldest">{lang === "fr" ? "Plus ancien" : "Oldest"}</option>
+                  </select>
+                </label>
+              </div>
               {rest.length > 0 && (
                 <div className="fb-grid">
                   {rest.map((post) => (
@@ -222,10 +247,22 @@ function BlogContent({ initialPosts, initialSeriesList }: BlogContentProps) {
                   ))}
                 </div>
               )}
-              {hasMore && (
-                <div style={{ textAlign: "center", padding: "40px 0 20px" }}>
-                  <button className="fb-load-more" onClick={() => setVisibleCount((v) => v + 6)}>
-                    {lang === "fr" ? "Charger plus" : "Load more"}
+              {totalPages > 1 && (
+                <div className="fb-pagination">
+                  <button className="fb-page-btn" disabled={currentPage === 1} onClick={() => setPage((p) => Math.max(1, p - 1))} aria-label="Previous page">
+                    ‹
+                  </button>
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
+                    <button
+                      key={n}
+                      className={`fb-page-btn${n === currentPage ? " fb-page-btn--active" : ""}`}
+                      onClick={() => setPage(n)}
+                    >
+                      {String(n).padStart(2, "0")}
+                    </button>
+                  ))}
+                  <button className="fb-page-btn" disabled={currentPage === totalPages} onClick={() => setPage((p) => Math.min(totalPages, p + 1))} aria-label="Next page">
+                    ›
                   </button>
                 </div>
               )}
