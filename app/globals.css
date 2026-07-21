@@ -233,11 +233,11 @@
 
 /* Newsletter / Subscription box */
 .light .sf-nl-card {
-  background: rgba(61,84,224,.04);
-  border-color: rgba(61,84,224,.28);
+  background: #f5f3ef;
+  border-color: rgba(10,10,10,.1);
 }
 .light .sf-nl-glow {
-  background: radial-gradient(ellipse at 50% -20%, rgba(61,84,224,.1) 0%, transparent 65%);
+  background: radial-gradient(ellipse at 50% -20%, rgba(61,84,224,.06) 0%, transparent 65%);
 }
 .light .sf-nl-icon-wrap {
   background: rgba(61,84,224,.08);

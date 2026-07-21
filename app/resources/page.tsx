@@ -35,19 +35,6 @@ const css = `
   max-width: 1100px;
   margin: 0 auto;
 }
-.lib-eyebrow {
-  font-family: var(--font-poppins), 'Poppins', sans-serif;
-  font-size: 10px;
-  letter-spacing: 0.35em;
-  text-transform: uppercase;
-  background: var(--gold-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 20px;
-  opacity: 0;
-  animation: lib-rise .9s .1s ease forwards;
-}
 .lib-headline {
   font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: clamp(48px, 7.5vw, 100px);
@@ -215,6 +202,49 @@ const css = `
   .lib-section-card--full { flex-direction: column; align-items: flex-start; gap: 20px; padding: 40px 28px; }
   .lib-section-card--full .lib-card-cta { margin-left: 0; }
 }
+
+/* ── LIGHT THEME ── */
+.light .lib-pg {
+  background: #ffffff;
+  color: #1a1816;
+}
+.light .lib-pg::before {
+  opacity: 0.03;
+}
+.light .lib-hero {
+  border-bottom-color: rgba(84,108,250,.15);
+}
+.light .lib-headline {
+  color: #1a1816;
+}
+.light .lib-sub {
+  color: rgba(26, 24, 22, 0.65);
+}
+.light .lib-section-card {
+  background: #f5f3ef;
+  border-color: rgba(84,108,250,.12);
+}
+.light .lib-section-card:hover {
+  border-color: rgba(84,108,250,.3);
+  background: #efece5;
+}
+.light .lib-card-title {
+  color: #1a1816;
+}
+.light .lib-card-body {
+  color: rgba(26, 24, 22, 0.65);
+}
+.light .lib-card-cta {
+  border-top-color: rgba(84,108,250,.18);
+}
+.light .lib-quote-strip {
+  background: rgba(84,108,250,.04);
+  border-top-color: rgba(84,108,250,.12);
+  border-bottom-color: rgba(84,108,250,.12);
+}
+.light .lib-quote-strip blockquote {
+  color: #1a1816;
+}
 `;
 
 export default function ResourcesPage() {
@@ -236,9 +266,6 @@ export default function ResourcesPage() {
 
         {/* ── HERO ── */}
         <div className="lib-hero">
-          <p className="lib-eyebrow">
-            {lang === "en" ? "Samuel Kobina Gyasi · Reading Life" : "Samuel Kobina Gyasi · Vie de Lecteur"}
-          </p>
           <h1 className="lib-headline">
             {lang === "en" ? <>The<br /><em>Resources</em></> : <>Les<br /><em>Ressources</em></>}
           </h1>

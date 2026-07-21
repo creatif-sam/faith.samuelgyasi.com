@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LogIn } from "lucide-react";
+import { User } from "lucide-react";
 import { useLang } from "@/lib/i18n";
 import { localizedHref } from "@/lib/i18n/locale";
 import { navTranslations as t } from "@/lib/i18n/nav";
@@ -78,7 +78,7 @@ export function Navbar() {
             aria-label="Sign in"
             title={lang === "en" ? "Sign in" : "Se connecter"}
           >
-            <LogIn size={15} />
+            <User size={15} />
           </Link>
         </div>
 
