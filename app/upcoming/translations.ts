@@ -43,6 +43,8 @@ export const upcomingTranslations = {
     backToUpcoming:     { en: "Back to Upcoming", fr: "Retour à À Venir" },
     notFoundTitle:      { en: "Event Not Found", fr: "Événement Introuvable" },
     notFoundBody:       { en: "This event may have been removed or the link is incorrect.", fr: "Cet événement a peut-être été supprimé ou le lien est incorrect." },
+    otherLabel:         { en: "More to Come",   fr: "À Venir Aussi" },
+    otherTitle:         { en: "Other Upcoming Events", fr: "Autres Événements à Venir" },
   },
 
   countdown: {

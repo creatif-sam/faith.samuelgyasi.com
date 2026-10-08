@@ -6,19 +6,19 @@ import { toast } from "sonner";
 import { useLang } from "@/lib/i18n";
 import { localizedHref } from "@/lib/i18n/locale";
 import { upcomingTranslations as t } from "../translations";
+import { slugify } from "./slug";
 
 interface ShareEventButtonProps {
-  eventId: string;
   title: string;
   className?: string;
 }
 
-export function ShareEventButton({ eventId, title, className }: ShareEventButtonProps) {
+export function ShareEventButton({ title, className }: ShareEventButtonProps) {
   const { lang } = useLang();
   const [copied, setCopied] = useState(false);
 
   async function handleShare() {
-    const url = `${window.location.origin}${localizedHref(lang, `/upcoming/${eventId}`)}`;
+    const url = `${window.location.origin}${localizedHref(lang, `/upcoming/${slugify(title)}`)}`;
 
     if (typeof navigator.share === "function") {
       try {

@@ -14,10 +14,12 @@ import { upcomingTranslations as t } from "../translations";
 
 interface EventDetailClientProps {
   event: UpcomingEvent;
+  otherEvents?: UpcomingEvent[];
 }
 
-export function EventDetailClient({ event }: EventDetailClientProps) {
+export function EventDetailClient({ event, otherEvents = [] }: EventDetailClientProps) {
   const { lang } = useLang();
+  const others = otherEvents.filter((e) => !isPast(e));
 
   // .up-card/.up-section start at opacity:0 and only reveal once JS adds
   // .up-visible — on the listing page an IntersectionObserver does that as
@@ -49,6 +51,18 @@ export function EventDetailClient({ event }: EventDetailClientProps) {
           <Link href={localizedHref(lang, "/upcoming")} className="up-detail-back" style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
             <ArrowLeft size={14} /> {t.detail.backToUpcoming[lang]}
           </Link>
+
+          {others.length > 0 && (
+            <div className="up-section up-visible">
+              <p className="up-section-label">{t.detail.otherLabel[lang]}</p>
+              <h2 className="up-section-title">{t.detail.otherTitle[lang]}</h2>
+              <div className="up-cards">
+                {others.map((item, i) => (
+                  <EventCard key={item.id} item={item} delay={i * 0.08} isPastEvent={false} />
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
 

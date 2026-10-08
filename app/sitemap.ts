@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { createClient } from "@/lib/supabase/server";
 import { SUPPORTED_LOCALES } from "@/lib/i18n/locale";
 import { SITE_URL } from "@/lib/seo";
+import { slugify } from "@/app/upcoming/components/slug";
 
 const STATIC_PATHS: Array<{ path: string; changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"]; priority: number }> = [
   { path: "", changeFrequency: "monthly", priority: 1 },
@@ -32,7 +33,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { data: faithTests },
   ] = await Promise.all([
     supabase.from("blog_posts").select("slug, created_at").eq("published", true),
-    supabase.from("upcoming_events").select("id, event_date").eq("published", true),
+    supabase.from("upcoming_events").select("id, title, event_date").eq("published", true),
     supabase.from("library_items").select("id, created_at").eq("published", true),
     supabase.from("faith_tests").select("slug, created_at").eq("published", true),
   ]);
@@ -61,13 +62,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   );
 
   const eventRoutes: MetadataRoute.Sitemap = SUPPORTED_LOCALES.flatMap((locale) =>
-    (events ?? []).map((event) => ({
-      url: `${siteUrl}/${locale}/upcoming/${event.id}`,
-      lastModified: event.event_date ? new Date(event.event_date) : new Date(),
-      changeFrequency: "weekly" as const,
-      priority: 0.5,
-      alternates: { languages: languages(`/upcoming/${event.id}`) },
-    })),
+    (events ?? []).map((event) => {
+      const slug = slugify(event.title);
+      return {
+        url: `${siteUrl}/${locale}/upcoming/${slug}`,
+        lastModified: event.event_date ? new Date(event.event_date) : new Date(),
+        changeFrequency: "weekly" as const,
+        priority: 0.5,
+        alternates: { languages: languages(`/upcoming/${slug}`) },
+      };
+    }),
   );
 
   const libraryRoutes: MetadataRoute.Sitemap = SUPPORTED_LOCALES.flatMap((locale) =>

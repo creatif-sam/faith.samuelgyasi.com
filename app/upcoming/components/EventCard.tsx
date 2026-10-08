@@ -73,7 +73,7 @@ export function EventCard({ item, delay, isPastEvent }: EventCardProps) {
 
           {/* CTA buttons — Share is always available; the rest are upcoming-only */}
           <div className="up-card-actions">
-            <ShareEventButton eventId={item.id} title={item.title} />
+            <ShareEventButton title={item.title} />
             {!isPastEvent && (
               <>
               {item.needs_registration && (
