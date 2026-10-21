@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Sparkle, ArrowUpRight } from "lucide-react";
+import { Video, ArrowUpRight } from "lucide-react";
 import { type UpcomingEvent, displayDate, FORMAT_LABEL } from "./types";
 import { RegisterModal } from "./RegisterModal";
 import { RecordingModal } from "./RecordingModal";
@@ -119,7 +119,7 @@ export function EventCard({ item, delay, isPastEvent }: EventCardProps) {
           {item.recording_signup && (
             <button className="up-btn up-btn--rec" onClick={() => setRecOpen(true)}>
               <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
-                <Sparkle size={11} fill="currentColor" />
+                <Video size={11} />
                 {t.card.getRecording[lang]}
               </span>
             </button>

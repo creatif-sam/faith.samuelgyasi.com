@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { X, Sparkle, Zap, GraduationCap, Feather, Mic } from "lucide-react";
+import { X, CheckCircle2, Zap, GraduationCap, Feather, Mic } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { useLang } from "@/lib/i18n";
 import { upcomingTranslations as ut } from "../translations";
@@ -68,7 +68,7 @@ export function ReserveModal({ onClose }: ReserveModalProps) {
 
         {done ? (
           <div className="up-modal-done">
-            <div className="up-modal-done-icon"><Sparkle size={26} style={{ color: "#546cfa" }} fill="currentColor" /></div>
+            <div className="up-modal-done-icon"><CheckCircle2 size={26} style={{ color: "#546cfa" }} /></div>
             <p className="up-modal-done-h">{t.doneTitle[lang]}</p>
             <p className="up-modal-done-sub">{t.doneSub[lang]}</p>
             <button className="up-btn up-btn--gold" onClick={onClose}>{t.close[lang]}</button>

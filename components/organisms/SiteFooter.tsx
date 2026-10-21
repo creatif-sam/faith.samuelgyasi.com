@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 import Link from "next/link";
-import { Sparkle, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { useLang } from "@/lib/i18n";
 import { localizedHref } from "@/lib/i18n/locale";
@@ -290,7 +290,6 @@ export function SiteFooter() {
       <div className="sf-rule" />
       <div className="sf-bottom">
         <span className="sf-copy" suppressHydrationWarning>© {new Date().getFullYear()} Samuel Kobina Gyasi · {ft.copyright[lang]}</span>
-        <span className="sf-emblem"><Sparkle size={14} fill="currentColor" /></span>
         <span className="sf-credit">{ft.builtWith[lang]} · samuelgyasi.com</span>
       </div>
     </footer>

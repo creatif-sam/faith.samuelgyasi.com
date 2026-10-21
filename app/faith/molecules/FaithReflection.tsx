@@ -1,7 +1,6 @@
 ﻿// molecules/FaithReflection.tsx — central reflection quote
 "use client";
 import React from "react";
-import { Sparkle } from "lucide-react";
 import { faithTranslations as t } from "../translations";
 import type { Lang } from "../translations";
 
@@ -13,11 +12,7 @@ export function FaithReflection({ lang }: { lang: Lang }) {
   return (
     <section id="reflection">
       <div className="reflection-inner">
-        <div className="refl-ornament" style={{ display: "flex", justifyContent: "center", gap: 14, color: "#546cfa" }}>
-          <Sparkle size={18} fill="currentColor" />
-          <Sparkle size={18} fill="currentColor" />
-          <Sparkle size={18} fill="currentColor" />
-        </div>
+        <div className="refl-ornament" style={{ width: 48, height: 2, background: "#546cfa", marginLeft: "auto", marginRight: "auto", opacity: 0.5 }} />
         <blockquote className="refl-quote">
           {rawLines.map((line, i) => {
             const parts = line.split(strong);

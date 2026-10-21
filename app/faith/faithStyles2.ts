@@ -41,16 +41,7 @@
 }
 .fdp .reflection-inner { max-width:780px;margin:0 auto; }
 .fdp .refl-ornament {
-  font-size:32px;
-  background:linear-gradient(90deg,#546cfa,#546cfa);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  background-clip:text;
-  opacity:.6;
-  margin-bottom:40px;letter-spacing:.4em;
-  animation:fdp-shimmer 4s ease-in-out infinite;
-}
-@keyframes fdp-shimmer {
-  0%,100%{opacity:.3;} 50%{opacity:.7;}
+  margin-bottom:40px;
 }
 .fdp .refl-quote {
   font-family:var(--font-playfair),'Playfair Display',serif;

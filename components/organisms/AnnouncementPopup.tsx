@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { Sparkle, X } from "lucide-react";
+import { X } from "lucide-react";
 import { useAnnouncements } from "@/lib/useAnnouncements";
 
 export function AnnouncementPopup() {
@@ -34,7 +34,6 @@ export function AnnouncementPopup() {
             <X size={15} />
           </button>
         )}
-        <div className="an-pop-emblem"><Sparkle size={18} fill="currentColor" /></div>
         {announcement.title && <h2 className="an-pop-title">{announcement.title}</h2>}
         <p className="an-pop-message">{announcement.message}</p>
         {announcement.cta_text && announcement.cta_url && (

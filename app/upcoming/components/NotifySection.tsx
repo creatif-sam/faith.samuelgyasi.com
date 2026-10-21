@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { X, Sparkle } from "lucide-react";
+import { X, CheckCircle2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
 import { useLang } from "@/lib/i18n";
@@ -61,7 +61,7 @@ export function NotifySection() {
           <div className="up-modal up-modal--sm" onClick={(e) => e.stopPropagation()}>
             {done ? (
               <div className="up-modal-done">
-                <div className="up-modal-done-icon"><Sparkle size={26} style={{ color: "#546cfa" }} fill="currentColor" /></div>
+                <div className="up-modal-done-icon"><CheckCircle2 size={26} style={{ color: "#546cfa" }} /></div>
                 <p className="up-modal-done-h">{t.notify.doneTitle[lang]}</p>
                 <p className="up-modal-done-sub">{t.notify.doneSub[lang]}</p>
                 <button className="up-btn up-btn--gold" onClick={() => setOpen(false)}>

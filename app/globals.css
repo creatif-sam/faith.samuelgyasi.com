@@ -274,7 +274,6 @@
 .light .sf-col-link:hover { color: #546cfa; }
 .light .sf-copy, .light .sf-credit { color: rgba(10,10,10,.45); }
 .light .sf-rule { border-color: rgba(10,10,10,.1); }
-.light .sf-emblem { color: #546cfa; }
 .light .sf-social-icon { color: #4a4640; border-color: rgba(10,10,10,.18); }
 .light .sf-social-icon:hover { color: #546cfa; border-color: #546cfa; }
 
@@ -2307,7 +2306,6 @@ body {
   font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
   color: rgba(245,243,239,0.25);
 }
-.sf-emblem { font-family: var(--font-poppins), 'Ubuntu', sans-serif; color: var(--gold); font-size: 16px; letter-spacing: 0.2em; }
 /* Footer responsive */
 @media (max-width: 768px) {
   .sf-footer { padding: 48px 24px 32px; }
@@ -2359,7 +2357,6 @@ body {
   font-size: 15px; font-style: italic;
   color: rgba(245,243,239,0.55); line-height: 1.55;
 }
-.ck-emblem { color: var(--gold); font-size: 16px; flex-shrink: 0; margin-top: 2px; }
 .ck-link { color: var(--gold); }
 .ck-actions { display: flex; gap: 10px; flex-shrink: 0; }
 .ck-btn {
@@ -2451,11 +2448,6 @@ body {
   transition: all 0.2s;
 }
 .an-pop-close:hover { background: rgba(245,243,239,0.12); color: rgba(245,243,239,0.9); }
-.an-pop-emblem {
-  width: 44px; height: 44px; margin: 0 auto 20px;
-  display: flex; align-items: center; justify-content: center;
-  background: var(--gold-gradient); color: #100e05;
-}
 .an-pop-title {
   font-family: var(--font-playfair), 'Playfair Display', serif;
   font-size: 24px; font-weight: 700; color: #eef0f5; line-height: 1.25; margin-bottom: 12px;
