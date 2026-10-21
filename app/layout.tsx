@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import { Playfair_Display, Albert_Sans } from "next/font/google";
+import { Playfair_Display, Ubuntu } from "next/font/google";
 import "./globals.css";
 import { SiteToaster } from "@/components/organisms/SiteToaster";
 import { CookieBanner } from "@/components/organisms/CookieBanner";
@@ -20,10 +20,10 @@ const playfair = Playfair_Display({
   style: ["normal", "italic"],
 });
 
-const albertSans = Albert_Sans({
+const ubuntu = Ubuntu({
   variable: "--font-poppins",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["300", "400", "500", "700"],
 });
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -159,7 +159,7 @@ export default async function RootLayout({
         />
       </head>
       <body
-        className={`${playfair.variable} ${albertSans.variable}`}
+        className={`${playfair.variable} ${ubuntu.variable}`}
       >
         <Providers initialLang={lang}>
           <Analytics />
