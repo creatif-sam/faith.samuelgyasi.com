@@ -382,7 +382,26 @@ export const upcomingLayoutStyles = `
 .up-detail-back:hover { color: var(--gold); }
 :root:not(.dark) .up-detail-back { color: rgba(10,10,10,.4); }
 :root:not(.dark) .up-detail-back:hover { color: #546cfa; }
+
+/* .up-cards is a 3/4-col grid sized for the 1440px listing page; the detail
+   wrap is only 640px, so the "other events" block gets its own narrow,
+   single-column layout instead of squeezing that grid down. */
+.up-detail-other {
+  margin-top: 56px;
+  padding-top: 48px;
+  border-top: 1px solid rgba(123,143,252,.12);
+}
+.up-detail-other .up-section-label { margin-bottom: 8px; }
+.up-detail-other .up-section-title {
+  font-size: clamp(20px,3vw,26px);
+  margin-bottom: 28px;
+}
+.up-detail-other .up-cards {
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
 @media (max-width: 640px) {
   .up-detail-wrap { padding: 120px 6% 72px; }
+  .up-detail-other { margin-top: 44px; padding-top: 36px; }
 }
 `;

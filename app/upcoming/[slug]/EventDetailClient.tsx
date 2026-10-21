@@ -53,7 +53,7 @@ export function EventDetailClient({ event, otherEvents = [] }: EventDetailClient
           </Link>
 
           {others.length > 0 && (
-            <div className="up-section up-visible">
+            <div className="up-section up-detail-other up-visible">
               <p className="up-section-label">{t.detail.otherLabel[lang]}</p>
               <h2 className="up-section-title">{t.detail.otherTitle[lang]}</h2>
               <div className="up-cards">
