@@ -8,13 +8,14 @@ import { localizedHref } from "@/lib/i18n/locale";
 import Breadcrumbs from "@/components/atoms/Breadcrumbs";
 import { SiteFooter } from "@/components/organisms/SiteFooter";
 import { Suspense } from "react";
-import { ClipboardCheck, TrendingUp, Users, ArrowRight } from "lucide-react";
+import { ClipboardCheck, Compass, TrendingUp, Users, ArrowRight } from "lucide-react";
 
 type FaithTest = {
   id: string;
   name_en: string;
   name_fr: string;
   slug: string;
+  test_type: "quiz" | "reflection";
   description_en: string | null;
   description_fr: string | null;
   total_takes: number;
@@ -131,7 +132,9 @@ export default function AnalyzerListClient({ initialTests }: { initialTests: Fai
                 <div className={cardStyles}>
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[#546cfa]/20 to-[#546cfa]/10 flex items-center justify-center flex-shrink-0 border border-[#546cfa]/20 group-hover:border-[#546cfa]/40 transition-all">
-                      <ClipboardCheck size={24} className="text-[#546cfa]" />
+                      {test.test_type === "reflection"
+                        ? <Compass size={24} className="text-[#546cfa]" />
+                        : <ClipboardCheck size={24} className="text-[#546cfa]" />}
                     </div>
 
                     <div className="flex-1">
@@ -152,7 +155,9 @@ export default function AnalyzerListClient({ initialTests }: { initialTests: Fai
                         </div>
                         <div className="flex items-center gap-1.5">
                           <ClipboardCheck size={14} />
-                          <span>10-12 {lang === "fr" ? "questions" : "questions"}</span>
+                          <span>{test.test_type === "reflection"
+                            ? (lang === "fr" ? "Auto-évaluation" : "Self-assessment")
+                            : (lang === "fr" ? "Quiz biblique" : "Biblical quiz")}</span>
                         </div>
                       </div>
 

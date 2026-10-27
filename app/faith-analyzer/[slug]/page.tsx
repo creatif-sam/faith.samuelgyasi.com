@@ -54,5 +54,13 @@ export default async function TestPage({ params }: Props) {
     .eq("test_id", test.id)
     .order("sort_order", { ascending: true });
 
-  return <TestPageClient test={test} questions={questions ?? []} />;
+  const { data: profiles } = test.test_type === "reflection"
+    ? await supabase
+        .from("faith_test_profiles")
+        .select("*")
+        .eq("test_id", test.id)
+        .order("sort_order", { ascending: true })
+    : { data: [] };
+
+  return <TestPageClient test={test} questions={questions ?? []} profiles={profiles ?? []} />;
 }

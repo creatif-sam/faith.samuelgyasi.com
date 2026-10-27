@@ -17,6 +17,7 @@ export default function FaithTestModal({ test, onClose, onSave, db }: FaithTestM
   const [nameEn,        setNameEn]        = useState(test?.name_en         ?? "");
   const [nameFr,        setNameFr]        = useState(test?.name_fr         ?? "");
   const [slug,          setSlug]          = useState(test?.slug            ?? "");
+  const [testType,      setTestType]      = useState(test?.test_type       ?? "quiz");
   const [descriptionEn, setDescriptionEn] = useState(test?.description_en  ?? "");
   const [descriptionFr, setDescriptionFr] = useState(test?.description_fr  ?? "");
   const [disclaimerEn,  setDisclaimerEn]  = useState(test?.disclaimer_en   ?? "");
@@ -40,6 +41,7 @@ export default function FaithTestModal({ test, onClose, onSave, db }: FaithTestM
       name_en: nameEn.trim(),
       name_fr: nameFr.trim(),
       slug: slug.trim(),
+      test_type: testType,
       description_en: descriptionEn.trim() || null,
       description_fr: descriptionFr.trim() || null,
       disclaimer_en: disclaimerEn.trim() || null,
@@ -110,7 +112,25 @@ export default function FaithTestModal({ test, onClose, onSave, db }: FaithTestM
               URL: /faith-analyzer/{slug || "..."}
             </div>
           </div>
-          
+
+          <div className={TW.field}>
+            <label className={TW.label}>Test Type *</label>
+            <select
+              className={TW.select}
+              value={testType}
+              disabled={!!test}
+              onChange={(e) => setTestType(e.target.value as "quiz" | "reflection")}
+            >
+              <option value="quiz">Quiz — has right/wrong answers</option>
+              <option value="reflection">Reflection — scored self-assessment (e.g. Three Islands)</option>
+            </select>
+            <div className="text-[10px] text-white/30 mt-1.5">
+              {test
+                ? "Type can't be changed after creation — it changes what each question's options mean."
+                : "Quiz: each question has one correct option. Reflection: each option counts toward a result profile instead."}
+            </div>
+          </div>
+
           <div className={TW.field}>
             <label className={TW.label}>Description (English)</label>
             <textarea 

@@ -189,11 +189,14 @@ export interface DiscipleProgress {
   created_at: string;
 }
 
+export type FaithTestType = "quiz" | "reflection";
+
 export interface FaithTest {
   id: string;
   name_en: string;
   name_fr: string;
   slug: string;
+  test_type: FaithTestType;
   description_en: string | null;
   description_fr: string | null;
   disclaimer_en: string | null;
@@ -203,6 +206,21 @@ export interface FaithTest {
   sort_order: number;
   created_at: string;
   updated_at: string;
+}
+
+// A result profile for a "reflection" test — e.g. one of the three islands.
+// Unused for "quiz" tests.
+export interface FaithTestProfile {
+  id: string;
+  test_id: string;
+  name_en: string;
+  name_fr: string;
+  interpretation_en: string | null;
+  interpretation_fr: string | null;
+  advice_en: string | null;
+  advice_fr: string | null;
+  sort_order: number;
+  created_at: string;
 }
 
 export interface FaithTestQuestion {
@@ -216,7 +234,12 @@ export interface FaithTestQuestion {
   option_b_fr: string;
   option_c_en: string;
   option_c_fr: string;
-  correct_option: 'A' | 'B' | 'C';
+  // "quiz" tests use correct_option; "reflection" tests use the per-option
+  // profile ids instead (each option points at the profile it counts toward).
+  correct_option: 'A' | 'B' | 'C' | null;
+  option_a_profile_id: string | null;
+  option_b_profile_id: string | null;
+  option_c_profile_id: string | null;
   explanation_en: string | null;
   explanation_fr: string | null;
   sort_order: number;
