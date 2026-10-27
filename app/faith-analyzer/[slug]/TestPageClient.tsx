@@ -362,7 +362,6 @@ function ReflectionTestClient({ test, questions, profiles }: { test: FaithTest; 
   const [page, setPage] = useState(0);
   const [answers, setAnswers] = useState<Array<'A' | 'B' | 'C' | null>>(Array(questions.length).fill(null));
   const [showResults, setShowResults] = useState(false);
-  const [showLearn, setShowLearn] = useState(!!(test.learn_en || test.learn_fr));
   const [started, setStarted] = useState(false);
 
   const getName = (t: FaithTest) => lang === "fr" ? t.name_fr : t.name_en;
@@ -456,23 +455,6 @@ function ReflectionTestClient({ test, questions, profiles }: { test: FaithTest; 
 
           {!started ? (
             <div className="p-6 md:p-8 bg-[#f5f3ef] border border-black/[.08] dark:bg-[#0b0c12] dark:border-white/[.08] rounded-xl">
-              {getLearn(test) && (
-                <div className="mb-6">
-                  <button
-                    onClick={() => setShowLearn((v) => !v)}
-                    className="font-poppins text-[13px] font-semibold text-[#546cfa] hover:underline"
-                  >
-                    {showLearn
-                      ? (lang === "fr" ? "Masquer les explications ▲" : "Hide explanation ▲")
-                      : (lang === "fr" ? "En savoir plus avant de commencer ▼" : "Learn more before you start ▼")}
-                  </button>
-                  {showLearn && (
-                    <div className="mt-4">
-                      <LearnContent text={getLearn(test) ?? ""} />
-                    </div>
-                  )}
-                </div>
-              )}
               <div className="flex justify-center">
                 <button
                   onClick={() => setStarted(true)}
@@ -584,6 +566,7 @@ function ReflectionTestClient({ test, questions, profiles }: { test: FaithTest; 
               getInterpretation={getInterpretation}
               getAdvice={getAdvice}
               onRetake={restart}
+              learn={getLearn(test)}
             />
           )}
         </div>
@@ -662,7 +645,7 @@ function LearnContent({ text }: { text: string }) {
 
 function ReflectionResults({
   lang, questions, profiles, answers,
-  getProfileId, getProfileName, getInterpretation, getAdvice, onRetake,
+  getProfileId, getProfileName, getInterpretation, getAdvice, onRetake, learn,
 }: {
   lang: "en" | "fr";
   questions: FaithTestQuestion[];
@@ -673,7 +656,9 @@ function ReflectionResults({
   getInterpretation: (p: FaithTestProfile) => string | null;
   getAdvice: (p: FaithTestProfile) => string | null;
   onRetake: () => void;
+  learn: string | null;
 }) {
+  const [showLearn, setShowLearn] = useState(false);
   const counts = new Map<string, number>(profiles.map((p) => [p.id, 0]));
   questions.forEach((q, i) => {
     const opt = answers[i];
@@ -727,6 +712,24 @@ function ReflectionResults({
           <p className="font-poppins text-[14px] text-black/70 dark:text-white/70 leading-relaxed">
             {getAdvice(winner)}
           </p>
+        </div>
+      )}
+
+      {learn && (
+        <div className="mb-8">
+          <button
+            onClick={() => setShowLearn((v) => !v)}
+            className="font-poppins text-[13px] font-semibold text-[#546cfa] hover:underline"
+          >
+            {showLearn
+              ? (lang === "fr" ? "Masquer les explications ▲" : "Hide explanation ▲")
+              : (lang === "fr" ? "Pourquoi ce résultat ? En savoir plus ▼" : "Why this result? Learn more ▼")}
+          </button>
+          {showLearn && (
+            <div className="mt-4">
+              <LearnContent text={learn} />
+            </div>
+          )}
         </div>
       )}
 
