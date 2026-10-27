@@ -51,6 +51,14 @@ create policy "Admins can manage faith test profiles"
 alter table public.faith_test_questions
   alter column correct_option drop not null;
 
+-- The admin question editor already treats explanations as optional
+-- (sends null when left blank) for both quiz and reflection questions —
+-- relax the column to match, since reflection questions in particular
+-- usually won't have one.
+alter table public.faith_test_questions
+  alter column explanation_en drop not null,
+  alter column explanation_fr drop not null;
+
 alter table public.faith_test_questions
   add column if not exists option_a_profile_id uuid references public.faith_test_profiles(id) on delete set null,
   add column if not exists option_b_profile_id uuid references public.faith_test_profiles(id) on delete set null,

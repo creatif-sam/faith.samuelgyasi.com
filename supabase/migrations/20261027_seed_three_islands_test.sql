@@ -55,12 +55,14 @@ insert into public.faith_test_questions (
   option_a_en, option_a_fr, option_a_profile_id,
   option_b_en, option_b_fr, option_b_profile_id,
   option_c_en, option_c_fr, option_c_profile_id,
+  explanation_en, explanation_fr,
   sort_order
 )
 select q.test_id, v.question_en, v.question_fr,
   v.a_en, v.a_fr, q.p1,
   v.b_en, v.b_fr, q.p2,
   v.c_en, v.c_fr, q.p3,
+  null, null,
   v.sort_order
 from q, (values
   (0, 'When you have an important goal, what do you usually do?', 'Lorsque vous avez un objectif important, que faites-vous généralement ?',
