@@ -467,9 +467,9 @@ function ReflectionTestClient({ test, questions, profiles }: { test: FaithTest; 
                       : (lang === "fr" ? "En savoir plus avant de commencer ▼" : "Learn more before you start ▼")}
                   </button>
                   {showLearn && (
-                    <p className="font-poppins text-[14px] text-black/70 dark:text-white/70 leading-relaxed whitespace-pre-line mt-4">
-                      {getLearn(test)}
-                    </p>
+                    <div className="mt-4">
+                      <LearnContent text={getLearn(test) ?? ""} />
+                    </div>
                   )}
                 </div>
               )}
@@ -593,6 +593,70 @@ function ReflectionTestClient({ test, questions, profiles }: { test: FaithTest; 
         <SiteFooter />
       </Suspense>
     </>
+  );
+}
+
+// Renders a test's "learn more" text. Blank lines separate blocks; a block
+// where every line contains "|" is rendered as a table (first line = header
+// row, rest = "Row label: val1 | val2 | val3" data rows). Everything else
+// renders as a plain paragraph.
+function LearnContent({ text }: { text: string }) {
+  const blocks = text.split(/\n{2,}/).map((b) => b.trim()).filter(Boolean);
+
+  return (
+    <div className="space-y-5">
+      {blocks.map((block, i) => {
+        const lines = block.split("\n").map((l) => l.trim()).filter(Boolean);
+        const isTable = lines.length > 1 && lines.every((l) => l.includes("|"));
+
+        if (isTable) {
+          const [headerLine, ...rowLines] = lines;
+          const headerCells = headerLine.split("|").map((c) => c.trim());
+          const rows = rowLines.map((line) => {
+            const [label, rest] = line.split(/:(.+)/);
+            return [label.trim(), ...(rest ?? "").split("|").map((c) => c.trim())];
+          });
+
+          return (
+            <div key={i} className="overflow-x-auto rounded-lg border border-black/[.08] dark:border-white/[.08]">
+              <table className="w-full text-[13px] font-poppins border-collapse">
+                <thead>
+                  <tr className="bg-[rgba(84,108,250,.1)]">
+                    {headerCells.map((c, ci) => (
+                      <th key={ci} className="text-left px-3 py-2 font-semibold text-black/80 dark:text-white/80 border-b border-black/[.08] dark:border-white/[.08]">
+                        {c}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {rows.map((r, ri) => (
+                    <tr key={ri} className={ri % 2 === 1 ? "bg-black/[.015] dark:bg-white/[.02]" : ""}>
+                      {r.map((c, ci) => (
+                        <td
+                          key={ci}
+                          className={`px-3 py-2 border-b border-black/[.06] dark:border-white/[.06] ${
+                            ci === 0 ? "font-medium text-black/80 dark:text-white/80" : "text-black/60 dark:text-white/60"
+                          }`}
+                        >
+                          {c}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          );
+        }
+
+        return (
+          <p key={i} className="font-poppins text-[14px] text-black/70 dark:text-white/70 leading-relaxed whitespace-pre-line">
+            {block}
+          </p>
+        );
+      })}
+    </div>
   );
 }
 
