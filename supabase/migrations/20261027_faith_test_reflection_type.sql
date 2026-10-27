@@ -10,6 +10,13 @@ alter table public.faith_tests
   add column if not exists test_type text not null default 'quiz'
     check (test_type in ('quiz', 'reflection'));
 
+-- Optional long-form "learn more" content shown before a reflection test
+-- starts (e.g. the island explanations + comparison table from the
+-- original prototype). Free-form text, admin-editable, shown as-is.
+alter table public.faith_tests
+  add column if not exists learn_en text,
+  add column if not exists learn_fr text;
+
 -- 2. Result profiles for reflection tests (e.g. the three islands).
 create table if not exists public.faith_test_profiles (
   id uuid primary key default gen_random_uuid(),

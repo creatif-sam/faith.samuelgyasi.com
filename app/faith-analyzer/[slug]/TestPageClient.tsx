@@ -20,6 +20,8 @@ type FaithTest = {
   description_fr: string | null;
   disclaimer_en: string | null;
   disclaimer_fr: string | null;
+  learn_en: string | null;
+  learn_fr: string | null;
   total_takes: number;
 };
 
@@ -360,10 +362,13 @@ function ReflectionTestClient({ test, questions, profiles }: { test: FaithTest; 
   const [page, setPage] = useState(0);
   const [answers, setAnswers] = useState<Array<'A' | 'B' | 'C' | null>>(Array(questions.length).fill(null));
   const [showResults, setShowResults] = useState(false);
+  const [showLearn, setShowLearn] = useState(!!(test.learn_en || test.learn_fr));
+  const [started, setStarted] = useState(false);
 
   const getName = (t: FaithTest) => lang === "fr" ? t.name_fr : t.name_en;
   const getDescription = (t: FaithTest) => lang === "fr" ? t.description_fr : t.description_en;
   const getDisclaimer = (t: FaithTest) => lang === "fr" ? t.disclaimer_fr : t.disclaimer_en;
+  const getLearn = (t: FaithTest) => lang === "fr" ? t.learn_fr : t.learn_en;
   const getQuestion = (q: FaithTestQuestion) => lang === "fr" ? q.question_fr : q.question_en;
   const getOption = (q: FaithTestQuestion, opt: 'A' | 'B' | 'C') =>
     lang === "fr" ? (opt === 'A' ? q.option_a_fr : opt === 'B' ? q.option_b_fr : q.option_c_fr)
@@ -406,6 +411,7 @@ function ReflectionTestClient({ test, questions, profiles }: { test: FaithTest; 
     setAnswers(Array(questions.length).fill(null));
     setPage(0);
     setShowResults(false);
+    setStarted(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -448,7 +454,35 @@ function ReflectionTestClient({ test, questions, profiles }: { test: FaithTest; 
             </div>
           )}
 
-          {!showResults ? (
+          {!started ? (
+            <div className="p-6 md:p-8 bg-[#f5f3ef] border border-black/[.08] dark:bg-[#0b0c12] dark:border-white/[.08] rounded-xl">
+              {getLearn(test) && (
+                <div className="mb-6">
+                  <button
+                    onClick={() => setShowLearn((v) => !v)}
+                    className="font-poppins text-[13px] font-semibold text-[#546cfa] hover:underline"
+                  >
+                    {showLearn
+                      ? (lang === "fr" ? "Masquer les explications ▲" : "Hide explanation ▲")
+                      : (lang === "fr" ? "En savoir plus avant de commencer ▼" : "Learn more before you start ▼")}
+                  </button>
+                  {showLearn && (
+                    <p className="font-poppins text-[14px] text-black/70 dark:text-white/70 leading-relaxed whitespace-pre-line mt-4">
+                      {getLearn(test)}
+                    </p>
+                  )}
+                </div>
+              )}
+              <div className="flex justify-center">
+                <button
+                  onClick={() => setStarted(true)}
+                  className="px-8 py-3 bg-gradient-to-br from-[#546cfa] to-[#546cfa] text-[#09090d] font-poppins text-[14px] font-semibold rounded-lg hover:shadow-[0_4px_20px_rgba(84,108,250,.4)] transition-all"
+                >
+                  {lang === "fr" ? `Commencer les ${questions.length} questions` : `Start the ${questions.length} questions`}
+                </button>
+              </div>
+            </div>
+          ) : !showResults ? (
             <div className="p-6 md:p-8 bg-[#f5f3ef] border border-black/[.08] dark:bg-[#0b0c12] dark:border-white/[.08] rounded-xl">
               <div className="flex justify-between items-center mb-4">
                 <span className="font-poppins text-[12px] font-semibold text-black/60 dark:text-white/60">

@@ -201,6 +201,10 @@ export interface FaithTest {
   description_fr: string | null;
   disclaimer_en: string | null;
   disclaimer_fr: string | null;
+  // Optional long-form "learn more" content shown before a reflection test
+  // starts (e.g. background on the result profiles). Unused for "quiz" tests.
+  learn_en: string | null;
+  learn_fr: string | null;
   total_takes: number;
   published: boolean;
   sort_order: number;

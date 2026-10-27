@@ -22,6 +22,8 @@ export default function FaithTestModal({ test, onClose, onSave, db }: FaithTestM
   const [descriptionFr, setDescriptionFr] = useState(test?.description_fr  ?? "");
   const [disclaimerEn,  setDisclaimerEn]  = useState(test?.disclaimer_en   ?? "");
   const [disclaimerFr,  setDisclaimerFr]  = useState(test?.disclaimer_fr   ?? "");
+  const [learnEn,       setLearnEn]       = useState(test?.learn_en        ?? "");
+  const [learnFr,       setLearnFr]       = useState(test?.learn_fr        ?? "");
   const [published,     setPub]           = useState(test?.published       ?? false);
   const [sortOrder,     setSort]          = useState(test?.sort_order      ?? 0);
   const [saving,        setSaving]        = useState(false);
@@ -46,6 +48,8 @@ export default function FaithTestModal({ test, onClose, onSave, db }: FaithTestM
       description_fr: descriptionFr.trim() || null,
       disclaimer_en: disclaimerEn.trim() || null,
       disclaimer_fr: disclaimerFr.trim() || null,
+      learn_en: learnEn.trim() || null,
+      learn_fr: learnFr.trim() || null,
       published,
       sort_order: sortOrder,
       // total_takes is managed automatically, don't include in insert/update
@@ -174,6 +178,33 @@ export default function FaithTestModal({ test, onClose, onSave, db }: FaithTestM
             />
           </div>
           
+          {testType === "reflection" && (
+            <>
+              <div className={TW.field}>
+                <label className={TW.label}>Learn More (English)</label>
+                <textarea
+                  className={cn(TW.tarea, "min-h-[160px]")}
+                  value={learnEn}
+                  onChange={(e) => setLearnEn(e.target.value)}
+                  placeholder="Background on the result profiles, shown before the quiz starts (e.g. explain each island and how they differ)..."
+                />
+                <div className="text-[10px] text-white/30 mt-1.5">
+                  Shown on an intro screen before the first question, behind a &quot;Learn more&quot; toggle. Plain text, line breaks preserved.
+                </div>
+              </div>
+
+              <div className={TW.field}>
+                <label className={TW.label}>Learn More (French)</label>
+                <textarea
+                  className={cn(TW.tarea, "min-h-[160px]")}
+                  value={learnFr}
+                  onChange={(e) => setLearnFr(e.target.value)}
+                  placeholder="Contexte sur les profils de résultat, affiché avant de commencer le test..."
+                />
+              </div>
+            </>
+          )}
+
           <div className={TW.field}>
             <label className={TW.label}>Sort Order (lower = first)</label>
             <input 

@@ -9,6 +9,7 @@ with new_test as (
     name_en, name_fr, slug, test_type,
     description_en, description_fr,
     disclaimer_en, disclaimer_fr,
+    learn_en, learn_fr,
     published, sort_order
   ) values (
     'Three Islands of Life', 'Les trois îles de la vie', 'three-islands-of-life', 'reflection',
@@ -16,6 +17,62 @@ with new_test as (
     'Répondez à 15 questions sur vos choix quotidiens pour découvrir quelle île décrit le mieux vos 90 derniers jours : Bonnes intentions, Vie intentionnelle ou Vie porteuse de sens.',
     'This is a self-reflection exercise, not a scientifically validated psychological assessment. Your island is a snapshot of your reported habits, not a permanent identity.',
     'Cet exercice favorise la réflexion personnelle ; ce n''est pas un test psychologique scientifiquement validé. Votre île représente vos habitudes déclarées à ce moment, et non une identité permanente.',
+    'Inspired by John C. Maxwell''s Intentional Living: Choosing a Life That Matters. A meaningful life is not built by good intentions alone: it grows through deliberate choices, consistent action, and adding value to others. These three islands are an educational reflection framework inspired by those ideas, not an official assessment from Maxwell.
+
+1. Good Intentions — The life of wishing
+You have hopes and ideas but struggle to turn them into consistent action.
+Your move: choose one goal and take one action today.
+
+2. Intentional Living — The life of action
+You decide what matters, plan deliberately, accept responsibility and follow through.
+Your move: build habits, track progress and add value.
+
+3. A Life That Matters — The life of significance
+Your habits produce sustained results, and you intentionally use your growth to benefit others.
+Your move: sustain and multiply your positive impact.
+
+How the three lives differ:
+Life dimension | Good Intentions | Intentional Living | Significance
+Mindset: Desire | Action | Results
+Aspirations: Wish | Purpose | Fulfillment
+Time: Someday | Today | Every day
+Planning: Fantasy | Strategy | Follow-through
+Commitment: Hopefully | Definitely | Continually
+Initiative: Passive | Active | Proactive
+Consistency: Occasional | Continual | Habitual
+Motivation: Emotion | Discipline | Lifestyle
+Responsibility: Somebody should | I will | I do
+Life direction: Survival | Success | Significance
+
+The goal is not to label yourself. It is to move from wishing, to acting, to making a meaningful difference.',
+    'Inspiré du livre Intentional Living: Choosing a Life That Matters de John C. Maxwell. Une vie qui a du sens ne se construit pas uniquement avec de bonnes intentions : elle grandit grâce à des choix délibérés, des actions régulières et une contribution positive aux autres. Ces trois îles constituent un outil pédagogique de réflexion inspiré de ces idées, et non un test officiel de Maxwell.
+
+1. Bonnes intentions — La vie des souhaits
+Vous avez des rêves et des idées, mais vous avez du mal à les traduire en actions régulières.
+Votre défi : choisissez un objectif et agissez dès aujourd''hui.
+
+2. Vie intentionnelle — La vie de l''action
+Vous identifiez vos priorités, planifiez, prenez vos responsabilités et passez à l''action.
+Votre défi : développez des habitudes, mesurez vos progrès et apportez de la valeur.
+
+3. Une vie qui compte — La vie de l''impact
+Vos habitudes produisent des résultats durables et vous utilisez votre progression pour aider les autres.
+Votre défi : pérennisez et multipliez votre impact positif.
+
+Les différences entre les trois vies :
+Dimension | Bonnes intentions | Vie intentionnelle | Vie significative
+État d''esprit : Désir | Action | Résultats
+Aspirations : Souhait | Objectif précis | Accomplissement
+Temps : Un jour | Aujourd''hui | Chaque jour
+Planification : Rêverie | Stratégie | Mise en œuvre jusqu''au bout
+Engagement : Avec un peu de chance | Résolument | Continuellement
+Initiative : Passive | Active | Proactive
+Régularité : Occasionnelle | Continue | Habituelle
+Motivation : Émotion | Discipline | Mode de vie
+Responsabilité : Quelqu''un devrait agir | Je vais agir | J''agis
+Orientation de vie : Survie | Réussite | Impact et sens
+
+L''objectif n''est pas de vous étiqueter, mais de passer du souhait à l''action, puis à une contribution significative.',
     true, 0
   )
   returning id
